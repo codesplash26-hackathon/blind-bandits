@@ -5,32 +5,39 @@ import { Hero } from "../components/landing/Hero";
 import { Stat } from "../components/landing/Stat";
 import { Features } from "../components/landing/Features";
 import { Testimonial } from "../components/landing/Testimonial";
+import { CallToAction } from "../components/landing/CallToAction";
 import { Footer } from "../components/landing/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="font-body-md min-h-screen flex flex-col">
+    <div className="font-sans min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+      {/* Sticky Theme-aware Navigation */}
       <Navigation />
 
-      <main className="flex-grow pb-stack-lg flex flex-col gap-stack-lg">
+      <main className="flex-grow flex flex-col gap-8 md:gap-16">
+        {/* Fullscreen Edge-to-edge Hero */}
         <Hero />
 
-        {/* Stats (About) */}
-        <div id="about" className="w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        {/* Stats & Impact */}
+        <div id="about" className="w-full">
           <Stat />
         </div>
-        {/* Features Section */}
+
+        {/* Smart Travel Engine Features */}
         <section id="features" className="w-full">
           <Features />
         </section>
 
-        {/* Testimonials Section (Market) */}
+        {/* Community Reviews & Stories */}
         <section id="market" className="w-full">
           <Testimonial />
         </section>
 
+        {/* Call To Action Banner */}
+        <CallToAction />
       </main>
 
+      {/* Footer */}
       <div id="contact">
         <Footer />
       </div>

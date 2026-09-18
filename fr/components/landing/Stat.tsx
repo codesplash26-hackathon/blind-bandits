@@ -1,68 +1,87 @@
-import { useId, ComponentProps } from "react";
-import { MapPin, Users, GraduationCap, Search } from "lucide-react";
+"use client";
 
+import { useId } from "react";
+import { Compass, MapPin, Users, Award, ShieldCheck, TreePine } from "lucide-react";
 import CountUp from "./CountUp";
 
 export function Stat() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-2 pb-12 pt-0 sm:pt-0 md:pt-4 lg:pt-12 px-4 sm:px-6 md:px-12 lg:px-12 w-full max-w-7xl mx-auto">
-      {stats.map((feature, idx) => (
-        <div
-          key={idx}
-          className="relative flex flex-col border border-border items-center justify-center bg-card p-3 sm:p-6 rounded-3xl overflow-hidden soft-bloom"
-        >
-          <Grid size={20} />
-          <div className="relative z-20 mb-4 text-primary">
-            {feature.icon}
-          </div>
-          <div className="text-3xl font-bold text-foreground relative z-20 flex items-center">
-            <CountUp
-              from={0}
-              to={feature.value}
-              separator=","
-              direction="up"
-              duration={1}
-              className="count-up-text"
-            />
-            {feature.suffix}
-          </div>
-          <p className="text-muted-foreground mt-2 text-base font-normal relative z-20 text-center">
-            {feature.description}
-          </p>
+    <div className="py-8 md:py-16 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
+          <TreePine className="w-3.5 h-3.5" />
+          <span>Our Sustainable Footprint</span>
         </div>
-      ))}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight">
+          Empowering Sri Lanka Through Conscious Travel
+        </h2>
+        <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto mt-3 font-normal">
+          Every journey booked through Ceylon Tour helps preserve pristine ecosystems and directly supports local rural communities.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+        {stats.map((feature, idx) => (
+          <div
+            key={idx}
+            className="relative flex flex-col border border-border/80 items-center justify-center bg-card p-6 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
+          >
+            <Grid size={22} />
+            <div className="relative z-20 mb-4 p-3 rounded-2xl bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+              {feature.icon}
+            </div>
+            <div className="text-3xl sm:text-4xl font-extrabold text-foreground relative z-20 flex items-center tracking-tight">
+              <CountUp
+                from={0}
+                to={feature.value}
+                separator=","
+                direction="up"
+                duration={1.5}
+                className="count-up-text"
+              />
+              <span className="text-secondary font-bold">{feature.suffix}</span>
+            </div>
+            <p className="text-foreground font-semibold text-base mt-2 relative z-20 text-center">
+              {feature.title}
+            </p>
+            <p className="text-muted-foreground text-sm font-normal relative z-20 text-center mt-1">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 const stats = [
   {
-    title: "9K+",
-    value: 900,
+    title: "Hidden Eco Spots",
+    value: 150,
     suffix: "+",
-    description: "Farmers Registered",
-    icon: <span className="material-symbols-outlined text-4xl" data-icon="group">group</span>,
+    description: "Curated off-grid locations & secret trails",
+    icon: <MapPin className="w-6 h-6" />,
   },
   {
-    title: "850+",
+    title: "Certified Local Hosts",
     value: 850,
     suffix: "+",
-    description: "Verified Agro-Dealers",
-    icon: <span className="material-symbols-outlined text-4xl" data-icon="storefront">storefront</span>,
+    description: "Verified guides, artisans & homestays",
+    icon: <Users className="w-6 h-6" />,
   },
   {
-    title: "5k+",
-    value: 500,
-    suffix: "T",
-    description: "Metric Tons Distributed",
-    icon: <span className="material-symbols-outlined text-4xl" data-icon="local_shipping">local_shipping</span>,
+    title: "Eco Travelers Served",
+    value: 45,
+    suffix: "k+",
+    description: "Memorable journeys across the island",
+    icon: <Compass className="w-6 h-6" />,
   },
   {
-    title: "100%",
+    title: "Zero-Waste Certified",
     value: 100,
     suffix: "%",
-    description: "Blockchain Verified",
-    icon: <span className="material-symbols-outlined text-4xl" data-icon="verified_user">verified_user</span>,
+    description: "Sustainable plastic-free tour protocols",
+    icon: <ShieldCheck className="w-6 h-6" />,
   },
 ];
 
@@ -83,8 +102,8 @@ export const Grid = ({
 }) => {
   const p = pattern ?? defaultGridPattern;
   return (
-    <div className="pointer-events-none absolute left-1/2 top-0  -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
-      <div className="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-muted/20 from-transparent to-transparent dark:to-muted/20 opacity-100">
+    <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)] opacity-40 dark:opacity-20">
+      <div className="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-muted/20 from-transparent to-transparent opacity-100">
         <GridPattern
           width={size ?? 20}
           height={size ?? 20}
@@ -100,7 +119,24 @@ export const Grid = ({
   );
 };
 
-export function GridPattern({ width, height, x, y, squares, strokeClassName, fillClassName, ...props }: React.ComponentProps<"svg"> & { width?: number, height?: number, x?: string | number, y?: string | number, squares?: number[][], strokeClassName?: string, fillClassName?: string }) {
+export function GridPattern({
+  width,
+  height,
+  x,
+  y,
+  squares,
+  strokeClassName,
+  fillClassName,
+  ...props
+}: React.ComponentProps<"svg"> & {
+  width?: number;
+  height?: number;
+  x?: string | number;
+  y?: string | number;
+  squares?: number[][];
+  strokeClassName?: string;
+  fillClassName?: string;
+}) {
   const patternId = useId();
 
   return (
@@ -114,7 +150,12 @@ export function GridPattern({ width, height, x, y, squares, strokeClassName, fil
           x={x}
           y={y}
         >
-          <path d={`M.5 ${height}V.5H${width}`} fill="none" strokeWidth="1" className={strokeClassName} />
+          <path
+            d={`M.5 ${height}V.5H${width}`}
+            fill="none"
+            strokeWidth="1"
+            className={strokeClassName}
+          />
         </pattern>
       </defs>
       <rect

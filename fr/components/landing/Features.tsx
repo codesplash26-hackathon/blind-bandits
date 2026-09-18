@@ -1,69 +1,85 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import {
+  Map,
+  Leaf,
+  Train,
+  HeartHandshake,
+  ShieldCheck,
+  WifiOff,
+  Sparkles,
+  Utensils,
+} from "lucide-react";
 
 export const Features = () => {
   const features = [
     {
-      title: "Digital Farmer Passbook",
+      title: "AI Eco-Route Planner",
       description:
-        "Manage fertilizer quotas, view allocations, and securely access smart-contract subsidy tokens.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="wallet">wallet</span>,
+        "Smart itinerary builder optimizing routes to minimize travel emissions and discover hidden gems.",
+      icon: <Map className="w-7 h-7" />,
     },
     {
-      title: "Real-time Tracking",
+      title: "100% Eco Stays",
       description:
-        "Track fertilizer movement from import ports to local agrarian service centers seamlessly.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="route">route</span>,
+        "Handpicked eco-villas, jungle lodges, and treehouses certified for zero plastic & solar energy.",
+      icon: <Leaf className="w-7 h-7" />,
     },
     {
-      title: "Smart Quota Distribution",
+      title: "Scenic Train Pass",
       description:
-        "Automated allocation logic preventing hoarding and ensuring equitable distribution.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="balance">balance</span>,
+        "Instant booking for Sri Lanka's iconic Ella to Kandy mountain train rides and EV transfers.",
+      icon: <Train className="w-7 h-7" />,
     },
     {
-      title: "Blockchain Integrity",
+      title: "Community Direct Impact",
       description:
-        "Immutable, cryptographically secure ledgers for all transactions across the grid.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="enhanced_encryption">enhanced_encryption</span>,
+        "Over 85% of your trip booking fees go directly to local rural hosts, guides, and conservationists.",
+      icon: <HeartHandshake className="w-7 h-7" />,
     },
     {
-      title: "Agro-Dealer Portal",
+      title: "24/7 Verified Guide Grid",
       description:
-        "Dedicated portals for dealers to manage stock, sales, and verify farmer identities.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="storefront">storefront</span>,
+        "Access licensed local experts for safe hiking, wildlife safaris, and cultural immersion.",
+      icon: <ShieldCheck className="w-7 h-7" />,
     },
     {
-      title: "Government Auditing",
+      title: "Offline Trail Navigation",
       description:
-        "Complete visibility for officials to run real-time national inventory audits.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="account_balance">account_balance</span>,
+        "Interactive GPS maps for remote treks in Knuckles Mountain Range & Devil's Staircase without internet.",
+      icon: <WifiOff className="w-7 h-7" />,
     },
     {
-      title: "Green Market",
+      title: "Authentic Food Tours",
       description:
-        "Decentralized marketplace for purchasing verified organic fertilizers and alternatives.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="eco">eco</span>,
+        "Experience traditional village cooking classes, spice garden visits, and organic tea tastings.",
+      icon: <Utensils className="w-7 h-7" />,
     },
     {
-      title: "SMS / USSD Access",
+      title: "Custom Wildlife Safaris",
       description:
-        "Fully accessible quota management and alerts for offline farmers via simple SMS interfaces.",
-      icon: <span className="material-symbols-outlined text-4xl" data-icon="sms">sms</span>,
+        "Ethical leopard, elephant, and blue whale watching tours guided by certified naturalists.",
+      icon: <Sparkles className="w-7 h-7" />,
     },
   ];
 
   return (
-    <div className="pt-2 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto">
+    <div className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="font-headline-lg text-headline-lg md:text-display-lg text-foreground mb-4">
-          Core Infrastructure
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-semibold uppercase tracking-wider mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Smart Travel Engine</span>
+        </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight mb-4">
+          Core Platform Features
         </h2>
-        <p className="font-body-lg text-body-lg text-muted-foreground max-w-2xl mx-auto">
-          Everything the agricultural sector needs to manage resources, people, and distribution in one unified ecosystem.
+        <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          Everything you need to plan, explore, and experience Sri Lanka authentically, responsibly, and effortlessly.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 min-[450px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 relative z-10 soft-bloom rounded-3xl overflow-hidden bg-background border border-border">
+      <div className="grid grid-cols-1 min-[450px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 relative z-10 rounded-3xl overflow-hidden bg-card border border-border shadow-md">
         {features.map((feature, index) => (
           <Feature key={feature.title} {...feature} index={index} />
         ))}
@@ -86,25 +102,22 @@ const Feature = ({
   return (
     <div
       className={cn(
-        "flex flex-col lg:border-r py-5 relative group/feature border-border",
+        "flex flex-col lg:border-r py-8 relative group/feature border-border transition-colors duration-200 hover:bg-muted/40",
         (index === 0 || index === 4) && "lg:border-l border-border",
         index < 4 && "lg:border-b border-border",
       )}
     >
-      {index < 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-muted pointer-events-none" />
-      )}
-      {index >= 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-muted pointer-events-none" />
-      )}
-      <div className="mb-4 relative z-10 px-10 text-primary">{icon}</div>
-      <div className="font-title-lg text-title-lg mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-muted group-hover/feature:bg-primary transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-foreground">
+      <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-primary/5 pointer-events-none" />
+      <div className="mb-4 relative z-10 px-8 text-primary p-3 rounded-2xl w-fit ml-8 bg-primary/10 group-hover/feature:bg-primary group-hover/feature:text-primary-foreground transition-all duration-300">
+        {icon}
+      </div>
+      <div className="font-title-lg text-lg font-bold mb-2 relative z-10 px-8">
+        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-border group-hover/feature:bg-primary transition-all duration-200 origin-center" />
+        <span className="group-hover/feature:translate-x-1 transition duration-200 inline-block text-foreground font-heading">
           {title}
         </span>
       </div>
-      <p className="font-body-md text-body-md text-muted-foreground max-w-xs relative z-10 px-10">
+      <p className="text-muted-foreground text-sm font-normal leading-relaxed relative z-10 px-8">
         {description}
       </p>
     </div>

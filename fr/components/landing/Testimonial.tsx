@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { ArrowLeft, ArrowRight, Star, Heart } from "lucide-react";
 import { TestimonialCard } from "./TestimonialCard";
 
 export function Testimonial() {
@@ -17,14 +18,28 @@ export function Testimonial() {
   };
 
   return (
-    <div className="py-stack-lg px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-gutter items-center">
+    <div className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div>
-          <h2 className="font-headline-lg text-headline-lg md:text-display-lg font-bold text-foreground mb-stack-md">
-            What the community says
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
+            <Heart className="w-3.5 h-3.5" />
+            <span>Traveler & Host Stories</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground mb-4 tracking-tight leading-tight">
+            Loved by Travelers from Around the Globe
           </h2>
-          <p className="font-body-lg text-body-lg text-muted-foreground mb-0 max-w-lg">
-            Hear from farmers, distributors, and officials using Ceylon Tour to ensure transparent and equitable fertilizer allocation.
+          <p className="text-muted-foreground text-base sm:text-lg max-w-lg leading-relaxed font-normal mb-6">
+            Hear how eco-conscious adventurers and Sri Lankan local hosts create unforgettable, sustainable memories together with Ceylon Tour.
+          </p>
+
+          <div className="flex items-center gap-2 text-amber-500 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+            ))}
+            <span className="text-foreground font-bold text-base ml-2">4.96 / 5.0</span>
+          </div>
+          <p className="text-muted-foreground text-xs font-medium">
+            Based on 2,400+ verified traveler reviews across Sri Lanka
           </p>
         </div>
 
@@ -33,23 +48,23 @@ export function Testimonial() {
             key={currentIndex}
             {...testimonials[currentIndex]}
             onComplete={handleNext}
-            duration={30}
+            duration={15}
           />
 
           <div className="flex gap-4 mt-8">
             <button
               onClick={handlePrev}
-              className="p-3 rounded-full bg-background border border-border hover:bg-muted transition-colors text-foreground flex items-center justify-center soft-bloom"
+              className="p-3.5 rounded-full bg-card border border-border hover:bg-muted transition-colors text-foreground flex items-center justify-center shadow-sm hover:scale-105"
               aria-label="Previous testimonial"
             >
-              <span className="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+              <ArrowLeft className="w-5 h-5" />
             </button>
             <button
               onClick={handleNext}
-              className="p-3 rounded-full bg-background border border-border hover:bg-muted transition-colors text-foreground flex items-center justify-center soft-bloom"
+              className="p-3.5 rounded-full bg-card border border-border hover:bg-muted transition-colors text-foreground flex items-center justify-center shadow-sm hover:scale-105"
               aria-label="Next testimonial"
             >
-              <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -60,27 +75,27 @@ export function Testimonial() {
 
 const testimonials = [
   {
-    name: "Nadeesha Perera",
-    role: "Registered Farmer, Anuradhapura",
+    name: "Clara & Mark Vance",
+    role: "Eco Travelers, London UK",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     testimonial:
-      "With the digital passbook, I know exactly when my fertilizer quota is ready. No more waiting in long lines wondering if supplies have arrived at the center.",
+      "Ceylon Tour helped us discover secret waterfall trails near Ella that weren't on any generic travel map. Booking local homestays felt seamless, authentic, and truly rewarding.",
   },
   {
-    name: "Ravindu Senanayake",
-    role: "Agro-Dealer, Kurunegala",
+    name: "Kavinda Wickramasinghe",
+    role: "Certified Heritage Guide, Sigiriya",
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     testimonial:
-      "The dealer portal automatically syncs our inventory with the national grid. It has completely eliminated the paperwork we used to struggle with during distribution season.",
+      "As a local guide, this platform connects me directly with respectful travelers who care about preserving our history and wildlife. It changed my livelihoods for the better.",
   },
   {
-    name: "Ishara Fernando",
-    role: "Agrarian Services Officer",
+    name: "Dr. Sophia Lindqvist",
+    role: "Wildlife Photographer, Stockholm",
     image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     testimonial:
-      "Blockchain verification means we have 100% accurate data on where the fertilizer went. Auditing the supply chain is now instant and fully transparent.",
+      "The AI route planner saved us days of stress. We spent 2 weeks exploring Yala safari points, Mirissa blue whale sanctuaries, and misty tea plantations with absolute ease.",
   },
 ];
