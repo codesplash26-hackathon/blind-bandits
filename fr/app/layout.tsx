@@ -6,7 +6,11 @@ import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
-const playfairDisplayHeading = Playfair_Display({ subsets: ['latin'], variable: '--font-heading' });
+const playfairDisplayHeading = Playfair_Display({ 
+  subsets: ['latin'], 
+  variable: '--font-heading',
+  style: ['normal', 'italic'],
+});
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

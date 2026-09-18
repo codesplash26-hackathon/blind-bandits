@@ -68,27 +68,28 @@ export const Navigation = () => {
           layout
           initial={{
             width: "800px",
-            backgroundColor: "rgba(0, 0, 0, 0)",
+            backgroundColor: "var(--card)",
           }}
           animate={
             isMobile
-              ? { backgroundColor: "rgba(0, 0, 0, 0)", width: "95%" }
+              ? {
+                  width: "95%",
+                  backgroundColor: "var(--card)",
+                }
               : {
-                width: isScrolled ? "fit-content" : "1000px",
-                backgroundColor: isScrolled
-                  ? "var(--background)"
-                  : "rgba(0, 0, 0, 0)",
-              }
+                  width: isScrolled ? "fit-content" : "1000px",
+                  backgroundColor: "var(--card)",
+                }
           }
           transition={{
             duration: 0.5,
             ease: "easeInOut",
           }}
-          className="relative max-screen sm:backdrop-blur-md pointer-events-auto flex w-full items-center justify-between gap-6 rounded-full px-4 py-1 transition-colors sm:px-6 sm:pr-4"
+          className="relative max-screen backdrop-blur-md pointer-events-auto flex w-full items-center justify-between gap-6 rounded-full px-4 py-1.5 transition-all duration-300 sm:px-6 sm:pr-4 border border-border/80 shadow-lg text-card-foreground"
         >
           <Link
             href="/"
-            className="text-title-lg font-title-lg font-bold text-primary flex items-center gap-2"
+            className="text-title-lg font-title-lg font-bold text-primary flex items-center gap-2 transition-colors"
           >
             <Image src={logo} alt="Ceylon Tour logo" width={32} height={32} />
             Ceylon Tour
@@ -110,8 +111,9 @@ export const Navigation = () => {
                     />
                   )}
                   <Link
-                    className={`text-foreground hover:text-primary transition-colors ${isActive ? "font-bold" : ""
-                      }`}
+                    className={`text-foreground hover:text-primary transition-colors ${
+                      isActive ? "font-bold" : ""
+                    }`}
                     href={href}
                   >
                     <span className="relative inline-flex overflow-hidden">
@@ -131,7 +133,10 @@ export const Navigation = () => {
           <div className="flex items-center justify-center gap-4">
             <ThemeToggle />
             <div className="hidden sm:flex gap-4">
-              <Button onClick={() => router.push("/auth")}>
+              <Button
+                onClick={() => router.push("/auth")}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+              >
                 Launch App
               </Button>
             </div>
