@@ -24,7 +24,7 @@ export default function AuthContainer() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const dotGridBaseColor = mounted && resolvedTheme === 'dark' ? '#2F293A' : '#ebeef0ff';
+  const dotGridBaseColor = mounted && resolvedTheme === 'dark' ? '#003B47' : '#D3D0C8';
 
   return (
     <div className="w-full min-h-screen bg-background flex flex-col lg:flex-row relative text-foreground">
@@ -62,7 +62,7 @@ export default function AuthContainer() {
             dotSize={5}
             gap={15}
             baseColor={dotGridBaseColor}
-            activeColor="#10B981"
+            activeColor="#44A6B5"
             proximity={120}
             shockRadius={250}
             shockStrength={5}

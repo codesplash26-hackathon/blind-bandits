@@ -30,13 +30,13 @@ export const Hero = () => {
           </p>
           <div className="flex flex-wrap gap-stack-md mt-stack-md">
             <Button
-              className="font-label-md text-label-md px-8 py-4 h-auto rounded-full soft-bloom"
+              className="font-label-md text-label-md px-8 py-4 h-auto rounded-full soft-bloom bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Access Your Quota
             </Button>
             <Button
               variant="outline"
-              className="border-2 border-secondary text-secondary font-label-md text-label-md px-8 py-4 h-auto rounded-full hover:bg-surface-container-low hover:text-secondary soft-bloom"
+              className="border-2 border-primary text-primary font-label-md text-label-md px-8 py-4 h-auto rounded-full hover:bg-primary/10 hover:text-primary soft-bloom"
             >
               Explore the Green Market
             </Button>

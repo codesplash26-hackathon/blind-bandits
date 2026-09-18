@@ -1,14 +1,14 @@
 'use client';
 
-import { useRef, useEffect, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useCallback, useMemo, CSSProperties } from 'react';
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 
 gsap.registerPlugin(InertiaPlugin);
 
-const throttle = (func, limit) => {
+const throttle = <T extends (...args: any[]) => any>(func: T, limit: number) => {
   let lastCall = 0;
-  return function (...args) {
+  return function (this: any, ...args: Parameters<T>) {
     const now = performance.now();
     if (now - lastCall >= limit) {
       lastCall = now;
@@ -17,7 +17,7 @@ const throttle = (func, limit) => {
   };
 };
 
-function hexToRgb(hex) {
+function hexToRgb(hex: string) {
   const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
   if (!m) return { r: 0, g: 0, b: 0 };
   return {
@@ -27,11 +27,35 @@ function hexToRgb(hex) {
   };
 }
 
-const DotGrid = ({
+export interface DotGridProps {
+  dotSize?: number;
+  gap?: number;
+  baseColor?: string;
+  activeColor?: string;
+  proximity?: number;
+  speedTrigger?: number;
+  shockRadius?: number;
+  shockStrength?: number;
+  maxSpeed?: number;
+  resistance?: number;
+  returnDuration?: number;
+  className?: string;
+  style?: CSSProperties;
+}
+
+interface Dot {
+  cx: number;
+  cy: number;
+  xOffset: number;
+  yOffset: number;
+  _inertiaApplied: boolean;
+}
+
+const DotGrid: React.FC<DotGridProps> = ({
   dotSize = 16,
   gap = 32,
-  baseColor = '#5227FF',
-  activeColor = '#5227FF',
+  baseColor = '#004554',
+  activeColor = '#44A6B5',
   proximity = 150,
   speedTrigger = 100,
   shockRadius = 250,
@@ -42,9 +66,9 @@ const DotGrid = ({
   className = '',
   style
 }) => {
-  const wrapperRef = useRef(null);
-  const canvasRef = useRef(null);
-  const dotsRef = useRef([]);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const dotsRef = useRef<Dot[]>([]);
   const pointerRef = useRef({
     x: 0,
     y: 0,
@@ -95,7 +119,7 @@ const DotGrid = ({
     const startX = extraX / 2 + dotSize / 2;
     const startY = extraY / 2 + dotSize / 2;
 
-    const dots = [];
+    const dots: Dot[] = [];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const cx = startX + x * cell;
@@ -109,7 +133,7 @@ const DotGrid = ({
   useEffect(() => {
     if (!circlePath) return;
 
-    let rafId;
+    let rafId: number;
     const proxSq = proximity * proximity;
 
     const draw = () => {
@@ -128,19 +152,19 @@ const DotGrid = ({
         const dy = dot.cy - py;
         const dsq = dx * dx + dy * dy;
 
-        let style = baseColor;
+        let dotStyle = baseColor;
         if (dsq <= proxSq) {
           const dist = Math.sqrt(dsq);
           const t = 1 - dist / proximity;
           const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
           const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
           const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-          style = `rgb(${r},${g},${b})`;
+          dotStyle = `rgb(${r},${g},${b})`;
         }
 
         ctx.save();
         ctx.translate(ox, oy);
-        ctx.fillStyle = style;
+        ctx.fillStyle = dotStyle;
         ctx.fill(circlePath);
         ctx.restore();
       }
@@ -154,10 +178,11 @@ const DotGrid = ({
 
   useEffect(() => {
     buildGrid();
-    let ro = null;
-    if ('ResizeObserver' in window) {
+    let ro: ResizeObserver | null = null;
+    const wrap = wrapperRef.current;
+    if (typeof ResizeObserver !== 'undefined' && wrap) {
       ro = new ResizeObserver(buildGrid);
-      wrapperRef.current && ro.observe(wrapperRef.current);
+      ro.observe(wrap);
     } else {
       window.addEventListener('resize', buildGrid);
     }
@@ -168,7 +193,8 @@ const DotGrid = ({
   }, [buildGrid]);
 
   useEffect(() => {
-    const onMove = e => {
+    const onMove = (e: MouseEvent) => {
+      if (!canvasRef.current) return;
       const now = performance.now();
       const pr = pointerRef.current;
       const dt = pr.lastTime ? now - pr.lastTime : 16;
@@ -217,7 +243,8 @@ const DotGrid = ({
       }
     };
 
-    const onClick = e => {
+    const onClick = (e: MouseEvent) => {
+      if (!canvasRef.current) return;
       const rect = canvasRef.current.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
