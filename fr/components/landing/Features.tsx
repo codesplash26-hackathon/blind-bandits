@@ -67,7 +67,7 @@ export const Features = () => {
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
       <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-semibold uppercase tracking-wider mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#004554]/10 dark:bg-[#44A6B5]/15 border border-[#004554]/20 dark:border-[#44A6B5]/30 text-[#004554] dark:text-[#44A6B5] text-xs font-semibold uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Smart Travel Engine</span>
         </div>

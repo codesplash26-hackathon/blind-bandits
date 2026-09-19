@@ -103,9 +103,11 @@ export const Hero = () => {
           </div>
 
           {/* Clean Main Title */}
-          <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-white leading-[1.05] drop-shadow-lg">
+          <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white leading-[1.04] drop-shadow-2xl">
             Smart. Sustainable. <br />
-            <span className="font-heading italic text-[#44A6B5] font-normal">Travel Lanka.</span>
+            <span className="font-heading italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#44A6B5] via-[#B2D5E2] to-[#44A6B5]">
+              Travel Lanka.
+            </span>
           </h1>
 
           {/* Subtitle */}
@@ -113,11 +115,11 @@ export const Hero = () => {
             Discover Sri Lanka’s hidden gems while protecting fragile ecosystems and supporting local communities with transparent, Explainable AI recommendations.
           </p>
 
-          {/* Action Pill Buttons (Proposal 3.2.1) */}
+          {/* Action Pill Buttons */}
           <div className="flex flex-wrap items-center gap-4 mt-2">
             <button
-              onClick={() => router.push("#demo")}
-              className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-6 pr-2.5 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
+              onClick={() => router.push("/auth")}
+              className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-6 pr-2.5 py-3.5 rounded-full shadow-lg hover:shadow-2xl transition-all hover:-translate-y-0.5 group"
             >
               <span>Find a Sustainable Destination</span>
               <span className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center text-white transition-colors">
@@ -126,7 +128,7 @@ export const Hero = () => {
             </button>
 
             <button
-              onClick={() => router.push("#sustainability")}
+              onClick={() => router.push("#why-us")}
               className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-md text-[#004554] hover:bg-white font-semibold text-sm pl-6 pr-2.5 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
             >
               <span>Explore Tourism Sustainability</span>
@@ -134,6 +136,16 @@ export const Hero = () => {
                 <ArrowUpRight size={16} />
               </span>
             </button>
+          </div>
+
+          {/* Micro Trust Badge */}
+          <div className="hidden sm:inline-flex items-center gap-3 px-4 py-2 rounded-full bg-black/30 backdrop-blur-md border border-white/15 text-white/90 text-xs mt-1">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Zero Plastic Protocols</span>
+            <span className="text-white/30">•</span>
+            <span>Fair-Wage Local Hosts</span>
+            <span className="text-white/30">•</span>
+            <span>Real-time Crowd Relief</span>
           </div>
         </div>
 

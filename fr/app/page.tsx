@@ -3,6 +3,7 @@
 import { Navigation } from "../components/landing/Navigation";
 import { Hero } from "../components/landing/Hero";
 import { WhyCeylonTour } from "../components/landing/WhyCeylonTour";
+import { ExperienceStory } from "../components/landing/ExperienceStory";
 import { HowItWorks } from "../components/landing/HowItWorks";
 import { Stat } from "../components/landing/Stat";
 import { Testimonial } from "../components/landing/Testimonial";
@@ -22,7 +23,10 @@ export default function LandingPage() {
         {/* Why CeylonTour - Plain, Human-Friendly Values */}
         <WhyCeylonTour />
 
-        {/* How It Works - 3 Simple Steps */}
+        {/* Visual Photographic Story - The CeylonTour Standard */}
+        <ExperienceStory />
+
+        {/* How It Works - 3 Simple Steps with Interactive Chips */}
         <HowItWorks />
 
         {/* Sustainable Footprint & Community Numbers */}

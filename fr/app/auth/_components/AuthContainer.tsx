@@ -73,7 +73,7 @@ export default function AuthContainer() {
 
         <div className="relative z-10 text-center mt-8 space-y-6">
           <h2 className="text-2xl font-bold text-foreground">
-            {isSignup ? "Already registered?" : "New to the ?"}
+            {isSignup ? "Already registered?" : "New to CeylonTour?"}
           </h2>
           <p className="text-muted-foreground max-w-sm px-8">
             {isSignup
@@ -82,7 +82,7 @@ export default function AuthContainer() {
           </p>
           <Button
             onClick={() => setIsSignup(!isSignup)}
-            className="border-2 rounded-lg"
+            className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-md font-semibold px-6 py-2.5"
           >
             {isSignup ? "Sign In" : "Register"}
           </Button>

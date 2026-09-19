@@ -68,24 +68,21 @@ export const Navigation = () => {
           layout
           initial={{
             width: "800px",
-            backgroundColor: "var(--card)",
           }}
           animate={
             isMobile
               ? {
                   width: "95%",
-                  backgroundColor: "var(--card)",
                 }
               : {
                   width: isScrolled ? "fit-content" : "1000px",
-                  backgroundColor: "var(--card)",
                 }
           }
           transition={{
             duration: 0.5,
             ease: "easeInOut",
           }}
-          className="relative max-screen backdrop-blur-md pointer-events-auto flex w-full items-center justify-between gap-6 rounded-full px-4 py-1.5 transition-all duration-300 sm:px-6 sm:pr-4 border border-border/80 shadow-lg text-card-foreground"
+          className="relative max-screen bg-card backdrop-blur-md pointer-events-auto flex w-full items-center justify-between gap-6 rounded-full px-4 py-1.5 transition-all duration-300 sm:px-6 sm:pr-4 border border-border/80 shadow-lg text-card-foreground"
         >
           <Link
             href="/"

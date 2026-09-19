@@ -64,19 +64,25 @@ export const Footer = () => {
               Platform
             </h4>
             <Link
-              href="#about"
+              href="#why-us"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              About Ceylon Tour
+              Why CeylonTour
             </Link>
             <Link
-              href="#features"
+              href="#how-it-works"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              AI Eco Route Planner
+              How It Works
             </Link>
             <Link
-              href="#market"
+              href="#impact"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Sustainable Footprint
+            </Link>
+            <Link
+              href="#reviews"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               Traveler Reviews
@@ -116,14 +122,17 @@ export const Footer = () => {
             © {new Date().getFullYear()} CeylonTour by <strong>Team Blind Bandits</strong> • University of Moratuwa (CodeSplash &apos;26).
           </p>
           <div className="flex items-center gap-6">
-            <Link href="#demo" className="hover:text-primary transition-colors">
-              XAI Model
+            <Link href="#why-us" className="hover:text-primary transition-colors">
+              Why Us
             </Link>
-            <Link href="#sustainability" className="hover:text-primary transition-colors">
-              Authority Portal
+            <Link href="#how-it-works" className="hover:text-primary transition-colors">
+              Process
             </Link>
-            <Link href="#features" className="hover:text-primary transition-colors">
-              Architecture
+            <Link href="#impact" className="hover:text-primary transition-colors">
+              Impact
+            </Link>
+            <Link href="#reviews" className="hover:text-primary transition-colors">
+              Reviews
             </Link>
           </div>
         </div>

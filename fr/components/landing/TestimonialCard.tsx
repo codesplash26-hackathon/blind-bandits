@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { Star, CheckCircle2, Quote } from "lucide-react";
 
 interface TestimonialCardProps {
   name: string;
@@ -19,18 +20,20 @@ export function TestimonialCard({
   duration = 30,
   onComplete,
 }: TestimonialCardProps) {
-  // Use a unique key based on props to reset animation when content changes
-  const key = `${name}-${role}-${image}`;
-
   return (
-    <div className="bg-background rounded-3xl p-8 border border-border shadow-sm max-w-xl soft-bloom">
-      <div className="flex items-center gap-4 mb-6">
+    <div className="bg-card rounded-3xl p-8 sm:p-9 border border-[#B2D5E2]/50 dark:border-[#003F4C] shadow-xl max-w-xl relative overflow-hidden group">
+      {/* Decorative Large Background Quote Mark */}
+      <div className="absolute top-4 right-6 text-7xl font-serif text-[#44A6B5]/15 dark:text-[#44A6B5]/20 select-none pointer-events-none">
+        “
+      </div>
+
+      <div className="flex items-center gap-4 mb-6 relative z-10">
         <div className="relative w-16 h-16 flex-shrink-0">
           {/* Circular Progress Timer */}
           <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
             <circle
-              className="text-muted"
-              strokeWidth="4"
+              className="text-[#004554]/15 dark:text-white/10"
+              strokeWidth="3.5"
               stroke="currentColor"
               fill="transparent"
               r="30"
@@ -38,8 +41,8 @@ export function TestimonialCard({
               cy="32"
             />
             <motion.circle
-              className="text-primary"
-              strokeWidth="4"
+              className="text-[#44A6B5]"
+              strokeWidth="3.5"
               stroke="currentColor"
               fill="transparent"
               r="30"
@@ -53,7 +56,7 @@ export function TestimonialCard({
             />
           </svg>
 
-          <div className="absolute inset-1 rounded-full overflow-hidden">
+          <div className="absolute inset-1.5 rounded-full overflow-hidden shadow-inner border border-white/20">
             <Image
               src={image}
               alt={name}
@@ -65,16 +68,24 @@ export function TestimonialCard({
         </div>
 
         <div>
-          <h3 className="font-title-lg text-title-lg text-foreground">
-            {name}
-          </h3>
-          <p className="font-caption text-caption text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <h3 className="font-heading text-lg font-bold text-foreground">
+              {name}
+            </h3>
+            <CheckCircle2 className="w-4 h-4 text-[#44A6B5]" />
+          </div>
+          <p className="text-xs text-muted-foreground mt-0.5">
             {role}
           </p>
+          <div className="flex items-center gap-1 mt-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            ))}
+          </div>
         </div>
       </div>
 
-      <p className="font-body-md text-body-md text-muted-foreground leading-relaxed">
+      <p className="text-foreground/90 text-sm sm:text-base leading-relaxed font-normal relative z-10 italic">
         &quot;{testimonial}&quot;
       </p>
     </div>
