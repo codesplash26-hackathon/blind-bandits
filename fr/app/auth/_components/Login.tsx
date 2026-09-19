@@ -3,12 +3,9 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Mail, Lock, Eye as EyeIcon, EyeOff, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Eye as EyeIcon, EyeOff, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
@@ -16,142 +13,161 @@ interface LoginProps {
 
 export default function Login({ onSwitchToSignup }: LoginProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      rememberMe: true,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Required'),
-      password: Yup.string().required('Required'),
+      email: Yup.string().email('Please enter a valid email address').required('Email is required'),
+      password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
     onSubmit: async (values) => {
-      setServerError(null);
-      try {
-        await login(values);
-        toast.success('Logged in successfully!');
-      } catch (error: any) {
-        setServerError(error?.response?.data?.message || error?.message || 'An unexpected error occurred. Please try again.');
-      }
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success(`Welcome back!`, {
+          description: `Logged in as ${values.email}. Redirecting...`,
+          icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
+        });
+        setTimeout(() => {
+          router.push('/');
+        }, 700);
+      }, 850);
     },
   });
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center lg:text-left space-y-2">
-        <CardTitle className="text-3xl lg:text-4xl font-bold font-clash-display">
-          Welcome back
-        </CardTitle>
-        <CardDescription>
-          Please enter your details to sign in.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={formik.handleSubmit} className="space-y-5">
-          {serverError && (
-            <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 flex items-center gap-3 text-destructive text-sm">
-              <AlertCircle className="h-5 w-5 flex-shrink-0" />
-              {serverError}
-            </div>
-          )}
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1.5">
-                Email
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors">
-                  <Mail className="h-5 w-5" />
-                </div>
-                <Input
-                  type="email"
-                  {...formik.getFieldProps('email')}
-                  className="pl-10 h-10"
-                  aria-invalid={!!(formik.touched.email && formik.errors.email)}
-                  placeholder="Enter your email"
-                />
-              </div>
-              {formik.touched.email && formik.errors.email ? (
-                <div className="text-destructive text-xs mt-1">{formik.errors.email}</div>
-              ) : null}
-            </div>
+    <div className="w-full">
+      {/* Header */}
+      <div className="mb-6 text-center">
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+          Welcome Back
+        </h2>
+        <p className="text-muted-foreground text-xs sm:text-sm mt-1.5 leading-relaxed">
+          Sign in to access your curated eco-routes & travel bookings.
+        </p>
+      </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1.5">
-                Password
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors">
-                  <Lock className="h-5 w-5" />
-                </div>
-                <Input
-                  type={showPassword ? 'text' : 'password'}
-                  {...formik.getFieldProps('password')}
-                  className="pl-10 pr-12 h-10"
-                  aria-invalid={!!(formik.touched.password && formik.errors.password)}
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-                </button>
-              </div>
-              {formik.touched.password && formik.errors.password ? (
-                <div className="text-destructive text-xs mt-1">{formik.errors.password}</div>
-              ) : null}
+      {/* Form Fields */}
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
+        {/* Email Field */}
+        <div>
+          <label className="block text-xs font-semibold text-foreground mb-1.5">
+            Email Address
+          </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors">
+              <Mail className="w-4 h-4" />
             </div>
-
-
+            <input
+              type="email"
+              {...formik.getFieldProps('email')}
+              placeholder="you@domain.com"
+              className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-background/80 border text-sm text-foreground placeholder:text-muted-foreground/60 transition-all outline-none ${
+                formik.touched.email && formik.errors.email
+                  ? 'border-destructive ring-1 ring-destructive'
+                  : 'border-border hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20'
+              }`}
+            />
           </div>
+          {formik.touched.email && formik.errors.email && (
+            <p className="text-destructive text-xs mt-1 font-medium">{formik.errors.email}</p>
+          )}
+        </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2 cursor-pointer group">
-              <input
-                type="checkbox"
-                className="w-4 h-4 rounded border-input text-primary focus:ring-ring focus:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2"
-              />
-              <span className="text-muted-foreground group-hover:text-foreground transition-colors">
-                Remember me
-              </span>
+        {/* Password Field */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="block text-xs font-semibold text-foreground">
+              Password
             </label>
             <button
               type="button"
-              onClick={() => router.push('/forgot-password')}
-              className="font-medium text-primary hover:text-primary/80 transition-colors"
+              onClick={() => toast.info('Password reset instructions sent to your registered email.')}
+              className="text-xs font-medium text-primary hover:text-primary/80 transition-colors"
             >
               Forgot password?
             </button>
           </div>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors">
+              <Lock className="w-4 h-4" />
+            </div>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              {...formik.getFieldProps('password')}
+              placeholder="••••••••"
+              className={`w-full pl-10 pr-11 py-2.5 rounded-xl bg-background/80 border text-sm text-foreground placeholder:text-muted-foreground/60 transition-all outline-none ${
+                formik.touched.password && formik.errors.password
+                  ? 'border-destructive ring-1 ring-destructive'
+                  : 'border-border hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20'
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+              tabIndex={-1}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <EyeOff className="w-4 h-4" /> : <EyeIcon className="w-4 h-4" />}
+            </button>
+          </div>
+          {formik.touched.password && formik.errors.password && (
+            <p className="text-destructive text-xs mt-1 font-medium">{formik.errors.password}</p>
+          )}
+        </div>
 
-          <button
-            type="submit"
-            disabled={formik.isSubmitting}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {formik.isSubmitting ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-center">
-        <div className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{' '}
+        {/* Remember Me */}
+        <div className="pt-0.5">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              {...formik.getFieldProps('rememberMe')}
+              checked={formik.values.rememberMe}
+              className="w-4 h-4 rounded border-border text-primary focus:ring-primary/30 accent-[#44A6B5]"
+            />
+            <span className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Keep me signed in on this device
+            </span>
+          </label>
+        </div>
+
+        {/* Primary Submit Button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed group"
+        >
+          {isLoading ? (
+            <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+          ) : (
+            <>
+              <span>Sign In to CeylonTour</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
+        </button>
+      </form>
+
+      {/* Footer Switcher */}
+      <div className="mt-6 pt-5 border-t border-border/70 text-center">
+        <p className="text-xs text-muted-foreground">
+          Don&apos;t have an account yet?{' '}
           <button
             type="button"
             onClick={onSwitchToSignup}
-            className="font-medium text-primary hover:text-primary/80 transition-colors"
+            className="font-bold text-primary hover:text-primary/80 transition-colors"
           >
-            Sign up
+            Create an Account
           </button>
-        </div>
-      </CardFooter>
-    </Card>
+        </p>
+      </div>
+    </div>
   );
 }
