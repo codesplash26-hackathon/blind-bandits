@@ -6,7 +6,7 @@ import CountUp from "./CountUp";
 
 export function Stat() {
   return (
-    <div className="py-8 md:py-16 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
+    <section id="impact" className="py-8 md:py-16 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
           <TreePine className="w-3.5 h-3.5" />
@@ -50,7 +50,7 @@ export function Stat() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

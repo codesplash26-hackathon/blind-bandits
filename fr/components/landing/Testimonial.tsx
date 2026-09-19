@@ -18,7 +18,7 @@ export function Testimonial() {
   };
 
   return (
-    <div className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto overflow-hidden">
+    <section id="reviews" className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
         <div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
@@ -69,7 +69,7 @@ export function Testimonial() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

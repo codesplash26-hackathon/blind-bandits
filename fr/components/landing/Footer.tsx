@@ -113,17 +113,17 @@ export const Footer = () => {
 
         <div className="pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Ceylon Tour. All rights reserved. Made with love for Sri Lanka.
+            © {new Date().getFullYear()} CeylonTour by <strong>Team Blind Bandits</strong> • University of Moratuwa (CodeSplash &apos;26).
           </p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-primary transition-colors">
-              Privacy Policy
+            <Link href="#demo" className="hover:text-primary transition-colors">
+              XAI Model
             </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Terms of Service
+            <Link href="#sustainability" className="hover:text-primary transition-colors">
+              Authority Portal
             </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Sustainability Code
+            <Link href="#features" className="hover:text-primary transition-colors">
+              Architecture
             </Link>
           </div>
         </div>

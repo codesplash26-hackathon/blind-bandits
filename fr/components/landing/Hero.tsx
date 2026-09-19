@@ -109,27 +109,27 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-body-md text-slate-100/90 text-base sm:text-lg max-w-lg font-normal leading-relaxed drop-shadow">
-            Discover off-the-beaten-path destinations across Sri Lanka. Unlock authentic experiences while preserving nature and local communities.
+          <p className="font-body-md text-slate-100/90 text-base sm:text-lg max-w-xl font-normal leading-relaxed drop-shadow">
+            Discover Sri Lanka’s hidden gems while protecting fragile ecosystems and supporting local communities with transparent, Explainable AI recommendations.
           </p>
 
-          {/* Action Pill Buttons */}
+          {/* Action Pill Buttons (Proposal 3.2.1) */}
           <div className="flex flex-wrap items-center gap-4 mt-2">
             <button
-              onClick={() => router.push("#features")}
-              className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-6 pr-2.5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
+              onClick={() => router.push("#demo")}
+              className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-6 pr-2.5 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
             >
-              <span>Explore Spots</span>
+              <span>Find a Sustainable Destination</span>
               <span className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center text-white transition-colors">
                 <ArrowUpRight size={16} />
               </span>
             </button>
 
             <button
-              onClick={() => router.push("#about")}
-              className="inline-flex items-center gap-3 bg-white text-[#004554] hover:bg-slate-100 font-semibold text-sm pl-6 pr-2.5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
+              onClick={() => router.push("#sustainability")}
+              className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-md text-[#004554] hover:bg-white font-semibold text-sm pl-6 pr-2.5 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
             >
-              <span>Learn More</span>
+              <span>Explore Tourism Sustainability</span>
               <span className="w-7 h-7 rounded-full bg-[#004554] text-white flex items-center justify-center group-hover:bg-[#003440] transition-colors">
                 <ArrowUpRight size={16} />
               </span>

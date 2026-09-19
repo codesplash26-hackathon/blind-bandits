@@ -16,10 +16,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/public/logo.svg"
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Features", href: "#features" },
-  { name: "Market", href: "#market" },
-  { name: "Contact", href: "#contact" },
+  { name: "Why CeylonTour", href: "#why-us" },
+  { name: "How It Works", href: "#how-it-works" },
+  { name: "Impact", href: "#impact" },
+  { name: "Reviews", href: "#reviews" },
 ];
 
 export const Navigation = () => {

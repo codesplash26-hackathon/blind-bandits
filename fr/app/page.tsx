@@ -2,8 +2,9 @@
 
 import { Navigation } from "../components/landing/Navigation";
 import { Hero } from "../components/landing/Hero";
+import { WhyCeylonTour } from "../components/landing/WhyCeylonTour";
+import { HowItWorks } from "../components/landing/HowItWorks";
 import { Stat } from "../components/landing/Stat";
-import { Features } from "../components/landing/Features";
 import { Testimonial } from "../components/landing/Testimonial";
 import { CallToAction } from "../components/landing/CallToAction";
 import { Footer } from "../components/landing/Footer";
@@ -14,33 +15,28 @@ export default function LandingPage() {
       {/* Sticky Theme-aware Navigation */}
       <Navigation />
 
-      <main className="flex-grow flex flex-col gap-8 md:gap-16">
-        {/* Fullscreen Edge-to-edge Hero */}
+      <main className="flex-grow flex flex-col">
+        {/* Fullscreen Edge-to-edge Hero with Top Sri Lanka Visuals */}
         <Hero />
 
-        {/* Stats & Impact */}
-        <div id="about" className="w-full">
-          <Stat />
-        </div>
+        {/* Why CeylonTour - Plain, Human-Friendly Values */}
+        <WhyCeylonTour />
 
-        {/* Smart Travel Engine Features */}
-        <section id="features" className="w-full">
-          <Features />
-        </section>
+        {/* How It Works - 3 Simple Steps */}
+        <HowItWorks />
 
-        {/* Community Reviews & Stories */}
-        <section id="market" className="w-full">
-          <Testimonial />
-        </section>
+        {/* Sustainable Footprint & Community Numbers */}
+        <Stat />
 
-        {/* Call To Action Banner */}
+        {/* Traveler & Host Stories */}
+        <Testimonial />
+
+        {/* Friendly Call To Action Banner */}
         <CallToAction />
       </main>
 
       {/* Footer */}
-      <div id="contact">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }
