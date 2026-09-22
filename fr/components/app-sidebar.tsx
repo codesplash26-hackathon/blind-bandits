@@ -37,15 +37,21 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/context/AuthContext';
 import { getNavGroupsForRole, ICONS_MAP, NavMenuGroup } from '@/lib/navigation';
+import { Role } from '@/types/ceylontour';
 import logo from '@/public/logo.svg';
 
 function AppLogo() {
   const { role } = useAuth();
+  const pathname = usePathname();
+  const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <Link href="/dashboard" className="flex items-center gap-3 px-2 py-2 rounded-2xl hover:bg-sidebar-accent/50 transition-colors">
+        <Link
+          href={effectiveRole === 'ADMIN' ? '/admin/dashboard' : '/dashboard'}
+          className="flex items-center gap-3 px-2 py-2 rounded-2xl hover:bg-sidebar-accent/50 transition-colors"
+        >
           <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary/90 to-secondary p-1.5 shadow-md border border-white/20">
             <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain brightness-0 invert" priority />
           </div>
@@ -54,7 +60,7 @@ function AppLogo() {
               CEYLONTOUR
             </span>
             <span className="text-[10px] font-semibold uppercase tracking-wider text-secondary">
-              {role === 'ADMIN' ? 'Authority Portal' : 'Sustainable Travel'}
+              {effectiveRole === 'ADMIN' ? 'Authority Portal' : 'Sustainable Travel'}
             </span>
           </div>
         </Link>
@@ -75,16 +81,7 @@ function NavMain({ groups }: { groups: NavMenuGroup[] }) {
                 <SidebarMenuButton
                   isActive={item.isActive}
                   tooltip={item.title}
-                  render={
-                    <Link
-                      href={item.url}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${
-                        item.isActive
-                          ? 'bg-primary text-primary-foreground font-semibold shadow-md'
-                          : 'text-sidebar-foreground hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground'
-                      }`}
-                    />
-                  }
+                  render={<Link href={item.url} />}
                 >
                   {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
                   <span className="text-xs sm:text-sm">{item.title}</span>
@@ -106,10 +103,16 @@ function NavMain({ groups }: { groups: NavMenuGroup[] }) {
 function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
+  const pathname = usePathname();
   const { user, role, loginAs, logout, savedDestinationIds } = useAuth();
+  const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
 
-  const displayName = user?.name || 'Tourist Explorer';
-  const displayEmail = user?.email || 'traveler@ceylontour.lk';
+  const displayName = effectiveRole === 'ADMIN'
+    ? 'Tourism Authority Officer'
+    : (user?.name || 'Tourist Explorer');
+  const displayEmail = effectiveRole === 'ADMIN'
+    ? 'officer@tourism.gov.lk'
+    : (user?.email || 'traveler@ceylontour.lk');
 
   return (
     <SidebarMenu>
@@ -130,7 +133,7 @@ function NavUser() {
               <div className="flex items-center gap-1.5">
                 <span className="truncate font-semibold text-foreground">{displayName}</span>
                 <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-secondary/15 text-secondary font-bold">
-                  {role}
+                  {effectiveRole}
                 </span>
               </div>
               <span className="truncate text-[11px] text-muted-foreground">{displayEmail}</span>
@@ -190,22 +193,22 @@ function NavUser() {
                   loginAs('TOURIST');
                   router.push('/dashboard');
                 }}
-                className={`cursor-pointer gap-2 px-3 py-1.5 text-xs ${role === 'TOURIST' ? 'text-primary font-bold' : ''}`}
+                className={`cursor-pointer gap-2 px-3 py-1.5 text-xs ${effectiveRole === 'TOURIST' ? 'text-primary font-bold' : ''}`}
               >
                 <Compass className="h-3.5 w-3.5" />
                 <span>Tourist View</span>
-                {role === 'TOURIST' && <span className="ml-auto text-[10px]">Active</span>}
+                {effectiveRole === 'TOURIST' && <span className="ml-auto text-[10px]">Active</span>}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   loginAs('ADMIN');
                   router.push('/admin/dashboard');
                 }}
-                className={`cursor-pointer gap-2 px-3 py-1.5 text-xs ${role === 'ADMIN' ? 'text-primary font-bold' : ''}`}
+                className={`cursor-pointer gap-2 px-3 py-1.5 text-xs ${effectiveRole === 'ADMIN' ? 'text-primary font-bold' : ''}`}
               >
                 <ShieldCheck className="h-3.5 w-3.5" />
                 <span>Authority Admin View</span>
-                {role === 'ADMIN' && <span className="ml-auto text-[10px]">Active</span>}
+                {effectiveRole === 'ADMIN' && <span className="ml-auto text-[10px]">Active</span>}
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -234,7 +237,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { role } = useAuth();
   const pathname = usePathname();
 
-  const navGroups = getNavGroupsForRole(role).map((group) => ({
+  const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
+
+  const navGroups = getNavGroupsForRole(effectiveRole).map((group) => ({
     id: group.id,
     label: group.label,
     items: group.items.map((item) => ({
@@ -242,7 +247,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: item.href,
       icon: ICONS_MAP[item.id] ?? Compass,
       badge: item.badge,
-      isActive: pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(`${item.href}/`)),
+      isActive:
+        pathname === item.href ||
+        (item.href !== '/dashboard' &&
+          item.href !== '/admin/dashboard' &&
+          pathname.startsWith(`${item.href}/`)),
     })),
   }));
 

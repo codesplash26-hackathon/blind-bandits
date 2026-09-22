@@ -17,9 +17,10 @@ export default function TouristLayout({
 }) {
   const { user, role, savedDestinationIds } = useAuth();
   const pathname = usePathname();
+  const effectiveRole = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
 
   const getPageTitle = () => {
-    if (pathname === '/dashboard') return role === 'ADMIN' ? 'Tourism Authority Overview' : 'Tourist Dashboard';
+    if (pathname === '/dashboard') return effectiveRole === 'ADMIN' ? 'Tourism Authority Overview' : 'Tourist Dashboard';
     if (pathname === '/admin/dashboard') return 'Tourism Authority Overview';
     if (pathname === '/admin/destinations') return 'Destinations Registry & Capacity';
     if (pathname === '/admin/tourism-pressure') return 'Tourism Pressure & Carrying Capacity';
@@ -59,27 +60,40 @@ export default function TouristLayout({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Quick Discover CTA */}
-            <Link
-              href="/discover"
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all hover:scale-102"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-secondary" />
-              <span>AI Trip Finder</span>
-            </Link>
+            {/* Role-Specific Action Controls */}
+            {effectiveRole === 'ADMIN' ? (
+              <Link
+                href="/admin/tourism-pressure"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-400 text-xs font-semibold border border-amber-500/30 transition-all"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <span>Pressure Simulator</span>
+              </Link>
+            ) : (
+              <>
+                {/* Quick Discover CTA */}
+                <Link
+                  href="/discover"
+                  className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all hover:scale-102"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-secondary" />
+                  <span>AI Trip Finder</span>
+                </Link>
 
-            {/* Saved Destinations Pill */}
-            <Link
-              href="/saved"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-medium border border-border/80 transition-colors"
-              title="Saved destinations"
-            >
-              <Bookmark className="w-3.5 h-3.5 text-secondary" />
-              <span className="hidden sm:inline">Saved</span>
-              <span className="h-4 min-w-4 px-1 rounded-full bg-secondary/20 text-secondary text-[10px] font-bold flex items-center justify-center">
-                {savedDestinationIds.length}
-              </span>
-            </Link>
+                {/* Saved Destinations Pill */}
+                <Link
+                  href="/saved"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-medium border border-border/80 transition-colors"
+                  title="Saved destinations"
+                >
+                  <Bookmark className="w-3.5 h-3.5 text-secondary" />
+                  <span className="hidden sm:inline">Saved</span>
+                  <span className="h-4 min-w-4 px-1 rounded-full bg-secondary/20 text-secondary text-[10px] font-bold flex items-center justify-center">
+                    {savedDestinationIds.length}
+                  </span>
+                </Link>
+              </>
+            )}
 
             {/* Theme Toggle */}
             <div className="p-1 rounded-full bg-muted/60 border border-border/80">
