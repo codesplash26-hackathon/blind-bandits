@@ -70,3 +70,22 @@ lower crowd pressure: `QUIET` favors high values, `LIVELY` favors low values, an
 temporary policy multipliers of 0.25 (`LOW`), 0.50 (`MEDIUM`), and 1.00 (`HIGH`).
 These ranking rules and the current top-five result limit are explicit project
 design decisions intended to be tuned after product research.
+
+## Recommendation history and interactions
+
+Each authenticated recommendation request stores its preferences, ordered result
+destination IDs, creation time, and the sustainability/ranking configuration
+versions. `GET /api/v1/recommendations/history` returns only the signed-in
+user's searches, newest first, including searches with no suitable results.
+
+Signed-in users can save, list, and remove destinations through
+`POST /api/v1/saved/{destination_id}`, `GET /api/v1/saved`, and
+`DELETE /api/v1/saved/{destination_id}`. Saving an already saved destination
+returns `409`; a successful save records a `DESTINATION_SAVED` event.
+
+`POST /api/v1/interactions` accepts `DESTINATION_VIEWED`,
+`RECOMMENDATION_SELECTED`, and `ALTERNATIVE_SELECTED` with a destination ID.
+Selection events also require a `recommendation_search_id` from the current
+user's history. A recommendation selection must name a destination returned by
+that search. Alternative selections may name a different active destination.
+The saved event is emitted by the save endpoint, not submitted separately.

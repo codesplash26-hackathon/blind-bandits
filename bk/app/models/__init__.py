@@ -5,6 +5,12 @@ from app.models.destination import (
     DestinationFactor,
     FactorValueType,
 )
+from app.models.engagement import (
+    InteractionEvent,
+    InteractionType,
+    RecommendationSearch,
+    SavedDestination,
+)
 from app.models.user import User, UserRole
 
 __all__ = [
@@ -13,6 +19,10 @@ __all__ = [
     "Destination",
     "DestinationFactor",
     "FactorValueType",
+    "InteractionEvent",
+    "InteractionType",
+    "RecommendationSearch",
+    "SavedDestination",
     "User",
     "UserRole",
 ]
