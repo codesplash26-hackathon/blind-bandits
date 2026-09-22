@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { register } from "@/lib/auth";
 
 interface RegisterProps {
   onSwitchToLogin: () => void;
@@ -49,6 +50,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           role: values.role
         });
         toast.success("Account created successfully!");
+        onSwitchToLogin();
       } catch (error: any) {
         setServerError(
           error?.response?.data?.message || error?.message || "An unexpected error occurred. Please try again."

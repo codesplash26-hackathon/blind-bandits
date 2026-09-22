@@ -7,8 +7,8 @@ import { Mail, Lock, Eye as EyeIcon, EyeOff, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { login } from '@/lib/auth';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
@@ -18,7 +18,6 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
-
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +33,7 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
       try {
         await login(values);
         toast.success('Logged in successfully!');
+        router.push('/');
       } catch (error: any) {
         setServerError(error?.response?.data?.message || error?.message || 'An unexpected error occurred. Please try again.');
       }
