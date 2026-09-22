@@ -33,4 +33,3 @@ def test_create_admin_creates_admin(
     assert stored is not None
     assert stored.role == UserRole.ADMIN
     assert stored.password_hash != "admin-password"
-

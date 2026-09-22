@@ -45,4 +45,3 @@ def decode_access_token(token: str) -> str:
     if payload.get("type") != "access" or not isinstance(payload.get("sub"), str):
         raise InvalidTokenError("Invalid access token")
     return payload["sub"]
-
