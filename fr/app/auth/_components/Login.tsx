@@ -5,6 +5,7 @@ import { Mail, Lock, Eye as EyeIcon, EyeOff, ArrowRight, CheckCircle2, AlertCirc
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
+import { login } from '@/lib/auth';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
@@ -102,8 +103,8 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await login({ email: formData.email.trim(), password: formData.password });
       toast.success('Welcome back to CeylonTour!', {
         description: `Signed in as ${formData.email.trim()}. Redirecting...`,
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
@@ -111,7 +112,11 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
       setTimeout(() => {
         router.push('/');
       }, 700);
-    }, 850);
+    } catch (err: any) {
+      toast.error(err?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

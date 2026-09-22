@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
+import { register } from '@/lib/auth';
 
 interface RegisterProps {
   onSwitchToLogin: () => void;
@@ -185,8 +186,13 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await register({
+        email: formData.email.trim(),
+        username: formData.username.trim(),
+        password: formData.password,
+        role: 'TRAVELER',
+      });
       toast.success('Account created successfully!', {
         description: `Welcome to CeylonTour, ${formData.username.trim()}!`,
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
@@ -194,7 +200,11 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
       setTimeout(() => {
         router.push('/');
       }, 700);
-    }, 850);
+    } catch (err: any) {
+      toast.error(err?.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
