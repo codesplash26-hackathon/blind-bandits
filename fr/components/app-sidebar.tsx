@@ -34,6 +34,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/context/AuthContext';
 import { getNavGroupsForRole, ICONS_MAP, NavMenuGroup } from '@/lib/navigation';
 import logo from '@/public/logo.svg';
@@ -122,9 +123,9 @@ function NavUser() {
               />
             }
           >
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-primary/20 to-secondary/30 border border-primary/30 text-primary font-bold text-xs shadow-xs">
-              {displayName.charAt(0)}
-            </div>
+            <Avatar size="sm" className="shrink-0">
+              <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
+            </Avatar>
             <div className="grid flex-1 text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
               <div className="flex items-center gap-1.5">
                 <span className="truncate font-semibold text-foreground">{displayName}</span>
@@ -146,9 +147,9 @@ function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuLabel className="p-2">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-primary/20 to-secondary/30 border border-primary/30 text-primary font-bold text-xs">
-                    {displayName.charAt(0)}
-                  </div>
+                  <Avatar size="default" className="shrink-0">
+                    <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
+                  </Avatar>
                   <div className="grid flex-1 text-left text-xs leading-tight">
                     <span className="truncate font-bold text-foreground">{displayName}</span>
                     <span className="truncate text-[11px] text-muted-foreground">{displayEmail}</span>

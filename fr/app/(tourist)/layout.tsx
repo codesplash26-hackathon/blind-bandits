@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/s
 import { AppSidebar } from '@/components/app-sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/context/AuthContext';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bookmark, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function TouristLayout({
@@ -79,12 +80,11 @@ export default function TouristLayout({
               <ThemeToggle />
             </div>
 
-            {/* Profile Avatar Icon */}
-            <Link
-              href="/profile"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xs shadow-sm hover:ring-2 hover:ring-primary/40 transition-all"
-            >
-              {user?.name?.charAt(0) || 'N'}
+            {/* Profile Avatar */}
+            <Link href="/profile" className="transition-transform hover:scale-105">
+              <Avatar size="sm" className="ring-2 ring-primary/20 hover:ring-primary/50 transition-all">
+                <AvatarFallback>{user?.name?.charAt(0) || 'N'}</AvatarFallback>
+              </Avatar>
             </Link>
           </div>
         </header>
