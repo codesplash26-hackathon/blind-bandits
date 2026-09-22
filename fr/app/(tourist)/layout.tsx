@@ -19,7 +19,13 @@ export default function TouristLayout({
   const pathname = usePathname();
 
   const getPageTitle = () => {
-    if (pathname === '/dashboard') return 'Tourist Dashboard';
+    if (pathname === '/dashboard') return role === 'ADMIN' ? 'Tourism Authority Overview' : 'Tourist Dashboard';
+    if (pathname === '/admin/dashboard') return 'Tourism Authority Overview';
+    if (pathname === '/admin/destinations') return 'Destinations Registry & Capacity';
+    if (pathname === '/admin/tourism-pressure') return 'Tourism Pressure & Carrying Capacity';
+    if (pathname === '/admin/analytics') return 'Redistribution & Impact Analytics';
+    if (pathname === '/admin/users') return 'User & Operator Directory';
+    if (pathname === '/admin/settings') return 'Authority Sustainability Settings';
     if (pathname === '/discover') return 'Discover Sustainable Destinations';
     if (pathname === '/discover/results') return 'Recommendation Results';
     if (pathname.startsWith('/destinations/')) return 'Destination Exploration';
