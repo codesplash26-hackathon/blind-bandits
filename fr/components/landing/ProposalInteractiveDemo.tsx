@@ -3,13 +3,8 @@
 import { useState } from "react";
 import {
   Sparkles,
-  AlertTriangle,
   CheckCircle2,
-  Sliders,
-  ArrowRight,
-  TrendingDown,
   Info,
-  Layers,
   Leaf,
   Users,
   Building,

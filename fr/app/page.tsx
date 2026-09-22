@@ -3,8 +3,10 @@
 import { Navigation } from "../components/landing/Navigation";
 import { Hero } from "../components/landing/Hero";
 import { WhyCeylonTour } from "../components/landing/WhyCeylonTour";
+import { Destinations } from "../components/landing/Destinations";
 import { ExperienceStory } from "../components/landing/ExperienceStory";
 import { HowItWorks } from "../components/landing/HowItWorks";
+import { ProposalInteractiveDemo } from "../components/landing/ProposalInteractiveDemo";
 import { Stat } from "../components/landing/Stat";
 import { Testimonial } from "../components/landing/Testimonial";
 import { CallToAction } from "../components/landing/CallToAction";
@@ -23,11 +25,17 @@ export default function LandingPage() {
         {/* Why CeylonTour - Plain, Human-Friendly Values */}
         <WhyCeylonTour />
 
+        {/* Curated Sustainable Destinations */}
+        <Destinations />
+
         {/* Visual Photographic Story - The CeylonTour Standard */}
         <ExperienceStory />
 
         {/* How It Works - 3 Simple Steps with Interactive Chips */}
         <HowItWorks />
+
+        {/* Interactive Explainable AI Engine & Overtourism Simulator */}
+        <ProposalInteractiveDemo />
 
         {/* Sustainable Footprint & Community Numbers */}
         <Stat />
