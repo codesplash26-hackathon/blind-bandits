@@ -131,10 +131,10 @@ export const Navigation = () => {
             <ThemeToggle />
             <div className="hidden sm:flex gap-4">
               <Button
-                onClick={() => router.push("/auth")}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+                onClick={() => router.push("/dashboard")}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm cursor-pointer"
               >
-                Launch App
+                Tourist Dashboard
               </Button>
             </div>
             <button
@@ -203,9 +203,12 @@ export const Navigation = () => {
               <div className="mt-6 flex flex-col gap-4">
                 <Button
                   className="w-full flex justify-center bg-primary text-primary-foreground hover:bg-primary/90"
-                  onClick={() => router.push("/auth")}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    router.push("/dashboard");
+                  }}
                 >
-                  Launch App
+                  Tourist Dashboard
                 </Button>
               </div>
             </motion.aside>

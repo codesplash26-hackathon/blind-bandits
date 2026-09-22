@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans, Playfair_Display, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "@/components/ThemeProvider";
+import { AuthProvider } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
 const playfairDisplayHeading = Playfair_Display({ 
@@ -25,8 +26,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ceylon Tour",
-  description: "Employee management system.",
+  title: "CeylonTour - Sustainable Travel & AI Destination Recommendations",
+  description: "Discover conscious eco-destinations, XAI recommendations, and live overtourism monitoring across Sri Lanka.",
 };
 
 export default function RootLayout({
@@ -50,7 +51,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster />{children}
+          <AuthProvider>
+            <Toaster />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

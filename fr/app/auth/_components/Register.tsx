@@ -72,7 +72,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
 
   const strength = getPasswordStrength(formData.password);
 
-  const validateField = (field: keyof typeof formData, value: any) => {
+  const validateField = (field: keyof typeof formData, value: unknown) => {
     if (field === 'username') {
       const name = String(value || '').trim();
       if (!name) return 'Full name is required';
@@ -106,7 +106,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
     }
 
     if (field === 'agreedToTerms') {
-      if (!value) return 'You must accept the terms to create an account';
+      if (!value) return 'You must agree to the Terms of Service & Privacy Policy';
       return '';
     }
 
@@ -115,18 +115,10 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
 
   const validateAll = () => {
     const newErrors: Record<string, string> = {};
-    const usernameErr = validateField('username', formData.username);
-    const emailErr = validateField('email', formData.email);
-    const passwordErr = validateField('password', formData.password);
-    const confirmErr = validateField('confirmPassword', formData.confirmPassword);
-    const termsErr = validateField('agreedToTerms', formData.agreedToTerms);
-
-    if (usernameErr) newErrors.username = usernameErr;
-    if (emailErr) newErrors.email = emailErr;
-    if (passwordErr) newErrors.password = passwordErr;
-    if (confirmErr) newErrors.confirmPassword = confirmErr;
-    if (termsErr) newErrors.agreedToTerms = termsErr;
-
+    (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
+      const err = validateField(key, formData[key]);
+      if (err) newErrors[key] = err;
+    });
     setErrors(newErrors);
     return newErrors;
   };
@@ -137,9 +129,9 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
-  const handleChange = (field: keyof typeof formData, value: any) => {
+  const handleChange = (field: keyof typeof formData, value: unknown) => {
     setFormData((prev) => {
-      const updated = { ...prev, [field]: value };
+      const updated = { ...prev, [field]: value as never };
       return updated;
     });
 
@@ -191,17 +183,18 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         email: formData.email.trim(),
         username: formData.username.trim(),
         password: formData.password,
-        role: 'TRAVELER',
+        role: 'TOURIST',
       });
       toast.success('Account created successfully!', {
         description: `Welcome to CeylonTour, ${formData.username.trim()}!`,
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
       });
       setTimeout(() => {
-        router.push('/');
+        router.push('/dashboard');
       }, 700);
-    } catch (err: any) {
-      toast.error(err?.message || 'Registration failed. Please try again.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Registration failed. Please try again.';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

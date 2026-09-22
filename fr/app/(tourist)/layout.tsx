@@ -1,0 +1,99 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { useAuth } from '@/context/AuthContext';
+import { Bookmark, Sparkles, ShieldCheck } from 'lucide-react';
+
+export default function TouristLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { user, role, savedDestinationIds } = useAuth();
+  const pathname = usePathname();
+
+  const getPageTitle = () => {
+    if (pathname === '/dashboard') return 'Tourist Dashboard';
+    if (pathname === '/discover') return 'Discover Sustainable Destinations';
+    if (pathname === '/discover/results') return 'Recommendation Results';
+    if (pathname.startsWith('/destinations/')) return 'Destination Exploration';
+    if (pathname === '/destinations') return 'Explore Destinations';
+    if (pathname === '/map') return 'Interactive Sri Lanka Map';
+    if (pathname === '/saved') return 'My Saved Destinations';
+    if (pathname === '/history') return 'Recommendation History';
+    if (pathname === '/profile') return 'Traveler Profile';
+    return 'CeylonTour';
+  };
+
+  return (
+    <SidebarProvider defaultOpen={true}>
+      <AppSidebar />
+      <SidebarInset className="min-h-screen bg-background text-foreground flex flex-col">
+        {/* Top Sticky Header */}
+        <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between gap-4 border-b border-sidebar-border bg-background/80 backdrop-blur-xl px-4 lg:px-6 transition-[width,height] ease-linear">
+          <div className="flex items-center gap-3">
+            <SidebarTrigger className="-ml-1" />
+            <div className="h-4 w-px bg-border/80 hidden sm:block" />
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-bold text-foreground">
+                {getPageTitle()}
+              </span>
+              {role === 'ADMIN' && (
+                <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-400 border border-amber-500/30">
+                  <ShieldCheck className="w-3 h-3" /> Authority Preview
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Quick Discover CTA */}
+            <Link
+              href="/discover"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all hover:scale-102"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-secondary" />
+              <span>AI Trip Finder</span>
+            </Link>
+
+            {/* Saved Destinations Pill */}
+            <Link
+              href="/saved"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-medium border border-border/80 transition-colors"
+              title="Saved destinations"
+            >
+              <Bookmark className="w-3.5 h-3.5 text-secondary" />
+              <span className="hidden sm:inline">Saved</span>
+              <span className="h-4 min-w-4 px-1 rounded-full bg-secondary/20 text-secondary text-[10px] font-bold flex items-center justify-center">
+                {savedDestinationIds.length}
+              </span>
+            </Link>
+
+            {/* Theme Toggle */}
+            <div className="p-1 rounded-full bg-muted/60 border border-border/80">
+              <ThemeToggle />
+            </div>
+
+            {/* Profile Avatar Icon */}
+            <Link
+              href="/profile"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xs shadow-sm hover:ring-2 hover:ring-primary/40 transition-all"
+            >
+              {user?.name?.charAt(0) || 'N'}
+            </Link>
+          </div>
+        </header>
+
+        {/* Main Content Area */}
+        <div className="flex flex-1 flex-col p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-300">
+          {children}
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}

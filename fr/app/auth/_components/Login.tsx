@@ -110,10 +110,11 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
       });
       setTimeout(() => {
-        router.push('/');
+        router.push('/dashboard');
       }, 700);
-    } catch (err: any) {
-      toast.error(err?.message || 'Login failed. Please try again.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Login failed. Please try again.';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
