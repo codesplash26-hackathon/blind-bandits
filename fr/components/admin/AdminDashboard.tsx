@@ -13,6 +13,15 @@ import {
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { useAuth } from '@/context/AuthContext';
 
 export default function AdminDashboard() {
@@ -52,57 +61,65 @@ export default function AdminDashboard() {
 
       {/* Top 4 KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-3xl bg-card border border-border/80 shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Monitored Destinations
-          </span>
-          <div className="flex items-baseline justify-between">
-            <span className="font-heading text-3xl font-bold text-foreground">
-              {DESTINATIONS.length}
+        <Card className="rounded-3xl border border-border/80 shadow-xs">
+          <CardContent className="p-5 space-y-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Monitored Destinations
             </span>
-            <MapPin className="w-5 h-5 text-secondary" />
-          </div>
-          <span className="text-[11px] text-muted-foreground">National pilot registry</span>
-        </div>
+            <div className="flex items-baseline justify-between">
+              <span className="font-heading text-3xl font-bold text-foreground">
+                {DESTINATIONS.length}
+              </span>
+              <MapPin className="w-5 h-5 text-secondary" />
+            </div>
+            <span className="text-[11px] text-muted-foreground">National pilot registry</span>
+          </CardContent>
+        </Card>
 
-        <div className="p-5 rounded-3xl bg-card border border-emerald-500/20 shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Low Pressure
-          </span>
-          <div className="flex items-baseline justify-between">
-            <span className="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-              {lowPressureList.length}
+        <Card className="rounded-3xl border border-emerald-500/20 shadow-xs">
+          <CardContent className="p-5 space-y-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Low Pressure
             </span>
-            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-          </div>
-          <span className="text-[11px] text-emerald-600 font-medium">Safe eco-carrying capacity</span>
-        </div>
+            <div className="flex items-baseline justify-between">
+              <span className="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                {lowPressureList.length}
+              </span>
+              <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+            </div>
+            <span className="text-[11px] text-emerald-600 font-medium">Safe eco-carrying capacity</span>
+          </CardContent>
+        </Card>
 
-        <div className="p-5 rounded-3xl bg-card border border-amber-500/20 shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Medium Pressure
-          </span>
-          <div className="flex items-baseline justify-between">
-            <span className="font-heading text-3xl font-bold text-amber-600 dark:text-amber-400">
-              {mediumPressureList.length}
+        <Card className="rounded-3xl border border-amber-500/20 shadow-xs">
+          <CardContent className="p-5 space-y-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Medium Pressure
             </span>
-            <TrendingUp className="w-5 h-5 text-amber-500" />
-          </div>
-          <span className="text-[11px] text-amber-600 font-medium">Moderate activity monitored</span>
-        </div>
+            <div className="flex items-baseline justify-between">
+              <span className="font-heading text-3xl font-bold text-amber-600 dark:text-amber-400">
+                {mediumPressureList.length}
+              </span>
+              <TrendingUp className="w-5 h-5 text-amber-500" />
+            </div>
+            <span className="text-[11px] text-amber-600 font-medium">Moderate activity monitored</span>
+          </CardContent>
+        </Card>
 
-        <div className="p-5 rounded-3xl bg-card border border-rose-500/20 shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            High Pressure
-          </span>
-          <div className="flex items-baseline justify-between">
-            <span className="font-heading text-3xl font-bold text-rose-600 dark:text-rose-400">
-              {highPressureList.length}
+        <Card className="rounded-3xl border border-rose-500/20 shadow-xs">
+          <CardContent className="p-5 space-y-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              High Pressure
             </span>
-            <AlertTriangle className="w-5 h-5 text-rose-500" />
-          </div>
-          <span className="text-[11px] text-rose-600 font-medium">Overcrowding mitigation needed</span>
-        </div>
+            <div className="flex items-baseline justify-between">
+              <span className="font-heading text-3xl font-bold text-rose-600 dark:text-rose-400">
+                {highPressureList.length}
+              </span>
+              <AlertTriangle className="w-5 h-5 text-rose-500" />
+            </div>
+            <span className="text-[11px] text-rose-600 font-medium">Overcrowding mitigation needed</span>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Action Recommendation Alert Banner */}
@@ -119,8 +136,8 @@ export default function AdminDashboard() {
       </div>
 
       {/* Highest Pressure Destinations Table */}
-      <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
+      <Card className="rounded-3xl border border-border/80 shadow-sm overflow-hidden">
+        <div className="p-6 pb-2 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-foreground">Highest-Pressure Destinations</h2>
             <p className="text-xs text-muted-foreground">Ranked by current monitored carrying capacity strain</p>
@@ -133,26 +150,26 @@ export default function AdminDashboard() {
           </Link>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-border/70 text-muted-foreground uppercase tracking-wider">
-                <th className="py-3 px-3">Destination</th>
-                <th className="py-3 px-3">District</th>
-                <th className="py-3 px-3">Pressure Load</th>
-                <th className="py-3 px-3">Sustainability</th>
-                <th className="py-3 px-3">Confidence</th>
-                <th className="py-3 px-3 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border/50">
+        <div className="px-6 pb-6">
+          <Table>
+            <TableHeader>
+              <TableRow className="text-muted-foreground uppercase tracking-wider text-[11px]">
+                <TableHead className="py-3 px-3">Destination</TableHead>
+                <TableHead className="py-3 px-3">District</TableHead>
+                <TableHead className="py-3 px-3">Pressure Load</TableHead>
+                <TableHead className="py-3 px-3">Sustainability</TableHead>
+                <TableHead className="py-3 px-3">Confidence</TableHead>
+                <TableHead className="py-3 px-3 text-right">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {DESTINATIONS.slice()
                 .sort((a, b) => b.pressure.score - a.pressure.score)
                 .map((dest) => (
-                  <tr key={dest.id} className="hover:bg-muted/40 transition-colors">
-                    <td className="py-3.5 px-3 font-bold text-foreground">{dest.name}</td>
-                    <td className="py-3.5 px-3 text-muted-foreground">{dest.district}</td>
-                    <td className="py-3.5 px-3">
+                  <TableRow key={dest.id} className="hover:bg-muted/40 transition-colors">
+                    <TableCell className="py-3.5 px-3 font-bold text-foreground">{dest.name}</TableCell>
+                    <TableCell className="py-3.5 px-3 text-muted-foreground">{dest.district}</TableCell>
+                    <TableCell className="py-3.5 px-3">
                       <div className="flex items-center gap-2">
                         <span className="font-mono font-bold">{dest.pressure.score}%</span>
                         <Badge
@@ -167,26 +184,26 @@ export default function AdminDashboard() {
                           {dest.pressure.level}
                         </Badge>
                       </div>
-                    </td>
-                    <td className="py-3.5 px-3 font-bold text-emerald-600 dark:text-emerald-400">
+                    </TableCell>
+                    <TableCell className="py-3.5 px-3 font-bold text-emerald-600 dark:text-emerald-400">
                       {dest.sustainability.overall} / 100
-                    </td>
-                    <td className="py-3.5 px-3">
+                    </TableCell>
+                    <TableCell className="py-3.5 px-3">
                       <Badge variant="outline">{dest.dataConfidence || 'HIGH'}</Badge>
-                    </td>
-                    <td className="py-3.5 px-3 text-right">
+                    </TableCell>
+                    <TableCell className="py-3.5 px-3 text-right">
                       <Link href={`/destinations/${dest.id}`}>
                         <Button size="xs" variant="outline" className="rounded-lg">
                           Inspect
                         </Button>
                       </Link>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

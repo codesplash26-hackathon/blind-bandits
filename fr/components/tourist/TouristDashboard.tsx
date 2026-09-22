@@ -16,6 +16,7 @@ import { useAuth } from '@/context/AuthContext';
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export default function TouristDashboard() {
   const { user, isSaved, toggleSaveDestination, searchHistory } = useAuth();
@@ -245,9 +246,9 @@ export default function TouristDashboard() {
           {searchHistory.length > 0 ? (
             <div className="space-y-3">
               {searchHistory.slice(0, 2).map((item) => (
-                <div
+                <Card
                   key={item.id}
-                  className="rounded-2xl border border-border/80 bg-card p-4 hover:border-border transition-colors space-y-2.5 shadow-xs"
+                  className="rounded-2xl border border-border/80 p-4 hover:border-border transition-colors space-y-2.5 shadow-xs"
                 >
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span className="flex items-center gap-1.5">
@@ -287,7 +288,7 @@ export default function TouristDashboard() {
                       </Button>
                     </Link>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           ) : (
@@ -325,9 +326,9 @@ export default function TouristDashboard() {
         {/* 3 Destination Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {sustainableDestinations.map((dest) => (
-            <div
+            <Card
               key={dest.id}
-              className="group rounded-3xl border border-border/80 bg-card overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-3xl border border-border/80 overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div className="relative h-44 w-full overflow-hidden">
                 <Image
@@ -393,7 +394,7 @@ export default function TouristDashboard() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
