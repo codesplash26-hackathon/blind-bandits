@@ -1,3 +1,4 @@
+import json
 import os
 from collections.abc import AsyncGenerator, Generator
 
@@ -11,6 +12,21 @@ os.environ.setdefault("DATABASE_URL", "sqlite+pysqlite:///:memory:")
 os.environ.setdefault(
     "JWT_SECRET_KEY",
     "test-only-secret-key-with-at-least-32-characters",
+)
+os.environ.setdefault(
+    "SUSTAINABILITY_WEIGHTS",
+    json.dumps(
+        {
+            "version": "temporary-test-weights-v1",
+            "weights": {
+                "environmental": "0.20",
+                "community": "0.20",
+                "crowd": "0.20",
+                "infrastructure": "0.20",
+                "suitability": "0.20",
+            },
+        }
+    ),
 )
 
 from app.core.security import hash_password

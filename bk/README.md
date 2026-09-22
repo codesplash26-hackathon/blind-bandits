@@ -33,3 +33,25 @@ all five scores, `data_source`, `confidence_level`, `value_type`, and
 `last_updated` are required. This repository intentionally does not bundle seed
 scores: values in automated tests are examples only and are not project research
 data.
+
+## Sustainability weights
+
+The Sustainability Index requires a reviewed, versioned weight configuration in
+the `SUSTAINABILITY_WEIGHTS` environment variable. No production weights are
+bundled with the application. The value must be a JSON object in this shape:
+
+```json
+{
+  "version": "<reviewed-configuration-version>",
+  "weights": {
+    "environmental": "<reviewed-weight>",
+    "community": "<reviewed-weight>",
+    "crowd": "<reviewed-weight>",
+    "infrastructure": "<reviewed-weight>",
+    "suitability": "<reviewed-weight>"
+  }
+}
+```
+
+Every weight is required, each must be between zero and one, and their sum must
+be 1.0. The equal weights used by tests are temporary test fixtures only.
