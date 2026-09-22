@@ -2,18 +2,18 @@
 
 import React from "react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 
+const emptySubscribe = () => () => {};
+
 export const ThemeToggle = ({ className }: { className?: string }) => {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = React.useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   return (
     <button
