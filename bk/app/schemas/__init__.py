@@ -11,6 +11,7 @@ from app.schemas.destination import (
     DestinationResponse,
     DestinationUpdate,
 )
+from app.schemas.sustainability import DestinationSustainabilityResponse
 
 __all__ = [
     "CurrentUserResponse",
@@ -18,6 +19,7 @@ __all__ = [
     "DestinationFactorInput",
     "DestinationFactorResponse",
     "DestinationResponse",
+    "DestinationSustainabilityResponse",
     "DestinationUpdate",
     "LoginRequest",
     "RegistrationRequest",

@@ -3,6 +3,8 @@ from functools import lru_cache
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.services.sustainability import SustainabilityWeightConfiguration
+
 
 class Settings(BaseSettings):
     app_name: str = "CeylonTour API"
@@ -13,6 +15,9 @@ class Settings(BaseSettings):
         default=30,
         gt=0,
         validation_alias="ACCESS_TOKEN_EXPIRE_MINUTES",
+    )
+    sustainability_weights: SustainabilityWeightConfiguration = Field(
+        validation_alias="SUSTAINABILITY_WEIGHTS"
     )
 
     model_config = SettingsConfigDict(
