@@ -26,6 +26,7 @@ from app.services.sustainability import (
 # Project design decision: recommendation cards currently return five results.
 # This can be made client-configurable if product requirements later call for it.
 DEFAULT_RECOMMENDATION_LIMIT = 5
+RANKING_VERSION = "rules-v1"
 
 # Project design decision: sustainability preference controls how strongly the
 # Sustainability Index affects ranking. These transparent multipliers are an
