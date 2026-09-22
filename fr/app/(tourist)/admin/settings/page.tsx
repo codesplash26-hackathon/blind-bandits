@@ -28,11 +28,11 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="warning">System Policy</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">System Policy</Badge>
             <span className="text-xs text-muted-foreground font-mono">Engine Config v3.1</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
-            Sustainability & Algorithm Settings
+            Sustainability &amp; Algorithm Settings
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Configure carrying capacity thresholds, recommendation weightings, and external sensor sync feeds.
@@ -50,8 +50,8 @@ export default function AdminSettingsPage() {
       </div>
 
       {savedFeedback && (
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2 text-xs text-emerald-800 dark:text-emerald-300 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center gap-2 text-xs text-foreground animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
           <span className="font-semibold">
             Authority configuration updated and propagated to tourist recommendation engine.
           </span>
@@ -77,7 +77,7 @@ export default function AdminSettingsPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Critical Carrying Capacity Alert Threshold:</span>
-              <span className="font-mono font-bold text-rose-600 dark:text-rose-400 text-sm">
+              <span className="font-mono font-bold text-destructive text-sm">
                 {warningThreshold}% Capacity
               </span>
             </div>
@@ -88,7 +88,7 @@ export default function AdminSettingsPage() {
               step="5"
               value={warningThreshold}
               onChange={(e) => setWarningThreshold(Number(e.target.value))}
-              className="w-full accent-rose-500 cursor-pointer"
+              className="w-full accent-destructive cursor-pointer"
             />
             <div className="flex justify-between text-[10px] text-muted-foreground">
               <span>Conservative (60%)</span>
@@ -131,7 +131,7 @@ export default function AdminSettingsPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Sustainability Weight in Algorithm:</span>
-              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400 text-sm">
+              <span className="font-mono font-bold text-primary text-sm">
                 {ecoWeight}% Eco-Factor
               </span>
             </div>
@@ -142,7 +142,7 @@ export default function AdminSettingsPage() {
               step="5"
               value={ecoWeight}
               onChange={(e) => setEcoWeight(Number(e.target.value))}
-              className="w-full accent-emerald-500 cursor-pointer"
+              className="w-full accent-primary cursor-pointer"
             />
             <div className="flex justify-between text-[10px] text-muted-foreground">
               <span>Tourist Preference Focused (20%)</span>

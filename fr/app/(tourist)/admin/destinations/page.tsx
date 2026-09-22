@@ -68,7 +68,7 @@ export default function AdminDestinationsRegistryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="warning">Tourism Authority</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority</Badge>
             <span className="text-xs text-muted-foreground font-mono">Registry v2.4</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
@@ -102,12 +102,16 @@ export default function AdminDestinationsRegistryPage() {
       </div>
 
       {toastMessage && (
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-2 text-xs text-emerald-800 dark:text-emerald-300 animate-in fade-in">
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center justify-between gap-2 text-xs text-foreground animate-in fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
             <span className="font-semibold">{toastMessage}</span>
           </div>
-          <button type="button" onClick={() => setToastMessage(null)} className="cursor-pointer font-bold">
+          <button
+            type="button"
+            onClick={() => setToastMessage(null)}
+            className="text-muted-foreground hover:text-foreground cursor-pointer font-bold"
+          >
             ✕
           </button>
         </div>

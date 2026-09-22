@@ -55,7 +55,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="warning">Tourism Authority</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority</Badge>
             <span className="text-xs font-mono text-muted-foreground">Clearance Level 3</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
@@ -97,7 +97,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
                 <h2 className="font-heading text-xl font-bold text-foreground">
                   Dilhara Senanayake
                 </h2>
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <CheckCircle2 className="w-4 h-4 text-secondary" />
               </div>
               <p className="text-xs text-secondary font-semibold">
                 Chief Sustainable Tourism Officer &amp; Carrying Capacity Inspector
@@ -108,7 +108,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
             </div>
           </div>
 
-          <Badge variant="success" className="px-3 py-1">
+          <Badge variant="default" className="bg-secondary/15 text-secondary border border-secondary/30 px-3 py-1 font-bold">
             ACTIVE OFFICIAL
           </Badge>
         </div>
@@ -145,7 +145,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Dynamic Visitor Rebalancing</span>
-              <Badge variant="success">AUTHORIZED</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
             </div>
             <p className="text-[11px] text-muted-foreground">
               Authority to broadcast policy weights and divert tourist traffic from saturated hubs like Ella.
@@ -155,7 +155,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Carrying Capacity Caps</span>
-              <Badge variant="success">AUTHORIZED</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
             </div>
             <p className="text-[11px] text-muted-foreground">
               Authority to set and enforce max daily footfall limits across all 12 pilot destination sites.
@@ -165,7 +165,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Sensor Telemetry Ingestion</span>
-              <Badge variant="success">AUTHORIZED</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
             </div>
             <p className="text-[11px] text-muted-foreground">
               Access to live river turbidity, trail gate counters, and air quality telemetry data.
@@ -175,7 +175,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">National Dossier Export</span>
-              <Badge variant="success">AUTHORIZED</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
             </div>
             <p className="text-[11px] text-muted-foreground">
               Right to generate and publish executive carbon reduction &amp; rural economic audit reports.
@@ -201,7 +201,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
               type="checkbox"
               checked={capacityAlerts}
               onChange={(e) => setCapacityAlerts(e.target.checked)}
-              className="w-4 h-4 accent-primary rounded cursor-pointer"
+              className="w-4 h-4 accent-secondary rounded cursor-pointer"
             />
           </div>
 
@@ -214,7 +214,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
               type="checkbox"
               checked={ceaAlerts}
               onChange={(e) => setCeaAlerts(e.target.checked)}
-              className="w-4 h-4 accent-primary rounded cursor-pointer"
+              className="w-4 h-4 accent-secondary rounded cursor-pointer"
             />
           </div>
 
@@ -227,7 +227,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
               type="checkbox"
               checked={weeklyDigest}
               onChange={(e) => setWeeklyDigest(e.target.checked)}
-              className="w-4 h-4 accent-primary rounded cursor-pointer"
+              className="w-4 h-4 accent-secondary rounded cursor-pointer"
             />
           </div>
         </div>
@@ -239,7 +239,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
             disabled={savingAlerts}
             className="rounded-xl gap-1.5 cursor-pointer bg-primary text-primary-foreground"
           >
-            <Save className="w-3.5 h-3.5" />
+            <Save className="w-3.5 h-3.5 text-secondary" />
             <span>{savingAlerts ? 'Saving Changes...' : 'Save Notification Preferences'}</span>
           </Button>
         </div>
@@ -269,7 +269,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
         >
           <div>
-            <Sliders className="w-5 h-5 text-amber-500 mb-2" />
+            <Sliders className="w-5 h-5 text-secondary mb-2" />
             <h3 className="text-xs font-bold text-foreground">Pressure Simulator</h3>
             <p className="text-[11px] text-muted-foreground mt-1">
               Model peak surge scenarios and evaluate AI dispersal bias.
@@ -286,7 +286,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
         >
           <div>
-            <Layers className="w-5 h-5 text-emerald-500 mb-2" />
+            <Layers className="w-5 h-5 text-primary mb-2" />
             <h3 className="text-xs font-bold text-foreground">Impact Analytics</h3>
             <p className="text-[11px] text-muted-foreground mt-1">
               Review avoided carbon emissions and rural livelihood gains.
@@ -303,7 +303,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
         >
           <div>
-            <Lock className="w-5 h-5 text-purple-500 mb-2" />
+            <Lock className="w-5 h-5 text-secondary mb-2" />
             <h3 className="text-xs font-bold text-foreground">Algorithm Settings</h3>
             <p className="text-[11px] text-muted-foreground mt-1">
               Tune diversion threshold parameters and IoT sync cadence.
@@ -326,8 +326,8 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
             <span className="text-muted-foreground block text-[11px]">Hardware Token Status</span>
-            <span className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> FIDO2 / YubiKey 5C Active
+            <span className="font-bold text-secondary flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> FIDO2 / YubiKey 5C Active
             </span>
           </div>
 

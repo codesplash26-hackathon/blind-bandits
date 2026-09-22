@@ -54,11 +54,11 @@ export default function AdminTourismPressurePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="destructive">Tourism Pressure Engine</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Pressure Engine</Badge>
             <span className="text-xs font-mono text-muted-foreground">TreeSHAP Explainable AI</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
-            Tourism Pressure & Carrying Capacity Simulator
+            Tourism Pressure &amp; Carrying Capacity Simulator
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Audit TreeSHAP carrying capacity drivers and run predictive what-if scenarios on visitor surges.
@@ -67,7 +67,7 @@ export default function AdminTourismPressurePage() {
 
         <Link href="/admin/analytics">
           <Button size="sm" variant="outline" className="rounded-xl gap-1.5 cursor-pointer">
-            <TrendingUp className="w-4 h-4 text-emerald-500" />
+            <TrendingUp className="w-4 h-4 text-secondary" />
             <span>View Impact Analytics</span>
           </Button>
         </Link>
@@ -86,7 +86,7 @@ export default function AdminTourismPressurePage() {
 
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">High Pressure Sites:</span>
-            <span className={`font-mono text-sm font-bold ${highPressureCount > 3 ? 'text-rose-600' : 'text-amber-600'}`}>
+            <span className={`font-mono text-sm font-bold ${highPressureCount > 3 ? 'text-destructive' : 'text-secondary'}`}>
               {highPressureCount} of {DESTINATIONS.length}
             </span>
           </div>

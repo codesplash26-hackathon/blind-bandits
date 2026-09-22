@@ -53,9 +53,9 @@ export default function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="warning">Tourism Authority Mode</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority Mode</Badge>
             <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> TreeSHAP Model Live
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" /> TreeSHAP Model Live
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
@@ -91,9 +91,9 @@ export default function AdminDashboard() {
       </div>
 
       {redistributeStatus && (
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3 text-xs text-emerald-800 dark:text-emerald-300">
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center justify-between gap-3 text-xs text-foreground">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
             <span className="font-semibold">{redistributeStatus}</span>
           </div>
           <button
@@ -123,48 +123,48 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-emerald-500/20 shadow-xs">
+        <Card className="rounded-3xl border border-secondary/25 shadow-xs">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Low Pressure Sites
             </span>
             <div className="flex items-baseline justify-between">
-              <span className="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              <span className="font-heading text-3xl font-bold text-secondary">
                 {lowPressureList.length}
               </span>
-              <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+              <CheckCircle2 className="w-5 h-5 text-secondary" />
             </div>
-            <span className="text-[11px] text-emerald-600 font-medium">Within safe carrying capacity</span>
+            <span className="text-[11px] text-secondary font-medium">Within safe carrying capacity</span>
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-amber-500/20 shadow-xs">
+        <Card className="rounded-3xl border border-border shadow-xs">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Moderate Pressure
             </span>
             <div className="flex items-baseline justify-between">
-              <span className="font-heading text-3xl font-bold text-amber-600 dark:text-amber-400">
+              <span className="font-heading text-3xl font-bold text-foreground">
                 {mediumPressureList.length}
               </span>
-              <TrendingUp className="w-5 h-5 text-amber-500" />
+              <TrendingUp className="w-5 h-5 text-secondary" />
             </div>
-            <span className="text-[11px] text-amber-600 font-medium">Seasonal footfall peak watch</span>
+            <span className="text-[11px] text-muted-foreground font-medium">Seasonal footfall peak watch</span>
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-rose-500/20 shadow-xs">
+        <Card className="rounded-3xl border border-destructive/20 shadow-xs">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               High Pressure Alerts
             </span>
             <div className="flex items-baseline justify-between">
-              <span className="font-heading text-3xl font-bold text-rose-600 dark:text-rose-400">
+              <span className="font-heading text-3xl font-bold text-destructive">
                 {highPressureList.length}
               </span>
-              <AlertTriangle className="w-5 h-5 text-rose-500" />
+              <AlertTriangle className="w-5 h-5 text-destructive" />
             </div>
-            <span className="text-[11px] text-rose-600 font-medium">Carrying capacity threshold exceeded</span>
+            <span className="text-[11px] text-destructive font-medium">Carrying capacity threshold exceeded</span>
           </CardContent>
         </Card>
       </div>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
                 <Layers className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-foreground block">Registry & Limits</span>
+                <span className="text-xs font-bold text-foreground block">Registry &amp; Limits</span>
                 <span className="text-[10px] text-muted-foreground">Manage carrying capacity</span>
               </div>
             </div>
@@ -186,9 +186,9 @@ export default function AdminDashboard() {
         </Link>
 
         <Link href="/admin/tourism-pressure" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-amber-500/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 hover:border-secondary/50 transition-all hover:shadow-md">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-105 transition-transform">
+              <div className="p-2.5 rounded-xl bg-secondary/15 text-secondary group-hover:scale-105 transition-transform">
                 <AlertTriangle className="w-4 h-4" />
               </div>
               <div>
@@ -200,14 +200,14 @@ export default function AdminDashboard() {
         </Link>
 
         <Link href="/admin/analytics" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-emerald-500/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 hover:border-primary/50 transition-all hover:shadow-md">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform">
+              <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:scale-105 transition-transform">
                 <BarChart3 className="w-4 h-4" />
               </div>
               <div>
                 <span className="text-xs font-bold text-foreground block">Impact Analytics</span>
-                <span className="text-[10px] text-muted-foreground">Carbon & dispersal metrics</span>
+                <span className="text-[10px] text-muted-foreground">Carbon &amp; dispersal metrics</span>
               </div>
             </div>
           </Card>
@@ -228,8 +228,8 @@ export default function AdminDashboard() {
         </Link>
       </div>
 
-      {/* Live AI Redistribution Banner */}
-      <Card className="rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/10 p-6 shadow-sm space-y-4">
+      {/* Live Redistribution Flow Card */}
+      <Card className="rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/5 via-card to-card p-6 shadow-sm space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-primary text-primary-foreground">
@@ -252,9 +252,9 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          <div className="p-4 rounded-2xl bg-card border border-rose-500/30 space-y-2">
+          <div className="p-4 rounded-2xl bg-card border border-destructive/30 space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-rose-600 dark:text-rose-400">Bottleneck Origin</span>
+              <span className="font-bold text-destructive">Bottleneck Origin</span>
               <Badge variant="destructive">82% Load</Badge>
             </div>
             <p className="font-heading text-lg font-bold text-foreground">Ella (Badulla)</p>
@@ -268,16 +268,16 @@ export default function AdminDashboard() {
               <span className="font-bold text-secondary">Redistribution Vectors</span>
               <Send className="w-3.5 h-3.5 text-secondary" />
             </div>
-            <p className="font-heading text-lg font-bold text-foreground">Haputale & Belihuloya</p>
+            <p className="font-heading text-lg font-bold text-foreground">Haputale &amp; Belihuloya</p>
             <p className="text-[11px] text-muted-foreground">
-              34% & 28% load, matching hiking and scenic tea country preferences with minimal footprint.
+              34% &amp; 28% load, matching hiking and scenic tea country preferences with minimal footprint.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-card border border-emerald-500/30 space-y-2">
+          <div className="p-4 rounded-2xl bg-card border border-secondary/30 space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-emerald-600 dark:text-emerald-400">Net Eco-Impact</span>
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="font-bold text-secondary">Net Eco-Impact</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
             </div>
             <p className="font-heading text-lg font-bold text-foreground">-28% Strain on Ella</p>
             <p className="text-[11px] text-muted-foreground">

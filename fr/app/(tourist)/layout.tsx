@@ -59,8 +59,8 @@ export default function TouristLayout({
                 {getPageTitle()}
               </span>
               {effectiveRole === 'ADMIN' && (
-                <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-400 border border-amber-500/30">
-                  <ShieldCheck className="w-3 h-3" /> Authority Clearance
+                <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-secondary/15 text-secondary border border-secondary/30">
+                  <ShieldCheck className="w-3 h-3 text-secondary" /> Authority Clearance
                 </span>
               )}
             </div>
@@ -71,9 +71,9 @@ export default function TouristLayout({
             {effectiveRole === 'ADMIN' ? (
               <Link
                 href="/admin/tourism-pressure"
-                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-400 text-xs font-semibold border border-amber-500/30 transition-all"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
                 <span>Pressure Simulator</span>
               </Link>
             ) : (

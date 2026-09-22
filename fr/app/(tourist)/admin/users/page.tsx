@@ -125,11 +125,11 @@ export default function AdminUsersPage() {
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'ADMIN':
-        return <Badge variant="warning">Authority Official</Badge>;
+        return <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Authority Official</Badge>;
       case 'OPERATOR':
-        return <Badge variant="info">Eco Operator</Badge>;
+        return <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 font-bold">Eco Operator</Badge>;
       default:
-        return <Badge variant="secondary">Conscious Traveler</Badge>;
+        return <Badge variant="outline" className="border-border text-muted-foreground font-semibold">Conscious Traveler</Badge>;
     }
   };
 
@@ -137,13 +137,13 @@ export default function AdminUsersPage() {
     switch (status) {
       case 'CERTIFIED':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-            <CheckCircle2 className="w-3.5 h-3.5" /> Eco-Certified
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-secondary">
+            <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> Eco-Certified
           </span>
         );
       case 'PENDING':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-400">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground">
             <Clock className="w-3.5 h-3.5" /> Audit Pending
           </span>
         );
@@ -162,11 +162,11 @@ export default function AdminUsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">Identity & Stakeholders</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Identity &amp; Stakeholders</Badge>
             <span className="text-xs text-muted-foreground font-mono">Directory v1.8</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
-            Travelers & Eco-Operators Directory
+            Travelers &amp; Eco-Operators Directory
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Registry of verified tourists, certified community tour operators, and tourism authority personnel.

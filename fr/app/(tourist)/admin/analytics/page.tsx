@@ -28,11 +28,11 @@ export default function AdminAnalyticsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="info">Authority Macro Analytics</Badge>
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Authority Macro Analytics</Badge>
             <span className="text-xs font-mono text-muted-foreground">National Dispersal Audit 2026</span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
-            Redistribution & Ecological Impact Analytics
+            Redistribution &amp; Ecological Impact Analytics
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Measurable environmental footprint reductions and community economic benefits from AI visitor routing.
@@ -51,8 +51,8 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {exported && (
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2 text-xs text-emerald-800 dark:text-emerald-300">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center gap-2 text-xs text-foreground">
+          <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
           <span className="font-semibold">
             Tourism Authority Sustainable Redistribution Report (Q3 2026) exported successfully.
           </span>
@@ -61,18 +61,18 @@ export default function AdminAnalyticsPage() {
 
       {/* Top 4 Macro Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="rounded-3xl border border-emerald-500/20 shadow-xs">
+        <Card className="rounded-3xl border border-secondary/25 shadow-xs">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Carbon Footprint Avoided
             </span>
             <div className="flex items-baseline justify-between">
-              <span className="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              <span className="font-heading text-3xl font-bold text-secondary">
                 14.8 T
               </span>
-              <Leaf className="w-5 h-5 text-emerald-500" />
+              <Leaf className="w-5 h-5 text-secondary" />
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-emerald-600 font-semibold">
+            <div className="flex items-center gap-1 text-[11px] text-secondary font-semibold">
               <ArrowUpRight className="w-3.5 h-3.5" /> +22% vs last quarter
             </div>
           </CardContent>
@@ -107,7 +107,7 @@ export default function AdminAnalyticsPage() {
               <DollarSign className="w-5 h-5 text-secondary" />
             </div>
             <div className="flex items-center gap-1 text-[11px] text-secondary font-semibold">
-              <ArrowUpRight className="w-3.5 h-3.5" /> Homestays & local guides
+              <ArrowUpRight className="w-3.5 h-3.5" /> Homestays &amp; local guides
             </div>
           </CardContent>
         </Card>
@@ -121,7 +121,7 @@ export default function AdminAnalyticsPage() {
               <span className="font-heading text-3xl font-bold text-foreground">
                 94.2%
               </span>
-              <Sparkles className="w-5 h-5 text-amber-500" />
+              <Sparkles className="w-5 h-5 text-secondary" />
             </div>
             <div className="flex items-center gap-1 text-[11px] text-muted-foreground font-semibold">
               Positive trip satisfaction
@@ -144,20 +144,20 @@ export default function AdminAnalyticsPage() {
           <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Central Highlands Corridor</span>
-              <Badge variant="success">OPTIMAL</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">OPTIMAL</Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-rose-600 dark:text-rose-400 font-semibold">Ella Hub Relief:</span>
-                <span className="font-mono font-bold text-rose-600">-32% footfall strain</span>
+                <span className="text-primary font-semibold">Ella Hub Relief:</span>
+                <span className="font-mono font-bold text-primary">-32% footfall strain</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Belihuloya Absorption:</span>
-                <span className="font-mono font-bold text-emerald-600">+18% eco-stays</span>
+                <span className="text-secondary font-semibold">Belihuloya Absorption:</span>
+                <span className="font-mono font-bold text-secondary">+18% eco-stays</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Haputale Absorption:</span>
-                <span className="font-mono font-bold text-emerald-600">+14% trail visits</span>
+                <span className="text-secondary font-semibold">Haputale Absorption:</span>
+                <span className="font-mono font-bold text-secondary">+14% trail visits</span>
               </div>
             </div>
             <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
@@ -169,20 +169,20 @@ export default function AdminAnalyticsPage() {
           <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Cultural Triangle Corridor</span>
-              <Badge variant="success">OPTIMAL</Badge>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">OPTIMAL</Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-rose-600 dark:text-rose-400 font-semibold">Sigiriya Rock Relief:</span>
-                <span className="font-mono font-bold text-rose-600">-24% peak queue</span>
+                <span className="text-primary font-semibold">Sigiriya Rock Relief:</span>
+                <span className="font-mono font-bold text-primary">-24% peak queue</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Pidurangala Dispersal:</span>
-                <span className="font-mono font-bold text-emerald-600">+16% sunrise share</span>
+                <span className="text-secondary font-semibold">Pidurangala Dispersal:</span>
+                <span className="font-mono font-bold text-secondary">+16% sunrise share</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Ritigala Monastery:</span>
-                <span className="font-mono font-bold text-emerald-600">+8% conscious visits</span>
+                <span className="text-secondary font-semibold">Ritigala Monastery:</span>
+                <span className="font-mono font-bold text-secondary">+8% conscious visits</span>
               </div>
             </div>
             <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
@@ -194,20 +194,20 @@ export default function AdminAnalyticsPage() {
           <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-foreground">Southern Coastline Corridor</span>
-              <Badge variant="warning">EXPANDING</Badge>
+              <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 text-[10px] font-bold">EXPANDING</Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-rose-600 dark:text-rose-400 font-semibold">Mirissa Whale Relief:</span>
-                <span className="font-mono font-bold text-rose-600">-19% boat density</span>
+                <span className="text-primary font-semibold">Mirissa Whale Relief:</span>
+                <span className="font-mono font-bold text-primary">-19% boat density</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Kite Kalpitiya Influx:</span>
-                <span className="font-mono font-bold text-emerald-600">+12% eco-watersports</span>
+                <span className="text-secondary font-semibold">Kite Kalpitiya Influx:</span>
+                <span className="font-mono font-bold text-secondary">+12% eco-watersports</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Tangalle Marine Sanctuaries:</span>
-                <span className="font-mono font-bold text-emerald-600">+7% turtle conservation</span>
+                <span className="text-secondary font-semibold">Tangalle Marine Sanctuaries:</span>
+                <span className="font-mono font-bold text-secondary">+7% turtle conservation</span>
               </div>
             </div>
             <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
