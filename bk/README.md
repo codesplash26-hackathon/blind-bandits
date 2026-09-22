@@ -55,3 +55,18 @@ bundled with the application. The value must be a JSON object in this shape:
 
 Every weight is required, each must be between zero and one, and their sum must
 be 1.0. The equal weights used by tests are temporary test fixtures only.
+
+## Recommendation policy
+
+`POST /api/v1/recommendations` uses a deterministic, rules-based policy rather
+than machine learning. `typical_budget` is currently treated as the expected
+total destination cost, and the requested trip duration must fall within the
+destination's recommended minimum and maximum.
+
+Eligible destinations are ranked using requested-interest coverage, crowd fit,
+and the existing Sustainability Index. A higher crowd-condition score represents
+lower crowd pressure: `QUIET` favors high values, `LIVELY` favors low values, and
+`BALANCED` favors values near 50. Sustainability preference uses transparent
+temporary policy multipliers of 0.25 (`LOW`), 0.50 (`MEDIUM`), and 1.00 (`HIGH`).
+These ranking rules and the current top-five result limit are explicit project
+design decisions intended to be tuned after product research.
