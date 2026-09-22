@@ -15,6 +15,7 @@ import { useAuth } from '@/context/AuthContext';
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export default function DestinationsCatalogPage() {
   const { isSaved, toggleSaveDestination } = useAuth();
@@ -160,9 +161,9 @@ export default function DestinationsCatalogPage() {
             const isBookmarked = isSaved(dest.id);
 
             return (
-              <div
+              <Card
                 key={dest.id}
-                className="group rounded-3xl border border-border/80 bg-card overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                className="group rounded-3xl border border-border/80 overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Image Section */}
                 <div className="relative h-48 w-full overflow-hidden">
@@ -247,12 +248,12 @@ export default function DestinationsCatalogPage() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </Card>
             );
           })}
         </div>
       ) : (
-        <div className="p-12 text-center rounded-3xl border border-dashed border-border bg-card/60 space-y-3">
+        <Card className="p-12 text-center rounded-3xl border border-dashed border-border/80 space-y-3">
           <Compass className="w-10 h-10 text-muted-foreground/60 mx-auto" />
           <h3 className="text-base font-bold text-foreground">No destinations matched your filters</h3>
           <p className="text-xs text-muted-foreground max-w-sm mx-auto">
@@ -270,7 +271,7 @@ export default function DestinationsCatalogPage() {
           >
             Clear Filters
           </Button>
-        </div>
+        </Card>
       )}
     </div>
   );

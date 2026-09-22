@@ -13,6 +13,7 @@ import { useAuth } from '@/context/AuthContext';
 import { getRecommendations } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export default function RecommendationResultsPage() {
   const { currentPreferences, isSaved, toggleSaveDestination } = useAuth();
@@ -37,7 +38,7 @@ export default function RecommendationResultsPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       {/* Top Results Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-card border border-border/80 shadow-md">
+      <Card className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl border border-border/80 shadow-md">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-secondary">
@@ -70,7 +71,7 @@ export default function RecommendationResultsPage() {
             <span>Change preferences</span>
           </Button>
         </Link>
-      </div>
+      </Card>
 
       {/* Ranked Destination Cards List */}
       <div className="space-y-6">
@@ -79,9 +80,9 @@ export default function RecommendationResultsPage() {
           const isBookmarked = isSaved(dest.id);
 
           return (
-            <div
+            <Card
               key={dest.id}
-              className="group relative rounded-3xl border border-border/80 bg-card overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row"
+              className="group relative rounded-3xl border border-border/80 overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row"
             >
               {/* Left Photo Showcase */}
               <div className="relative w-full lg:w-72 min-h-[220px] lg:min-h-full overflow-hidden shrink-0">
@@ -206,7 +207,7 @@ export default function RecommendationResultsPage() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </Card>
           );
         })}
       </div>

@@ -12,6 +12,8 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { SearchHistoryItem } from '@/types/ceylontour';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function HistoryPage() {
   const { searchHistory, updatePreferences } = useAuth();
@@ -43,9 +45,9 @@ export default function HistoryPage() {
       {searchHistory.length > 0 ? (
         <div className="space-y-4">
           {searchHistory.map((item) => (
-            <div
+            <Card
               key={item.id}
-              className="p-5 sm:p-6 rounded-3xl border border-border/80 bg-card shadow-sm hover:border-secondary/50 transition-all space-y-4"
+              className="p-5 sm:p-6 rounded-3xl border border-border/80 shadow-sm hover:border-secondary/50 transition-all space-y-4"
             >
               {/* Header: Date + Parameters */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-border/60">
@@ -56,12 +58,13 @@ export default function HistoryPage() {
 
                 <div className="flex flex-wrap items-center gap-1.5">
                   {item.preferences.interests.map((int) => (
-                    <span
+                    <Badge
                       key={int}
-                      className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20"
+                      variant="secondary"
+                      className="text-[11px] font-semibold"
                     >
                       {int}
-                    </span>
+                    </Badge>
                   ))}
                   <span className="text-xs text-muted-foreground">
                     • {item.preferences.durationDays} days • LKR {item.preferences.budgetLKR.toLocaleString()} •{' '}
@@ -113,11 +116,11 @@ export default function HistoryPage() {
                   </Button>
                 </Link>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       ) : (
-        <div className="p-12 text-center rounded-3xl border border-dashed border-border bg-card/60 max-w-md mx-auto space-y-4">
+        <Card className="p-12 text-center rounded-3xl border border-dashed border-border/80 max-w-md mx-auto space-y-4">
           <History className="w-12 h-12 text-muted-foreground/40 mx-auto" />
           <div className="space-y-1">
             <h3 className="text-base font-bold text-foreground">No search history yet</h3>
@@ -128,7 +131,7 @@ export default function HistoryPage() {
           <Link href="/discover">
             <Button size="sm" className="rounded-xl">Discover Destinations</Button>
           </Link>
-        </div>
+        </Card>
       )}
     </div>
   );

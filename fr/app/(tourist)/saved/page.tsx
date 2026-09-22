@@ -13,6 +13,7 @@ import { useAuth } from '@/context/AuthContext';
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export default function SavedDestinationsPage() {
   const { savedDestinationIds, toggleSaveDestination } = useAuth();
@@ -56,9 +57,9 @@ export default function SavedDestinationsPage() {
       {savedList.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {savedList.map((dest) => (
-            <div
+            <Card
               key={dest.id}
-              className="group rounded-3xl border border-border/80 bg-card overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-3xl border border-border/80 overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
@@ -122,12 +123,12 @@ export default function SavedDestinationsPage() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       ) : (
         /* Empty State */
-        <div className="p-12 text-center rounded-3xl border border-dashed border-border bg-card/60 max-w-md mx-auto space-y-4">
+        <Card className="p-12 text-center rounded-3xl border border-dashed border-border/80 max-w-md mx-auto space-y-4">
           <Bookmark className="w-12 h-12 text-muted-foreground/40 mx-auto" />
           <div className="space-y-1">
             <h3 className="text-base font-bold text-foreground">
@@ -144,7 +145,7 @@ export default function SavedDestinationsPage() {
               <span>Discover destinations</span>
             </Button>
           </Link>
-        </div>
+        </Card>
       )}
     </div>
   );
