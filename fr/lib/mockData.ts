@@ -577,6 +577,22 @@ export const DEFAULT_USER: User = {
   },
 };
 
+export const DEFAULT_ADMIN_USER: User = {
+  id: 'usr_admin_01',
+  name: 'Dilhara Senanayake',
+  email: 'd.senanayake@tourism.gov.lk',
+  role: 'ADMIN',
+  country: 'Sri Lanka',
+  avatar: '',
+  preferences: {
+    budgetLKR: 75000,
+    durationDays: 5,
+    interests: ['Nature', 'Culture'],
+    crowdPreference: 'quiet',
+    sustainabilityImportance: 95,
+  },
+};
+
 export const MOCK_SEARCH_HISTORY: SearchHistoryItem[] = [
   {
     id: 'hist_01',

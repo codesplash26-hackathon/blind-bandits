@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import { User, TouristPreferences, SearchHistoryItem, Role } from '@/types/ceylontour';
-import { DEFAULT_USER, MOCK_SEARCH_HISTORY } from '@/lib/mockData';
+import { DEFAULT_USER, DEFAULT_ADMIN_USER, MOCK_SEARCH_HISTORY } from '@/lib/mockData';
 
 interface AuthContextType {
   user: User | null;
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const updatePreferences = (newPrefs: Partial<TouristPreferences>) => {
+  const updatePreferences = React.useCallback((newPrefs: Partial<TouristPreferences>) => {
     setCurrentPreferences((prev) => {
       const updated = { ...prev, ...newPrefs };
       try {
@@ -97,9 +97,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
       return updated;
     });
-  };
+  }, []);
 
-  const addSearchHistory = (item: Omit<SearchHistoryItem, 'id' | 'date'>) => {
+  const addSearchHistory = React.useCallback((item: Omit<SearchHistoryItem, 'id' | 'date'>) => {
     const newItem: SearchHistoryItem = {
       ...item,
       id: `hist_${Date.now()}`,
@@ -115,30 +115,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
       return updated;
     });
-  };
+  }, []);
 
-  const loginAs = (role: Role) => {
-    const newUser: User = {
-      ...DEFAULT_USER,
-      role,
-      name: role === 'ADMIN' ? 'Tourism Authority Officer' : 'Nipun',
-    };
+  const loginAs = React.useCallback((role: Role) => {
+    const newUser: User = role === 'ADMIN' ? DEFAULT_ADMIN_USER : DEFAULT_USER;
     setUser(newUser);
     try {
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(newUser));
     } catch (e) {
       console.error(e);
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = React.useCallback(() => {
     setUser(null);
     try {
       localStorage.removeItem(STORAGE_KEYS.USER);
     } catch (e) {
       console.error(e);
     }
-  };
+  }, []);
 
   return (
     <AuthContext.Provider

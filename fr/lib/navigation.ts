@@ -94,7 +94,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: 'Profile',
     href: '/profile',
     group: 'account',
-    roles: ['TOURIST', 'ADMIN'],
+    roles: ['TOURIST'],
   },
 
   // Admin Items
@@ -140,6 +140,13 @@ export const NAV_ITEMS: NavItem[] = [
     group: 'system',
     roles: ['ADMIN'],
   },
+  {
+    id: 'adminProfile',
+    label: 'Authority Profile',
+    href: '/admin/profile',
+    group: 'account',
+    roles: ['ADMIN'],
+  },
 ];
 
 export const ICONS_MAP: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -156,6 +163,7 @@ export const ICONS_MAP: Record<string, ComponentType<SVGProps<SVGSVGElement>>> =
   adminAnalytics: BarChart3,
   adminUsers: Users,
   adminSettings: Settings,
+  adminProfile: User,
 };
 
 export function getNavGroupsForRole(userRole: Role | null | undefined): NavGroup[] {

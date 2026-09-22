@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Compass,
   Bookmark,
+  MapPin,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -107,12 +108,14 @@ function NavUser() {
   const { user, role, loginAs, logout, savedDestinationIds } = useAuth();
   const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
 
-  const displayName = effectiveRole === 'ADMIN'
-    ? 'Tourism Authority Officer'
+  const isAuthority = effectiveRole === 'ADMIN';
+  const displayName = isAuthority
+    ? (user?.role === 'ADMIN' && user.name ? user.name : 'Dilhara Senanayake')
     : (user?.name || 'Tourist Explorer');
-  const displayEmail = effectiveRole === 'ADMIN'
-    ? 'officer@tourism.gov.lk'
+  const displayEmail = isAuthority
+    ? (user?.role === 'ADMIN' && user.email ? user.email : 'd.senanayake@tourism.gov.lk')
     : (user?.email || 'traveler@ceylontour.lk');
+  const avatarInitials = isAuthority ? 'DS' : (displayName.charAt(0) || 'U');
 
   return (
     <SidebarMenu>
@@ -127,7 +130,7 @@ function NavUser() {
             }
           >
             <Avatar size="sm" className="shrink-0">
-              <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{avatarInitials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
               <div className="flex items-center gap-1.5">
@@ -151,7 +154,7 @@ function NavUser() {
               <DropdownMenuLabel className="p-2">
                 <div className="flex items-center gap-2.5">
                   <Avatar size="default" className="shrink-0">
-                    <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{avatarInitials}</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-xs leading-tight">
                     <span className="truncate font-bold text-foreground">{displayName}</span>
@@ -165,20 +168,30 @@ function NavUser() {
 
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => router.push('/profile')}
+                onClick={() => router.push(isAuthority ? '/admin/profile' : '/profile')}
                 className="cursor-pointer gap-2.5 px-3 py-2 text-xs font-medium"
               >
                 <UserIcon className="h-4 w-4 text-muted-foreground" />
-                <span>My Profile</span>
+                <span>{isAuthority ? 'Authority Official Profile' : 'My Profile'}</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem
-                onClick={() => router.push('/saved')}
-                className="cursor-pointer gap-2.5 px-3 py-2 text-xs font-medium"
-              >
-                <Bookmark className="h-4 w-4 text-muted-foreground" />
-                <span>Saved Destinations ({savedDestinationIds.length})</span>
-              </DropdownMenuItem>
+              {isAuthority ? (
+                <DropdownMenuItem
+                  onClick={() => router.push('/admin/destinations')}
+                  className="cursor-pointer gap-2.5 px-3 py-2 text-xs font-medium"
+                >
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  <span>Capacity Registry</span>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  onClick={() => router.push('/saved')}
+                  className="cursor-pointer gap-2.5 px-3 py-2 text-xs font-medium"
+                >
+                  <Bookmark className="h-4 w-4 text-muted-foreground" />
+                  <span>Saved Destinations ({savedDestinationIds.length})</span>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />

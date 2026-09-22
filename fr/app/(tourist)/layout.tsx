@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
@@ -15,9 +15,15 @@ export default function TouristLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, role, savedDestinationIds } = useAuth();
+  const { user, role, loginAs, savedDestinationIds } = useAuth();
   const pathname = usePathname();
   const effectiveRole = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
+
+  useEffect(() => {
+    if (pathname.startsWith('/admin') && role !== 'ADMIN') {
+      loginAs('ADMIN');
+    }
+  }, [pathname, role, loginAs]);
 
   const getPageTitle = () => {
     if (pathname === '/dashboard') return effectiveRole === 'ADMIN' ? 'Tourism Authority Overview' : 'Tourist Dashboard';
@@ -27,6 +33,7 @@ export default function TouristLayout({
     if (pathname === '/admin/analytics') return 'Redistribution & Impact Analytics';
     if (pathname === '/admin/users') return 'User & Operator Directory';
     if (pathname === '/admin/settings') return 'Authority Sustainability Settings';
+    if (pathname === '/admin/profile') return 'Authority Official Profile';
     if (pathname === '/discover') return 'Discover Sustainable Destinations';
     if (pathname === '/discover/results') return 'Recommendation Results';
     if (pathname.startsWith('/destinations/')) return 'Destination Exploration';
@@ -34,7 +41,7 @@ export default function TouristLayout({
     if (pathname === '/map') return 'Interactive Sri Lanka Map';
     if (pathname === '/saved') return 'My Saved Destinations';
     if (pathname === '/history') return 'Recommendation History';
-    if (pathname === '/profile') return 'Traveler Profile';
+    if (pathname === '/profile') return effectiveRole === 'ADMIN' ? 'Authority Official Profile' : 'Traveler Profile';
     return 'CeylonTour';
   };
 
@@ -51,9 +58,9 @@ export default function TouristLayout({
               <span className="text-xs sm:text-sm font-bold text-foreground">
                 {getPageTitle()}
               </span>
-              {role === 'ADMIN' && (
+              {effectiveRole === 'ADMIN' && (
                 <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-400 border border-amber-500/30">
-                  <ShieldCheck className="w-3 h-3" /> Authority Preview
+                  <ShieldCheck className="w-3 h-3" /> Authority Clearance
                 </span>
               )}
             </div>
@@ -101,9 +108,13 @@ export default function TouristLayout({
             </div>
 
             {/* Profile Avatar */}
-            <Link href="/profile" className="transition-transform hover:scale-105">
+            <Link
+              href={effectiveRole === 'ADMIN' ? '/admin/profile' : '/profile'}
+              className="transition-transform hover:scale-105"
+              title={effectiveRole === 'ADMIN' ? 'Authority Official Profile' : 'Traveler Profile'}
+            >
               <Avatar size="sm" className="ring-2 ring-primary/20 hover:ring-primary/50 transition-all">
-                <AvatarFallback>{user?.name?.charAt(0) || 'N'}</AvatarFallback>
+                <AvatarFallback>{effectiveRole === 'ADMIN' ? 'DS' : (user?.name?.charAt(0) || 'N')}</AvatarFallback>
               </Avatar>
             </Link>
           </div>
