@@ -15,12 +15,14 @@ from app.ml.pressure.inference import (
     pressure_band,
 )
 from app.models.destination import Activity, Destination, destination_activities
+from app.schemas.alternatives import DestinationAlternativesResponse
 from app.schemas.destination import DestinationResponse
 from app.schemas.pressure import (
     DestinationPressureExplanationResponse,
     DestinationPressureResponse,
 )
 from app.schemas.sustainability import DestinationSustainabilityResponse
+from app.services.destination_alternatives import suggest_alternatives
 from app.services.destinations import (
     destination_load_options,
     get_destination_by_id,
@@ -32,6 +34,43 @@ from app.services.sustainability import (
 )
 
 router = APIRouter(prefix="/destinations", tags=["destinations"])
+
+
+@router.get(
+    "/{destination_id}/alternatives",
+    response_model=DestinationAlternativesResponse,
+)
+async def read_destination_alternatives(
+    destination_id: int,
+    _: CurrentUser,
+    db: Annotated[Session, Depends(get_db)],
+    month: Annotated[str, Query(pattern=r"^\d{4}-(0[1-9]|1[0-2])$")],
+) -> DestinationAlternativesResponse:
+    if month.startswith("0000"):
+        raise HTTPException(status_code=422, detail="Invalid forecast month")
+    source = get_destination_by_id(db, destination_id)
+    if source is None or not source.is_active:
+        raise HTTPException(status_code=404, detail="Destination not found")
+    settings = get_settings()
+    if settings.pressure_band_thresholds is None:
+        raise HTTPException(status_code=503, detail="Pressure bands are not configured")
+    try:
+        return suggest_alternatives(
+            db,
+            source,
+            month=month,
+            artifact_dir=settings.pressure_model_artifact_dir,
+            thresholds=settings.pressure_band_thresholds,
+            sustainability_weights=settings.sustainability_weights,
+        )
+    except MissingPressureModelError:
+        raise HTTPException(
+            status_code=503, detail="Regional pressure model unavailable"
+        ) from None
+    except ForecastContextUnavailableError:
+        raise HTTPException(
+            status_code=404, detail="Regional forecast unavailable for month"
+        ) from None
 
 
 @router.get(

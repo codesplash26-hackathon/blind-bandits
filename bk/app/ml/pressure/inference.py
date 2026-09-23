@@ -54,6 +54,16 @@ def predict_regional_pressure(
     month: str,
 ) -> tuple[float, str]:
     artifact = load_artifact(directory)
+    return predict_regional_pressure_from_artifact(artifact, region=region, month=month)
+
+
+def predict_regional_pressure_from_artifact(
+    artifact: PressureArtifact,
+    *,
+    region: str,
+    month: str,
+) -> tuple[float, str]:
+    """Reuse one loaded artifact across multiple regional comparisons."""
     features, _ = forecast_features(artifact, region=region, month=month)
     score = bounded_occupancy_rate(float(artifact.model.predict(features)[0]))
     return score, str(artifact.metadata["model_version"])
