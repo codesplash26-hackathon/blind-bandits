@@ -15,6 +15,12 @@ import {
   Send,
   Layers,
   Sparkles,
+  Search,
+  Filter,
+  Eye,
+  Activity,
+  ArrowUpRight,
+  Radio,
 } from 'lucide-react';
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
@@ -34,17 +40,38 @@ export default function AdminDashboard() {
   const { loginAs } = useAuth();
   const [isRedistributing, setIsRedistributing] = useState(false);
   const [redistributeStatus, setRedistributeStatus] = useState<string | null>(null);
+  const [pressureFilter, setPressureFilter] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [rebalanceStep, setRebalanceStep] = useState<string>('');
 
   const highPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'HIGH');
   const mediumPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'MEDIUM');
   const lowPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'LOW');
 
+  const filteredDestinations = DESTINATIONS.filter((d) => {
+    const matchesFilter =
+      pressureFilter === 'ALL' ? true : d.pressure.level === pressureFilter;
+    const matchesSearch =
+      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      d.district.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  }).sort((a, b) => b.pressure.score - a.pressure.score);
+
   const handleTriggerRedistribution = () => {
     setIsRedistributing(true);
+    setRebalanceStep('Analyzing real-time sensor surge vectors...');
+    
+    setTimeout(() => {
+      setRebalanceStep('Broadcasting +35% alternative weight to TreeSHAP routing...');
+    }, 450);
+
     setTimeout(() => {
       setIsRedistributing(false);
-      setRedistributeStatus('Active: Dynamic routing bias increased by +35% for Ella & Sigiriya alternatives.');
-    }, 900);
+      setRebalanceStep('');
+      setRedistributeStatus(
+        'Redistribution Deployed: Dynamic bias increased by +35% for Belihuloya & Haputale alternatives. Ella footfall dropped by -22%.'
+      );
+    }, 1100);
   };
 
   return (
@@ -53,9 +80,12 @@ export default function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority Mode</Badge>
-            <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" /> TreeSHAP Model Live
+            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">
+              Tourism Authority Mode
+            </Badge>
+            <span className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+              TreeSHAP Model Live Telemetry
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
@@ -66,23 +96,23 @@ export default function AdminDashboard() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
           <Button
             variant="outline"
             size="sm"
             onClick={handleTriggerRedistribution}
             disabled={isRedistributing}
-            className="rounded-xl gap-1.5 cursor-pointer bg-card border-primary/30 text-primary hover:bg-primary/10"
+            className="rounded-xl gap-2 cursor-pointer bg-card border-primary/30 text-primary hover:bg-primary/10 shadow-xs"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRedistributing ? 'animate-spin' : ''}`} />
-            <span>{isRedistributing ? 'Broadcasting Policy...' : 'Trigger Rebalance'}</span>
+            <RefreshCw className={`w-3.5 h-3.5 text-secondary ${isRedistributing ? 'animate-spin' : ''}`} />
+            <span>{isRedistributing ? rebalanceStep || 'Broadcasting...' : 'Trigger Rebalance'}</span>
           </Button>
 
           <Button
             variant="outline"
             size="sm"
             onClick={() => loginAs('TOURIST')}
-            className="rounded-xl gap-1.5 cursor-pointer"
+            className="rounded-xl gap-1.5 cursor-pointer bg-card border-border hover:border-secondary/40"
           >
             <Compass className="w-4 h-4 text-primary" />
             <span>Switch to Tourist View</span>
@@ -91,15 +121,15 @@ export default function AdminDashboard() {
       </div>
 
       {redistributeStatus && (
-        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center justify-between gap-3 text-xs text-foreground">
-          <div className="flex items-center gap-2">
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center justify-between gap-3 text-xs text-foreground animate-in fade-in duration-300">
+          <div className="flex items-center gap-2.5">
             <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
             <span className="font-semibold">{redistributeStatus}</span>
           </div>
           <button
             type="button"
             onClick={() => setRedistributeStatus(null)}
-            className="text-muted-foreground hover:text-foreground cursor-pointer font-bold"
+            className="text-muted-foreground hover:text-foreground cursor-pointer font-bold px-1"
           >
             ✕
           </button>
@@ -180,7 +210,7 @@ export default function AdminDashboard() {
       {/* Quick Access Authority Modules Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Link href="/admin/destinations" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-primary/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:scale-105 transition-transform">
                 <Layers className="w-4 h-4" />
@@ -194,7 +224,7 @@ export default function AdminDashboard() {
         </Link>
 
         <Link href="/admin/tourism-pressure" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-secondary/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-secondary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-secondary/15 text-secondary group-hover:scale-105 transition-transform">
                 <AlertTriangle className="w-4 h-4" />
@@ -208,28 +238,28 @@ export default function AdminDashboard() {
         </Link>
 
         <Link href="/admin/analytics" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-primary/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:scale-105 transition-transform">
                 <BarChart3 className="w-4 h-4" />
               </div>
               <div>
                 <span className="text-xs font-bold text-foreground block">Impact Analytics</span>
-                <span className="text-[10px] text-muted-foreground">Carbon &amp; dispersal metrics</span>
+                <span className="text-[10px] text-muted-foreground">Charts, dispersal &amp; carbon</span>
               </div>
             </div>
           </Card>
         </Link>
 
         <Link href="/admin/settings" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 hover:border-secondary/50 transition-all hover:shadow-md">
+          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-secondary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-secondary/15 text-secondary group-hover:scale-105 transition-transform">
                 <SlidersHorizontal className="w-4 h-4" />
               </div>
               <div>
                 <span className="text-xs font-bold text-foreground block">Policy Thresholds</span>
-                <span className="text-[10px] text-muted-foreground">Model trigger bounds</span>
+                <span className="text-[10px] text-muted-foreground">Live algorithm simulator</span>
               </div>
             </div>
           </Card>
@@ -295,17 +325,55 @@ export default function AdminDashboard() {
         </div>
       </Card>
 
-      {/* Highest Pressure Destinations Table */}
-      <Card className="rounded-3xl border border-border/80 shadow-sm overflow-hidden">
-        <div className="p-6 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Highest Pressure Destinations Table with Interactive Filtering */}
+      <Card className="rounded-3xl border border-border/80 bg-card shadow-xs overflow-hidden space-y-4">
+        <div className="p-6 pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-bold text-foreground">Pilot Destinations Carrying Capacity Audit</h2>
-            <p className="text-xs text-muted-foreground">Ranked by monitored environmental & visitor load strain</p>
+            <div className="flex items-center gap-2">
+              <Activity className="w-4 h-4 text-primary" />
+              <h2 className="text-lg font-bold text-foreground">
+                Pilot Destinations Carrying Capacity Audit
+              </h2>
+            </div>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Real-time ecological carrying capacity status across Sri Lanka pilot monitoring nodes.
+            </p>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Search Input */}
+            <div className="relative min-w-[200px]">
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search pilot sites..."
+                className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-muted/40 border border-border text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:border-secondary"
+              />
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex items-center p-1 rounded-xl bg-muted/60 border border-border text-xs font-semibold">
+              {(['ALL', 'HIGH', 'MEDIUM', 'LOW'] as const).map((lvl) => (
+                <button
+                  key={lvl}
+                  type="button"
+                  onClick={() => setPressureFilter(lvl)}
+                  className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer text-[11px] ${
+                    pressureFilter === lvl
+                      ? 'bg-card text-foreground shadow-xs font-bold'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {lvl === 'ALL' ? 'All (10)' : `${lvl} (${DESTINATIONS.filter((d) => d.pressure.level === lvl).length})`}
+                </button>
+              ))}
+            </div>
+
             <Link href="/admin/destinations">
-              <Button size="xs" variant="outline" className="rounded-lg gap-1">
-                <span>View Full Registry</span>
+              <Button size="xs" variant="outline" className="rounded-xl gap-1">
+                <span>Registry</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </Link>
@@ -321,71 +389,82 @@ export default function AdminDashboard() {
                 <TableHead className="py-3 px-3">Load vs Limit</TableHead>
                 <TableHead className="py-3 px-3">Capacity Gauge</TableHead>
                 <TableHead className="py-3 px-3">Sustainability</TableHead>
-                <TableHead className="py-3 px-3">Confidence</TableHead>
-                <TableHead className="py-3 px-3 text-right">Action</TableHead>
+                <TableHead className="py-3 px-3">Telemetry Feed</TableHead>
+                <TableHead className="py-3 px-3 text-right">Inspect</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {DESTINATIONS.slice()
-                .sort((a, b) => b.pressure.score - a.pressure.score)
-                .map((dest) => (
-                  <TableRow key={dest.id} className="hover:bg-muted/40 transition-colors">
-                    <TableCell className="py-3.5 px-3 font-bold text-foreground">
-                      <div>
-                        <span>{dest.name}</span>
-                        <span className="text-[10px] text-muted-foreground block font-normal">{dest.tagline}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-3.5 px-3 text-muted-foreground">{dest.district}</TableCell>
-                    <TableCell className="py-3.5 px-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-xs">{dest.pressure.score}%</span>
-                        <Badge
-                          variant={
+              {filteredDestinations.map((dest) => (
+                <TableRow key={dest.id} className="hover:bg-muted/40 transition-colors">
+                  <TableCell className="py-3.5 px-3 font-bold text-foreground">
+                    <div>
+                      <span>{dest.name}</span>
+                      <span className="text-[10px] text-muted-foreground block font-normal truncate max-w-[200px]">
+                        {dest.tagline}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-3.5 px-3 text-muted-foreground text-xs">{dest.district}</TableCell>
+                  <TableCell className="py-3.5 px-3">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-bold text-xs">{dest.pressure.score}%</span>
+                      <Badge
+                        variant={
+                          dest.pressure.level === 'HIGH'
+                            ? 'destructive'
+                            : dest.pressure.level === 'MEDIUM'
+                            ? 'warning'
+                            : 'success'
+                        }
+                      >
+                        {dest.pressure.level}
+                      </Badge>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-3.5 px-3 min-w-[140px]">
+                    <div className="space-y-1">
+                      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-300 ${
                             dest.pressure.level === 'HIGH'
-                              ? 'destructive'
+                              ? 'bg-destructive'
                               : dest.pressure.level === 'MEDIUM'
-                              ? 'warning'
-                              : 'success'
-                          }
-                        >
-                          {dest.pressure.level}
-                        </Badge>
+                              ? 'bg-primary'
+                              : 'bg-secondary'
+                          }`}
+                          style={{ width: `${dest.pressure.score}%` }}
+                        />
                       </div>
-                    </TableCell>
-                    <TableCell className="py-3.5 px-3 min-w-[140px]">
-                      <div className="space-y-1">
-                        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all ${
-                              dest.pressure.level === 'HIGH'
-                                ? 'bg-rose-500'
-                                : dest.pressure.level === 'MEDIUM'
-                                ? 'bg-amber-500'
-                                : 'bg-emerald-500'
-                            }`}
-                            style={{ width: `${dest.pressure.score}%` }}
-                          />
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-3.5 px-3 font-bold text-emerald-600 dark:text-emerald-400">
-                      {dest.sustainability.overall} / 100
-                    </TableCell>
-                    <TableCell className="py-3.5 px-3">
-                      <Badge variant="outline">{dest.dataConfidence || 'HIGH'}</Badge>
-                    </TableCell>
-                    <TableCell className="py-3.5 px-3 text-right">
-                      <Link href={`/destinations/${dest.id}`}>
-                        <Button size="xs" variant="outline" className="rounded-lg">
-                          Inspect
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-3.5 px-3 font-bold text-secondary text-xs">
+                    {dest.sustainability.overall} / 100
+                  </TableCell>
+                  <TableCell className="py-3.5 px-3">
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                      Live (5m)
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-3.5 px-3 text-right">
+                    <Link href={`/destinations/${dest.id}`}>
+                      <Button size="xs" variant="outline" className="rounded-xl gap-1 text-xs hover:border-secondary">
+                        <Eye className="w-3 h-3 text-secondary" />
+                        <span>Inspect</span>
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
+
+          {filteredDestinations.length === 0 && (
+            <div className="text-center py-8 text-xs text-muted-foreground space-y-1">
+              <p className="font-semibold text-foreground">No destinations match your filter</p>
+              <p>Try searching another name or selecting &apos;All&apos;.</p>
+            </div>
+          )}
         </div>
       </Card>
     </div>
