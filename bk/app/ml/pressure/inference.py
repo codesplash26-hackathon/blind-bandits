@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from app.ml.pressure.artifact import load_artifact
+from app.ml.pressure.artifact import PressureArtifact, load_artifact
 from app.schemas.pressure import PressureBand, PressureBandThresholds
 
 
@@ -20,13 +20,17 @@ def pressure_band(score: float, thresholds: PressureBandThresholds) -> PressureB
     return PressureBand.HIGH
 
 
-def predict_regional_pressure(
-    directory: Path,
+def bounded_occupancy_rate(raw_prediction: float) -> float:
+    """Bound the unconstrained regressor output for percentage display."""
+    return min(100.0, max(0.0, raw_prediction))
+
+
+def forecast_features(
+    artifact: PressureArtifact,
     *,
     region: str,
     month: str,
-) -> tuple[float, str]:
-    artifact = load_artifact(directory)
+) -> tuple[pd.DataFrame, dict[str, str | int | float]]:
     context = next(
         (
             item
@@ -39,7 +43,17 @@ def predict_regional_pressure(
         raise ForecastContextUnavailableError(
             "No regional forecast context for the requested month"
         )
-    features = pd.DataFrame([context])[artifact.metadata["feature_names"]]
-    # Occupancy is a percentage; the regressor itself is unconstrained.
-    score = min(100.0, max(0.0, float(artifact.model.predict(features)[0])))
+    names = artifact.metadata["feature_names"]
+    return pd.DataFrame([context])[names], {name: context[name] for name in names}
+
+
+def predict_regional_pressure(
+    directory: Path,
+    *,
+    region: str,
+    month: str,
+) -> tuple[float, str]:
+    artifact = load_artifact(directory)
+    features, _ = forecast_features(artifact, region=region, month=month)
+    score = bounded_occupancy_rate(float(artifact.model.predict(features)[0]))
     return score, str(artifact.metadata["model_version"])
