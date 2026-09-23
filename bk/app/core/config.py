@@ -1,8 +1,10 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.schemas.pressure import PressureBandThresholds
 from app.services.sustainability import SustainabilityWeightConfiguration
 
 
@@ -18,6 +20,14 @@ class Settings(BaseSettings):
     )
     sustainability_weights: SustainabilityWeightConfiguration = Field(
         validation_alias="SUSTAINABILITY_WEIGHTS"
+    )
+    pressure_model_artifact_dir: Path = Field(
+        default=Path("artifacts/visitor_pressure"),
+        validation_alias="PRESSURE_MODEL_ARTIFACT_DIR",
+    )
+    pressure_band_thresholds: PressureBandThresholds | None = Field(
+        default=None,
+        validation_alias="PRESSURE_BAND_THRESHOLDS",
     )
 
     model_config = SettingsConfigDict(
