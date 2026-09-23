@@ -258,7 +258,7 @@ async def test_simulation_requires_auth_and_existing_factor_data(
             f"/api/v1/destinations/{missing_factor_destination['id']}/simulate",
             json=BASELINE_SCENARIO,
             headers=headers,
-        )
+        )   
     ).status_code == 404
 
 

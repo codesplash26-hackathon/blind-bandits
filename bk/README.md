@@ -188,3 +188,20 @@ using this endpoint, for example with reviewed values in this shape:
 No production reference or coefficient is bundled. The values in automated
 tests are temporary examples only. If the policy is absent, the endpoint
 returns `503` rather than silently assuming research-backed effects.
+
+## Destination map data
+
+`GET /api/v1/map/destinations?month=YYYY-MM` returns compact, numeric map
+markers for active destinations. The month is required because visitor pressure
+is a **regional monthly forecast**, not a destination-level measurement.
+Optional `region` (case-insensitive) and `pressure=LOW|MEDIUM|HIGH` filters are
+available. The response includes the pressure model version and scope.
+
+Map data is read with one projected destination/factor query; the model artifact
+is loaded once and each distinct region is predicted once per request. A marker
+with missing factor data has null sustainability, environmental, and community
+scores. A region without forecast context remains on the unfiltered map with
+null pressure fields and is omitted by pressure filters. A nonempty map needs
+the configured pressure model and band thresholds; an empty dataset returns an
+empty marker list without loading a model. This endpoint supplies data only;
+map rendering belongs to the frontend.
