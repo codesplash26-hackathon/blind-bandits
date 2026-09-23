@@ -95,11 +95,11 @@ export default function TouristDashboard() {
         </div>
 
         <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-secondary/30 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-light-blue/20 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+            <Sparkles className="w-3.5 h-3.5 text-light-blue" />
             <span>Smart Trip Planner</span>
           </div>
 
@@ -115,7 +115,7 @@ export default function TouristDashboard() {
             <Link href="/discover">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary to-[#5BC5D5] hover:opacity-95 text-[#002B35] font-bold text-sm px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:scale-102 cursor-pointer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary to-light-blue hover:opacity-95 text-midnight-green font-bold text-sm px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:scale-102 cursor-pointer"
               >
                 <span>Find a Destination</span>
                 <ArrowRight className="w-4 h-4" />
@@ -189,7 +189,7 @@ export default function TouristDashboard() {
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] uppercase font-bold text-muted-foreground block">Sustainability</span>
-                    <span className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">
+                    <span className="text-sm font-extrabold text-secondary">
                       {spotlight.sustainability.overall}/100
                     </span>
                   </div>
@@ -216,8 +216,8 @@ export default function TouristDashboard() {
               </div>
 
               <div className="pt-2 border-t border-border/70 flex items-center justify-between">
-                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                  <Leaf className="w-3.5 h-3.5" /> High Eco-Resilience
+                <span className="text-xs font-semibold text-secondary flex items-center gap-1">
+                  <Leaf className="w-3.5 h-3.5 text-secondary" /> High Eco-Resilience
                 </span>
 
                 <Link href={`/destinations/${spotlight.id}`}>
@@ -371,7 +371,7 @@ export default function TouristDashboard() {
                 <div>
                   <div className="flex items-center justify-between pb-2 border-b border-border/60 text-xs">
                     <span className="text-muted-foreground">Sustainability Score</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="font-bold text-secondary">
                       {dest.sustainability.overall} / 100
                     </span>
                   </div>

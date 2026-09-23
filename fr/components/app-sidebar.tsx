@@ -53,11 +53,11 @@ function AppLogo() {
           size="lg"
           className="hover:bg-transparent pointer-events-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary/15 text-primary">
-            <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain p-1" priority />
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white/10 text-white border border-white/10">
+            <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain p-1 brightness-0 invert" priority />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-bold text-base text-foreground tracking-tight">CeylonTour</span>
+            <span className="truncate font-bold text-base text-sidebar-foreground tracking-tight">CeylonTour</span>
             <span className="truncate text-[10px] font-semibold text-secondary uppercase tracking-wider">
               {effectiveRole === 'ADMIN' ? 'Authority Portal' : 'Sustainable Travel'}
             </span>
@@ -140,17 +140,17 @@ function NavUser({
               />
             }
           >
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-muted bg-secondary/20 text-secondary overflow-hidden">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sidebar-border bg-secondary/25 text-white overflow-hidden">
               <UserIcon className="h-5 w-5 text-secondary" />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <div className="flex items-center gap-1.5">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-md bg-secondary/15 text-secondary font-bold">
+                <span className="truncate font-medium text-sidebar-foreground">{user.name}</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded-md bg-secondary/20 text-secondary font-bold">
                   {user.role}
                 </span>
               </div>
-              <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+              <span className="truncate text-xs text-sidebar-foreground/70">{user.email}</span>
             </div>
             <ChevronsUpDown className="ml-auto size-4" />
           </DropdownMenuTrigger>

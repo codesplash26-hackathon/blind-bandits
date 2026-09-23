@@ -108,61 +108,69 @@ export default function AdminDashboard() {
 
       {/* Top 4 KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="rounded-3xl border border-border/80 shadow-xs">
+        <Card className="rounded-3xl border border-border/80 bg-card hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Monitored Pilot Sites
             </span>
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-center justify-between pt-1">
               <span className="font-heading text-3xl font-bold text-foreground">
                 {DESTINATIONS.length}
               </span>
-              <MapPin className="w-5 h-5 text-secondary" />
+              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
+                <MapPin className="w-5 h-5" />
+              </div>
             </div>
             <span className="text-[11px] text-muted-foreground">Island-wide sensor coverage</span>
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-secondary/25 shadow-xs">
+        <Card className="rounded-3xl border border-secondary/30 bg-card hover:border-secondary/60 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Low Pressure Sites
             </span>
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-center justify-between pt-1">
               <span className="font-heading text-3xl font-bold text-secondary">
                 {lowPressureList.length}
               </span>
-              <CheckCircle2 className="w-5 h-5 text-secondary" />
+              <div className="p-2.5 rounded-2xl bg-secondary/15 text-secondary">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
             </div>
             <span className="text-[11px] text-secondary font-medium">Within safe carrying capacity</span>
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-border shadow-xs">
+        <Card className="rounded-3xl border border-border bg-card hover:border-secondary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Moderate Pressure
             </span>
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-center justify-between pt-1">
               <span className="font-heading text-3xl font-bold text-foreground">
                 {mediumPressureList.length}
               </span>
-              <TrendingUp className="w-5 h-5 text-secondary" />
+              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
+                <TrendingUp className="w-5 h-5" />
+              </div>
             </div>
             <span className="text-[11px] text-muted-foreground font-medium">Seasonal footfall peak watch</span>
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border border-destructive/20 shadow-xs">
+        <Card className="rounded-3xl border border-destructive/25 bg-card hover:border-destructive/50 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
           <CardContent className="p-5 space-y-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               High Pressure Alerts
             </span>
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-center justify-between pt-1">
               <span className="font-heading text-3xl font-bold text-destructive">
                 {highPressureList.length}
               </span>
-              <AlertTriangle className="w-5 h-5 text-destructive" />
+              <div className="p-2.5 rounded-2xl bg-destructive/15 text-destructive">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
             </div>
             <span className="text-[11px] text-destructive font-medium">Carrying capacity threshold exceeded</span>
           </CardContent>

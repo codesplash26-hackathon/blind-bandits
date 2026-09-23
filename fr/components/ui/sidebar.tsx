@@ -335,7 +335,7 @@ function SidebarGroupLabel({
     props: mergeProps<"div">(
       {
         className: cn(
-          "flex h-7 shrink-0 items-center rounded-md px-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80 group-data-[collapsible=icon]:hidden",
+          "flex h-7 shrink-0 items-center rounded-md px-2 text-[11px] font-bold uppercase tracking-wider text-sidebar-foreground/60 group-data-[collapsible=icon]:hidden",
           className
         ),
       },
@@ -372,7 +372,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group/menu-button flex w-full items-center gap-3 overflow-hidden rounded-xl p-2.5 text-left text-sm font-medium outline-hidden transition-all duration-150 group-data-[collapsible=icon]:size-10 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:justify-center hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-active:bg-primary data-active:text-primary-foreground data-active:font-semibold shadow-xs data-active:shadow-md [&_svg]:size-4.5 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+  "peer/menu-button group/menu-button flex w-full items-center gap-3 overflow-hidden rounded-xl p-2.5 text-left text-sm font-medium outline-hidden transition-all duration-150 group-data-[collapsible=icon]:size-10 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:justify-center hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-active:bg-sidebar-primary data-active:text-sidebar-primary-foreground data-active:font-semibold shadow-xs data-active:shadow-md [&_svg]:size-4.5 [&_svg]:shrink-0 [&>span:last-child]:truncate",
   {
     variants: {
       variant: {
