@@ -6,6 +6,7 @@ from app.api.routes import (
     auth,
     destinations,
     interactions,
+    map,
     recommendations,
     saved,
 )
@@ -13,6 +14,7 @@ from app.api.routes import (
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(auth.router)
 api_router.include_router(destinations.router)
+api_router.include_router(map.router)
 api_router.include_router(recommendations.router)
 api_router.include_router(saved.router)
 api_router.include_router(interactions.router)
