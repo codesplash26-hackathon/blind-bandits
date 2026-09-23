@@ -6,6 +6,7 @@ from app.models.destination import (
     FactorValueType,
 )
 from app.models.engagement import (
+    AlternativeSelectionContext,
     InteractionEvent,
     InteractionType,
     RecommendationSearch,
@@ -15,6 +16,7 @@ from app.models.user import User, UserRole
 
 __all__ = [
     "Activity",
+    "AlternativeSelectionContext",
     "ConfidenceLevel",
     "Destination",
     "DestinationFactor",
