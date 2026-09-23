@@ -130,3 +130,24 @@ output; the displayed occupancy percentage is bounded to 0–100. These are
 model explanations, not causal claims or the exact weighted contributions used
 by the Sustainability Index. The backend reuses an explainer while the deployed
 artifact files remain unchanged. No LLM is used.
+
+## Lower-pressure alternatives
+
+`GET /api/v1/destinations/{id}/alternatives?month=YYYY-MM` requires
+authentication and uses the same regional pressure artifact and configured
+pressure bands as the pressure endpoint. Suggestions are returned only when the
+source is in the `HIGH` band. Candidates must be active, have sustainability
+factor data, share at least one destination attribute, and have a strictly lower
+predicted regional occupancy rate for the requested month. A lower rate can
+still be in the `HIGH` band; both the band and percentage-point reduction are
+reported explicitly. Regions missing forecast context are skipped. No eligible
+candidate yields an empty list with a status explaining why.
+
+Similarity is cosine similarity over one-hot landscape type and activity slugs;
+it is shown as both a 0–1 score and percentage. Among eligible destinations,
+similarity ranks first, then lower predicted occupancy, shorter straight-line
+geographic distance, and ID for stable ties. Straight-line distance is **not**
+road distance or travel time. Climate fields do not exist in the current model,
+so no climate similarity is inferred. Sustainability scores reuse the reviewed
+Sustainability Index weights. These selection rules are explicit design choices
+that can be reviewed as pilot evidence grows.
