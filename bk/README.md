@@ -151,3 +151,40 @@ road distance or travel time. Climate fields do not exist in the current model,
 so no climate similarity is inferred. Sustainability scores reuse the reviewed
 Sustainability Index weights. These selection rules are explicit design choices
 that can be reviewed as pilot evidence grows.
+
+## What-if Sustainability Index calculation
+
+`POST /api/v1/destinations/{id}/simulate` accepts three normalized 0–100
+scenario levels: `expected_visitor_level`, `waste_management_level`, and
+`infrastructure_level`. These are illustrative inputs, **not measured visitor
+counts or a calibrated simulation engine**. The response includes the baseline
+scenario, original and simulated factor values, score delta, changed factors,
+policy/configuration versions, and a deterministic explanation. No destination
+or factor row is updated.
+
+The transformations are intentionally small and separate:
+
+- Visitor level sets the crowd-condition factor to `100 - expected_visitor_level`
+  (a higher crowd-condition score means less pressure).
+- Waste-management level changes the current environmental factor by its
+  difference from a configured reference level, multiplied by a configured
+  points-per-level coefficient; the result is bounded to 0–100. Because no
+  measured waste baseline is stored, the reference is a policy assumption.
+- Infrastructure level directly sets the infrastructure factor. Community and
+  tourist-suitability factors stay unchanged. The existing Sustainability Index
+  weights recalculate both the original and hypothetical scores.
+
+Set a reviewed, versioned `SIMULATION_POLICY` JSON environment value before
+using this endpoint, for example with reviewed values in this shape:
+
+```json
+{
+  "version": "<reviewed-policy-version>",
+  "waste_reference_level": "<reviewed-0-to-100-reference>",
+  "environmental_points_per_waste_level": "<reviewed-nonnegative-coefficient>"
+}
+```
+
+No production reference or coefficient is bundled. The values in automated
+tests are temporary examples only. If the policy is absent, the endpoint
+returns `503` rather than silently assuming research-backed effects.

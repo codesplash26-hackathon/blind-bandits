@@ -21,6 +21,7 @@ from app.schemas.pressure import (
     DestinationPressureExplanationResponse,
     DestinationPressureResponse,
 )
+from app.schemas.simulation import DestinationSimulationResponse, SimulationScenario
 from app.schemas.sustainability import DestinationSustainabilityResponse
 from app.services.destination_alternatives import suggest_alternatives
 from app.services.destinations import (
@@ -32,8 +33,45 @@ from app.services.sustainability import (
     SustainabilityFactorScores,
     calculate_sustainability_score,
 )
+from app.services.what_if import simulate_destination
 
 router = APIRouter(prefix="/destinations", tags=["destinations"])
+
+
+@router.post("/{destination_id}/simulate", response_model=DestinationSimulationResponse)
+async def simulate_destination_sustainability(
+    destination_id: int,
+    scenario: SimulationScenario,
+    _: CurrentUser,
+    db: Annotated[Session, Depends(get_db)],
+) -> DestinationSimulationResponse:
+    destination = get_destination_by_id(db, destination_id)
+    if destination is None or not destination.is_active:
+        raise HTTPException(status_code=404, detail="Destination not found")
+    if destination.factor is None:
+        raise HTTPException(
+            status_code=404, detail="Sustainability factor data not found"
+        )
+    settings = get_settings()
+    if settings.simulation_policy is None:
+        raise HTTPException(
+            status_code=503, detail="Simulation policy is not configured"
+        )
+    factor = destination.factor
+    return simulate_destination(
+        destination_id=destination.id,
+        destination_slug=destination.slug,
+        current=SustainabilityFactorScores(
+            environmental=factor.environmental_score,
+            community=factor.community_benefit_score,
+            crowd=factor.crowd_score,
+            infrastructure=factor.infrastructure_score,
+            suitability=factor.tourist_suitability_score,
+        ),
+        scenario=scenario,
+        policy=settings.simulation_policy,
+        sustainability_weights=settings.sustainability_weights,
+    )
 
 
 @router.get(

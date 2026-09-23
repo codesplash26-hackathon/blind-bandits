@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.schemas.pressure import PressureBandThresholds
 from app.services.sustainability import SustainabilityWeightConfiguration
+from app.services.what_if import SimulationPolicy
 
 
 class Settings(BaseSettings):
@@ -28,6 +29,10 @@ class Settings(BaseSettings):
     pressure_band_thresholds: PressureBandThresholds | None = Field(
         default=None,
         validation_alias="PRESSURE_BAND_THRESHOLDS",
+    )
+    simulation_policy: SimulationPolicy | None = Field(
+        default=None,
+        validation_alias="SIMULATION_POLICY",
     )
 
     model_config = SettingsConfigDict(
