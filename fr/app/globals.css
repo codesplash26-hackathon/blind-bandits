@@ -16,8 +16,9 @@
   --color-surface-container-low: var(--muted);
   --color-outline-variant: var(--border);
 
-  --font-heading: var(--font-heading), Georgia, serif;
-  --font-serif: var(--font-heading), Georgia, serif;
+  --font-heading: var(--font-heading);
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-playfair: var(--font-playfair), Georgia, serif;
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -111,6 +112,7 @@
 }
 
 :root {
+  --font-heading: var(--font-sans);
   --background: #FAFCFD;
   --foreground: #002B35;
   --card: #FFFFFF;
@@ -143,6 +145,11 @@
   --sidebar-accent-foreground: #004554;
   --sidebar-border: #D3D0C8;
   --sidebar-ring: #44A6B5;
+}
+
+.landing-page,
+[data-landing-page] {
+  --font-heading: var(--font-playfair), Georgia, serif;
 }
 
 .dark {

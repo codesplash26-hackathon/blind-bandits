@@ -414,7 +414,7 @@ function SidebarMenuButton({
       {
         className: cn(sidebarMenuButtonVariants({ variant, size }), className),
         "data-active": isActive ? "true" : undefined,
-      },
+      } as React.ComponentProps<"button">,
       props
     ),
     render: (!tooltip || !isCollapsed) ? render : <TooltipTrigger render={render} />,

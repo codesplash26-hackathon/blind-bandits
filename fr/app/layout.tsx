@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const playfairDisplayHeading = Playfair_Display({ 
   subsets: ['latin'], 
-  variable: '--font-heading',
+  variable: '--font-playfair',
   style: ['normal', 'italic'],
 });
 

@@ -12,7 +12,7 @@ import { Footer } from "../components/landing/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="font-sans min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+    <div className="landing-page font-sans min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary">
       {/* Sticky Theme-aware Navigation */}
       <Navigation />
 

@@ -31,6 +31,20 @@ export interface NavGroup {
   items: NavItem[];
 }
 
+export interface NavMenuItem {
+  title: string;
+  url: string;
+  icon?: ComponentType<{ className?: string }>;
+  badge?: string;
+  isActive?: boolean;
+}
+
+export interface NavMenuGroup {
+  id: string;
+  label: string;
+  items: NavMenuItem[];
+}
+
 const NAV_GROUPS: { id: NavGroupId; label: string; roles: Role[] }[] = [
   // Tourist Groups
   { id: 'overview', label: 'Overview', roles: ['TOURIST', 'ADMIN'] },

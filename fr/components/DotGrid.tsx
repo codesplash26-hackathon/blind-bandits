@@ -6,9 +6,9 @@ import { InertiaPlugin } from 'gsap/InertiaPlugin';
 
 gsap.registerPlugin(InertiaPlugin);
 
-const throttle = <T extends (...args: unknown[]) => unknown>(func: T, limit: number) => {
+const throttle = <Args extends unknown[], R>(func: (...args: Args) => R, limit: number) => {
   let lastCall = 0;
-  return function (this: unknown, ...args: Parameters<T>) {
+  return function (this: unknown, ...args: Args) {
     const now = performance.now();
     if (now - lastCall >= limit) {
       lastCall = now;
