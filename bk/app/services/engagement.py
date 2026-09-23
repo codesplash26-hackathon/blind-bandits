@@ -1,9 +1,18 @@
+from decimal import Decimal
+from pathlib import Path
+
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, selectinload
 
+from app.ml.pressure.artifact import load_artifact
+from app.ml.pressure.inference import (
+    predict_regional_pressure_from_artifact,
+    pressure_band,
+)
 from app.models.destination import Destination
 from app.models.engagement import (
+    AlternativeSelectionContext,
     InteractionEvent,
     InteractionType,
     RecommendationSearch,
@@ -13,6 +22,7 @@ from app.schemas.engagement import (
     RecommendationHistoryItem,
     history_item_from_record,
 )
+from app.schemas.pressure import PressureBandThresholds
 from app.schemas.recommendation import RecommendationRequest, RecommendationResponse
 from app.services.recommendations import RANKING_VERSION
 from app.services.sustainability import SustainabilityWeightConfiguration
@@ -31,6 +41,10 @@ class AlreadySavedError(Exception):
 
 
 class InvalidSelectionError(Exception):
+    pass
+
+
+class PressureContextUnavailableError(Exception):
     pass
 
 
@@ -135,11 +149,17 @@ def record_interaction(
     destination_id: int,
     event_type: InteractionType,
     recommendation_search_id: int | None,
+    *,
+    source_destination_id: int | None = None,
+    pressure_month: str | None = None,
+    artifact_dir: Path | None = None,
+    pressure_thresholds: PressureBandThresholds | None = None,
 ) -> InteractionEvent:
     _active_destination(db, destination_id)
     if event_type == InteractionType.DESTINATION_SAVED:
         raise InvalidSelectionError
 
+    search: RecommendationSearch | None = None
     if recommendation_search_id is not None:
         search = db.scalar(
             select(RecommendationSearch).where(
@@ -160,12 +180,53 @@ def record_interaction(
     }:
         raise SearchUnavailableError
 
+    context: AlternativeSelectionContext | None = None
+    if pressure_month is not None and source_destination_id is None:
+        raise InvalidSelectionError
+    if source_destination_id is not None:
+        if (
+            event_type != InteractionType.ALTERNATIVE_SELECTED
+            or pressure_month is None
+            or search is None
+            or source_destination_id not in search.result_destination_ids
+            or source_destination_id == destination_id
+        ):
+            raise InvalidSelectionError
+        source = _active_destination(db, source_destination_id)
+        if artifact_dir is None or pressure_thresholds is None:
+            raise PressureContextUnavailableError
+        artifact = load_artifact(artifact_dir)
+        source_value, version = predict_regional_pressure_from_artifact(
+            artifact, region=source.region, month=pressure_month
+        )
+        selected = _active_destination(db, destination_id)
+        selected_value, _ = predict_regional_pressure_from_artifact(
+            artifact, region=selected.region, month=pressure_month
+        )
+        context = AlternativeSelectionContext(
+            source_destination_id=source_destination_id,
+            pressure_month=pressure_month,
+            source_pressure_value=Decimal(str(source_value)).quantize(
+                Decimal("0.00001")
+            ),
+            selected_pressure_value=Decimal(str(selected_value)).quantize(
+                Decimal("0.00001")
+            ),
+            source_pressure_band=pressure_band(source_value, pressure_thresholds).value,
+            selected_pressure_band=pressure_band(
+                selected_value, pressure_thresholds
+            ).value,
+            model_version=version,
+        )
+
     event = InteractionEvent(
         user_id=user_id,
         destination_id=destination_id,
         recommendation_search_id=recommendation_search_id,
         event_type=event_type,
     )
+    if context is not None:
+        event.alternative_context = context
     db.add(event)
     db.commit()
     db.refresh(event)

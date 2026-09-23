@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.models.engagement import InteractionType, RecommendationSearch
 from app.schemas.destination import DestinationResponse
@@ -28,8 +28,17 @@ class InteractionEventRequest(BaseModel):
     destination_id: int = Field(gt=0)
     event_type: InteractionType
     recommendation_search_id: int | None = Field(default=None, gt=0)
+    source_destination_id: int | None = Field(default=None, gt=0)
+    pressure_month: str | None = Field(default=None, pattern=r"^\d{4}-(0[1-9]|1[0-2])$")
 
     model_config = ConfigDict(extra="forbid")
+
+    @field_validator("pressure_month")
+    @classmethod
+    def valid_pressure_year(cls, value: str | None) -> str | None:
+        if value is not None and value.startswith("0000"):
+            raise ValueError("Invalid pressure month")
+        return value
 
     @model_validator(mode="after")
     def validate_selection_context(self) -> "InteractionEventRequest":
@@ -44,6 +53,15 @@ class InteractionEventRequest(BaseModel):
             and self.recommendation_search_id is None
         ):
             raise ValueError("Selection events require recommendation_search_id")
+        if self.event_type == InteractionType.ALTERNATIVE_SELECTED:
+            if (self.source_destination_id is None) != (self.pressure_month is None):
+                raise ValueError(
+                    "Alternative context requires both source_destination_id and pressure_month"
+                )
+        elif self.source_destination_id is not None or self.pressure_month is not None:
+            raise ValueError(
+                "Pressure context is only valid for alternative selections"
+            )
         return self
 
 

@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -9,12 +10,27 @@ from app.core.config import get_settings
 from app.db.session import get_db
 from app.ml.pressure.artifact import MissingPressureModelError
 from app.models.user import User
+from app.schemas.analytics import AdminAnalyticsResponse
 from app.schemas.auth import CurrentUserResponse
 from app.schemas.dashboard import AdminDashboardResponse
+from app.services.analytics import build_admin_analytics
 from app.services.dashboard import build_admin_dashboard
 from app.services.map_data import MissingPressureThresholdsError
 
 router = APIRouter(prefix="/admin", tags=["admin"])
+
+
+@router.get("/analytics", response_model=AdminAnalyticsResponse)
+async def read_admin_analytics(
+    _: AdminUser,
+    db: Annotated[Session, Depends(get_db)],
+    start_date: date,
+    end_date: date,
+) -> AdminAnalyticsResponse:
+    try:
+        return build_admin_analytics(db, start_date=start_date, end_date=end_date)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.get("/dashboard", response_model=AdminDashboardResponse)

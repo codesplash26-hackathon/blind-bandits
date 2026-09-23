@@ -90,6 +90,28 @@ user's history. A recommendation selection must name a destination returned by
 that search. Alternative selections may name a different active destination.
 The saved event is emitted by the save endpoint, not submitted separately.
 
+For attributable alternative selections, clients may additionally send
+`source_destination_id` (a destination in that user's recommendation result)
+and `pressure_month` (`YYYY-MM`) together. The server snapshots both regional
+pressure forecasts, bands, and model version in an event-context record. A
+trained pressure artifact and configured band thresholds are required for this
+context; the request returns `503` if they are unavailable. Older selection
+events without context remain valid, but cannot be counted as pressure
+redirections. These are regional forecasts, not attraction-level measurements.
+
+`GET /api/v1/admin/analytics?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD` is
+ADMIN-only. Both dates are inclusive (UTC), with a maximum of 366 days. It
+returns search and interaction totals, top interests/destinations, and daily
+chart points. "Most saved" counts save events in the range, including
+destinations later unsaved; it is not the current saved-list size. A
+high-pressure redirection requires a recorded HIGH source band and a strictly
+lower selected forecast. Lower-pressure discovery uses the same strict
+comparison regardless of source band. The alternative acceptance rate is the
+fraction of searches created in the range that have an alternative selection
+event in that range. It is a search-to-selection proxy, not an
+offer-impression conversion rate. Results are aggregates; no personal search
+or event rows are exposed.
+
 ## Regional visitor-pressure forecasting
 
 Training runs offline and requires reviewed external CSV data; this repository

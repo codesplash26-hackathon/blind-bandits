@@ -1,8 +1,18 @@
 from datetime import datetime
+from decimal import Decimal
 from enum import Enum
 from typing import Any
 
-from sqlalchemy import JSON, DateTime, ForeignKey, String, UniqueConstraint, func
+from sqlalchemy import (
+    JSON,
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    Numeric,
+    String,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy import Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -82,3 +92,51 @@ class InteractionEvent(Base):
     search: Mapped[RecommendationSearch | None] = relationship(
         back_populates="interactions"
     )
+    alternative_context: Mapped["AlternativeSelectionContext | None"] = relationship(
+        back_populates="event", cascade="all, delete-orphan", uselist=False
+    )
+
+
+class AlternativeSelectionContext(Base):
+    """Pressure snapshot for attributable alternative selections only."""
+
+    __tablename__ = "alternative_selection_contexts"
+    __table_args__ = (
+        UniqueConstraint("event_id"),
+        CheckConstraint(
+            "source_pressure_value BETWEEN 0 AND 100",
+            name="ck_alternative_context_source_pressure",
+        ),
+        CheckConstraint(
+            "selected_pressure_value BETWEEN 0 AND 100",
+            name="ck_alternative_context_selected_pressure",
+        ),
+        CheckConstraint(
+            "source_pressure_band IN ('LOW', 'MEDIUM', 'HIGH')",
+            name="ck_alternative_context_source_band",
+        ),
+        CheckConstraint(
+            "selected_pressure_band IN ('LOW', 'MEDIUM', 'HIGH')",
+            name="ck_alternative_context_selected_band",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_id: Mapped[int] = mapped_column(
+        ForeignKey("interaction_events.id", ondelete="CASCADE"), nullable=False
+    )
+    source_destination_id: Mapped[int] = mapped_column(
+        ForeignKey("destinations.id", ondelete="RESTRICT"), nullable=False
+    )
+    pressure_month: Mapped[str] = mapped_column(String(7), nullable=False)
+    source_pressure_value: Mapped[Decimal] = mapped_column(
+        Numeric(8, 5), nullable=False
+    )
+    selected_pressure_value: Mapped[Decimal] = mapped_column(
+        Numeric(8, 5), nullable=False
+    )
+    source_pressure_band: Mapped[str] = mapped_column(String(6), nullable=False)
+    selected_pressure_band: Mapped[str] = mapped_column(String(6), nullable=False)
+    model_version: Mapped[str] = mapped_column(String(100), nullable=False)
+
+    event: Mapped[InteractionEvent] = relationship(back_populates="alternative_context")
