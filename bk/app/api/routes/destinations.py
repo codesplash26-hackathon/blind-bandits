@@ -8,6 +8,7 @@ from app.api.dependencies import CurrentUser
 from app.core.config import get_settings
 from app.db.session import get_db
 from app.ml.pressure.artifact import MissingPressureModelError
+from app.ml.pressure.explanation import explain_regional_pressure
 from app.ml.pressure.inference import (
     ForecastContextUnavailableError,
     predict_regional_pressure,
@@ -15,7 +16,10 @@ from app.ml.pressure.inference import (
 )
 from app.models.destination import Activity, Destination, destination_activities
 from app.schemas.destination import DestinationResponse
-from app.schemas.pressure import DestinationPressureResponse
+from app.schemas.pressure import (
+    DestinationPressureExplanationResponse,
+    DestinationPressureResponse,
+)
 from app.schemas.sustainability import DestinationSustainabilityResponse
 from app.services.destinations import (
     destination_load_options,
@@ -28,6 +32,43 @@ from app.services.sustainability import (
 )
 
 router = APIRouter(prefix="/destinations", tags=["destinations"])
+
+
+@router.get(
+    "/{destination_id}/pressure/explanation",
+    response_model=DestinationPressureExplanationResponse,
+)
+async def read_destination_pressure_explanation(
+    destination_id: int,
+    _: CurrentUser,
+    db: Annotated[Session, Depends(get_db)],
+    month: Annotated[str, Query(pattern=r"^\d{4}-(0[1-9]|1[0-2])$")],
+) -> DestinationPressureExplanationResponse:
+    if month.startswith("0000"):
+        raise HTTPException(status_code=422, detail="Invalid forecast month")
+    destination = get_destination_by_id(db, destination_id)
+    if destination is None or not destination.is_active:
+        raise HTTPException(status_code=404, detail="Destination not found")
+    settings = get_settings()
+    if settings.pressure_band_thresholds is None:
+        raise HTTPException(status_code=503, detail="Pressure bands are not configured")
+    try:
+        return explain_regional_pressure(
+            settings.pressure_model_artifact_dir,
+            destination_id=destination.id,
+            destination_slug=destination.slug,
+            region=destination.region,
+            month=month,
+            thresholds=settings.pressure_band_thresholds,
+        )
+    except MissingPressureModelError:
+        raise HTTPException(
+            status_code=503, detail="Regional pressure model unavailable"
+        ) from None
+    except ForecastContextUnavailableError:
+        raise HTTPException(
+            status_code=404, detail="Regional forecast unavailable for month"
+        ) from None
 
 
 @router.get("/{destination_id}/pressure", response_model=DestinationPressureResponse)

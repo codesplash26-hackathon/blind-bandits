@@ -15,6 +15,11 @@ from app.ml.pressure.evaluation import (
     chronological_split,
     seasonal_average_baseline,
 )
+from app.ml.pressure.explanation import (
+    explain_regional_pressure,
+    load_explainer,
+    plain_language_explanation,
+)
 from app.ml.pressure.features import FEATURE_NAMES, engineer_features
 from app.ml.pressure.inference import (
     ForecastContextUnavailableError,
@@ -23,7 +28,11 @@ from app.ml.pressure.inference import (
 )
 from app.ml.pressure.training import train_pressure_model
 from app.models.user import User
-from app.schemas.pressure import PressureBand, PressureBandThresholds
+from app.schemas.pressure import (
+    PressureBand,
+    PressureBandThresholds,
+    PressureFeatureContribution,
+)
 from tests.test_destinations import (
     admin_headers,
     create_example_destination,
@@ -175,8 +184,7 @@ def test_training_smoke_and_artifact_loading(trained_artifact: Path) -> None:
     assert metadata["metrics"]["model_mae"] >= 0
     assert metadata["metrics"]["seasonal_baseline_mae"] >= 0
     assert metadata["metrics"]["model_beats_seasonal_baseline"] == (
-        metadata["metrics"]["model_mae"]
-        < metadata["metrics"]["seasonal_baseline_mae"]
+        metadata["metrics"]["model_mae"] < metadata["metrics"]["seasonal_baseline_mae"]
     )
     assert (trained_artifact / "model.joblib").is_file()
     assert (trained_artifact / "metadata.json").is_file()
@@ -288,6 +296,212 @@ async def test_pressure_endpoint_missing_model(
         destination = await create_example_destination(client, admin_user)
         response = await client.get(
             f"/api/v1/destinations/{destination['id']}/pressure?month=2026-01",
+            headers=await admin_headers(client, admin_user),
+        )
+        assert response.status_code == 503
+    finally:
+        get_settings.cache_clear()
+
+
+def test_tree_shap_explanation_aligns_with_original_features(
+    trained_artifact: Path,
+) -> None:
+    explanation = explain_regional_pressure(
+        trained_artifact,
+        destination_id=42,
+        destination_slug="example-coastal-trail",
+        region="Southern",
+        month="2026-01",
+        thresholds=PressureBandThresholds(low_max=40, medium_max=70),
+    )
+    assert explanation.explanation_method == "TreeSHAP"
+    assert explanation.contribution_kind == "model_explanation"
+    assert explanation.model_version == "synthetic-test-v1"
+    assert explanation.destination_id == 42
+    assert explanation.region == "Southern"
+    assert explanation.month == "2026-01"
+    assert list(explanation.input_features) == list(FEATURE_NAMES)
+    assert {item.feature_name for item in explanation.feature_contributions} == set(
+        FEATURE_NAMES
+    )
+    assert len(explanation.feature_contributions) == len(FEATURE_NAMES)
+    for item in explanation.feature_contributions:
+        assert item.input_value == explanation.input_features[item.feature_name]
+    assert explanation.base_value + sum(
+        item.shap_value for item in explanation.feature_contributions
+    ) == pytest.approx(explanation.raw_model_prediction, abs=1e-5)
+    expected_forecast, _ = predict_regional_pressure(
+        trained_artifact, region="Southern", month="2026-01"
+    )
+    assert explanation.predicted_regional_occupancy_rate == pytest.approx(
+        expected_forecast
+    )
+
+
+def test_tree_shap_explainer_is_reused(trained_artifact: Path) -> None:
+    first = load_explainer(trained_artifact)
+    second = load_explainer(trained_artifact)
+    assert first is second
+    assert first.tree_explainer is second.tree_explainer
+
+
+def test_template_explanation_is_deterministic(trained_artifact: Path) -> None:
+    kwargs = {
+        "destination_id": 42,
+        "destination_slug": "example-coastal-trail",
+        "region": "Southern",
+        "month": "2026-01",
+        "thresholds": PressureBandThresholds(low_max=40, medium_max=70),
+    }
+    first = explain_regional_pressure(trained_artifact, **kwargs)
+    second = explain_regional_pressure(trained_artifact, **kwargs)
+    assert first.plain_language_explanation == second.plain_language_explanation
+    assert "regional occupancy" in first.plain_language_explanation
+    assert "model explanations" in first.plain_language_explanation
+    assert "not causal" in first.plain_language_explanation
+
+
+def test_template_handles_neutral_contributions() -> None:
+    text = plain_language_explanation(
+        region="Southern",
+        month="2026-01",
+        forecast=50,
+        base_value=50,
+        contributions=[],
+    )
+    assert "no individual input materially shifts" in text
+
+
+def test_template_selects_two_strongest_model_drivers() -> None:
+    contributions = [
+        PressureFeatureContribution(
+            feature_name="is_holiday",
+            display_name="holiday indicator",
+            input_value=1,
+            shap_value=0.2,
+            direction="INCREASES",
+        ),
+        PressureFeatureContribution(
+            feature_name="occupancy_lag_1",
+            display_name="occupancy last month",
+            input_value=60,
+            shap_value=5.0,
+            direction="INCREASES",
+        ),
+        PressureFeatureContribution(
+            feature_name="arrival_trend",
+            display_name="recent tourist-arrival trend",
+            input_value=-0.1,
+            shap_value=-3.0,
+            direction="DECREASES",
+        ),
+    ]
+    text = plain_language_explanation(
+        region="Southern",
+        month="2026-01",
+        forecast=52,
+        base_value=50,
+        contributions=contributions,
+    )
+    assert "occupancy last month raises" in text
+    assert "recent tourist-arrival trend lowers" in text
+    assert "holiday indicator" not in text
+
+
+def test_explanation_uses_requested_region_context(trained_artifact: Path) -> None:
+    thresholds = PressureBandThresholds(low_max=40, medium_max=70)
+    southern = explain_regional_pressure(
+        trained_artifact,
+        destination_id=1,
+        destination_slug="southern-example",
+        region="Southern",
+        month="2026-01",
+        thresholds=thresholds,
+    )
+    central = explain_regional_pressure(
+        trained_artifact,
+        destination_id=2,
+        destination_slug="central-example",
+        region="Central",
+        month="2026-01",
+        thresholds=thresholds,
+    )
+    assert southern.input_features["region"] == "Southern"
+    assert central.input_features["region"] == "Central"
+    assert (
+        southern.input_features["occupancy_lag_1"]
+        != central.input_features["occupancy_lag_1"]
+    )
+    assert southern.destination_id == 1
+    assert central.destination_id == 2
+
+
+@pytest.mark.anyio
+async def test_pressure_explanation_endpoint_matches_forecast(
+    client: AsyncClient,
+    admin_user: User,
+    pressure_settings: None,
+) -> None:
+    destination = await create_example_destination(client, admin_user)
+    path = f"/api/v1/destinations/{destination['id']}/pressure"
+    explanation_url = f"{path}/explanation?month=2026-01"
+    assert (await client.get(explanation_url)).status_code == 401
+    headers = await tourist_headers(client)
+    explanation_response = await client.get(explanation_url, headers=headers)
+    forecast_response = await client.get(f"{path}?month=2026-01", headers=headers)
+    assert explanation_response.status_code == 200, explanation_response.text
+    body = explanation_response.json()
+    forecast = forecast_response.json()
+    assert body["predicted_regional_occupancy_rate"] == pytest.approx(
+        forecast["predicted_regional_occupancy_rate"]
+    )
+    assert body["band"] == forecast["band"]
+    assert body["model_version"] == forecast["model_version"]
+    assert body["scope"] == "REGIONAL"
+    assert body["input_features"]["region"] == body["region"]
+    assert body["month"] == "2026-01"
+
+
+@pytest.mark.anyio
+async def test_pressure_explanation_endpoint_rejects_invalid_requests(
+    client: AsyncClient,
+    admin_user: User,
+    pressure_settings: None,
+) -> None:
+    destination = await create_example_destination(client, admin_user)
+    headers = await admin_headers(client, admin_user)
+    base = f"/api/v1/destinations/{destination['id']}/pressure/explanation"
+    assert (
+        await client.get(f"{base}?month=2026-13", headers=headers)
+    ).status_code == 422
+    assert (
+        await client.get(f"{base}?month=0000-01", headers=headers)
+    ).status_code == 422
+    assert (
+        await client.get(f"{base}?month=2026-02", headers=headers)
+    ).status_code == 404
+    assert (
+        await client.get(
+            "/api/v1/destinations/999999/pressure/explanation?month=2026-01",
+            headers=headers,
+        )
+    ).status_code == 404
+
+
+@pytest.mark.anyio
+async def test_pressure_explanation_endpoint_missing_model(
+    client: AsyncClient,
+    admin_user: User,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setenv("PRESSURE_MODEL_ARTIFACT_DIR", str(tmp_path / "absent"))
+    monkeypatch.setenv("PRESSURE_BAND_THRESHOLDS", '{"low_max": 40, "medium_max": 70}')
+    get_settings.cache_clear()
+    try:
+        destination = await create_example_destination(client, admin_user)
+        response = await client.get(
+            f"/api/v1/destinations/{destination['id']}/pressure/explanation?month=2026-01",
             headers=await admin_headers(client, admin_user),
         )
         assert response.status_code == 503

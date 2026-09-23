@@ -120,3 +120,13 @@ band cutoffs are bundled. The endpoint
 `GET /api/v1/destinations/{id}/pressure?month=YYYY-MM` requires authentication,
 reports **regional monthly occupancy**, and only serves region/month contexts
 included in the artifact. It does not claim destination-level precision.
+
+`GET /api/v1/destinations/{id}/pressure/explanation?month=YYYY-MM` returns
+the same regional forecast and band, plus the original input values, TreeSHAP
+attributions, an expected/base value, and a deterministic plain-language
+summary of the two strongest model drivers. The one-hot region columns are
+combined into one `region` attribution. SHAP values add to the **raw** model
+output; the displayed occupancy percentage is bounded to 0–100. These are
+model explanations, not causal claims or the exact weighted contributions used
+by the Sustainability Index. The backend reuses an explainer while the deployed
+artifact files remain unchanged. No LLM is used.
