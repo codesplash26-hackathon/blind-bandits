@@ -205,3 +205,28 @@ null pressure fields and is omitted by pressure filters. A nonempty map needs
 the configured pressure model and band thresholds; an empty dataset returns an
 empty marker list without loading a model. This endpoint supplies data only;
 map rendering belongs to the frontend.
+
+## Administrator dashboard
+
+`GET /api/v1/admin/dashboard?month=YYYY-MM` requires an `ADMIN` account. The
+month is required because pressure is a regional monthly forecast. The
+dashboard reuses the map-data projection, Sustainability Index calculation,
+and trained pressure artifact; it does not recalculate scores with separate
+rules or retrain a model.
+
+`total_active_destinations` counts active records. `monitored_destinations`
+counts active destinations with a forecast for the requested month;
+`without_pressure_forecast` is the remainder. Low, medium, and high counts sum
+to monitored destinations, not all active records. The highest-pressure table
+shows at most five destinations, ordered by predicted occupancy descending and
+then ID. Destinations in the same region can share a forecast. Sustainability
+averages include active destinations with factor data, even when pressure is
+unavailable. Missing averages are null, not zero.
+
+The `recommended_action` object is a deterministic advisory based on the
+configured pressure bands: review high-pressure destinations first, otherwise
+monitor medium pressure, maintain routine monitoring for low pressure, or
+report that no forecast data is available. It does not trigger operational
+changes automatically. A nonempty dashboard requires the deployed pressure
+artifact and band thresholds; an empty dataset returns zero counts without
+loading the model.
