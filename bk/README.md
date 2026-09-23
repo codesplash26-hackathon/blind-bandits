@@ -89,3 +89,34 @@ Selection events also require a `recommendation_search_id` from the current
 user's history. A recommendation selection must name a destination returned by
 that search. Alternative selections may name a different active destination.
 The saved event is emitted by the save endpoint, not submitted separately.
+
+## Regional visitor-pressure forecasting
+
+Training runs offline and requires reviewed external CSV data; this repository
+does not include or manufacture production tourism observations. The monthly
+observations CSV needs `month` (`YYYY-MM`), `region`, `occupancy_rate` (0–100),
+`tourist_arrivals`, `is_holiday` (0/1), and `is_peak_season` (0/1). The calendar
+CSV needs `month`, `region`, `is_holiday`, and `is_peak_season` for the next month
+after each region's last observation. Holiday and season indicators must be
+supplied from reviewed sources; the application does not infer them.
+
+```bash
+python -m app.cli.train_pressure \
+  --observations /path/to/reviewed-monthly-regions.csv \
+  --calendar /path/to/reviewed-next-month-calendar.csv \
+  --version reviewed-model-version \
+  --output-dir artifacts/visitor_pressure
+```
+
+The pipeline uses only prior occupancy and arrival values as predictive inputs,
+evaluates on a chronological holdout (preferably the latest complete calendar
+year), compares model MAE with a training-only same-region/same-month seasonal
+average, then refits on all observations for deployment. The output directory
+contains a trusted `model.joblib` and `metadata.json`; do not load untrusted
+joblib files. Set `PRESSURE_MODEL_ARTIFACT_DIR` to that directory on the API host.
+Set `PRESSURE_BAND_THRESHOLDS` to reviewed JSON such as
+`{"low_max": <reviewed value>, "medium_max": <reviewed value>}`. No production
+band cutoffs are bundled. The endpoint
+`GET /api/v1/destinations/{id}/pressure?month=YYYY-MM` requires authentication,
+reports **regional monthly occupancy**, and only serves region/month contexts
+included in the artifact. It does not claim destination-level precision.
