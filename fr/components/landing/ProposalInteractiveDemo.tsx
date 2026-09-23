@@ -34,13 +34,13 @@ export const ProposalInteractiveDemo = () => {
       <div className="text-center max-w-3xl mx-auto mb-12">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-semibold uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Explainable AI Engine Preview</span>
+          <span>Interactive Live Preview</span>
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight">
-          How CeylonTour Rebalances Travel
+          How CeylonTour Helps You Travel Smarter
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg mt-3 font-normal leading-relaxed">
-          Explore our core AI features: transparent 5-factor scoring, explainable contributions, and real-time overtourism risk diversion.
+          See how we choose destinations: clear ratings, honest reasons for each pick, and quiet hidden alternatives.
         </p>
 
         {/* Tab Navigation */}
@@ -53,7 +53,7 @@ export const ProposalInteractiveDemo = () => {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            1. 5-Factor XAI Score
+            1. Destination Score & Why
           </button>
           <button
             onClick={() => setActiveTab("overtourism")}
@@ -63,7 +63,7 @@ export const ProposalInteractiveDemo = () => {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            2. Overtourism & Swap
+            2. Avoid Crowds with Smart Swaps
           </button>
           <button
             onClick={() => setActiveTab("simulator")}
@@ -73,7 +73,7 @@ export const ProposalInteractiveDemo = () => {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            3. What-If Simulator
+            3. Try the Sliders
           </button>
         </div>
       </div>
@@ -154,14 +154,14 @@ export const ProposalInteractiveDemo = () => {
               <div className="flex items-center gap-2 text-secondary mb-2">
                 <Info className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  XAI Explanation Layer
+                  Why You'll Love This Place
                 </span>
               </div>
               <h4 className="text-2xl font-bold font-heading text-foreground">
                 Why was Belihuloya Recommended?
               </h4>
               <p className="text-muted-foreground text-sm mt-1">
-                The system never provides a recommendation without a reason. Contributions to the Sustainability Score are computed directly from published index weights.
+                We always explain why a place is picked for you, showing what makes it special and eco-friendly.
               </p>
             </div>
 

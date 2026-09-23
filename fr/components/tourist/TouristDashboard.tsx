@@ -63,7 +63,7 @@ export default function TouristDashboard() {
             {getTimeGreeting()}, {user?.name || 'Traveler'} 👋
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base mt-1.5 max-w-2xl">
-            Where would you like to explore? Discover sustainable, low-pressure destinations across Sri Lanka.
+            Where would you like to travel? Discover peaceful and beautiful places across Sri Lanka.
           </p>
         </div>
 
@@ -100,15 +100,15 @@ export default function TouristDashboard() {
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white">
             <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-            <span>AI-Powered Sustainable Recommendation Engine</span>
+            <span>Smart Trip Planner</span>
           </div>
 
           <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
-            Find your next conscious destination
+            Find your next favorite place
           </h2>
 
           <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-            Get personalized recommendations ranked by budget, duration, interest, crowd preference, and verifiable sustainability metrics.
+            Get travel ideas matched to your budget, time, interests, and quiet spots with nature in mind.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">

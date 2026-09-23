@@ -112,7 +112,7 @@ export const Hero = () => {
 
           {/* Subtitle */}
           <p className="font-body-md text-slate-100/90 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed drop-shadow">
-            Discover Sri Lanka’s hidden gems while protecting fragile ecosystems and supporting local communities with transparent, Explainable AI recommendations.
+            Discover Sri Lanka’s hidden gems while caring for nature and supporting local communities with smart, personalized travel suggestions.
           </p>
 
           {/* Action Pill Buttons */}
@@ -121,7 +121,7 @@ export const Hero = () => {
               onClick={() => router.push("/auth")}
               className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-2xl transition-all hover:-translate-y-0.5 group"
             >
-              <span>Find a Sustainable Destination</span>
+              <span>Find a Destination</span>
               <span className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center text-white transition-colors">
                 <ArrowUpRight size={16} />
               </span>
@@ -131,7 +131,7 @@ export const Hero = () => {
               onClick={() => router.push("#why-us")}
               className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-md text-[#004554] hover:bg-white font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
             >
-              <span>Explore Tourism Sustainability</span>
+              <span>See How It Works</span>
               <span className="w-7 h-7 rounded-full bg-[#004554] text-white flex items-center justify-center group-hover:bg-[#003440] transition-colors">
                 <ArrowUpRight size={16} />
               </span>

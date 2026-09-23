@@ -10,11 +10,18 @@ import {
   BarChart3,
   Users,
   Settings,
+  Compass,
 } from 'lucide-react';
 import type { ComponentType, SVGProps } from 'react';
 import { Role } from '@/types/ceylontour';
 
-export type NavGroupId = 'overview' | 'explore' | 'travel' | 'account' | 'tourism' | 'management' | 'system';
+export type NavGroupId =
+  | 'overview'
+  | 'explore'
+  | 'travel'
+  | 'tourism'
+  | 'management'
+  | 'system';
 
 export interface NavItem {
   id: string;
@@ -45,21 +52,20 @@ export interface NavMenuGroup {
   items: NavMenuItem[];
 }
 
-const NAV_GROUPS: { id: NavGroupId; label: string; roles: Role[] }[] = [
-  // Tourist Groups
-  { id: 'overview', label: 'Overview', roles: ['TOURIST', 'ADMIN'] },
-  { id: 'explore', label: 'Explore', roles: ['TOURIST'] },
-  { id: 'travel', label: 'My Travel', roles: ['TOURIST'] },
-  { id: 'account', label: 'Account', roles: ['TOURIST', 'ADMIN'] },
+const NAV_GROUPS: { id: NavGroupId; label: string }[] = [
+  // Tourist navigation groups
+  { id: 'overview', label: 'Overview' },
+  { id: 'explore', label: 'Explore Sri Lanka' },
+  { id: 'travel', label: 'My Travel' },
 
-  // Admin Groups
-  { id: 'tourism', label: 'Tourism Monitoring', roles: ['ADMIN'] },
-  { id: 'management', label: 'Management', roles: ['ADMIN'] },
-  { id: 'system', label: 'System Configuration', roles: ['ADMIN'] },
+  // Admin / Authority navigation groups
+  { id: 'tourism', label: 'Tourism Monitoring' },
+  { id: 'management', label: 'Operations & Registry' },
+  { id: 'system', label: 'System Configuration' },
 ];
 
 export const NAV_ITEMS: NavItem[] = [
-  // Tourist Items
+  // ─── Tourist Items ─────────────────────────────────────────
   {
     id: 'dashboard',
     label: 'Dashboard',
@@ -103,15 +109,8 @@ export const NAV_ITEMS: NavItem[] = [
     group: 'travel',
     roles: ['TOURIST'],
   },
-  {
-    id: 'profile',
-    label: 'Profile',
-    href: '/profile',
-    group: 'account',
-    roles: ['TOURIST'],
-  },
 
-  // Admin Items
+  // ─── Authority / Admin Items ───────────────────────────────
   {
     id: 'adminDashboard',
     label: 'Authority Overview',
@@ -154,14 +153,35 @@ export const NAV_ITEMS: NavItem[] = [
     group: 'system',
     roles: ['ADMIN'],
   },
-  {
-    id: 'adminProfile',
-    label: 'Authority Profile',
-    href: '/admin/profile',
-    group: 'account',
-    roles: ['ADMIN'],
-  },
+
+  // NOTE: /profile and /admin/profile are deliberately absent from the main list.
+  // Like bumi, they are accessed from the sidebar footer's account menu (NavUser).
 ];
+
+/**
+ * Returns navigation items for the given user role
+ */
+export function getNavItemsForRole(userRole: Role | string | null | undefined): NavItem[] {
+  if (!userRole) return [];
+  const normalizedRole = userRole === 'ADMIN' ? 'ADMIN' : 'TOURIST';
+  return NAV_ITEMS.filter((item) => item.roles.includes(normalizedRole));
+}
+
+/**
+ * Groups navigation items according to NAV_GROUPS for the given role,
+ * dropping empty sections (matching bumi pattern)
+ */
+export function getNavGroupsForRole(userRole: Role | string | null | undefined): NavGroup[] {
+  const items = getNavItemsForRole(userRole);
+
+  return NAV_GROUPS.map(({ id, label }) => ({
+    id,
+    label,
+    items: items.filter((item) => item.group === id),
+  })).filter((group) => group.items.length > 0);
+}
+
+export default NAV_ITEMS;
 
 export const ICONS_MAP: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   dashboard: LayoutDashboard,
@@ -180,15 +200,3 @@ export const ICONS_MAP: Record<string, ComponentType<SVGProps<SVGSVGElement>>> =
   adminProfile: User,
 };
 
-export function getNavGroupsForRole(userRole: Role | null | undefined): NavGroup[] {
-  const activeRole: Role = userRole || 'TOURIST';
-  const roleItems = NAV_ITEMS.filter((item) => item.roles.includes(activeRole));
-
-  return NAV_GROUPS.filter((group) => group.roles.includes(activeRole))
-    .map(({ id, label }) => ({
-      id,
-      label,
-      items: roleItems.filter((item) => item.group === id),
-    }))
-    .filter((group) => group.items.length > 0);
-}
