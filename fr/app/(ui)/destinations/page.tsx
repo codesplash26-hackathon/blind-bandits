@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -10,100 +10,239 @@ import {
   ArrowRight,
   SlidersHorizontal,
   Compass,
+  Bookmark,
+  ShieldCheck,
+  Leaf,
+  Sparkles,
+  X,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { DESTINATIONS } from '@/lib/mockData';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 export default function DestinationsCatalogPage() {
-  const { isSaved, toggleSaveDestination } = useAuth();
+  const { isSaved, toggleSaveDestination, savedDestinationIds } = useAuth();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string>('All');
   const [selectedPressure, setSelectedPressure] = useState<string>('All');
   const [sortBy, setSortBy] = useState<'sustainability' | 'name' | 'budget'>('sustainability');
+  const [lastSavedNotice, setLastSavedNotice] = useState<string | null>(null);
 
   const tagFilters = ['All', 'Nature', 'Beach', 'Wildlife', 'Culture', 'Hiking', 'Adventure'];
   const pressureFilters = ['All', 'LOW', 'MEDIUM', 'HIGH'];
 
-  const filteredDestinations = DESTINATIONS.filter((dest) => {
-    // Search filter
-    const matchesSearch =
-      dest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      dest.district.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      dest.description.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredDestinations = useMemo(() => {
+    return DESTINATIONS.filter((dest) => {
+      const matchesSearch =
+        dest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        dest.district.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        dest.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Category filter
-    const matchesTag =
-      selectedTag === 'All' ||
-      dest.tags.some((t) => t.toLowerCase() === selectedTag.toLowerCase());
+      const matchesTag =
+        selectedTag === 'All' ||
+        dest.tags.some((t) => t.toLowerCase() === selectedTag.toLowerCase());
 
-    // Pressure filter
-    const matchesPressure =
-      selectedPressure === 'All' || dest.pressure.level === selectedPressure;
+      const matchesPressure =
+        selectedPressure === 'All' || dest.pressure.level === selectedPressure;
 
-    return matchesSearch && matchesTag && matchesPressure;
-  }).slice().sort((a, b) => {
-    if (sortBy === 'sustainability') {
-      return b.sustainability.overall - a.sustainability.overall;
-    }
-    if (sortBy === 'budget') {
-      return a.typicalBudgetLKR - b.typicalBudgetLKR;
-    }
-    return a.name.localeCompare(b.name);
-  });
+      return matchesSearch && matchesTag && matchesPressure;
+    }).slice().sort((a, b) => {
+      if (sortBy === 'sustainability') {
+        return b.sustainability.overall - a.sustainability.overall;
+      }
+      if (sortBy === 'budget') {
+        return a.typicalBudgetLKR - b.typicalBudgetLKR;
+      }
+      return a.name.localeCompare(b.name);
+    });
+  }, [searchQuery, selectedTag, selectedPressure, sortBy]);
 
-  const getPressureBadgeVariant = (level: string) => {
-    switch (level) {
-      case 'LOW':
-        return 'success';
-      case 'MEDIUM':
-        return 'warning';
-      case 'HIGH':
-        return 'destructive';
-      default:
-        return 'default';
-    }
+  const handleSaveToggle = (destId: string, destName: string) => {
+    const currentlySaved = isSaved(destId);
+    toggleSaveDestination(destId);
+    setLastSavedNotice(
+      currentlySaved ? `Removed ${destName} from your saved trips` : `Saved ${destName} to your journey bucketlist!`
+    );
+    setTimeout(() => setLastSavedNotice(null), 3000);
   };
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Header Banner */}
-      <div className="space-y-1.5">
-        <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
-          Explore Sri Lanka Destinations
-        </h1>
-        <p className="text-xs sm:text-sm text-muted-foreground">
-          Browse monitored pilot destinations with verified environmental scores and live pressure indicators.
-        </p>
+    <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
+      {/* ── 1. Header ─────────────────────────────────────────── */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+              Island Registry &amp; Sanctuaries
+            </span>
+            <span className="text-[#94A3B8]">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
+              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+              {DESTINATIONS.length} Monitored Pilot Sanctuaries
+            </span>
+          </div>
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+            Explore Sri Lanka Sanctuaries
+          </h1>
+          <p className="text-xs sm:text-sm text-[#5A737D] mt-0.5 font-medium">
+            Browse verified eco-destinations with transparent sustainability audits and real-time visitor pressure.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Link href="/map">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-2xl gap-2 bg-white border-[#004554]/15 text-[#004554] hover:bg-[#EAF4F7] text-xs font-bold shadow-[0_2px_8px_rgba(0,69,84,0.03)] cursor-pointer"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#44A6B5]" />
+              <span>Interactive Map View</span>
+            </Button>
+          </Link>
+
+          <Link href="/discover">
+            <Button
+              size="sm"
+              className="rounded-2xl gap-2 bg-[#004554] hover:bg-[#003844] text-white text-xs font-bold shadow-sm hover:shadow-md transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-light-blue" />
+              <span>AI Trip Finder</span>
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      {/* Filter & Search Controls Bar */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
-        {/* Top Row: Search Input & Sort Dropdown */}
+      {/* Toast Notification */}
+      {lastSavedNotice && (
+        <div className="p-3.5 px-4 rounded-2xl bg-[#E9F1F6] border border-[#44A6B5]/50 flex items-center justify-between text-xs text-black shadow-xs animate-in fade-in duration-200">
+          <div className="flex items-center gap-2.5">
+            <span className="p-1 rounded-full bg-[#44A6B5]/20 text-[#44A6B5]">
+              <Bookmark className="w-3.5 h-3.5" />
+            </span>
+            <span className="font-bold">{lastSavedNotice}</span>
+          </div>
+          <Link href="/saved" className="text-[#44A6B5] font-extrabold hover:underline">
+            View Bucketlist →
+          </Link>
+        </div>
+      )}
+
+      {/* ── 2. Modern Kleon Metric KPI Cards ─────────────────────────────────── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Metric 1: Total Sanctuaries */}
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all flex items-center justify-between">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+              Catalog Sanctuaries
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-black tracking-tight">{DESTINATIONS.length}</span>
+              <span className="text-xs text-[#5A737D] font-semibold">regions</span>
+            </div>
+            <p className="text-[11px] text-[#5A737D] font-semibold mt-0.5">
+              Across all 9 provinces
+            </p>
+          </div>
+          <div className="p-3 rounded-2xl bg-[#EAF4F7] text-[#004554] border border-[#004554]/10">
+            <Compass className="w-5 h-5 text-[#44A6B5]" />
+          </div>
+        </div>
+
+        {/* Metric 2: Low-Pressure Sanctuaries */}
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all flex items-center justify-between">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+              Uncrowded Havens
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-black tracking-tight">8</span>
+              <span className="text-xs text-[#5A737D] font-semibold">destinations</span>
+            </div>
+            <p className="text-[11px] text-[#5A737D] font-semibold mt-0.5">
+              <span className="text-[#44A6B5] font-bold">● 67%</span> low crowd density
+            </p>
+          </div>
+          <div className="p-3 rounded-2xl bg-[#EAF4F7] text-[#004554] border border-[#004554]/10">
+            <Leaf className="w-5 h-5 text-[#004554]" />
+          </div>
+        </div>
+
+        {/* Metric 3: Avg Sustainability */}
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all flex items-center justify-between">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+              Avg Sustainability
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-black tracking-tight">86</span>
+              <span className="text-xs text-[#5A737D] font-semibold">/100</span>
+            </div>
+            <p className="text-[11px] text-[#5A737D] font-semibold mt-0.5">
+              Verified eco-audited
+            </p>
+          </div>
+          <div className="p-3 rounded-2xl bg-[#EAF4F7] text-[#004554] border border-[#004554]/10">
+            <ShieldCheck className="w-5 h-5 text-[#44A6B5]" />
+          </div>
+        </div>
+
+        {/* Metric 4: Saved Count */}
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all flex items-center justify-between">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+              In Your Bucketlist
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-black tracking-tight">
+                {savedDestinationIds.length}
+              </span>
+              <span className="text-xs text-[#5A737D] font-semibold">places</span>
+            </div>
+            <Link href="/saved" className="text-[11px] text-[#44A6B5] font-extrabold hover:underline block mt-0.5">
+              Manage saved trips →
+            </Link>
+          </div>
+          <div className="p-3 rounded-2xl bg-[#EAF4F7] text-[#44A6B5] border border-[#004554]/10">
+            <Bookmark className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── 3. Modern Kleon-Style Search & Filters Bar ──────────────────────── */}
+      <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card space-y-4">
+        {/* Top Filter Controls: Search & Sort */}
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A737D]" />
             <input
               type="text"
-              placeholder="Search destinations by name, district, or keywords..."
+              placeholder="Search destinations by name, district, or style (e.g. Belihuloya, hiking)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              className="w-full pl-10 pr-9 py-2.5 rounded-2xl border border-[#004554]/12 bg-white text-xs sm:text-sm text-[#004554] placeholder:text-[#5A737D] focus:ring-2 focus:ring-[#004554] focus:border-transparent outline-none transition-all shadow-2xs font-semibold"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5A737D] hover:text-[#004554] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-muted-foreground font-semibold flex items-center gap-1">
-              <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span className="text-xs text-[#5A737D] font-bold flex items-center gap-1">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#44A6B5]" />
               <span>Sort:</span>
             </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'sustainability' | 'name' | 'budget')}
-              className="px-3 py-2 rounded-xl border border-border bg-background text-xs font-semibold text-foreground focus:border-primary outline-none transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-2xl border border-[#004554]/12 bg-white text-xs font-bold text-[#004554] focus:ring-2 focus:ring-[#004554] outline-none transition-colors cursor-pointer shadow-2xs"
             >
               <option value="sustainability">Sustainability (High to Low)</option>
               <option value="name">Name (A to Z)</option>
@@ -112,121 +251,144 @@ export default function DestinationsCatalogPage() {
           </div>
         </div>
 
-        {/* Bottom Row: Category & Pressure Filter Pills */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-2 border-t border-border/60">
-          {/* Experience Tags */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-xs text-muted-foreground font-semibold mr-1">Experience:</span>
-            {tagFilters.map((tag) => (
-              <button
-                type="button"
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  selectedTag === tag
-                    ? 'bg-primary text-primary-foreground shadow-xs'
-                    : 'bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted'
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
+        {/* Bottom Filter Controls: Tags & Pressure Level */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-3 border-t border-[#004554]/10">
+          {/* Experience Tabs */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="text-xs text-[#5A737D] font-bold">Experience:</span>
+            <div className="p-1.5 rounded-2xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] flex flex-wrap items-center gap-1 shadow-[inset_0_1px_3px_rgba(0,69,84,0.06)]">
+              {tagFilters.map((tag) => {
+                const isActive = selectedTag === tag;
+                return (
+                  <button
+                    type="button"
+                    key={tag}
+                    onClick={() => setSelectedTag(tag)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white shadow-[0_3px_12px_rgba(0,69,84,0.28)] ring-1 ring-white/20 font-black'
+                        : 'bg-white/60 hover:bg-white text-[#004554] hover:text-[#002D38] border border-transparent hover:border-[#B5D7E4] hover:shadow-2xs'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Pressure Filters */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-xs text-muted-foreground font-semibold mr-1">Pressure:</span>
-            {pressureFilters.map((p) => (
-              <button
-                type="button"
-                key={p}
-                onClick={() => setSelectedPressure(p)}
-                className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  selectedPressure === p
-                    ? 'bg-secondary text-secondary-foreground shadow-xs'
-                    : 'bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted'
-                }`}
-              >
-                {p === 'All' ? 'All' : `${p.charAt(0) + p.slice(1).toLowerCase()}`}
-              </button>
-            ))}
+          {/* Pressure Level Tabs */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span className="text-xs text-[#5A737D] font-bold">Pressure:</span>
+            <div className="p-1.5 rounded-2xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] flex items-center gap-1 shadow-[inset_0_1px_3px_rgba(0,69,84,0.06)]">
+              {pressureFilters.map((p) => {
+                const isActive = selectedPressure === p;
+                let activeStyle = 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white shadow-[0_3px_12px_rgba(0,69,84,0.28)] ring-1 ring-white/20 font-black';
+                let inactiveStyle = 'bg-white/60 hover:bg-white text-[#004554] border border-transparent hover:border-[#B5D7E4] hover:shadow-2xs';
+
+                if (p === 'LOW') {
+                  activeStyle = 'bg-gradient-to-r from-[#047857] to-[#059669] text-white shadow-[0_3px_12px_rgba(4,120,87,0.3)] ring-1 ring-white/20 font-black';
+                  inactiveStyle = 'bg-white/60 hover:bg-emerald-50 text-emerald-800 border border-transparent hover:border-emerald-200 hover:shadow-2xs';
+                } else if (p === 'MEDIUM') {
+                  activeStyle = 'bg-gradient-to-r from-[#B45309] to-[#D97706] text-white shadow-[0_3px_12px_rgba(180,83,9,0.3)] ring-1 ring-white/20 font-black';
+                  inactiveStyle = 'bg-white/60 hover:bg-amber-50 text-amber-800 border border-transparent hover:border-amber-200 hover:shadow-2xs';
+                } else if (p === 'HIGH') {
+                  activeStyle = 'bg-gradient-to-r from-[#BE123C] to-[#E11D48] text-white shadow-[0_3px_12px_rgba(190,18,60,0.3)] ring-1 ring-white/20 font-black';
+                  inactiveStyle = 'bg-white/60 hover:bg-rose-50 text-rose-800 border border-transparent hover:border-rose-200 hover:shadow-2xs';
+                }
+
+                return (
+                  <button
+                    type="button"
+                    key={p}
+                    onClick={() => setSelectedPressure(p)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive ? activeStyle : inactiveStyle
+                    }`}
+                  >
+                    {p === 'All' ? 'All' : `${p.charAt(0) + p.slice(1).toLowerCase()}`}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Destinations Grid */}
+      {/* ── 4. Destinations Grid (Kleon Modern Cards) ───────────────────────── */}
       {filteredDestinations.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDestinations.map((dest) => {
             const isBookmarked = isSaved(dest.id);
 
             return (
-              <Card
+              <div
                 key={dest.id}
-                className="group rounded-3xl border border-border/80 overflow-hidden hover:border-secondary/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                className="group rounded-3xl bg-white border border-[#004554]/10 overflow-hidden shadow-dashboard-card transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Image Section */}
-                <div className="relative h-48 w-full overflow-hidden">
+                <div className="relative h-52 w-full overflow-hidden">
                   <Image
                     src={dest.image}
                     alt={dest.name}
                     fill
-                    className="object-cover group-hover:scale-108 transition-transform duration-500"
+                    className="object-cover group-hover:scale-106 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#004554]/85 via-transparent to-transparent pointer-events-none" />
 
                   {/* Pressure Pill */}
-                  <div className="absolute top-3 left-3">
-                    <Badge variant={getPressureBadgeVariant(dest.pressure.level)}>
+                  <div className="absolute top-3.5 left-3.5">
+                    <span className="text-[10px] font-black px-3 py-1 rounded-full bg-[#004554]/85 text-white border border-white/20 backdrop-blur-md">
                       {dest.pressure.level} PRESSURE
-                    </Badge>
+                    </span>
                   </div>
 
                   {/* Save Heart Button */}
                   <button
                     type="button"
-                    onClick={() => toggleSaveDestination(dest.id)}
-                    className="absolute top-3 right-3 p-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md text-white transition-colors cursor-pointer"
+                    onClick={() => handleSaveToggle(dest.id, dest.name)}
+                    className="absolute top-3.5 right-3.5 p-2 rounded-full bg-white/90 hover:bg-white text-[#004554] shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
+                    title={isBookmarked ? 'Saved' : 'Save'}
                   >
                     <Heart
                       className={`w-4 h-4 ${
-                        isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-white'
+                        isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-[#004554]'
                       }`}
                     />
                   </button>
 
                   {/* Title overlay on photo */}
-                  <div className="absolute bottom-3 inset-x-3 text-white">
-                    <div className="flex items-center gap-1 text-[11px] font-semibold text-secondary">
-                      <MapPin className="w-3 h-3" />
+                  <div className="absolute bottom-3.5 inset-x-4 text-white">
+                    <div className="flex items-center gap-1 text-[11px] font-bold text-[#B2D5E2] uppercase tracking-wider">
+                      <MapPin className="w-3.5 h-3.5" />
                       <span>{dest.district} District</span>
                     </div>
-                    <h3 className="font-heading text-lg sm:text-xl font-bold leading-tight">
+                    <h3 className="font-heading text-xl font-bold leading-tight mt-0.5 text-white">
                       {dest.name}
                     </h3>
                   </div>
                 </div>
 
                 {/* Body Content */}
-                <div className="p-4 sm:p-5 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs pb-2 border-b border-border/60">
-                      <span className="text-muted-foreground">Sustainability Score</span>
-                      <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs pb-2.5 border-b border-[#004554]/10">
+                      <span className="text-[#5A737D] font-semibold">Sustainability Index</span>
+                      <span className="font-black text-[#004554]">
                         {dest.sustainability.overall} / 100
                       </span>
                     </div>
 
-                    <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                      {dest.description}
+                    <p className="text-xs text-[#5A737D] line-clamp-2 leading-relaxed">
+                      {dest.tagline || dest.description}
                     </p>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-1 pt-1">
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       {dest.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-muted text-muted-foreground"
+                          className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-[#EAF4F7] text-[#004554] border border-[#004554]/10"
                         >
                           {tag}
                         </span>
@@ -235,29 +397,36 @@ export default function DestinationsCatalogPage() {
                   </div>
 
                   {/* Footer CTA */}
-                  <div className="pt-3 border-t border-border/70 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-foreground font-mono">
-                      ~LKR {dest.typicalBudgetLKR.toLocaleString()}
-                    </span>
+                  <div className="pt-3 border-t border-[#004554]/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-[#5A737D] block">Typical Budget</span>
+                      <span className="text-xs font-black text-[#004554]">
+                        ~LKR {dest.typicalBudgetLKR.toLocaleString()}
+                      </span>
+                    </div>
 
                     <Link href={`/destinations/${dest.id}`}>
-                      <Button size="xs" variant="default" className="rounded-xl gap-1 cursor-pointer">
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        className="rounded-xl gap-1 text-xs cursor-pointer border-[#004554]/20 text-[#004554] hover:bg-[#004554] hover:text-white transition-all font-bold"
+                      >
                         <span>Explore</span>
                         <ArrowRight className="w-3 h-3" />
                       </Button>
                     </Link>
                   </div>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
       ) : (
-        <Card className="p-12 text-center rounded-3xl border border-dashed border-border/80 space-y-3">
-          <Compass className="w-10 h-10 text-muted-foreground/60 mx-auto" />
-          <h3 className="text-base font-bold text-foreground">No destinations matched your filters</h3>
-          <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-            Try loosening your search query or selecting &quot;All&quot; in the category or pressure filters.
+        <div className="p-12 text-center rounded-3xl bg-white border border-dashed border-[#004554]/20 space-y-3 shadow-2xs">
+          <Compass className="w-10 h-10 text-[#44A6B5] mx-auto" />
+          <h3 className="text-base font-black text-black">No sanctuaries match your active filters</h3>
+          <p className="text-xs text-[#5A737D] max-w-sm mx-auto">
+            Try clearing your search query or selecting &quot;All&quot; in the category or pressure filters.
           </p>
           <Button
             size="sm"
@@ -267,11 +436,11 @@ export default function DestinationsCatalogPage() {
               setSelectedTag('All');
               setSelectedPressure('All');
             }}
-            className="rounded-xl mt-2"
+            className="rounded-2xl mt-2 bg-white border-[#004554]/20 text-[#004554] hover:bg-[#EAF4F7] font-bold cursor-pointer"
           >
-            Clear Filters
+            Reset Filters
           </Button>
-        </Card>
+        </div>
       )}
     </div>
   );

@@ -122,15 +122,16 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
               System Policy Engine
-            </Badge>
-            <span className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            </span>
+            <span className="text-[#94A3B8]">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
+              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
               TreeSHAP Model v3.2 Active
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
             Sustainability &amp; Algorithm Policy Console
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">

@@ -12,8 +12,11 @@ import {
   Leaf,
   CloudSun,
   Wind,
-  ShieldCheck,
   Sliders,
+  TrendingUp,
+  Calendar,
+  CheckCircle2,
+  DollarSign,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { DESTINATIONS, simulateSustainabilityScore } from '@/lib/mockData';
@@ -41,9 +44,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
   if (!destination) {
     return (
       <div className="p-12 text-center space-y-4">
-        <h2 className="text-xl font-bold">Destination Not Found</h2>
+        <h2 className="text-xl font-bold text-[#004554]">Destination Not Found</h2>
         <Link href="/destinations">
-          <Button variant="outline">Back to Catalog</Button>
+          <Button variant="outline" className="rounded-full">Back to Destinations Catalog</Button>
         </Link>
       </div>
     );
@@ -61,48 +64,169 @@ export default function DestinationDetailPage({ params }: PageProps) {
     infraSlider
   );
 
-  const getPressureBadgeVariant = (level: string) => {
-    switch (level) {
-      case 'LOW':
-        return 'success';
-      case 'MEDIUM':
-        return 'warning';
-      case 'HIGH':
-        return 'destructive';
-      default:
-        return 'default';
-    }
-  };
-
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-16">
-      {/* Top Breadcrumb / Return */}
-      <div className="flex items-center justify-between">
-        <Link
-          href="/destinations"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Destinations</span>
-        </Link>
+    <div className="space-y-6 pb-16">
+      {/* Top Search & Navigation Bar (Kleon Style) */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/destinations"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFFFFF] border border-[#004554]/10 text-xs font-bold text-[#004554] shadow-[0_2px_10px_rgba(0,69,84,0.03)] hover:bg-[#E9F1F6] transition-all group"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#44A6B5] group-hover:-translate-x-1 transition-transform" />
+            <span>All Sanctuaries</span>
+          </Link>
 
-        <button
-          type="button"
-          onClick={() => toggleSaveDestination(destination.id)}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold border transition-all cursor-pointer ${
-            isBookmarked
-              ? 'bg-rose-500/10 text-rose-600 border-rose-500/20'
-              : 'bg-card hover:bg-muted text-foreground border-border'
-          }`}
-        >
-          <Heart className={`w-4 h-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : ''}`} />
-          <span>{isBookmarked ? 'Saved Destination' : 'Save Destination'}</span>
-        </button>
+          <span className="text-xs font-semibold text-[#004554]/50 hidden sm:inline">
+            Catalog &gt; {destination.district} &gt; {destination.name}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2.5 self-end md:self-auto">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#FFFFFF] border border-[#004554]/10 text-xs font-semibold text-[#004554] shadow-[0_2px_10px_rgba(0,69,84,0.03)]">
+            <Calendar className="w-3.5 h-3.5 text-[#44A6B5]" />
+            <span>Optimal: {destination.recommendedDurationDays || 3} Days</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => toggleSaveDestination(destination.id)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer shadow-sm ${
+              isBookmarked
+                ? 'bg-rose-50 text-rose-600 border-rose-200'
+                : 'bg-[#FFFFFF] hover:bg-[#E9F1F6] text-[#004554] border-[#004554]/10'
+            }`}
+          >
+            <Heart className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-rose-500 text-rose-500' : ''}`} />
+            <span>{isBookmarked ? 'Saved to Bookmarks' : 'Bookmark Destination'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 4 Kleon Top Metric KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* KPI 1: Sustainability Index */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Sustainability Score</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <Leaf className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">
+                {destination.sustainability.overall}
+                <span className="text-sm font-normal text-[#004554]/50">/100</span>
+              </span>
+              <span className="text-[11px] text-[#44A6B5] font-bold block mt-0.5 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" /> Certified Eco Standard
+              </span>
+            </div>
+            {/* SVG Circular Ring */}
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E9F1F6" strokeWidth="3" />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="#44A6B5"
+                  strokeWidth="3"
+                  strokeDasharray="88"
+                  strokeDashoffset={88 - (88 * destination.sustainability.overall) / 100}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="absolute text-[10px] font-bold text-[#004554]">{destination.sustainability.overall}%</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 2: Tourism Pressure */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Tourism Pressure</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <Sliders className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">
+                {destination.pressure.score}%
+              </span>
+              <span className={`text-[11px] font-bold block mt-0.5 ${isHighPressure ? 'text-rose-600' : 'text-[#44A6B5]'}`}>
+                {destination.pressure.level} Pressure Zone
+              </span>
+            </div>
+            {/* Mini Sparkline */}
+            <svg className="w-16 h-8 overflow-visible" viewBox="0 0 60 25">
+              <path
+                d="M 0 16 Q 15 5, 30 14 T 60 4"
+                fill="none"
+                stroke={isHighPressure ? '#E11D48' : '#004554'}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* KPI 3: Typical Budget */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Est. 3-Day Budget</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <DollarSign className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-2xl font-black text-[#004554] tracking-tight">
+                LKR {(destination.typicalBudgetLKR / 1000).toFixed(0)}k
+              </span>
+              <span className="text-[11px] text-[#004554]/60 font-semibold block mt-0.5">
+                Homestays &amp; meals
+              </span>
+            </div>
+            {/* Mini Bars */}
+            <div className="flex items-end gap-1 h-8">
+              <div className="w-1.5 h-3 bg-[#E9F1F6] rounded-full" />
+              <div className="w-1.5 h-5 bg-[#B2D5E2] rounded-full" />
+              <div className="w-1.5 h-7 bg-[#44A6B5] rounded-full" />
+              <div className="w-1.5 h-8 bg-[#004554] rounded-full" />
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 4: Climate & Air Quality */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Microclimate &amp; AQI</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <CloudSun className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-xl font-bold text-[#004554] tracking-tight">
+                {destination.weather || '24°C • Pleasant'}
+              </span>
+              <span className="text-[11px] text-[#44A6B5] font-bold block mt-0.5">
+                {destination.airQuality || 'AQI 15 • Pristine Air'}
+              </span>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#004554]">
+              <Wind className="w-4 h-4 text-[#44A6B5]" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Hero Header Card */}
-      <div className="relative rounded-3xl overflow-hidden border border-border/80 bg-card shadow-lg">
-        {/* Full-width Scenic Image */}
+      <div className="relative rounded-3xl overflow-hidden border border-[#004554]/10 bg-[#FFFFFF] shadow-[0_8px_30px_rgba(0,69,84,0.04)]">
         <div className="relative h-72 sm:h-96 w-full">
           <Image
             src={destination.image}
@@ -111,171 +235,107 @@ export default function DestinationDetailPage({ params }: PageProps) {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#004554]/95 via-[#004554]/40 to-transparent" />
 
           {/* Floating Badges */}
           <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-semibold text-white">
-              <MapPin className="w-3.5 h-3.5 text-secondary" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-xs font-semibold text-white">
+              <MapPin className="w-3.5 h-3.5 text-[#44A6B5]" />
               <span>{destination.district} District, {destination.province}</span>
             </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-medium text-white/90">
+            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-xs font-medium text-white/90">
               {destination.landscape}
             </span>
           </div>
 
-          {/* Hero Content on Image Bottom */}
+          {/* Hero Content Bottom */}
           <div className="absolute bottom-6 inset-x-6 text-white space-y-2">
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
               {destination.name}
             </h1>
-            <p className="text-sm sm:text-base text-white/90 max-w-2xl font-light">
+            <p className="text-sm sm:text-base text-white/90 max-w-2xl font-light leading-relaxed">
               {destination.tagline}
             </p>
           </div>
         </div>
-
-        {/* Hero Score Ribbon */}
-        <div className="p-6 bg-card border-t border-border grid grid-cols-2 sm:grid-cols-4 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-border">
-          {/* Sustainability Metric */}
-          <div className="pt-2 sm:pt-0 sm:px-4 text-center sm:text-left">
-            <span className="text-[11px] uppercase font-bold text-muted-foreground block">
-              Sustainability Index
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="font-heading text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
-                {destination.sustainability.overall}
-              </span>
-              <span className="text-xs text-muted-foreground">/ 100</span>
-            </div>
-            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 mt-0.5">
-              <Leaf className="w-3 h-3" /> Certified Standard
-            </span>
-          </div>
-
-          {/* Tourism Pressure Metric */}
-          <div className="pt-2 sm:pt-0 sm:px-4 text-center sm:text-left">
-            <span className="text-[11px] uppercase font-bold text-muted-foreground block">
-              Tourism Pressure
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="font-heading text-3xl font-extrabold text-foreground">
-                {destination.pressure.score}%
-              </span>
-              <Badge variant={getPressureBadgeVariant(destination.pressure.level)}>
-                {destination.pressure.level}
-              </Badge>
-            </div>
-            <span className="text-[11px] text-muted-foreground mt-0.5 block">
-              Visitor density & carrying load
-            </span>
-          </div>
-
-          {/* Typical Budget */}
-          <div className="pt-2 sm:pt-0 sm:px-4 text-center sm:text-left">
-            <span className="text-[11px] uppercase font-bold text-muted-foreground block">
-              Typical Budget
-            </span>
-            <span className="font-heading text-xl font-bold text-foreground mt-1 block font-mono">
-              LKR {destination.typicalBudgetLKR.toLocaleString()}
-            </span>
-            <span className="text-[11px] text-muted-foreground">Est. 3-day conscious stay</span>
-          </div>
-
-          {/* Recommended Duration */}
-          <div className="pt-2 sm:pt-0 sm:px-4 text-center sm:text-left">
-            <span className="text-[11px] uppercase font-bold text-muted-foreground block">
-              Suggested Duration
-            </span>
-            <span className="font-heading text-xl font-bold text-foreground mt-1 block">
-              {destination.recommendedDurationDays} Days
-            </span>
-            <span className="text-[11px] text-muted-foreground">Recommended pace</span>
-          </div>
-        </div>
       </div>
 
-      {/* OVERTOURISM WARNING SECTION (Shown prominently if High Pressure) */}
+      {/* OVERTOURISM WARNING SECTION (Shown if High Pressure) */}
       {isHighPressure && (
-        <div className="rounded-3xl border-2 border-rose-500/40 bg-rose-500/5 p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="rounded-3xl border-2 border-rose-300 bg-rose-50/60 p-6 sm:p-8 space-y-6 shadow-sm">
           <div className="flex items-start gap-4">
-            <div className="p-3 rounded-2xl bg-rose-500/15 text-rose-600 dark:text-rose-400 shrink-0">
+            <div className="p-3 rounded-2xl bg-rose-500/15 text-rose-600 shrink-0">
               <AlertTriangle className="w-6 h-6" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <h2 className="text-lg sm:text-xl font-bold text-rose-700 dark:text-rose-400">
+                <h2 className="text-lg sm:text-xl font-bold text-rose-700">
                   Overtourism Alert: High Visitor Pressure ({destination.pressure.score}%)
                 </h2>
-                <Badge variant="destructive">CRITICAL CONCENTRATION</Badge>
+                <span className="px-2.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-bold">
+                  PEAK DENSITY
+                </span>
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs sm:text-sm text-rose-800/80 leading-relaxed">
                 This destination is currently experiencing peak visitor concentration. High footfall along viewpoints and trail bottlenecks causes stress on local waste processing and roads.
               </p>
             </div>
           </div>
 
           {/* Pressure Factor Breakdown */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-rose-500/20">
-            <div className="p-3 rounded-xl bg-background/80 border border-rose-500/20 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Visitor Density</span>
-              <span className="text-base font-extrabold text-rose-600">{destination.pressure.visitorDensity}%</span>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-rose-200">
+            <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-rose-200 text-center">
+              <span className="text-[10px] uppercase font-bold text-rose-700/60 block">Visitor Density</span>
+              <span className="text-base font-extrabold text-rose-700">{destination.pressure.visitorDensity}%</span>
             </div>
-            <div className="p-3 rounded-xl bg-background/80 border border-rose-500/20 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Infra Pressure</span>
-              <span className="text-base font-extrabold text-rose-600">{destination.pressure.infrastructurePressure}%</span>
+            <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-rose-200 text-center">
+              <span className="text-[10px] uppercase font-bold text-rose-700/60 block">Infra Pressure</span>
+              <span className="text-base font-extrabold text-rose-700">{destination.pressure.infrastructurePressure}%</span>
             </div>
-            <div className="p-3 rounded-xl bg-background/80 border border-rose-500/20 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Waste Strain</span>
-              <span className="text-base font-extrabold text-rose-600">{destination.pressure.wastePressure}%</span>
+            <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-rose-200 text-center">
+              <span className="text-[10px] uppercase font-bold text-rose-700/60 block">Waste Strain</span>
+              <span className="text-base font-extrabold text-rose-700">{destination.pressure.wastePressure}%</span>
             </div>
-            <div className="p-3 rounded-xl bg-background/80 border border-rose-500/20 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Traffic Density</span>
-              <span className="text-base font-extrabold text-rose-600">{destination.pressure.traffic}%</span>
+            <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-rose-200 text-center">
+              <span className="text-[10px] uppercase font-bold text-rose-700/60 block">Traffic Density</span>
+              <span className="text-base font-extrabold text-rose-700">{destination.pressure.traffic}%</span>
             </div>
           </div>
 
-          {/* Consider These Alternatives Callout */}
+          {/* Alternatives Callout */}
           {destination.alternatives && destination.alternatives.length > 0 && (
             <div className="pt-3 space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-bold text-foreground">
-                    Consider these lower-pressure alternatives
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    Same scenic landscapes and mountain trails with less congestion
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-sm font-bold text-[#004554]">
+                Consider these serene, low-pressure alternatives
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {destination.alternatives.map((alt) => (
                   <Link
                     key={alt.id}
                     href={`/destinations/${alt.id}`}
-                    className="group p-4 rounded-2xl bg-card border border-border/80 hover:border-secondary transition-all hover:shadow-md space-y-2 flex flex-col justify-between"
+                    className="p-4 rounded-2xl bg-[#FFFFFF] border border-[#004554]/10 hover:border-[#44A6B5] transition-all hover:shadow-md space-y-2 flex flex-col justify-between group"
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-secondary">
-                          {alt.similarity}% similar
+                        <span className="text-xs font-bold text-[#44A6B5]">
+                          {alt.similarity}% match
                         </span>
-                        <Badge variant={getPressureBadgeVariant(alt.pressureLevel)}>
+                        <span className="px-2 py-0.5 rounded-full bg-[#E9F1F6] text-[#004554] text-[10px] font-bold">
                           {alt.pressureLevel}
-                        </Badge>
+                        </span>
                       </div>
-                      <h4 className="text-sm font-bold text-foreground mt-1 group-hover:text-secondary transition-colors">
+                      <h4 className="text-sm font-bold text-[#004554] mt-1 group-hover:text-[#44A6B5] transition-colors">
                         {alt.name}
                       </h4>
-                      <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">
+                      <p className="text-[11px] text-[#004554]/60 mt-0.5 line-clamp-2">
                         {alt.tagline}
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-border/60 flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground">Sustainability:</span>
-                      <span className="font-extrabold text-emerald-600">{alt.sustainabilityScore}/100</span>
+                    <div className="pt-2 border-t border-[#004554]/10 flex items-center justify-between text-xs">
+                      <span className="text-[#004554]/60">Sustainability:</span>
+                      <span className="font-bold text-[#004554]">{alt.sustainabilityScore}/100</span>
                     </div>
                   </Link>
                 ))}
@@ -286,37 +346,37 @@ export default function DestinationDetailPage({ params }: PageProps) {
       )}
 
       {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column (7 Cols): Sustainability Breakdown & XAI TreeSHAP Explanation */}
-        <div className="lg:col-span-7 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column (7 Cols): Sustainability Breakdown & XAI TreeSHAP */}
+        <div className="lg:col-span-7 space-y-6">
           {/* Sustainability 5-Dimension Breakdown */}
-          <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
+          <div className="p-6 rounded-3xl bg-[#FFFFFF] border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-foreground">Sustainability Breakdown</h2>
-              <p className="text-xs text-muted-foreground">
-                Evaluated across 5 core indicators of the CeylonTour Sustainability Index
+              <h2 className="text-base font-black text-black">Sustainability 5-Dimension Index</h2>
+              <p className="text-xs text-[#5A737D]">
+                Evaluated under the Sri Lanka National Sustainable Tourism Framework
               </p>
             </div>
 
-            <div className="space-y-3.5 pt-1">
+            <div className="space-y-4 pt-1">
               {[
                 { label: 'Environmental Preservation', value: destination.sustainability.environmental, desc: 'Forest cover, biodiversity, and clean water' },
                 { label: 'Community Benefit', value: destination.sustainability.communityBenefit, desc: 'Revenue retention for local homestays & guides' },
-                { label: 'Crowd & Density Index', value: destination.sustainability.crowd, desc: 'Visitor carrying capacity and trail tranquility' },
+                { label: 'Crowd & Carrying Capacity', value: destination.sustainability.crowd, desc: 'Visitor carrying threshold and trail tranquility' },
                 { label: 'Eco-Infrastructure', value: destination.sustainability.infrastructure, desc: 'Waste diversion, clean energy, and transit' },
                 { label: 'Tourist Suitability', value: destination.sustainability.touristSuitability, desc: 'Comfort, trail safety, and hospitality quality' },
               ].map((item) => (
                 <div key={item.label} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <div>
-                      <span className="font-semibold text-foreground">{item.label}</span>
-                      <span className="text-[10px] text-muted-foreground hidden sm:inline ml-1.5">({item.desc})</span>
+                      <span className="font-bold text-[#004554]">{item.label}</span>
+                      <span className="text-[10px] text-[#004554]/50 hidden sm:inline ml-1.5">({item.desc})</span>
                     </div>
-                    <span className="font-bold text-foreground font-mono">{item.value}/100</span>
+                    <span className="font-bold text-[#004554] font-mono">{item.value}/100</span>
                   </div>
-                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-[#E9F1F6] rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-700"
+                      className="h-full rounded-full bg-gradient-to-r from-[#004554] to-[#44A6B5] transition-all duration-700"
                       style={{ width: `${item.value}%` }}
                     />
                   </div>
@@ -326,56 +386,57 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
 
           {/* Explainable AI (XAI) Why this was recommended */}
-          <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
+          <div className="p-6 rounded-3xl bg-[#FFFFFF] border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-secondary" />
-                  <h2 className="text-lg font-bold text-foreground">
-                    Why was {destination.name} recommended?
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#44A6B5]" />
+                  <h2 className="text-base font-black text-black">
+                    AI Evaluation &amp; TreeSHAP Analysis
                   </h2>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Explainable AI (XAI TreeSHAP) feature contribution breakdown
+                <p className="text-xs text-[#5A737D]">
+                  Algorithmic feature contribution towards recommendation
                 </p>
               </div>
-              <Badge variant="outline">XAI Model</Badge>
+              <Badge variant="outline" className="border-[#44A6B5]/30 text-[#004554] bg-[#E9F1F6]/50">
+                XAI Model
+              </Badge>
             </div>
 
-            {/* Narrative Explanation */}
-            <div className="p-4 rounded-2xl bg-secondary/10 border border-secondary/20">
-              <p className="text-xs sm:text-sm text-foreground leading-relaxed">
+            <div className="p-4 rounded-2xl bg-[#E9F1F6]/40 border border-[#004554]/10">
+              <p className="text-xs sm:text-sm text-[#004554] leading-relaxed">
                 &ldquo;{destination.xaiExplanation.summary}&rdquo;
               </p>
             </div>
 
             {/* TreeSHAP Contribution Bar Chart */}
             <div className="space-y-3 pt-2">
-              <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
+              <span className="text-xs font-bold text-[#004554]/70 uppercase tracking-wider block">
                 Factor Contribution Weights
               </span>
 
               {destination.xaiExplanation.contributions.map((c) => (
                 <div key={c.factor} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-foreground">{c.factor}</span>
-                    <span className={`font-bold font-mono ${c.positive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className="font-semibold text-[#004554]">{c.factor}</span>
+                    <span className={`font-bold font-mono ${c.positive ? 'text-[#44A6B5]' : 'text-rose-600'}`}>
                       {c.percentage > 0 ? `+${c.percentage}%` : `${c.percentage}%`}
                     </span>
                   </div>
 
-                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden flex">
+                  <div className="h-2 w-full bg-[#E9F1F6] rounded-full overflow-hidden flex">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
                         c.positive
-                          ? 'bg-gradient-to-r from-emerald-500 to-secondary'
+                          ? 'bg-[#44A6B5]'
                           : 'bg-rose-500'
                       }`}
                       style={{ width: `${Math.abs(c.percentage)}%` }}
                     />
                   </div>
                   {c.description && (
-                    <span className="text-[10px] text-muted-foreground block">{c.description}</span>
+                    <span className="text-[10px] text-[#004554]/60 block">{c.description}</span>
                   )}
                 </div>
               ))}
@@ -383,37 +444,36 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Right Column (5 Cols): What-If Simulator & Travel Specs */}
-        <div className="lg:col-span-5 space-y-8">
-          {/* INTERACTIVE WHAT-IF SIMULATOR */}
-          <div className="p-6 rounded-3xl bg-gradient-to-br from-card via-card to-muted/30 border-2 border-primary/20 shadow-md space-y-5">
+        {/* Right Column (5 Cols): Interactive What-If Simulator */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="p-6 rounded-3xl bg-[#FFFFFF] border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sliders className="w-5 h-5 text-secondary" />
-                <h2 className="text-base sm:text-lg font-bold text-foreground">
-                  What-If Simulator
+                <Sliders className="w-5 h-5 text-[#44A6B5]" />
+                <h2 className="text-base font-black text-black">
+                  What-If Impact Simulator
                 </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowSimulator(!showSimulator)}
-                className="text-xs text-primary font-semibold hover:underline cursor-pointer"
+                className="text-xs text-[#44A6B5] font-bold hover:underline cursor-pointer"
               >
                 {showSimulator ? 'Collapse' : 'Expand'}
               </button>
             </div>
 
-            <p className="text-xs text-muted-foreground">
-              Simulate how future visitor density and municipal interventions impact this destination&apos;s score in real time.
+            <p className="text-xs text-[#004554]/60">
+              Simulate how future visitor density and municipal eco-interventions affect this sanctuary&apos;s live score.
             </p>
 
             {showSimulator && (
-              <div className="space-y-5 pt-2">
+              <div className="space-y-4 pt-1">
                 {/* Slider 1: Expected Visitors */}
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">Expected Visitors</span>
-                    <span className="font-mono font-bold text-muted-foreground">
+                    <span className="font-semibold text-[#004554]">Expected Weekly Visitors</span>
+                    <span className="font-mono font-bold text-[#004554]">
                       {Math.round(2000 + visitorSlider * 100)} / week
                     </span>
                   </div>
@@ -423,20 +483,20 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     max={100}
                     value={visitorSlider}
                     onChange={(e) => setVisitorSlider(Number(e.target.value))}
-                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 bg-[#E9F1F6] rounded-lg appearance-none cursor-pointer accent-[#004554]"
                   />
-                  <div className="flex justify-between text-[10px] text-muted-foreground">
-                    <span>2,000 (Quiet)</span>
-                    <span>12,000 (Heavy)</span>
+                  <div className="flex justify-between text-[10px] text-[#004554]/50">
+                    <span>2,000 (Tranquil)</span>
+                    <span>12,000 (Congested)</span>
                   </div>
                 </div>
 
                 {/* Slider 2: Waste Management */}
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">Waste Management</span>
-                    <span className="font-mono font-bold text-muted-foreground">
-                      {wasteSlider > 66 ? 'Excellent' : wasteSlider > 33 ? 'Moderate' : 'Poor'}
+                    <span className="font-semibold text-[#004554]">Waste Sorting &amp; Composting</span>
+                    <span className="font-mono font-bold text-[#44A6B5]">
+                      {wasteSlider > 66 ? 'Zero Waste' : wasteSlider > 33 ? 'Moderate' : 'Understaffed'}
                     </span>
                   </div>
                   <input
@@ -445,21 +505,16 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     max={100}
                     value={wasteSlider}
                     onChange={(e) => setWasteSlider(Number(e.target.value))}
-                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                    className="w-full h-2 bg-[#E9F1F6] rounded-lg appearance-none cursor-pointer accent-[#44A6B5]"
                   />
-                  <div className="flex justify-between text-[10px] text-muted-foreground">
-                    <span>Poor</span>
-                    <span>Standard</span>
-                    <span>Excellent</span>
-                  </div>
                 </div>
 
-                {/* Slider 3: Infrastructure */}
-                <div className="space-y-2">
+                {/* Slider 3: Eco-Infrastructure */}
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">Eco-Infrastructure</span>
-                    <span className="font-mono font-bold text-muted-foreground">
-                      {infraSlider > 66 ? 'Strong' : infraSlider > 33 ? 'Moderate' : 'Limited'}
+                    <span className="font-semibold text-[#004554]">Eco Transit &amp; Solar Trails</span>
+                    <span className="font-mono font-bold text-[#004554]">
+                      {infraSlider > 66 ? 'High Grade' : infraSlider > 33 ? 'Standard' : 'Primitive'}
                     </span>
                   </div>
                   <input
@@ -468,37 +523,33 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     max={100}
                     value={infraSlider}
                     onChange={(e) => setInfraSlider(Number(e.target.value))}
-                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-secondary"
+                    className="w-full h-2 bg-[#E9F1F6] rounded-lg appearance-none cursor-pointer accent-[#004554]"
                   />
-                  <div className="flex justify-between text-[10px] text-muted-foreground">
-                    <span>Limited</span>
-                    <span>Strong</span>
-                  </div>
                 </div>
 
-                {/* Live Simulation Output Box */}
-                <div className="p-4 rounded-2xl bg-background border border-border space-y-3">
-                  <div className="grid grid-cols-2 gap-4 text-center divide-x divide-border">
+                {/* Simulation Output Card */}
+                <div className="p-4 rounded-2xl bg-[#E9F1F6]/50 border border-[#004554]/10 space-y-2">
+                  <div className="grid grid-cols-2 gap-4 text-center divide-x divide-[#004554]/10">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-muted-foreground block">
+                      <span className="text-[10px] uppercase font-bold text-[#004554]/60 block">
                         Current Score
                       </span>
-                      <span className="text-2xl font-extrabold text-foreground mt-1 block">
+                      <span className="text-2xl font-black text-[#004554] mt-1 block">
                         {destination.sustainability.overall}
                       </span>
                     </div>
 
                     <div className="pl-4">
-                      <span className="text-[10px] uppercase font-bold text-muted-foreground block">
+                      <span className="text-[10px] uppercase font-bold text-[#004554]/60 block">
                         Simulated Score
                       </span>
                       <div className="flex items-center justify-center gap-1.5 mt-1">
-                        <span className="text-2xl font-extrabold text-primary">
+                        <span className="text-2xl font-black text-[#004554]">
                           {simulation.simulatedSustainability}
                         </span>
                         <span
                           className={`text-xs font-bold ${
-                            simulation.deltaSustainability >= 0 ? 'text-emerald-600' : 'text-rose-600'
+                            simulation.deltaSustainability >= 0 ? 'text-[#44A6B5]' : 'text-rose-600'
                           }`}
                         >
                           {simulation.deltaSustainability >= 0
@@ -509,8 +560,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* Simulator Alert Note */}
-                  <p className="text-xs text-muted-foreground text-center italic pt-1">
+                  <p className="text-xs text-[#004554]/70 text-center italic pt-1">
                     {simulation.alertMessage}
                   </p>
                 </div>
@@ -519,47 +569,25 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
 
           {/* Destination Travel Guide Specs */}
-          <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
-            <h2 className="text-base font-bold text-foreground">Travel Essentials</h2>
+          <div className="p-6 rounded-3xl bg-[#FFFFFF] border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
+            <h2 className="text-base font-black text-black">Key Activities &amp; Highlights</h2>
 
-            <div className="space-y-3 divide-y divide-border/60 text-xs">
-              <div className="pt-2 flex items-center justify-between">
-                <span className="text-muted-foreground flex items-center gap-1.5">
-                  <CloudSun className="w-3.5 h-3.5 text-secondary" /> Weather
+            <div className="flex flex-wrap gap-2">
+              {destination.activities.map((act) => (
+                <span
+                  key={act}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#E9F1F6] text-[#004554] border border-[#004554]/10"
+                >
+                  {act}
                 </span>
-                <span className="font-semibold text-foreground">{destination.weather || '24°C • Pleasant'}</span>
-              </div>
-
-              <div className="pt-2 flex items-center justify-between">
-                <span className="text-muted-foreground flex items-center gap-1.5">
-                  <Wind className="w-3.5 h-3.5 text-secondary" /> Air Quality
-                </span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                  {destination.airQuality || 'AQI 15 • Excellent'}
-                </span>
-              </div>
-
-              <div className="pt-2 flex items-center justify-between">
-                <span className="text-muted-foreground flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-secondary" /> Data Confidence
-                </span>
-                <Badge variant="outline">{destination.dataConfidence || 'HIGH'}</Badge>
-              </div>
+              ))}
             </div>
 
-            {/* Activities Chips */}
-            <div className="pt-2 space-y-2">
-              <span className="text-xs font-bold text-foreground block">Key Activities</span>
-              <div className="flex flex-wrap gap-1.5">
-                {destination.activities.map((act) => (
-                  <span
-                    key={act}
-                    className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-muted text-foreground"
-                  >
-                    {act}
-                  </span>
-                ))}
-              </div>
+            <div className="pt-2 border-t border-[#004554]/10 flex items-center justify-between text-xs text-[#004554]/70">
+              <span>Data Telemetry Reliability</span>
+              <span className="font-bold text-[#004554] flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#44A6B5]" /> Verified 2026
+              </span>
             </div>
           </div>
         </div>

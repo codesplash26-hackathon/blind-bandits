@@ -53,12 +53,12 @@ function AppLogo() {
           size="lg"
           className="hover:bg-transparent pointer-events-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white/10 text-white border border-white/10">
-            <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain p-1 brightness-0 invert" priority />
+          <div className="flex aspect-square size-9 items-center justify-center rounded-xl bg-[#0A5C6D] text-white shadow-xs">
+            <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain p-1.5 brightness-0 invert" priority />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-bold text-base text-sidebar-foreground tracking-tight">CeylonTour</span>
-            <span className="truncate text-[10px] font-semibold text-secondary uppercase tracking-wider">
+            <span className="truncate font-heading font-black text-base text-black tracking-tight">CeylonTour</span>
+            <span className="truncate text-[10px] font-bold text-[#44A6B5] uppercase tracking-wider">
               {effectiveRole === 'ADMIN' ? 'Authority Portal' : 'Sustainable Travel'}
             </span>
           </div>
@@ -86,20 +86,39 @@ function NavMain({ groups }: { groups: NavMenuGroup[] }) {
   return (
     <>
       {groups.map((group) => (
-        <SidebarGroup key={group.id}>
-          <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
-          <SidebarMenu>
+        <SidebarGroup key={group.id} className="py-1">
+          <SidebarGroupLabel className="text-[11px] font-bold uppercase tracking-wider text-[#5A737D] px-3 py-1">
+            {group.label}
+          </SidebarGroupLabel>
+          <SidebarMenu className="gap-1">
             {group.items.map((item) => (
               <SidebarMenuItem key={item.url}>
                 <SidebarMenuButton
                   isActive={item.isActive}
                   tooltip={item.title}
-                  render={<Link href={item.url} className="flex items-center gap-2" />}
+                  className={`transition-all duration-150 rounded-xl px-3 py-2 ${
+                    item.isActive
+                      ? '!bg-gradient-to-r !from-[#E2F0F6] !to-[#EEF7FA] !text-black font-extrabold shadow-xs border border-[#B5D7E4]'
+                      : '!text-[#475E68] hover:!text-black hover:!bg-[#F2F7FA] font-medium'
+                  }`}
+                  render={<Link href={item.url} className="flex items-center gap-2.5" />}
                 >
-                  {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
-                  <span>{item.title}</span>
+                  {item.icon && (
+                    <item.icon
+                      className={`h-4 w-4 shrink-0 transition-colors ${
+                        item.isActive ? 'text-black stroke-[2.3]' : 'text-[#5E7A85]'
+                      }`}
+                    />
+                  )}
+                  <span className={item.isActive ? 'text-black font-black' : 'text-[#475E68] font-semibold'}>
+                    {item.title}
+                  </span>
                   {item.badge && (
-                    <span className="ml-auto text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-secondary/20 text-secondary border border-secondary/30 group-data-[collapsible=icon]:hidden">
+                    <span className={`ml-auto text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full group-data-[collapsible=icon]:hidden ${
+                      item.isActive
+                        ? 'bg-black text-white shadow-2xs'
+                        : 'bg-[#E2F0F6] text-[#004554] border border-[#B5D7E4]'
+                    }`}>
                       {item.badge}
                     </span>
                   )}
@@ -136,39 +155,39 @@ function NavUser({
             render={
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-2xl border border-black/5 hover:bg-[#F8FAFC]"
               />
             }
           >
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sidebar-border bg-secondary/25 text-white overflow-hidden">
-              <UserIcon className="h-5 w-5 text-secondary" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black/10 bg-[#E9F1F6] text-black overflow-hidden">
+              <UserIcon className="h-4 w-4 text-black" />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <div className="flex items-center gap-1.5">
-                <span className="truncate font-medium text-sidebar-foreground">{user.name}</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-md bg-secondary/20 text-secondary font-bold">
+                <span className="truncate font-bold text-black">{user.name}</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded-md bg-[#E9F1F6] text-black font-bold border border-black/10">
                   {user.role}
                 </span>
               </div>
-              <span className="truncate text-xs text-sidebar-foreground/70">{user.email}</span>
+              <span className="truncate text-xs text-[#64748B]">{user.email}</span>
             </div>
-            <ChevronsUpDown className="ml-auto size-4" />
+            <ChevronsUpDown className="ml-auto size-4 text-[#64748B]" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-2xl bg-white shadow-xl border border-black/10"
             side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
             <DropdownMenuGroup>
               <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-muted bg-secondary/20 text-secondary overflow-hidden">
-                    <UserIcon className="h-5 w-5 text-secondary" />
+                <div className="flex items-center gap-2 px-2 py-2 text-left text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black/10 bg-[#E9F1F6] text-black overflow-hidden">
+                    <UserIcon className="h-4 w-4 text-black" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                    <span className="truncate font-bold text-black">{user.name}</span>
+                    <span className="truncate text-xs text-[#64748B]">{user.email}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
@@ -177,32 +196,32 @@ function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() => router.push(isAuthority ? '/admin/profile' : '/profile')}
-                className="cursor-pointer"
+                className="cursor-pointer text-black font-medium"
               >
-                <BadgeCheck className="mr-2 h-4 w-4" />
+                <BadgeCheck className="mr-2 h-4 w-4 text-[#44A6B5]" />
                 <span>{isAuthority ? 'Authority Official Profile' : 'Traveler Profile'}</span>
               </DropdownMenuItem>
               {isAuthority ? (
                 <DropdownMenuItem
                   onClick={() => router.push('/admin/destinations')}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-black font-medium"
                 >
-                  <MapPin className="mr-2 h-4 w-4" />
+                  <MapPin className="mr-2 h-4 w-4 text-[#44A6B5]" />
                   <span>Destinations Registry</span>
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
                   onClick={() => router.push('/saved')}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-black font-medium"
                 >
-                  <Bookmark className="mr-2 h-4 w-4" />
+                  <Bookmark className="mr-2 h-4 w-4 text-[#44A6B5]" />
                   <span>Saved Destinations ({savedDestinationIds.length})</span>
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuLabel className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">
+              <DropdownMenuLabel className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
                 Demo Switch Role
               </DropdownMenuLabel>
               <DropdownMenuItem
@@ -210,22 +229,22 @@ function NavUser({
                   loginAs('TOURIST');
                   router.push('/dashboard');
                 }}
-                className={`cursor-pointer ${!isAuthority ? 'text-primary font-bold' : ''}`}
+                className={`cursor-pointer ${!isAuthority ? 'text-black font-black bg-[#F1F5F9]' : 'text-black'}`}
               >
-                <Compass className="mr-2 h-4 w-4" />
+                <Compass className="mr-2 h-4 w-4 text-[#44A6B5]" />
                 <span>Tourist View</span>
-                {!isAuthority && <span className="ml-auto text-[10px] font-bold">Active</span>}
+                {!isAuthority && <span className="ml-auto text-[10px] font-extrabold text-black">Active</span>}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   loginAs('ADMIN');
                   router.push('/admin/dashboard');
                 }}
-                className={`cursor-pointer ${isAuthority ? 'text-primary font-bold' : ''}`}
+                className={`cursor-pointer ${isAuthority ? 'text-black font-black bg-[#F1F5F9]' : 'text-black'}`}
               >
-                <ShieldCheck className="mr-2 h-4 w-4" />
+                <ShieldCheck className="mr-2 h-4 w-4 text-[#44A6B5]" />
                 <span>Authority Admin View</span>
-                {isAuthority && <span className="ml-auto text-[10px] font-bold">Active</span>}
+                {isAuthority && <span className="ml-auto text-[10px] font-extrabold text-black">Active</span>}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -235,7 +254,7 @@ function NavUser({
                   logout();
                   router.push('/auth');
                 }}
-                className="cursor-pointer text-destructive focus:text-destructive"
+                className="cursor-pointer text-rose-600 focus:text-rose-700"
               >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
@@ -285,14 +304,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       };
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+    <Sidebar collapsible="icon" className="bg-white border-r border-black/8" {...props}>
+      <SidebarHeader className="bg-white">
         <AppLogo />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-white">
         <NavMain groups={navGroups} />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-white border-t border-black/5">
         <NavUser user={navUser} />
       </SidebarFooter>
     </Sidebar>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
@@ -10,6 +10,8 @@ import { Loader } from '@/components/Loader';
 import { useAuth } from '@/context/AuthContext';
 import { Bookmark, Sparkles, ShieldCheck } from 'lucide-react';
 
+const emptySubscribe = () => () => {};
+
 export default function DashboardLayout({
   children,
 }: {
@@ -18,13 +20,13 @@ export default function DashboardLayout({
   const { user, role, isLoading, loginAs, savedDestinationIds } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
+  const mounted = React.useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   const effectiveRole = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -65,7 +67,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="bg-gradient-to-br from-[#F0F5F8] via-[#F4F7F9] to-[#F8FAFC] min-h-screen">
         {isLoading || !mounted ? (
           <div className="flex h-full w-full items-center justify-center min-h-screen">
             <Loader label="Loading CeylonTour..." />
@@ -73,17 +75,22 @@ export default function DashboardLayout({
         ) : (
           <>
             {/* Top Dashboard Navbar */}
-            <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b border-sidebar-border bg-background/80 backdrop-blur-xl">
-              <div className="flex items-center gap-3 px-4 w-full">
-                <SidebarTrigger className="-ml-1" />
-                <div className="h-4 w-px bg-border/80 hidden sm:block" />
-                <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-bold text-foreground">
+            <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-[#004554]/10 bg-white/85 backdrop-blur-md shadow-[0_1px_3px_rgba(0,69,84,0.03)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+              <div className="flex items-center gap-3 px-4 sm:px-6 w-full">
+                <SidebarTrigger className="-ml-1 text-[#004554] hover:bg-[#EAF4F7]" />
+                <div className="h-4 w-px bg-[#004554]/15 hidden sm:block" />
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xs sm:text-sm font-black text-[#004554] tracking-tight">
                     {getPageTitle()}
                   </span>
-                  {effectiveRole === 'ADMIN' && (
-                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-secondary/15 text-secondary border border-secondary/30">
-                      <ShieldCheck className="w-3 h-3 text-secondary" /> Authority Clearance
+                  {effectiveRole === 'ADMIN' ? (
+                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] text-[#004554] border border-[#B5D7E4]">
+                      <ShieldCheck className="w-3 h-3 text-[#44A6B5]" /> Authority Clearance
+                    </span>
+                  ) : (
+                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] text-[#004554] border border-[#B5D7E4] shadow-2xs">
+                      <span className="size-1.5 rounded-full bg-[#44A6B5] animate-pulse" />
+                      Live Travel Stream
                     </span>
                   )}
                 </div>
@@ -93,29 +100,29 @@ export default function DashboardLayout({
                   {effectiveRole === 'ADMIN' ? (
                     <Link
                       href="/admin/tourism-pressure"
-                      className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all"
+                      className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white hover:opacity-95 text-xs font-bold transition-all shadow-xs"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-light-blue" />
                       <span>Pressure Simulator</span>
                     </Link>
                   ) : (
                     <>
                       <Link
                         href="/discover"
-                        className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold border border-primary/20 transition-all hover:scale-102"
+                        className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white text-xs font-bold shadow-xs hover:opacity-95 transition-all hover:scale-102"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-secondary" />
+                        <Sparkles className="w-3.5 h-3.5 text-light-blue" />
                         <span>AI Trip Finder</span>
                       </Link>
 
                       <Link
                         href="/saved"
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-medium border border-border/80 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white text-[#004554] text-xs font-bold border border-[#B5D7E4] shadow-2xs transition-colors"
                         title="Saved destinations"
                       >
-                        <Bookmark className="w-3.5 h-3.5 text-secondary" />
+                        <Bookmark className="w-3.5 h-3.5 text-[#44A6B5]" />
                         <span className="hidden sm:inline">Saved</span>
-                        <span className="h-4 min-w-4 px-1 rounded-full bg-secondary/20 text-secondary text-[10px] font-bold flex items-center justify-center">
+                        <span className="h-4 min-w-4 px-1 rounded-full bg-gradient-to-r from-[#003E4C] to-[#04667C] text-white text-[10px] font-black flex items-center justify-center">
                           {savedDestinationIds.length}
                         </span>
                       </Link>
@@ -129,7 +136,7 @@ export default function DashboardLayout({
             </header>
 
             {/* Main Content Area */}
-            <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-background text-foreground">
+            <main className="flex flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8 text-foreground max-w-7xl mx-auto w-full">
               {children}
             </main>
           </>

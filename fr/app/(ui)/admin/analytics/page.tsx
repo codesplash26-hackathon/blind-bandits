@@ -120,15 +120,17 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   return null;
 };
 
+const emptySubscribe = () => () => {};
+
 export default function AdminAnalyticsPage() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = React.useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
   const [exported, setExported] = useState(false);
   const [timeframe, setTimeframe] = useState<'30D' | 'Q3' | 'YTD'>('Q3');
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isDark = mounted && resolvedTheme === 'dark';
 
@@ -159,15 +161,16 @@ export default function AdminAnalyticsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
               Authority Macro Analytics
-            </Badge>
-            <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            </span>
+            <span className="text-[#94A3B8]">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
+              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
               National Dispersal Audit 2026
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
             Redistribution &amp; Ecological Impact Analytics
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">

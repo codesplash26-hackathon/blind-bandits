@@ -25,7 +25,6 @@ import {
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -80,18 +79,19 @@ export default function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">
-              Tourism Authority Mode
-            </Badge>
-            <span className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              TreeSHAP Model Live Telemetry
+            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+              Tourism Authority Oversight
+            </span>
+            <span className="text-[#94A3B8]">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
+              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+              TreeSHAP Live Model Telemetry
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
             Tourism Authority Oversight Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-[#5A737D] mt-0.5 font-medium">
             Live visitor carrying capacity monitoring, overtourism warnings, and sustainable redistribution metrics.
           </p>
         </div>
@@ -138,146 +138,138 @@ export default function AdminDashboard() {
 
       {/* Top 4 KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="rounded-3xl border border-border/80 bg-card hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Monitored Pilot Sites
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all space-y-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#5A737D]">
+            Monitored Pilot Sites
+          </span>
+          <div className="flex items-center justify-between pt-1">
+            <span className="font-heading text-3xl font-black text-black tracking-tight">
+              {DESTINATIONS.length}
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-foreground">
-                {DESTINATIONS.length}
-              </span>
-              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
-                <MapPin className="w-5 h-5" />
-              </div>
+            <div className="p-2.5 rounded-2xl bg-[#EAF4F7] text-[#004554]">
+              <MapPin className="w-5 h-5 text-[#44A6B5]" />
             </div>
-            <span className="text-[11px] text-muted-foreground">Island-wide sensor coverage</span>
-          </CardContent>
-        </Card>
+          </div>
+          <span className="text-[11px] text-[#5A737D] font-medium block">Island-wide sensor coverage</span>
+        </div>
 
-        <Card className="rounded-3xl border border-secondary/30 bg-card hover:border-secondary/60 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Low Pressure Sites
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all space-y-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#5A737D]">
+            Low Pressure Sites
+          </span>
+          <div className="flex items-center justify-between pt-1">
+            <span className="font-heading text-3xl font-black text-black tracking-tight">
+              {lowPressureList.length}
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-secondary">
-                {lowPressureList.length}
-              </span>
-              <div className="p-2.5 rounded-2xl bg-secondary/15 text-secondary">
-                <CheckCircle2 className="w-5 h-5" />
-              </div>
+            <div className="p-2.5 rounded-2xl bg-emerald-50 text-emerald-600">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
-            <span className="text-[11px] text-secondary font-medium">Within safe carrying capacity</span>
-          </CardContent>
-        </Card>
+          </div>
+          <span className="text-[11px] text-emerald-700 font-semibold block">Within safe carrying capacity</span>
+        </div>
 
-        <Card className="rounded-3xl border border-border bg-card hover:border-secondary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Moderate Pressure
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all space-y-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#5A737D]">
+            Moderate Pressure
+          </span>
+          <div className="flex items-center justify-between pt-1">
+            <span className="font-heading text-3xl font-black text-black tracking-tight">
+              {mediumPressureList.length}
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-foreground">
-                {mediumPressureList.length}
-              </span>
-              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
-                <TrendingUp className="w-5 h-5" />
-              </div>
+            <div className="p-2.5 rounded-2xl bg-amber-50 text-amber-600">
+              <TrendingUp className="w-5 h-5" />
             </div>
-            <span className="text-[11px] text-muted-foreground font-medium">Seasonal footfall peak watch</span>
-          </CardContent>
-        </Card>
+          </div>
+          <span className="text-[11px] text-[#5A737D] font-medium block">Seasonal footfall peak watch</span>
+        </div>
 
-        <Card className="rounded-3xl border border-destructive/25 bg-card hover:border-destructive/50 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              High Pressure Alerts
+        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all space-y-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#5A737D]">
+            High Pressure Alerts
+          </span>
+          <div className="flex items-center justify-between pt-1">
+            <span className="font-heading text-3xl font-black text-black tracking-tight">
+              {highPressureList.length}
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-destructive">
-                {highPressureList.length}
-              </span>
-              <div className="p-2.5 rounded-2xl bg-destructive/15 text-destructive">
-                <AlertTriangle className="w-5 h-5" />
-              </div>
+            <div className="p-2.5 rounded-2xl bg-rose-50 text-rose-600">
+              <AlertTriangle className="w-5 h-5" />
             </div>
-            <span className="text-[11px] text-destructive font-medium">Carrying capacity threshold exceeded</span>
-          </CardContent>
-        </Card>
+          </div>
+          <span className="text-[11px] text-rose-600 font-semibold block">Carrying capacity threshold exceeded</span>
+        </div>
       </div>
 
       {/* Quick Access Authority Modules Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Link href="/admin/destinations" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl border border-[#004554]/10 bg-white shadow-dashboard-panel hover:shadow-dashboard-card hover:-translate-y-0.5 transition-all">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:scale-105 transition-transform">
-                <Layers className="w-4 h-4" />
+              <div className="p-2.5 rounded-xl bg-[#EAF4F7] text-[#004554] group-hover:scale-105 transition-transform">
+                <Layers className="w-4 h-4 text-[#44A6B5]" />
               </div>
               <div>
-                <span className="text-xs font-bold text-foreground block">Registry &amp; Limits</span>
-                <span className="text-[10px] text-muted-foreground">Manage carrying capacity</span>
+                <span className="text-xs font-black text-black block">Registry &amp; Limits</span>
+                <span className="text-[10px] text-[#5A737D]">Manage carrying capacity</span>
               </div>
             </div>
-          </Card>
+          </div>
         </Link>
 
         <Link href="/admin/tourism-pressure" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-secondary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl border border-[#004554]/10 bg-white shadow-dashboard-panel hover:shadow-dashboard-card hover:-translate-y-0.5 transition-all">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-secondary/15 text-secondary group-hover:scale-105 transition-transform">
+              <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 group-hover:scale-105 transition-transform">
                 <AlertTriangle className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-foreground block">Pressure Simulator</span>
-                <span className="text-[10px] text-muted-foreground">TreeSHAP factor audit</span>
+                <span className="text-xs font-black text-black block">Pressure Simulator</span>
+                <span className="text-[10px] text-[#5A737D]">TreeSHAP factor audit</span>
               </div>
             </div>
-          </Card>
+          </div>
         </Link>
 
         <Link href="/admin/analytics" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl border border-[#004554]/10 bg-white shadow-dashboard-panel hover:shadow-dashboard-card hover:-translate-y-0.5 transition-all">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:scale-105 transition-transform">
-                <BarChart3 className="w-4 h-4" />
+              <div className="p-2.5 rounded-xl bg-[#EAF4F7] text-[#004554] group-hover:scale-105 transition-transform">
+                <BarChart3 className="w-4 h-4 text-[#44A6B5]" />
               </div>
               <div>
-                <span className="text-xs font-bold text-foreground block">Impact Analytics</span>
-                <span className="text-[10px] text-muted-foreground">Charts, dispersal &amp; carbon</span>
+                <span className="text-xs font-black text-black block">Impact Analytics</span>
+                <span className="text-[10px] text-[#5A737D]">Charts, dispersal &amp; carbon</span>
               </div>
             </div>
-          </Card>
+          </div>
         </Link>
 
         <Link href="/admin/settings" className="group">
-          <Card className="p-4 rounded-2xl border border-border/80 bg-card hover:border-secondary/50 transition-all hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl border border-[#004554]/10 bg-white shadow-dashboard-panel hover:shadow-dashboard-card hover:-translate-y-0.5 transition-all">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-secondary/15 text-secondary group-hover:scale-105 transition-transform">
-                <SlidersHorizontal className="w-4 h-4" />
+              <div className="p-2.5 rounded-xl bg-[#EAF4F7] text-[#004554] group-hover:scale-105 transition-transform">
+                <SlidersHorizontal className="w-4 h-4 text-[#44A6B5]" />
               </div>
               <div>
-                <span className="text-xs font-bold text-foreground block">Policy Thresholds</span>
-                <span className="text-[10px] text-muted-foreground">Live algorithm simulator</span>
+                <span className="text-xs font-black text-black block">Policy Thresholds</span>
+                <span className="text-[10px] text-[#5A737D]">Live algorithm simulator</span>
               </div>
             </div>
-          </Card>
+          </div>
         </Link>
       </div>
 
       {/* Live Redistribution Flow Card */}
-      <Card className="rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/5 via-card to-card p-6 shadow-sm space-y-4">
+      <div className="rounded-3xl border border-[#004554]/10 bg-white p-6 sm:p-7 shadow-dashboard-card space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-primary text-primary-foreground">
-              <Sparkles className="w-5 h-5 text-secondary" />
+            <div className="p-2.5 rounded-xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] text-[#004554] shadow-2xs">
+              <Sparkles className="w-5 h-5 text-[#44A6B5]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-foreground">
+              <h2 className="font-heading text-lg font-black text-black">
                 Active AI Tourist Redistribution Flow
-              </h3>
-              <p className="text-xs text-muted-foreground">
+              </h2>
+              <p className="text-xs text-[#5A737D]">
                 Algorithm dynamically steers conscious travelers away from over-saturated hotspots.
               </p>
             </div>
@@ -285,57 +277,57 @@ export default function AdminDashboard() {
 
           <div className="flex items-center gap-2 self-start md:self-auto">
             <Badge variant="success">ACTIVE REDIRECTION</Badge>
-            <span className="text-xs font-mono font-bold text-foreground">~1,420 diverted/week</span>
+            <span className="text-xs font-mono font-bold text-black">~1,420 diverted/week</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          <div className="p-4 rounded-2xl bg-card border border-destructive/30 space-y-2">
+          <div className="p-4 rounded-2xl bg-[#F8FBFC] border border-[#004554]/10 shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-destructive">Bottleneck Origin</span>
+              <span className="font-bold text-rose-600">Bottleneck Origin</span>
               <Badge variant="destructive">82% Load</Badge>
             </div>
-            <p className="font-heading text-lg font-bold text-foreground">Ella (Badulla)</p>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="font-heading text-base font-black text-black">Ella (Badulla)</p>
+            <p className="text-[11px] text-[#5A737D] leading-relaxed">
               Water stress index 78/100, local trail congestion peaking at 142% capacity.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-card border border-secondary/40 space-y-2">
+          <div className="p-4 rounded-2xl bg-[#F8FBFC] border border-[#004554]/10 shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-secondary">Redistribution Vectors</span>
-              <Send className="w-3.5 h-3.5 text-secondary" />
+              <span className="font-bold text-[#44A6B5]">Redistribution Vectors</span>
+              <Send className="w-3.5 h-3.5 text-[#44A6B5]" />
             </div>
-            <p className="font-heading text-lg font-bold text-foreground">Haputale &amp; Belihuloya</p>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="font-heading text-base font-black text-black">Haputale &amp; Belihuloya</p>
+            <p className="text-[11px] text-[#5A737D] leading-relaxed">
               34% &amp; 28% load, matching hiking and scenic tea country preferences with minimal footprint.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-card border border-secondary/30 space-y-2">
+          <div className="p-4 rounded-2xl bg-[#F8FBFC] border border-[#004554]/10 shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-secondary">Net Eco-Impact</span>
-              <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
+              <span className="font-bold text-emerald-600">Net Eco-Impact</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
             </div>
-            <p className="font-heading text-lg font-bold text-foreground">-28% Strain on Ella</p>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="font-heading text-base font-black text-black">-28% Strain on Ella</p>
+            <p className="text-[11px] text-[#5A737D] leading-relaxed">
               +LKR 4.2M distributed to rural eco-homestays in Belihuloya and Haputale this month.
             </p>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Highest Pressure Destinations Table with Interactive Filtering */}
-      <Card className="rounded-3xl border border-border/80 bg-card shadow-xs overflow-hidden space-y-4">
+      <div className="rounded-3xl border border-[#004554]/10 bg-white shadow-dashboard-card overflow-hidden space-y-4">
         <div className="p-6 pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-primary" />
-              <h2 className="text-lg font-bold text-foreground">
+              <Activity className="w-4 h-4 text-[#44A6B5]" />
+              <h2 className="font-heading text-lg font-black text-black">
                 Pilot Destinations Carrying Capacity Audit
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-[#5A737D] mt-0.5">
               Real-time ecological carrying capacity status across Sri Lanka pilot monitoring nodes.
             </p>
           </div>
@@ -354,16 +346,16 @@ export default function AdminDashboard() {
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex items-center p-1 rounded-xl bg-muted/60 border border-border text-xs font-semibold">
+            <div className="flex items-center p-1 rounded-xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] text-xs font-bold shadow-[inset_0_1px_3px_rgba(0,69,84,0.06)]">
               {(['ALL', 'HIGH', 'MEDIUM', 'LOW'] as const).map((lvl) => (
                 <button
                   key={lvl}
                   type="button"
                   onClick={() => setPressureFilter(lvl)}
-                  className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer text-[11px] ${
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer text-xs ${
                     pressureFilter === lvl
-                      ? 'bg-card text-foreground shadow-xs font-bold'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white shadow-xs font-black'
+                      : 'bg-white/60 hover:bg-white text-[#004554] hover:text-[#002D38] border border-transparent hover:border-[#B5D7E4]'
                   }`}
                 >
                   {lvl === 'ALL' ? 'All (10)' : `${lvl} (${DESTINATIONS.filter((d) => d.pressure.level === lvl).length})`}
@@ -466,7 +458,7 @@ export default function AdminDashboard() {
             </div>
           )}
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

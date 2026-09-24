@@ -68,10 +68,16 @@ export default function AdminDestinationsRegistryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority</Badge>
-            <span className="text-xs text-muted-foreground font-mono">Registry v2.4</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+              Tourism Authority
+            </span>
+            <span className="text-[#94A3B8]">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
+              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+              Registry v2.4 Active
+            </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
             Destinations Carrying Capacity Registry
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">

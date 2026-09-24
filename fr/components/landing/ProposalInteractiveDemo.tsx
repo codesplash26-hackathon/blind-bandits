@@ -154,7 +154,7 @@ export const ProposalInteractiveDemo = () => {
               <div className="flex items-center gap-2 text-secondary mb-2">
                 <Info className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  Why You'll Love This Place
+                  Why You&apos;ll Love This Place
                 </span>
               </div>
               <h4 className="text-2xl font-bold font-heading text-foreground">

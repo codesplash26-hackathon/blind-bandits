@@ -5,25 +5,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   ShieldCheck,
-  Building,
   CheckCircle2,
   Bell,
   Compass,
   ArrowRight,
-  Layers,
   MapPin,
-  Lock,
-  FileText,
   KeyRound,
   Shield,
   Save,
-  Radio,
   Sliders,
+  Activity,
+  TrendingUp,
+  Search,
+  Calendar,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 
@@ -50,313 +47,422 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Tourism Authority</Badge>
-            <span className="text-xs font-mono text-muted-foreground">Clearance Level 3</span>
-          </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">
-            Authority Official Profile
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Official credentials, jurisdictional oversight authorizations, and emergency dispatch preferences.
-          </p>
+    <div className="space-y-6">
+      {/* Top Search & Period Bar */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#004554]/40" />
+          <input
+            type="text"
+            placeholder="Search authority clearance or parameters..."
+            className="w-full pl-11 pr-4 py-2.5 rounded-full bg-[#FFFFFF] border border-[#004554]/10 text-xs text-[#004554] placeholder:text-[#004554]/40 focus:outline-none focus:border-[#44A6B5] shadow-[0_2px_10px_rgba(0,69,84,0.03)]"
+          />
         </div>
 
-        {showSwitchToTourist && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              loginAs('TOURIST');
-              toast.info('Switched session to Conscious Tourist mode');
-              router.push('/profile');
-            }}
-            className="rounded-xl gap-1.5 cursor-pointer self-start sm:self-auto"
-          >
-            <Compass className="w-4 h-4 text-primary" />
-            <span>Switch to Tourist Profile</span>
-          </Button>
-        )}
+        <div className="flex items-center gap-2.5 self-end md:self-auto">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#FFFFFF] border border-[#004554]/10 text-xs font-semibold text-[#004554] shadow-[0_2px_10px_rgba(0,69,84,0.03)]">
+            <Calendar className="w-3.5 h-3.5 text-[#44A6B5]" />
+            <span>Active Cycle 2026</span>
+          </div>
+
+          {showSwitchToTourist && (
+            <button
+              onClick={() => {
+                loginAs('TOURIST');
+                toast.info('Switched session to Conscious Tourist mode');
+                router.push('/profile');
+              }}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#E9F1F6] hover:bg-[#B2D5E2]/40 text-[#004554] text-xs font-bold transition-all cursor-pointer border border-[#004554]/10"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#44A6B5]" />
+              <span>Switch to Tourist</span>
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Official Identity Card */}
-      <Card className="rounded-3xl border border-border/80 p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border/70">
-          <div className="flex items-center gap-4">
-            <Avatar size="lg" className="ring-2 ring-primary/20">
-              <AvatarFallback className="bg-primary text-primary-foreground font-heading text-lg font-bold">
+      {/* Official Identity Banner */}
+      <div className="bg-[#FFFFFF] p-6 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <Avatar size="lg" className="w-16 h-16 ring-2 ring-[#004554]/20 shadow-sm">
+              <AvatarFallback className="bg-[#004554] text-white font-heading text-xl font-bold">
                 DS
               </AvatarFallback>
             </Avatar>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="font-heading text-xl font-bold text-foreground">
-                  Dilhara Senanayake
-                </h2>
-                <CheckCircle2 className="w-4 h-4 text-secondary" />
-              </div>
-              <p className="text-xs text-secondary font-semibold">
-                Chief Sustainable Tourism Officer &amp; Carrying Capacity Inspector
-              </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Sri Lanka Tourism Development Authority (SLTDA)
-              </p>
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#44A6B5] border-2 border-[#FFFFFF] flex items-center justify-center text-white" title="Level 3 Clearance">
+              <CheckCircle2 className="w-3.5 h-3.5" />
             </div>
           </div>
 
-          <Badge variant="default" className="bg-secondary/15 text-secondary border border-secondary/30 px-3 py-1 font-bold">
-            ACTIVE OFFICIAL
-          </Badge>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-5 text-xs">
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Official Email</span>
-            <span className="font-bold text-foreground font-mono">d.senanayake@tourism.gov.lk</span>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Badge &amp; License ID</span>
-            <span className="font-bold text-foreground font-mono">SLTDA-ECO-2026-0842</span>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Operations Center</span>
-            <span className="font-bold text-foreground">Central Command, Colombo 03</span>
-          </div>
-        </div>
-      </Card>
-
-      {/* Delegated Authorities & Privileges */}
-      <Card className="rounded-3xl border border-border/80 p-6 shadow-sm space-y-4">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-secondary" />
-          <h2 className="text-base font-bold text-foreground">Delegated Authority Mandates</h2>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Authorizations granted under the Sri Lanka National Sustainable Tourism Policy 2026.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-          <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Dynamic Visitor Rebalancing</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Authority to broadcast policy weights and divert tourist traffic from saturated hubs like Ella.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Carrying Capacity Caps</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Authority to set and enforce max daily footfall limits across all 12 pilot destination sites.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Sensor Telemetry Ingestion</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Access to live river turbidity, trail gate counters, and air quality telemetry data.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl border border-border/70 bg-card space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">National Dossier Export</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">AUTHORIZED</Badge>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Right to generate and publish executive carbon reduction &amp; rural economic audit reports.
-            </p>
-          </div>
-        </div>
-      </Card>
-
-      {/* Emergency Alert & Dispatch Subscriptions */}
-      <Card className="rounded-3xl border border-border/80 p-6 shadow-sm space-y-5">
-        <div className="flex items-center gap-2">
-          <Bell className="w-5 h-5 text-secondary" />
-          <h2 className="text-base font-bold text-foreground">Emergency Alert Subscriptions</h2>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-muted/40 border border-border/70">
-            <div className="space-y-0.5">
-              <span className="text-xs font-bold text-foreground block">Carrying Capacity Breach Alerts (&gt;80%)</span>
-              <span className="text-[11px] text-muted-foreground">Instant SMS and mobile push notification when a pilot destination enters critical pressure</span>
-            </div>
-            <input
-              type="checkbox"
-              checked={capacityAlerts}
-              onChange={(e) => setCapacityAlerts(e.target.checked)}
-              className="w-4 h-4 accent-secondary rounded cursor-pointer"
-            />
-          </div>
-
-          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-muted/40 border border-border/70">
-            <div className="space-y-0.5">
-              <span className="text-xs font-bold text-foreground block">Central Environmental Authority (CEA) River Sensor Spikes</span>
-              <span className="text-[11px] text-muted-foreground">Webhook alerts for sudden water turbidity or trail waste accumulation</span>
-            </div>
-            <input
-              type="checkbox"
-              checked={ceaAlerts}
-              onChange={(e) => setCeaAlerts(e.target.checked)}
-              className="w-4 h-4 accent-secondary rounded cursor-pointer"
-            />
-          </div>
-
-          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-muted/40 border border-border/70">
-            <div className="space-y-0.5">
-              <span className="text-xs font-bold text-foreground block">Weekly National Eco-Dispersal Executive Digest</span>
-              <span className="text-[11px] text-muted-foreground">PDF executive summary emailed every Monday at 08:00 AM IST</span>
-            </div>
-            <input
-              type="checkbox"
-              checked={weeklyDigest}
-              onChange={(e) => setWeeklyDigest(e.target.checked)}
-              className="w-4 h-4 accent-secondary rounded cursor-pointer"
-            />
-          </div>
-        </div>
-
-        <div className="pt-2 flex justify-end">
-          <Button
-            size="sm"
-            onClick={handleSaveAlerts}
-            disabled={savingAlerts}
-            className="rounded-xl gap-1.5 cursor-pointer bg-primary text-primary-foreground"
-          >
-            <Save className="w-3.5 h-3.5 text-secondary" />
-            <span>{savingAlerts ? 'Saving Changes...' : 'Save Notification Preferences'}</span>
-          </Button>
-        </div>
-      </Card>
-
-      {/* Authority Quick Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <Link
-          href="/admin/destinations"
-          className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
-        >
           <div>
-            <MapPin className="w-5 h-5 text-primary mb-2" />
-            <h3 className="text-xs font-bold text-foreground">Capacity Limits</h3>
-            <p className="text-[11px] text-muted-foreground mt-1">
-              Adjust visitor caps for Ella, Mirissa, and Sinharaja.
+            <div className="flex items-center gap-2">
+              <h1 className="font-heading text-2xl font-bold text-[#004554] tracking-tight">Dilhara Senanayake</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#44A6B5]/15 text-[#004554] text-[10px] font-bold border border-[#44A6B5]/30">
+                Clearance Level 3
+              </span>
+            </div>
+            <p className="text-xs font-semibold text-[#44A6B5] mt-0.5">
+              Chief Sustainable Tourism Officer &amp; Carrying Capacity Inspector
+            </p>
+            <p className="text-xs text-[#004554]/60">
+              Sri Lanka Tourism Development Authority (SLTDA) • Central Command
             </p>
           </div>
-          <div className="mt-3 flex items-center text-[11px] font-semibold text-primary gap-1 group-hover:translate-x-0.5 transition-transform">
-            <span>Manage Registry</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
-        </Link>
+        </div>
 
-        <Link
-          href="/admin/tourism-pressure"
-          className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
-        >
-          <div>
-            <Sliders className="w-5 h-5 text-secondary mb-2" />
-            <h3 className="text-xs font-bold text-foreground">Pressure Simulator</h3>
-            <p className="text-[11px] text-muted-foreground mt-1">
-              Model peak surge scenarios and evaluate AI dispersal bias.
-            </p>
+        <div className="flex items-center gap-3">
+          <div className="text-right hidden sm:block">
+            <span className="text-[11px] font-semibold text-[#004554]/50 block uppercase tracking-wider">Badge Identifier</span>
+            <span className="text-xs font-mono font-bold text-[#004554]">SLTDA-ECO-2026-0842</span>
           </div>
-          <div className="mt-3 flex items-center text-[11px] font-semibold text-primary gap-1 group-hover:translate-x-0.5 transition-transform">
-            <span>Launch Simulator</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
-        </Link>
-
-        <Link
-          href="/admin/analytics"
-          className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
-        >
-          <div>
-            <Layers className="w-5 h-5 text-primary mb-2" />
-            <h3 className="text-xs font-bold text-foreground">Impact Analytics</h3>
-            <p className="text-[11px] text-muted-foreground mt-1">
-              Review avoided carbon emissions and rural livelihood gains.
-            </p>
-          </div>
-          <div className="mt-3 flex items-center text-[11px] font-semibold text-primary gap-1 group-hover:translate-x-0.5 transition-transform">
-            <span>View ROI Report</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
-        </Link>
-
-        <Link
-          href="/admin/settings"
-          className="p-4 rounded-3xl border border-border/80 bg-card hover:bg-muted/40 transition-all group flex flex-col justify-between"
-        >
-          <div>
-            <Lock className="w-5 h-5 text-secondary mb-2" />
-            <h3 className="text-xs font-bold text-foreground">Algorithm Settings</h3>
-            <p className="text-[11px] text-muted-foreground mt-1">
-              Tune diversion threshold parameters and IoT sync cadence.
-            </p>
-          </div>
-          <div className="mt-3 flex items-center text-[11px] font-semibold text-primary gap-1 group-hover:translate-x-0.5 transition-transform">
-            <span>Configure Engine</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
-        </Link>
+        </div>
       </div>
 
-      {/* Security & Access Management */}
-      <Card className="rounded-3xl border border-border/80 p-6 shadow-sm space-y-4">
-        <div className="flex items-center gap-2">
-          <Shield className="w-5 h-5 text-secondary" />
-          <h2 className="text-base font-bold text-foreground">Security &amp; Terminal Clearance</h2>
+      {/* 4 Kleon Top Metric KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* KPI 1 */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Enforced Sanctuaries</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <MapPin className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">12</span>
+              <span className="text-[11px] text-[#44A6B5] font-bold block mt-0.5 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" /> 100% active caps
+              </span>
+            </div>
+            {/* Circular Ring */}
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E9F1F6" strokeWidth="3" />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="#004554"
+                  strokeWidth="3"
+                  strokeDasharray="88"
+                  strokeDashoffset="0"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="absolute text-[10px] font-bold text-[#004554]">100%</span>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Hardware Token Status</span>
-            <span className="font-bold text-secondary flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> FIDO2 / YubiKey 5C Active
-            </span>
+        {/* KPI 2 */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Dispersal Bias</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <Sliders className="w-4 h-4" />
+            </div>
           </div>
-
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Active Clearance Terminal</span>
-            <span className="font-bold text-foreground font-mono">SLTDA-SEC-GW-04 (192.248.32.14)</span>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-muted/40 space-y-1">
-            <span className="text-muted-foreground block text-[11px]">Session Expiration</span>
-            <span className="font-bold text-foreground">Rolling 8-Hour Shift Key</span>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">84%</span>
+              <span className="text-[11px] text-[#44A6B5] font-bold block mt-0.5">
+                Active rebalancing rate
+              </span>
+            </div>
+            {/* Sparkline */}
+            <svg className="w-16 h-8 overflow-visible" viewBox="0 0 60 25">
+              <path
+                d="M 0 16 Q 15 3, 30 12 T 60 2"
+                fill="none"
+                stroke="#44A6B5"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+            </svg>
           </div>
         </div>
 
-        <div className="pt-2 flex items-center justify-between border-t border-border/60">
-          <p className="text-xs text-muted-foreground">
-            Clearance session logs are maintained per Sri Lanka Electronic Transactions Act.
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => toast.success('Security key rotation validated. Session timestamp renewed.')}
-            className="rounded-xl text-xs gap-1.5 cursor-pointer"
-          >
-            <KeyRound className="w-3.5 h-3.5 text-primary" />
-            <span>Rotate Key Token</span>
-          </Button>
+        {/* KPI 3 */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">IoT Telemetry Nodes</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <Activity className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">28</span>
+              <span className="text-[11px] text-[#004554]/60 font-semibold block mt-0.5">
+                River &amp; gate sensors
+              </span>
+            </div>
+            {/* Mini Bars */}
+            <div className="flex items-end gap-1 h-8">
+              <div className="w-1.5 h-4 bg-[#E9F1F6] rounded-full" />
+              <div className="w-1.5 h-6 bg-[#B2D5E2] rounded-full" />
+              <div className="w-1.5 h-7 bg-[#44A6B5] rounded-full" />
+              <div className="w-1.5 h-8 bg-[#004554] rounded-full" />
+            </div>
+          </div>
         </div>
-      </Card>
+
+        {/* KPI 4 */}
+        <div className="bg-[#FFFFFF] p-5 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-[#004554]/60">Peak Traffic Diverted</span>
+            <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <span className="font-heading text-3xl font-black text-[#004554] tracking-tight">1,480</span>
+              <span className="text-[11px] text-[#44A6B5] font-bold block mt-0.5 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" /> +18.5% protected
+              </span>
+            </div>
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E9F1F6" strokeWidth="3" />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="#44A6B5"
+                  strokeWidth="3"
+                  strokeDasharray="88"
+                  strokeDashoffset="18"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="absolute text-[10px] font-bold text-[#004554]">82%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mandates & Alerts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Delegated Authorities (7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="bg-[#FFFFFF] p-6 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-[#004554]">Delegated Mandates &amp; Directives</h2>
+                <p className="text-xs text-[#004554]/60">Sri Lanka National Sustainable Tourism Policy 2026</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="p-4 rounded-2xl border border-[#004554]/10 bg-[#E9F1F6]/30 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-[#004554]">Dynamic Rebalancing</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#004554]/10 text-[#004554] text-[10px] font-bold">
+                    AUTHORIZED
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#004554]/70 leading-relaxed">
+                  Authority to broadcast AI policy weights and divert tourist flows away from saturated hubs like Ella.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-[#004554]/10 bg-[#E9F1F6]/30 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-[#004554]">Carrying Capacity Caps</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#004554]/10 text-[#004554] text-[10px] font-bold">
+                    AUTHORIZED
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#004554]/70 leading-relaxed">
+                  Authority to set and enforce max daily footfall limits across all 12 pilot destination sites.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-[#004554]/10 bg-[#E9F1F6]/30 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-[#004554]">Sensor Telemetry Ingestion</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#004554]/10 text-[#004554] text-[10px] font-bold">
+                    AUTHORIZED
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#004554]/70 leading-relaxed">
+                  Access to live river turbidity, trail gate counters, and air quality telemetry data.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl border border-[#004554]/10 bg-[#E9F1F6]/30 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-[#004554]">National Audit Export</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#004554]/10 text-[#004554] text-[10px] font-bold">
+                    AUTHORIZED
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#004554]/70 leading-relaxed">
+                  Right to generate and publish executive carbon reduction &amp; rural economic audit reports.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Authority Modules */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link
+              href="/admin/tourism-pressure"
+              className="p-5 rounded-3xl border border-[#004554]/10 bg-[#FFFFFF] hover:border-[#44A6B5]/60 hover:shadow-lg transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5] mb-3">
+                  <Sliders className="w-4 h-4" />
+                </div>
+                <h3 className="text-xs font-bold text-[#004554]">Pressure Simulator</h3>
+                <p className="text-[11px] text-[#004554]/60 mt-1">
+                  Model peak surge scenarios and evaluate algorithmic dispersal bias.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center text-[11px] font-bold text-[#004554] gap-1 group-hover:translate-x-1 transition-transform">
+                <span>Launch Simulator</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#44A6B5]" />
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/destinations"
+              className="p-5 rounded-3xl border border-[#004554]/10 bg-[#FFFFFF] hover:border-[#44A6B5]/60 hover:shadow-lg transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#004554] mb-3">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <h3 className="text-xs font-bold text-[#004554]">Carrying Capacity Caps</h3>
+                <p className="text-[11px] text-[#004554]/60 mt-1">
+                  Adjust visitor limits and status thresholds for monitored spots.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center text-[11px] font-bold text-[#004554] gap-1 group-hover:translate-x-1 transition-transform">
+                <span>Manage Registry</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#44A6B5]" />
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* Right Column (5 cols): Alert Subscriptions & Terminal Security */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Emergency Alert Subscriptions */}
+          <div className="bg-[#FFFFFF] p-6 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+                <Bell className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-[#004554]">Emergency Subscriptions</h2>
+                <p className="text-xs text-[#004554]/60">Automated SLTDA alert channels</p>
+              </div>
+            </div>
+
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#E9F1F6]/40 border border-[#004554]/10">
+                <div className="space-y-0.5 pr-2">
+                  <span className="text-xs font-bold text-[#004554] block">Capacity Breach Alerts (&gt;80%)</span>
+                  <span className="text-[10px] text-[#004554]/60 block">Instant SMS dispatch during critical surges</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={capacityAlerts}
+                  onChange={(e) => setCapacityAlerts(e.target.checked)}
+                  className="w-4 h-4 accent-[#004554] rounded cursor-pointer"
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#E9F1F6]/40 border border-[#004554]/10">
+                <div className="space-y-0.5 pr-2">
+                  <span className="text-xs font-bold text-[#004554] block">CEA River Sensor Spikes</span>
+                  <span className="text-[10px] text-[#004554]/60 block">Alerts for river turbidity or trail runoff</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={ceaAlerts}
+                  onChange={(e) => setCeaAlerts(e.target.checked)}
+                  className="w-4 h-4 accent-[#004554] rounded cursor-pointer"
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#E9F1F6]/40 border border-[#004554]/10">
+                <div className="space-y-0.5 pr-2">
+                  <span className="text-xs font-bold text-[#004554] block">Weekly Eco-Dispersal Digest</span>
+                  <span className="text-[10px] text-[#004554]/60 block">PDF executive audit emailed Mondays at 8 AM</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={weeklyDigest}
+                  onChange={(e) => setWeeklyDigest(e.target.checked)}
+                  className="w-4 h-4 accent-[#004554] rounded cursor-pointer"
+                />
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <Button
+                size="sm"
+                onClick={handleSaveAlerts}
+                disabled={savingAlerts}
+                className="rounded-full px-4 py-2 bg-[#004554] hover:bg-[#004554]/90 text-white text-xs font-bold gap-1.5 cursor-pointer shadow-sm"
+              >
+                <Save className="w-3.5 h-3.5 text-[#44A6B5]" />
+                <span>{savingAlerts ? 'Saving...' : 'Save Subscriptions'}</span>
+              </Button>
+            </div>
+          </div>
+
+          {/* Security & Terminal Clearance */}
+          <div className="bg-[#FFFFFF] p-6 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.04)] space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#E9F1F6] flex items-center justify-center text-[#44A6B5]">
+                <Shield className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#004554]">Terminal Clearance</h3>
+                <p className="text-xs text-[#004554]/60">Cryptographic hardware session</p>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-1 text-xs">
+              <div className="p-3 rounded-2xl bg-[#E9F1F6]/30 border border-[#004554]/10 flex items-center justify-between">
+                <span className="text-[#004554]/70">Hardware Token</span>
+                <span className="font-bold text-[#004554] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#44A6B5]" /> YubiKey 5C Active
+                </span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-[#E9F1F6]/30 border border-[#004554]/10 flex items-center justify-between">
+                <span className="text-[#004554]/70">Clearance Gateway</span>
+                <span className="font-bold font-mono text-[#004554]">SLTDA-GW-04</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between border-t border-[#004554]/10">
+              <span className="text-[11px] text-[#004554]/60">Rolling 8-hour shift key</span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => toast.success('Security key rotation validated.')}
+                className="rounded-full text-xs font-semibold gap-1.5 border-[#004554]/20 text-[#004554] hover:bg-[#E9F1F6]"
+              >
+                <KeyRound className="w-3.5 h-3.5 text-[#44A6B5]" />
+                <span>Rotate Key</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
