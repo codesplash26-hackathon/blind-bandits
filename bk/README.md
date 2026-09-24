@@ -112,6 +112,40 @@ event in that range. It is a search-to-selection proxy, not an
 offer-impression conversion rate. Results are aggregates; no personal search
 or event rows are exposed.
 
+## Environmental observations
+
+Run `alembic upgrade head` before refreshing data. An ADMIN can manually fetch
+one source at a time with
+`POST /api/v1/admin/destinations/{id}/environment/refresh?type=WEATHER` or
+`?type=AIR_QUALITY`. Any authenticated user can read the latest stored values
+at `GET /api/v1/destinations/{id}/environment`. Reads make no external calls.
+Refreshes append a new observation when the provider timestamp changes; a
+repeat of the same source/timestamp is reported as `UNCHANGED`. If a provider
+fails, the refresh returns the latest stored observation as `FALLBACK` with
+its age and stale flag, or `503` if none exists. No background scheduler is
+included; `refresh_observation` can be called by a future scheduled job.
+
+Weather comes from the [Open-Meteo current-weather API](https://open-meteo.com/en/docs)
+for the destination coordinates. The values include temperature, humidity,
+precipitation and weather code. Open-Meteo current conditions are model-based;
+precipitation is a backward-looking interval total. Air quality uses the
+[OpenAQ v3 API](https://docs.openaq.org/api): it looks for the nearest PM2.5
+monitoring station within `OPENAQ_RADIUS_M` (default 25 km), stores the
+station ID, name, distance, original unit, and measurement time, and does not
+claim an on-site destination measurement or calculate an AQI. OpenAQ requires
+`OPENAQ_API_KEY` in the private environment. Its
+[latest endpoint](https://docs.openaq.org/resources/latest) is not a complete
+historical feed; this application only preserves snapshots fetched by its
+refreshes.
+
+Provider URLs, optional Open-Meteo commercial API key, OpenAQ radius, HTTP
+timeout, and the stale threshold are
+environment-configurable (see `.env.example`). The default stale threshold is
+180 minutes for both observation types, based on the provider observation time
+rather than our fetch time. This is an initial display policy, not a claim
+about scientific validity, and can be tuned. Automated tests use mocked HTTP
+responses and never call live providers.
+
 ## Regional visitor-pressure forecasting
 
 Training runs offline and requires reviewed external CSV data; this repository

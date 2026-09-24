@@ -12,6 +12,7 @@ from app.models.engagement import (
     RecommendationSearch,
     SavedDestination,
 )
+from app.models.environment import EnvironmentalObservation, ObservationType
 from app.models.user import User, UserRole
 
 __all__ = [
@@ -20,9 +21,11 @@ __all__ = [
     "ConfidenceLevel",
     "Destination",
     "DestinationFactor",
+    "EnvironmentalObservation",
     "FactorValueType",
     "InteractionEvent",
     "InteractionType",
+    "ObservationType",
     "RecommendationSearch",
     "SavedDestination",
     "User",
