@@ -311,3 +311,176 @@ html:not(.light) body::before {
     box-shadow: 0 4px 20px rgba(0, 69, 84, 0.04);
   }
 }
+
+/* ── Comprehensive Dark Theme Harmony ──────────────────────── */
+.dark {
+  /* Override literal white card backgrounds to dark card surface */
+  & .bg-white {
+    background-color: #00232B !important;
+    color: #E9F1F6;
+  }
+
+  /* Override literal black text to crisp light */
+  & .text-black {
+    color: #FFFFFF !important;
+  }
+
+  /* Override dark midnight green text to radiant light cyan/teal */
+  & .text-\[\#004554\] {
+    color: #B2D5E2 !important;
+  }
+
+  /* Override muted slate text to soft luminous blue-gray */
+  & .text-\[\#5A737D\],
+  & .text-\[\#64748B\],
+  & .text-\[\#475569\],
+  & .text-\[\#475E68\],
+  & .text-\[\#5E7A85\] {
+    color: #8DB5C2 !important;
+  }
+
+  & .text-\[\#1E293B\],
+  & .text-\[\#334155\] {
+    color: #E2E8F0 !important;
+  }
+
+  /* Page & panel soft backgrounds */
+  & .bg-\[\#F8FBFC\],
+  & .bg-\[\#F8FCFD\],
+  & .bg-\[\#F0F5F8\],
+  & .bg-\[\#F4F7F9\] {
+    background-color: #001A20 !important;
+  }
+
+  & .bg-\[\#F1F5F9\],
+  & .bg-\[\#F2F7FA\] {
+    background-color: #002832 !important;
+  }
+
+  /* Pill badges & soft container highlights */
+  & .bg-\[\#EAF4F7\],
+  & .bg-\[\#E9F1F6\],
+  & .bg-\[\#EBF1F5\],
+  & .bg-\[\#EEF5F8\],
+  & .bg-\[\#E2F0F6\] {
+    background-color: rgba(68, 166, 181, 0.16) !important;
+    color: #B2D5E2 !important;
+  }
+
+  /* Neutral and Teal Borders */
+  & .border-\[\#004554\]\/10,
+  & .border-\[\#004554\]\/12,
+  & .border-\[\#004554\]\/15,
+  & .border-\[\#004554\]\/20,
+  & .border-black\/5,
+  & .border-black\/8,
+  & .border-black\/10,
+  & .border-\[\#B5D7E4\] {
+    border-color: rgba(68, 166, 181, 0.22) !important;
+  }
+
+  /* Black Action Buttons & Badges become luminous Moonstone Cyan */
+  & .bg-black {
+    background-color: #44A6B5 !important;
+    color: #00161C !important;
+  }
+  & .bg-black:hover {
+    background-color: #55B8C7 !important;
+  }
+  & .bg-black * {
+    color: #00161C !important;
+  }
+
+  /* Segmented control tabs (gradient backgrounds) */
+  & .from-\[\#F2F8FB\] {
+    --tw-gradient-from: #00232B !important;
+  }
+  & .to-\[\#E3F0F6\] {
+    --tw-gradient-to: #002E39 !important;
+  }
+  & .from-\[\#E2F0F6\] {
+    --tw-gradient-from: rgba(68, 166, 181, 0.25) !important;
+  }
+  & .to-\[\#EEF7FA\] {
+    --tw-gradient-to: rgba(68, 166, 181, 0.15) !important;
+  }
+
+  /* Deep teal action gradients remain radiant */
+  & .from-\[\#003E4C\] {
+    --tw-gradient-from: #005061 !important;
+  }
+  & .via-\[\#004E5F\] {
+    --tw-gradient-via: #00687E !important;
+  }
+  & .to-\[\#04667C\] {
+    --tw-gradient-to: #07809B !important;
+  }
+
+  /* Shadows in Dark Mode */
+  & .shadow-dashboard-card {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(68, 166, 181, 0.18) !important;
+  }
+  & .shadow-dashboard-card:hover {
+    box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(68, 166, 181, 0.3) !important;
+  }
+  & .shadow-dashboard-panel {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(68, 166, 181, 0.14) !important;
+  }
+  & .shadow-dashboard-header {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(68, 166, 181, 0.18) !important;
+  }
+
+  /* Form Elements: Inputs, Textareas, Selects */
+  & input:not([type="checkbox"]):not([type="radio"]),
+  & textarea,
+  & select {
+    background-color: #00181F !important;
+    color: #FFFFFF !important;
+    border-color: rgba(68, 166, 181, 0.25) !important;
+  }
+  & input::placeholder,
+  & textarea::placeholder {
+    color: #628795 !important;
+  }
+
+  /* Semi-transparent white containers and buttons */
+  & .bg-white\/50,
+  & .bg-white\/60,
+  & .bg-white\/70,
+  & .bg-white\/80,
+  & .bg-white\/85,
+  & .bg-white\/90 {
+    background-color: rgba(0, 35, 43, 0.85) !important;
+  }
+  & .hover\:bg-white:hover {
+    background-color: #002E39 !important;
+  }
+  & .hover\:text-\[\#002D38\]:hover {
+    color: #FFFFFF !important;
+  }
+  & .hover\:border-\[\#B5D7E4\]:hover {
+    border-color: rgba(68, 166, 181, 0.4) !important;
+  }
+
+  /* SVG & Chart Dark Mode Adjustments */
+  & .recharts-cartesian-grid line {
+    stroke: rgba(68, 166, 181, 0.12) !important;
+  }
+  & .recharts-text,
+  & .recharts-cartesian-axis-tick text {
+    fill: #8DB5C2 !important;
+  }
+  & .recharts-default-tooltip {
+    background-color: #00232B !important;
+    border: 1px solid rgba(68, 166, 181, 0.3) !important;
+    border-radius: 12px !important;
+    color: #E9F1F6 !important;
+  }
+  & svg path.text-\[\#004554\] {
+    color: #44A6B5 !important;
+  }
+  & svg path.text-\[\#E9F1F6\] {
+    color: rgba(68, 166, 181, 0.2) !important;
+  }
+}
+

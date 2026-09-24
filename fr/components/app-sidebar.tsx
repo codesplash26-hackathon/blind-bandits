@@ -98,26 +98,26 @@ function NavMain({ groups }: { groups: NavMenuGroup[] }) {
                   tooltip={item.title}
                   className={`transition-all duration-150 rounded-xl px-3 py-2 ${
                     item.isActive
-                      ? '!bg-gradient-to-r !from-[#E2F0F6] !to-[#EEF7FA] !text-black font-extrabold shadow-xs border border-[#B5D7E4]'
-                      : '!text-[#475E68] hover:!text-black hover:!bg-[#F2F7FA] font-medium'
+                      ? '!bg-gradient-to-r !from-[#E2F0F6] !to-[#EEF7FA] dark:!from-[rgba(68,166,181,0.22)] dark:!to-[rgba(68,166,181,0.12)] !text-black dark:!text-white font-extrabold shadow-xs border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.35)]'
+                      : '!text-[#475E68] dark:!text-[#8DB5C2] hover:!text-black dark:hover:!text-white hover:!bg-[#F2F7FA] dark:hover:!bg-[rgba(68,166,181,0.1)] font-medium'
                   }`}
                   render={<Link href={item.url} className="flex items-center gap-2.5" />}
                 >
                   {item.icon && (
                     <item.icon
                       className={`h-4 w-4 shrink-0 transition-colors ${
-                        item.isActive ? 'text-black stroke-[2.3]' : 'text-[#5E7A85]'
+                        item.isActive ? 'text-black dark:text-white stroke-[2.3]' : 'text-[#5E7A85] dark:text-[#8DB5C2]'
                       }`}
                     />
                   )}
-                  <span className={item.isActive ? 'text-black font-black' : 'text-[#475E68] font-semibold'}>
+                  <span className={item.isActive ? 'text-black dark:text-white font-black' : 'text-[#475E68] dark:text-[#B2D5E2] font-semibold'}>
                     {item.title}
                   </span>
                   {item.badge && (
                     <span className={`ml-auto text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full group-data-[collapsible=icon]:hidden ${
                       item.isActive
-                        ? 'bg-black text-white shadow-2xs'
-                        : 'bg-[#E2F0F6] text-[#004554] border border-[#B5D7E4]'
+                        ? 'bg-black text-white dark:bg-[#44A6B5] dark:text-[#00161C] shadow-2xs'
+                        : 'bg-[#E2F0F6] text-[#004554] dark:bg-[rgba(68,166,181,0.2)] dark:text-[#B2D5E2] border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.3)]'
                     }`}>
                       {item.badge}
                     </span>
@@ -304,14 +304,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       };
 
   return (
-    <Sidebar collapsible="icon" className="bg-white border-r border-black/8" {...props}>
-      <SidebarHeader className="bg-white">
+    <Sidebar collapsible="icon" className="bg-white dark:bg-[#001A20] border-r border-black/8 dark:border-[rgba(68,166,181,0.2)]" {...props}>
+      <SidebarHeader className="bg-white dark:bg-[#001A20]">
         <AppLogo />
       </SidebarHeader>
-      <SidebarContent className="bg-white">
+      <SidebarContent className="bg-white dark:bg-[#001A20]">
         <NavMain groups={navGroups} />
       </SidebarContent>
-      <SidebarFooter className="bg-white border-t border-black/5">
+      <SidebarFooter className="bg-white dark:bg-[#001A20] border-t border-black/5 dark:border-[rgba(68,166,181,0.15)]">
         <NavUser user={navUser} />
       </SidebarFooter>
     </Sidebar>

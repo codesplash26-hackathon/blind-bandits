@@ -67,7 +67,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
-      <SidebarInset className="bg-gradient-to-br from-[#F0F5F8] via-[#F4F7F9] to-[#F8FAFC] min-h-screen">
+      <SidebarInset className="bg-gradient-to-br from-[#F0F5F8] via-[#F4F7F9] to-[#F8FAFC] dark:from-[#001318] dark:via-[#00181F] dark:to-[#001D24] min-h-screen text-foreground transition-colors duration-200">
         {isLoading || !mounted ? (
           <div className="flex h-full w-full items-center justify-center min-h-screen">
             <Loader label="Loading CeylonTour..." />
@@ -75,20 +75,20 @@ export default function DashboardLayout({
         ) : (
           <>
             {/* Top Dashboard Navbar */}
-            <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-[#004554]/10 bg-white/85 backdrop-blur-md shadow-[0_1px_3px_rgba(0,69,84,0.03)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-[#004554]/10 dark:border-[rgba(68,166,181,0.2)] bg-white/85 dark:bg-[#001A20]/90 backdrop-blur-md shadow-[0_1px_3px_rgba(0,69,84,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
               <div className="flex items-center gap-3 px-4 sm:px-6 w-full">
-                <SidebarTrigger className="-ml-1 text-[#004554] hover:bg-[#EAF4F7]" />
-                <div className="h-4 w-px bg-[#004554]/15 hidden sm:block" />
+                <SidebarTrigger className="-ml-1 text-[#004554] dark:text-[#B2D5E2] hover:bg-[#EAF4F7] dark:hover:bg-[rgba(68,166,181,0.15)]" />
+                <div className="h-4 w-px bg-[#004554]/15 dark:bg-[rgba(68,166,181,0.25)] hidden sm:block" />
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xs sm:text-sm font-black text-[#004554] tracking-tight">
+                  <span className="text-xs sm:text-sm font-black text-[#004554] dark:text-[#E9F1F6] tracking-tight">
                     {getPageTitle()}
                   </span>
                   {effectiveRole === 'ADMIN' ? (
-                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] text-[#004554] border border-[#B5D7E4]">
+                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] dark:from-[#002832] dark:to-[#00222B] text-[#004554] dark:text-[#B2D5E2] border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.3)]">
                       <ShieldCheck className="w-3 h-3 text-[#44A6B5]" /> Authority Clearance
                     </span>
                   ) : (
-                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] text-[#004554] border border-[#B5D7E4] shadow-2xs">
+                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] dark:from-[#002832] dark:to-[#00222B] text-[#004554] dark:text-[#B2D5E2] border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.3)] shadow-2xs">
                       <span className="size-1.5 rounded-full bg-[#44A6B5] animate-pulse" />
                       Live Travel Stream
                     </span>
@@ -117,7 +117,7 @@ export default function DashboardLayout({
 
                       <Link
                         href="/saved"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white text-[#004554] text-xs font-bold border border-[#B5D7E4] shadow-2xs transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white dark:bg-[#00232B] dark:hover:bg-[#002D37] text-[#004554] dark:text-[#B2D5E2] text-xs font-bold border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.25)] shadow-2xs transition-colors"
                         title="Saved destinations"
                       >
                         <Bookmark className="w-3.5 h-3.5 text-[#44A6B5]" />
