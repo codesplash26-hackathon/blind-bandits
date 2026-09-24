@@ -10,6 +10,7 @@ from app.models import (  # noqa: F401
     AlternativeSelectionContext,
     Destination,
     DestinationFactor,
+    EnvironmentalObservation,
     InteractionEvent,
     RecommendationSearch,
     SavedDestination,
