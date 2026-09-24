@@ -1,9 +1,25 @@
 from fastapi import APIRouter
 
-from app.api.routes import admin, admin_destinations, auth, destinations
+from app.api.routes import (
+    admin,
+    admin_destinations,
+    auth,
+    destinations,
+    environment,
+    interactions,
+    map,
+    recommendations,
+    saved,
+)
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(auth.router)
 api_router.include_router(destinations.router)
+api_router.include_router(environment.read_router)
+api_router.include_router(map.router)
+api_router.include_router(recommendations.router)
+api_router.include_router(saved.router)
+api_router.include_router(interactions.router)
 api_router.include_router(admin.router)
 api_router.include_router(admin_destinations.router)
+api_router.include_router(environment.admin_router)

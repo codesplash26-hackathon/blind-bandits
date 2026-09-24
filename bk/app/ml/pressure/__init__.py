@@ -1,0 +1,1 @@
+"""Regional monthly occupancy forecasting."""

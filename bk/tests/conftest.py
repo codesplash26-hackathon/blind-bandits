@@ -1,3 +1,4 @@
+import json
 import os
 from collections.abc import AsyncGenerator, Generator
 
@@ -12,6 +13,23 @@ os.environ.setdefault(
     "JWT_SECRET_KEY",
     "test-only-secret-key-with-at-least-32-characters",
 )
+os.environ["SUSTAINABILITY_WEIGHTS"] = json.dumps(
+    {
+        "version": "temporary-test-weights-v1",
+        "weights": {
+            "environmental": "0.20",
+            "community": "0.20",
+            "crowd": "0.20",
+            "infrastructure": "0.20",
+            "suitability": "0.20",
+        },
+    }
+)
+
+from app.core.config import Settings
+
+# Test settings must not merge with developer-specific values from bk/.env.
+Settings.model_config["env_file"] = None
 
 from app.core.security import hash_password
 from app.db.base import Base

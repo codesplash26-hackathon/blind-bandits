@@ -11,15 +11,41 @@ from app.schemas.destination import (
     DestinationResponse,
     DestinationUpdate,
 )
+from app.schemas.engagement import (
+    InteractionEventRequest,
+    InteractionEventResponse,
+    RecommendationHistoryItem,
+    SavedDestinationResponse,
+)
+from app.schemas.recommendation import (
+    CrowdPreference,
+    PreferenceMatchResponse,
+    RecommendationItemResponse,
+    RecommendationRequest,
+    RecommendationResponse,
+    SustainabilityPreference,
+)
+from app.schemas.sustainability import DestinationSustainabilityResponse
 
 __all__ = [
+    "CrowdPreference",
     "CurrentUserResponse",
     "DestinationCreate",
     "DestinationFactorInput",
     "DestinationFactorResponse",
     "DestinationResponse",
+    "DestinationSustainabilityResponse",
     "DestinationUpdate",
+    "InteractionEventRequest",
+    "InteractionEventResponse",
     "LoginRequest",
+    "PreferenceMatchResponse",
+    "RecommendationHistoryItem",
+    "RecommendationItemResponse",
+    "RecommendationRequest",
+    "RecommendationResponse",
     "RegistrationRequest",
+    "SavedDestinationResponse",
+    "SustainabilityPreference",
     "TokenResponse",
 ]
