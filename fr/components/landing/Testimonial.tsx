@@ -19,9 +19,9 @@ export function Testimonial() {
   };
 
   return (
-    <section id="reviews" className="w-full bg-muted/50 dark:bg-[#00252E] border-y border-border/80 dark:border-[#003F4C] py-20 md:py-28 relative overflow-hidden">
+    <section id="reviews" className="w-full bg-muted/50 dark:bg-muted border-y border-border/80 dark:border-border py-20 md:py-28 relative overflow-hidden">
       {/* Subtle Background Glow */}
-      <div className="absolute top-1/2 left-10 w-96 h-96 bg-[#B2D5E2]/20 dark:bg-[#004554]/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-96 h-96 bg-frosted-blue/20 dark:bg-muted/25 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
@@ -42,9 +42,9 @@ export function Testimonial() {
             Hear how conscious adventurers and Sri Lankan local hosts create unforgettable, sustainable memories together with Ceylon Tour.
           </p>
 
-          <div className="flex items-center gap-2 text-amber-500 mb-2">
+          <div className="flex items-center gap-2 text-warning mb-2">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+              <Star key={i} className="w-5 h-5 fill-warning text-warning" />
             ))}
             <span className="text-foreground font-bold text-base ml-2">4.96 / 5.0</span>
           </div>
@@ -70,14 +70,14 @@ export function Testimonial() {
           <div className="flex gap-4 mt-8">
             <button
               onClick={handlePrev}
-              className="p-3.5 rounded-full bg-card border border-border/80 hover:border-[#44A6B5] hover:bg-[#E9F1F6] dark:hover:bg-[#003A47] dark:hover:border-[#44A6B5]/60 transition-all text-foreground flex items-center justify-center shadow-sm hover:scale-105"
+              className="p-3.5 rounded-full bg-card border border-border/80 hover:border-primary hover:bg-muted dark:hover:border-primary/60 transition-all text-foreground flex items-center justify-center shadow-sm hover:scale-105"
               aria-label="Previous testimonial"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <button
               onClick={handleNext}
-              className="p-3.5 rounded-full bg-card border border-border/80 hover:border-[#44A6B5] hover:bg-[#E9F1F6] dark:hover:bg-[#003A47] dark:hover:border-[#44A6B5]/60 transition-all text-foreground flex items-center justify-center shadow-sm hover:scale-105"
+              className="p-3.5 rounded-full bg-card border border-border/80 hover:border-primary hover:bg-muted dark:hover:border-primary/60 transition-all text-foreground flex items-center justify-center shadow-sm hover:scale-105"
               aria-label="Next testimonial"
             >
               <ArrowRight className="w-5 h-5" />

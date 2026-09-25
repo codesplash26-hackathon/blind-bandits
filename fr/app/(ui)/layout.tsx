@@ -67,7 +67,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
-      <SidebarInset className="bg-gradient-to-br from-[#F0F5F8] via-[#F4F7F9] to-[#F8FAFC] dark:from-[#001318] dark:via-[#00181F] dark:to-[#001D24] min-h-screen text-foreground transition-colors duration-200">
+      <SidebarInset className="bg-gradient-to-br from-muted via-background to-background dark:via-muted dark:to-muted min-h-screen text-foreground transition-colors duration-200">
         {isLoading || !mounted ? (
           <div className="flex h-full w-full items-center justify-center min-h-screen">
             <Loader label="Loading CeylonTour..." />
@@ -75,21 +75,21 @@ export default function DashboardLayout({
         ) : (
           <>
             {/* Top Dashboard Navbar */}
-            <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-[#004554]/10 dark:border-[rgba(68,166,181,0.2)] bg-white/85 dark:bg-[#001A20]/90 backdrop-blur-md shadow-[0_1px_3px_rgba(0,69,84,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-border dark:border-primary/20 bg-card/85 dark:bg-muted/90 backdrop-blur-md shadow-[0_1px_3px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] dark:shadow-[0_4px_20px_color-mix(in_srgb,var(--shadow-color)_50%,transparent)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
               <div className="flex items-center gap-3 px-4 sm:px-6 w-full">
-                <SidebarTrigger className="-ml-1 text-[#004554] dark:text-[#B2D5E2] hover:bg-[#EAF4F7] dark:hover:bg-[rgba(68,166,181,0.15)]" />
-                <div className="h-4 w-px bg-[#004554]/15 dark:bg-[rgba(68,166,181,0.25)] hidden sm:block" />
+                <SidebarTrigger className="-ml-1 text-primary dark:text-secondary hover:bg-muted dark:hover:bg-primary/15" />
+                <div className="h-4 w-px bg-primary/15 dark:bg-primary/25 hidden sm:block" />
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xs sm:text-sm font-black text-[#004554] dark:text-[#E9F1F6] tracking-tight">
+                  <span className="text-xs sm:text-sm font-black text-primary dark:text-overlay-foreground tracking-tight">
                     {getPageTitle()}
                   </span>
                   {effectiveRole === 'ADMIN' ? (
-                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] dark:from-[#002832] dark:to-[#00222B] text-[#004554] dark:text-[#B2D5E2] border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.3)]">
-                      <ShieldCheck className="w-3 h-3 text-[#44A6B5]" /> Authority Clearance
+                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-muted text-primary dark:text-secondary border border-border dark:border-primary/30">
+                      <ShieldCheck className="w-3 h-3 text-primary" /> Authority Clearance
                     </span>
                   ) : (
-                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] dark:from-[#002832] dark:to-[#00222B] text-[#004554] dark:text-[#B2D5E2] border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.3)] shadow-2xs">
-                      <span className="size-1.5 rounded-full bg-[#44A6B5] animate-pulse" />
+                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-muted text-primary dark:text-secondary border border-border dark:border-primary/30 shadow-2xs">
+                      <span className="size-1.5 rounded-full bg-primary animate-pulse" />
                       Live Travel Stream
                     </span>
                   )}
@@ -100,29 +100,29 @@ export default function DashboardLayout({
                   {effectiveRole === 'ADMIN' ? (
                     <Link
                       href="/admin/tourism-pressure"
-                      className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white hover:opacity-95 text-xs font-bold transition-all shadow-xs"
+                      className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground hover:opacity-95 text-xs font-bold transition-all shadow-xs"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 text-light-blue" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
                       <span>Pressure Simulator</span>
                     </Link>
                   ) : (
                     <>
                       <Link
                         href="/discover"
-                        className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white text-xs font-bold shadow-xs hover:opacity-95 transition-all hover:scale-102"
+                        className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground text-xs font-bold shadow-xs hover:opacity-95 transition-all hover:scale-102"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-light-blue" />
+                        <Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
                         <span>AI Trip Finder</span>
                       </Link>
 
                       <Link
                         href="/saved"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white dark:bg-[#00232B] dark:hover:bg-[#002D37] text-[#004554] dark:text-[#B2D5E2] text-xs font-bold border border-[#B5D7E4] dark:border-[rgba(68,166,181,0.25)] shadow-2xs transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/80 hover:bg-card dark:bg-muted dark:hover:bg-muted text-primary dark:text-secondary text-xs font-bold border border-border dark:border-primary/25 shadow-2xs transition-colors"
                         title="Saved destinations"
                       >
-                        <Bookmark className="w-3.5 h-3.5 text-[#44A6B5]" />
+                        <Bookmark className="w-3.5 h-3.5 text-primary" />
                         <span className="hidden sm:inline">Saved</span>
-                        <span className="h-4 min-w-4 px-1 rounded-full bg-gradient-to-r from-[#003E4C] to-[#04667C] text-white text-[10px] font-black flex items-center justify-center">
+                        <span className="h-4 min-w-4 px-1 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground text-[10px] font-black flex items-center justify-center">
                           {savedDestinationIds.length}
                         </span>
                       </Link>

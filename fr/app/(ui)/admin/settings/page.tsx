@@ -122,16 +122,16 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               System Policy Engine
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               TreeSHAP Model v3.2 Active
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Sustainability &amp; Algorithm Policy Console
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -193,7 +193,7 @@ export default function AdminSettingsPage() {
               onClick={() => applyPreset('balanced')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 activePreset === 'balanced'
-                  ? 'bg-secondary text-white border-secondary shadow-xs'
+                  ? 'bg-secondary text-secondary-foreground border-secondary shadow-xs'
                   : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
               }`}
             >

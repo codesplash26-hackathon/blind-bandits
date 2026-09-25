@@ -62,7 +62,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-screen min-h-[620px] flex flex-col justify-between overflow-hidden pt-20 pb-6 sm:pt-24 sm:pb-8">
       {/* Background Image Slideshow Container */}
-      <div className="absolute inset-0 z-0 bg-[#00171D]">
+      <div className="absolute inset-0 z-0 bg-overlay">
         {heroSlides.map((slide, idx) => (
           <div
             key={idx}
@@ -85,9 +85,9 @@ export const Hero = () => {
         ))}
 
         {/* Unified Clean Vignette Overlay - Zero Clutter */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00171D]/80 via-[#00171D]/45 to-transparent z-20 pointer-events-none" />
-        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-black/50 to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#00171D] via-[#00171D]/60 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-overlay/80 via-overlay/45 to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-overlay/50 to-transparent z-20 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-overlay via-overlay/60 to-transparent z-20 pointer-events-none" />
       </div>
 
       {/* Hero Main Content Container */}
@@ -95,23 +95,23 @@ export const Hero = () => {
         {/* Top Text Content */}
         <div className="max-w-2xl flex flex-col items-start gap-4 sm:gap-5 my-auto pt-2 sm:pt-4">
           {/* Eco Location Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 sm:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium shadow-md transition-all duration-300">
-            <Compass className="w-4 h-4 text-[#44A6B5]" />
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 sm:py-2 rounded-full bg-overlay-foreground/10 backdrop-blur-md border border-overlay-foreground/20 text-overlay-foreground text-xs sm:text-sm font-medium shadow-md transition-all duration-300">
+            <Compass className="w-4 h-4 text-sky-aqua" />
             <span>{heroSlides[currentSlide].location}</span>
-            <span className="text-white/40">•</span>
-            <span className="text-white/80">{heroSlides[currentSlide].tagline}</span>
+            <span className="text-overlay-foreground/40">•</span>
+            <span className="text-overlay-foreground/80">{heroSlides[currentSlide].tagline}</span>
           </div>
 
           {/* Clean Main Title */}
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[1.06] drop-shadow-2xl">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-overlay-foreground leading-[1.06] drop-shadow-2xl">
             Smart. Sustainable. <br />
-            <span className="font-heading italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#44A6B5] via-[#B2D5E2] to-[#44A6B5]">
+            <span className="font-heading italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-sky-aqua via-frosted-blue to-sky-aqua">
               Travel Lanka.
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="font-body-md text-slate-100/90 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed drop-shadow">
+          <p className="font-body-md text-overlay-foreground/90 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed drop-shadow">
             Discover Sri Lanka’s hidden gems while caring for nature and supporting local communities with smart, personalized travel suggestions.
           </p>
 
@@ -119,32 +119,32 @@ export const Hero = () => {
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-1">
             <button
               onClick={() => router.push("/auth")}
-              className="inline-flex items-center gap-3 bg-[#44A6B5] hover:bg-[#3993A1] text-white font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-2xl transition-all hover:-translate-y-0.5 group"
+              className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-2xl transition-all hover:-translate-y-0.5 group"
             >
               <span>Find a Destination</span>
-              <span className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center text-white transition-colors">
+              <span className="w-7 h-7 rounded-full bg-overlay-foreground/20 group-hover:bg-overlay-foreground/30 flex items-center justify-center text-inherit transition-colors">
                 <ArrowUpRight size={16} />
               </span>
             </button>
 
             <button
               onClick={() => router.push("#why-us")}
-              className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-md text-[#004554] hover:bg-white font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
+              className="inline-flex items-center gap-3 bg-card/95 backdrop-blur-md text-primary hover:bg-card font-semibold text-sm pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
             >
               <span>See How It Works</span>
-              <span className="w-7 h-7 rounded-full bg-[#004554] text-white flex items-center justify-center group-hover:bg-[#003440] transition-colors">
+              <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center group-hover:bg-primary/90 transition-colors">
                 <ArrowUpRight size={16} />
               </span>
             </button>
           </div>
 
           {/* Micro Trust Badge */}
-          <div className="hidden sm:inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/15 text-white/90 text-xs mt-0.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="hidden sm:inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-overlay/30 backdrop-blur-md border border-overlay-foreground/15 text-overlay-foreground/90 text-xs mt-0.5">
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
             <span>Zero Plastic Protocols</span>
-            <span className="text-white/30">•</span>
+            <span className="text-overlay-foreground/30">•</span>
             <span>Fair-Wage Local Hosts</span>
-            <span className="text-white/30">•</span>
+            <span className="text-overlay-foreground/30">•</span>
             <span>Real-time Crowd Relief</span>
           </div>
         </div>
@@ -158,7 +158,7 @@ export const Hero = () => {
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === currentSlide ? "w-8 bg-[#44A6B5]" : "w-2 bg-white/40 hover:bg-white/70"
+                  idx === currentSlide ? "w-8 bg-primary" : "w-2 bg-overlay-foreground/40 hover:bg-card/70"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -166,22 +166,22 @@ export const Hero = () => {
           </div>
 
           {/* Slide Counter & Arrow Navigation */}
-          <div className="inline-flex items-center gap-4 px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 shadow-xl text-white text-xs sm:text-sm">
-            <span className="font-mono text-white/70">
+          <div className="inline-flex items-center gap-4 px-4 py-2 rounded-full bg-overlay/40 backdrop-blur-xl border border-overlay-foreground/20 shadow-xl text-overlay-foreground text-xs sm:text-sm">
+            <span className="font-mono text-overlay-foreground/70">
               0{currentSlide + 1} / 0{heroSlides.length}
             </span>
-            <div className="w-px h-4 bg-white/20" />
+            <div className="w-px h-4 bg-overlay-foreground/20" />
             <div className="flex items-center gap-1">
               <button
                 onClick={handlePrev}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/25 flex items-center justify-center transition-colors"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 onClick={handleNext}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/25 flex items-center justify-center transition-colors"
                 aria-label="Next slide"
               >
                 <ChevronRight size={16} />

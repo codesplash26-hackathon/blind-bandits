@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
+import { useState } from 'react';
 import {
   Leaf,
   DollarSign,
@@ -37,16 +36,13 @@ import {
   ComposedChart,
 } from 'recharts';
 
-// Theme Colors Palette Constants
-const THEME = {
-  midnightGreen: '#004554',
-  moonstone: '#44A6B5',
-  lightBlue: '#B2D5E2',
-  aliceBlue: '#E9F1F6',
-  timberwolf: '#D3D0C8',
-  darkTeal: '#002B35',
-  destructiveLight: '#C94A4A',
-  destructiveDark: '#F87171',
+// CSS variables update chart series immediately when the theme changes.
+const chartColors = {
+  primarySeries: 'var(--chart-1)',
+  secondarySeries: 'var(--chart-2)',
+  accentSeries: 'var(--chart-3)',
+  neutralSeries: 'var(--chart-4)',
+  thresholdStroke: 'var(--destructive)',
 };
 
 // 1. Time Series Dispersal Trajectory (Jan - Oct 2026)
@@ -105,7 +101,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
             <div className="flex items-center gap-1.5">
               <span
                 className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: item.color || THEME.moonstone }}
+                style={{ backgroundColor: item.color || chartColors.secondarySeries }}
               />
               <span className="text-muted-foreground">{item.name}:</span>
             </div>
@@ -120,34 +116,15 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   return null;
 };
 
-const emptySubscribe = () => () => {};
-
 export default function AdminAnalyticsPage() {
-  const { resolvedTheme } = useTheme();
-  const mounted = React.useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false
-  );
   const [exported, setExported] = useState(false);
   const [timeframe, setTimeframe] = useState<'30D' | 'Q3' | 'YTD'>('Q3');
 
-  const isDark = mounted && resolvedTheme === 'dark';
-
-  // Theme-aware series styling strictly using the 5 Theme Colors
-  const chartColors = {
-    primarySeries: isDark ? THEME.lightBlue : THEME.midnightGreen,
-    secondarySeries: THEME.moonstone,
-    accentSeries: isDark ? THEME.aliceBlue : THEME.lightBlue,
-    neutralSeries: THEME.timberwolf,
-    thresholdStroke: isDark ? THEME.destructiveDark : THEME.destructiveLight,
-  };
-
   const categoryShareData = [
-    { name: 'Eco-Trekking & Waterfalls', value: 38, color: THEME.moonstone },
+    { name: 'Eco-Trekking & Waterfalls', value: 38, color: chartColors.secondarySeries },
     { name: 'Heritage & Ancient Sanctuaries', value: 27, color: chartColors.primarySeries },
-    { name: 'Rural Agro & Homestays', value: 21, color: isDark ? THEME.aliceBlue : THEME.lightBlue },
-    { name: 'Marine & Coast Sanctuaries', value: 14, color: THEME.timberwolf },
+    { name: 'Rural Agro & Homestays', value: 21, color: chartColors.accentSeries },
+    { name: 'Marine & Coast Sanctuaries', value: 14, color: chartColors.neutralSeries },
   ];
 
   const handleExport = () => {
@@ -161,16 +138,16 @@ export default function AdminAnalyticsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Authority Macro Analytics
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               National Dispersal Audit 2026
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Redistribution &amp; Ecological Impact Analytics
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">

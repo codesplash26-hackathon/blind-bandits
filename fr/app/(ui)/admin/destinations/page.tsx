@@ -68,16 +68,16 @@ export default function AdminDestinationsRegistryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Tourism Authority
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               Registry v2.4 Active
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Destinations Carrying Capacity Registry
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -232,22 +232,22 @@ export default function AdminDestinationsRegistryPage() {
                     </TableCell>
 
                     <TableCell className="py-3.5 px-3">
-                      <span className="font-bold text-emerald-600 dark:text-emerald-400 text-xs">
+                      <span className="font-bold text-success text-xs">
                         {dest.sustainability.overall} / 100
                       </span>
                     </TableCell>
 
                     <TableCell className="py-3.5 px-3">
                       {dest.pressure.level === 'HIGH' ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-600 dark:text-rose-400">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-destructive">
                           <AlertTriangle className="w-3.5 h-3.5" /> Over Capacity
                         </span>
                       ) : dest.pressure.level === 'MEDIUM' ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-warning">
                           Near Threshold
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-success">
                           <CheckCircle2 className="w-3.5 h-3.5" /> Eco-Safe
                         </span>
                       )}
@@ -282,7 +282,7 @@ export default function AdminDestinationsRegistryPage() {
 
       {/* Edit Carrying Capacity Modal */}
       {editingDest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay/60 backdrop-blur-xs animate-in fade-in">
           <Card className="max-w-md w-full rounded-3xl border border-border shadow-2xl p-6 space-y-5 bg-card">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div>

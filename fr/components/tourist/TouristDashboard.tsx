@@ -47,10 +47,10 @@ const weeklyVisitorData = [
 ];
 
 const categoryData = [
-  { name: 'Misty Highlands', value: 38, color: '#004554' },
-  { name: 'Quiet Waterfalls', value: 26, color: '#44A6B5' },
-  { name: 'Ancient Heritage', value: 22, color: '#B2D5E2' },
-  { name: 'Coastal Havens', value: 14, color: '#D3D0C8' },
+  { name: 'Misty Highlands', value: 38, color: 'var(--chart-1)' },
+  { name: 'Quiet Waterfalls', value: 26, color: 'var(--chart-2)' },
+  { name: 'Ancient Heritage', value: 22, color: 'var(--chart-3)' },
+  { name: 'Coastal Havens', value: 14, color: 'var(--chart-4)' },
 ];
 
 const hourlyTrajectoryData = [
@@ -131,19 +131,19 @@ export default function TouristDashboard() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Traveler Overview &amp; Analytics
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               Live Island Feed
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             {user?.name ? `${user.name}'s Overview` : 'Conscious Travel Dashboard'}
           </h1>
-          <p className="text-xs sm:text-sm text-[#5A737D] mt-0.5 font-medium">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
             Monitor real-time carrying capacities, eco-footprint, and curated crowd-free sanctuaries.
           </p>
         </div>
@@ -152,19 +152,19 @@ export default function TouristDashboard() {
         <div className="flex flex-wrap items-center gap-3">
           {/* Search Input */}
           <form onSubmit={handleSearchSubmit} className="relative flex items-center min-w-[220px] sm:min-w-[260px]">
-            <Search className="absolute left-3.5 w-4 h-4 text-[#5A737D] pointer-events-none" />
+            <Search className="absolute left-3.5 w-4 h-4 text-muted-foreground pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search here..."
-              className="w-full pl-10 pr-8 py-2 rounded-2xl bg-white border border-[#004554]/15 text-[#004554] placeholder:text-[#5A737D] text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#44A6B5] focus:border-transparent shadow-[0_2px_8px_rgba(0,69,84,0.03)]"
+              className="w-full pl-10 pr-8 py-2 rounded-2xl bg-card border border-border text-primary placeholder:text-muted-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 p-1 text-[#5A737D] hover:text-[#004554] cursor-pointer"
+                className="absolute right-2.5 p-1 text-muted-foreground hover:text-primary cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -172,20 +172,20 @@ export default function TouristDashboard() {
           </form>
 
           {/* Period Selector Dropdown Pill */}
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-[#004554]/15 shadow-[0_2px_8px_rgba(0,69,84,0.03)] text-xs font-bold text-[#004554]">
-            <Calendar className="w-3.5 h-3.5 text-[#44A6B5]" />
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card border border-border shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] text-xs font-bold text-primary">
+            <Calendar className="w-3.5 h-3.5 text-primary" />
             <span className="hidden sm:inline">Aug 2026 - Oct 2026</span>
             <span className="sm:hidden">Q3 2026</span>
-            <ChevronDown className="w-3.5 h-3.5 text-[#5A737D] ml-1" />
+            <ChevronDown className="w-3.5 h-3.5 text-muted-foreground ml-1" />
           </div>
 
           {/* Export Report Button */}
           <button
             type="button"
             onClick={handleExport}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white hover:bg-[#EAF4F7] border border-[#004554]/15 text-[#004554] text-xs font-bold shadow-[0_2px_8px_rgba(0,69,84,0.03)] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card hover:bg-muted border border-border text-primary text-xs font-bold shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] transition-all cursor-pointer"
           >
-            <Download className="w-3.5 h-3.5 text-[#44A6B5]" />
+            <Download className="w-3.5 h-3.5 text-primary" />
             <span>{downloadNotice ? 'Exported!' : 'Export'}</span>
           </button>
         </div>
@@ -193,14 +193,14 @@ export default function TouristDashboard() {
 
       {/* Toast Notification */}
       {lastSavedNotice && (
-        <div className="p-3.5 px-4 rounded-2xl bg-alice-blue border border-moonstone/50 flex items-center justify-between text-xs text-midnight-green shadow-xs animate-in fade-in duration-200">
+        <div className="p-3.5 px-4 rounded-2xl bg-muted border border-primary/50 flex items-center justify-between text-xs text-primary shadow-xs animate-in fade-in duration-200">
           <div className="flex items-center gap-2.5">
-            <span className="p-1 rounded-full bg-moonstone/20 text-moonstone">
+            <span className="p-1 rounded-full bg-primary/20 text-primary">
               <Bookmark className="w-3.5 h-3.5" />
             </span>
             <span className="font-semibold">{lastSavedNotice}</span>
           </div>
-          <Link href="/saved" className="text-moonstone font-bold hover:underline">
+          <Link href="/saved" className="text-primary font-bold hover:underline">
             View Bucketlist →
           </Link>
         </div>
@@ -209,18 +209,18 @@ export default function TouristDashboard() {
       {/* ── 2. Top 4 Modern Kleon Metric KPI Cards with Sparklines ──────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Eco-Score with Circular Donut Gauge */}
-        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
               Eco Travel Score
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-black tracking-tight">94</span>
-              <span className="text-xs text-[#5A737D] font-semibold">/100</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">94</span>
+              <span className="text-xs text-muted-foreground font-semibold">/100</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#004554] pt-0.5">
-              <span className="text-[#44A6B5]">▲ +4.2%</span>
-              <span className="text-[#5A737D] font-normal">than last trip</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">▲ +4.2%</span>
+              <span className="text-muted-foreground font-normal">than last trip</span>
             </div>
           </div>
 
@@ -228,14 +228,14 @@ export default function TouristDashboard() {
           <div className="relative size-14 shrink-0 flex items-center justify-center">
             <svg className="size-full -rotate-90" viewBox="0 0 36 36">
               <path
-                className="text-[#E9F1F6]"
+                className="text-muted"
                 strokeWidth="3.5"
                 stroke="currentColor"
                 fill="none"
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
               <path
-                className="text-[#44A6B5]"
+                className="text-primary"
                 strokeDasharray="94, 100"
                 strokeWidth="3.5"
                 strokeLinecap="round"
@@ -244,23 +244,23 @@ export default function TouristDashboard() {
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
             </svg>
-            <span className="absolute text-[11px] font-black text-black">94%</span>
+            <span className="absolute text-[11px] font-black text-foreground">94%</span>
           </div>
         </div>
 
         {/* Card 2: Crowd Avoidance with Mini Smooth Curve */}
-        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
               Crowd Congestion
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-black tracking-tight">68%</span>
-              <span className="text-xs text-[#5A737D] font-semibold">less</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">68%</span>
+              <span className="text-xs text-muted-foreground font-semibold">less</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#004554] pt-0.5">
-              <span className="text-[#44A6B5]">▲ +12%</span>
-              <span className="text-[#5A737D] font-normal">vs Ella corridor</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">▲ +12%</span>
+              <span className="text-muted-foreground font-normal">vs Ella corridor</span>
             </div>
           </div>
 
@@ -270,55 +270,55 @@ export default function TouristDashboard() {
               <path
                 d="M 0 30 Q 15 5, 30 20 T 60 8 T 70 12"
                 fill="none"
-                stroke="#44A6B5"
+                stroke="var(--chart-2)"
                 strokeWidth="3"
                 strokeLinecap="round"
               />
-              <circle cx="70" cy="12" r="3.5" fill="#004554" />
+              <circle cx="70" cy="12" r="3.5" fill="var(--chart-1)" />
             </svg>
           </div>
         </div>
 
         {/* Card 3: Saved Sanctuaries with Mini Bar Sparkline */}
-        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
               Saved Sanctuaries
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-black tracking-tight">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {savedDestinationIds.length > 0 ? savedDestinationIds.length : 4}
               </span>
-              <span className="text-xs text-[#5A737D] font-semibold">destinations</span>
+              <span className="text-xs text-muted-foreground font-semibold">destinations</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#004554] pt-0.5">
-              <span className="text-[#44A6B5]">● Ready</span>
-              <span className="text-[#5A737D] font-normal">for trip routing</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">● Ready</span>
+              <span className="text-muted-foreground font-normal">for trip routing</span>
             </div>
           </div>
 
           {/* Mini Bar SVG Sparkline */}
           <div className="flex items-end gap-1.5 h-10 w-14 shrink-0">
-            <div className="w-2.5 bg-[#E9F1F6] h-5 rounded-full" />
-            <div className="w-2.5 bg-[#B2D5E2] h-8 rounded-full" />
-            <div className="w-2.5 bg-[#44A6B5] h-10 rounded-full" />
-            <div className="w-2.5 bg-[#004554] h-7 rounded-full" />
+            <div className="w-2.5 bg-muted h-5 rounded-full" />
+            <div className="w-2.5 bg-accent h-8 rounded-full" />
+            <div className="w-2.5 bg-primary h-10 rounded-full" />
+            <div className="w-2.5 bg-primary h-7 rounded-full" />
           </div>
         </div>
 
         {/* Card 4: Direct Homestay Benefit with Circular Donut */}
-        <div className="p-5 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-[#5A737D] uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
               Direct Host Benefit
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-black tracking-tight">88%</span>
-              <span className="text-xs text-[#5A737D] font-semibold">income</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">88%</span>
+              <span className="text-xs text-muted-foreground font-semibold">income</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#004554] pt-0.5">
-              <span className="text-[#44A6B5]">★ Certified</span>
-              <span className="text-[#5A737D] font-normal">village homestays</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">★ Certified</span>
+              <span className="text-muted-foreground font-normal">village homestays</span>
             </div>
           </div>
 
@@ -326,14 +326,14 @@ export default function TouristDashboard() {
           <div className="relative size-14 shrink-0 flex items-center justify-center">
             <svg className="size-full -rotate-90" viewBox="0 0 36 36">
               <path
-                className="text-[#E9F1F6]"
+                className="text-muted"
                 strokeWidth="3.5"
                 stroke="currentColor"
                 fill="none"
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
               <path
-                className="text-[#004554]"
+                className="text-primary"
                 strokeDasharray="88, 100"
                 strokeWidth="3.5"
                 strokeLinecap="round"
@@ -342,7 +342,7 @@ export default function TouristDashboard() {
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
             </svg>
-            <span className="absolute text-[11px] font-black text-black">88%</span>
+            <span className="absolute text-[11px] font-black text-foreground">88%</span>
           </div>
         </div>
       </div>
@@ -350,13 +350,13 @@ export default function TouristDashboard() {
       {/* ── 3. Mid-Top Row: Bar Chart + Donut Categories Breakdown ────── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Project Statistics / Regional Visitor Load Bar Chart (8 cols) */}
-        <div className="lg:col-span-8 p-6 sm:p-7 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card space-y-5">
+        <div className="lg:col-span-8 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 className="font-heading text-lg font-black text-black">
+              <h2 className="font-heading text-lg font-black text-foreground">
                 Visitor Load vs. Conscious Dispersal
               </h2>
-              <p className="text-xs text-[#5A737D]">
+              <p className="text-xs text-muted-foreground">
                 Compares saturated peak corridors against CeylonTour crowd-free alternatives
               </p>
             </div>
@@ -364,16 +364,16 @@ export default function TouristDashboard() {
             <div className="flex items-center gap-3">
               {/* Stat Chips */}
               <div className="hidden sm:flex items-center gap-3 text-xs font-bold">
-                <span className="flex items-center gap-1.5 text-[#004554]">
-                  <span className="size-2.5 rounded-full bg-[#004554]" /> Peak Influx
+                <span className="flex items-center gap-1.5 text-foreground">
+                  <span className="size-2.5 rounded-full bg-chart-1" /> Peak Influx
                 </span>
-                <span className="flex items-center gap-1.5 text-[#44A6B5]">
-                  <span className="size-2.5 rounded-full bg-[#44A6B5]" /> CeylonTour Flow
+                <span className="flex items-center gap-1.5 text-foreground">
+                  <span className="size-2.5 rounded-full bg-chart-2" /> CeylonTour Flow
                 </span>
               </div>
 
               {/* Daily / Weekly Segmented Tab Control */}
-              <div className="p-1 rounded-xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] flex items-center text-xs font-bold shadow-[inset_0_1px_3px_rgba(0,69,84,0.06)]">
+              <div className="p-1 rounded-xl bg-muted border border-border flex items-center text-xs font-bold shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
                 {(['Daily', 'Weekly'] as const).map((period) => (
                   <button
                     key={period}
@@ -381,8 +381,8 @@ export default function TouristDashboard() {
                     onClick={() => setChartPeriod(period)}
                     className={`px-3.5 py-1 rounded-lg transition-all cursor-pointer ${
                       chartPeriod === period
-                        ? 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white shadow-xs font-black'
-                        : 'bg-white/60 hover:bg-white text-[#004554] hover:text-[#002D38] border border-transparent hover:border-[#B5D7E4]'
+                        ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-xs font-black'
+                        : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border'
                     }`}
                   >
                     {period}
@@ -397,40 +397,41 @@ export default function TouristDashboard() {
             {mounted && (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={weeklyVisitorData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EAF2F6" />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
                   <XAxis
                     dataKey="day"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: '#5A737D', fontSize: 12, fontWeight: 600 }}
+                    tick={{ fill: 'var(--muted-foreground)', fontSize: 12, fontWeight: 600 }}
                   />
                   <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: '#5A737D', fontSize: 11 }}
+                    tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
                     domain={[0, 100]}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#FFFFFF',
+                      backgroundColor: 'var(--popover)',
+                      color: 'var(--popover-foreground)',
                       borderRadius: '16px',
-                      border: '1px solid rgba(0,69,84,0.12)',
-                      boxShadow: '0 8px 24px rgba(0,69,84,0.08)',
+                      border: '1px solid var(--border)',
+                      boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
                       fontSize: '12px',
                     }}
-                    cursor={{ fill: '#F0F6F8', opacity: 0.6 }}
+                    cursor={{ fill: 'var(--muted)', opacity: 0.6 }}
                   />
                   <Bar
                     dataKey="saturated"
                     name="Peak Hubs (Ella/Sigiriya)"
-                    fill="#004554"
+                    fill="var(--chart-1)"
                     radius={[6, 6, 0, 0]}
                     barSize={16}
                   />
                   <Bar
                     dataKey="conscious"
                     name="Conscious Escapes (Belihuloya)"
-                    fill="#44A6B5"
+                    fill="var(--chart-2)"
                     radius={[6, 6, 0, 0]}
                     barSize={16}
                   />
@@ -441,12 +442,12 @@ export default function TouristDashboard() {
         </div>
 
         {/* Right: Travel Mood Categories Donut Chart (4 cols) */}
-        <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-white border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.03)] flex flex-col justify-between space-y-4">
+        <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] flex flex-col justify-between space-y-4">
           <div>
-            <h2 className="font-heading text-lg font-black text-black">
+            <h2 className="font-heading text-lg font-black text-foreground">
               Travel Categories
             </h2>
-            <p className="text-xs text-[#5A737D]">
+            <p className="text-xs text-muted-foreground">
               Distribution of curated eco-sanctuaries
             </p>
           </div>
@@ -466,14 +467,15 @@ export default function TouristDashboard() {
                     dataKey="value"
                   >
                     {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color === '#004554' ? '#111827' : entry.color} />
+                      <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#FFFFFF',
+                      backgroundColor: 'var(--popover)',
+                      color: 'var(--popover-foreground)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(0,0,0,0.08)',
+                      border: '1px solid var(--border)',
                       fontSize: '12px',
                     }}
                   />
@@ -481,18 +483,18 @@ export default function TouristDashboard() {
               </ResponsiveContainer>
             )}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="font-heading text-xl font-black text-black">100%</span>
-              <span className="text-[10px] uppercase font-bold text-[#64748B]">Curated</span>
+              <span className="font-heading text-xl font-black text-foreground">100%</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground">Curated</span>
             </div>
           </div>
 
           {/* Custom Category Legends */}
-          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-black/8 text-xs">
+          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-border text-xs">
             {categoryData.map((cat) => (
               <div key={cat.name} className="flex items-center gap-2">
-                <span className="size-2 rounded-full shrink-0" style={{ backgroundColor: cat.color === '#004554' ? '#111827' : cat.color }} />
-                <span className="text-[#64748B] truncate font-medium">{cat.name}</span>
-                <span className="font-bold text-black ml-auto">{cat.value}%</span>
+                <span className="size-2 rounded-full shrink-0" style={{ backgroundColor: cat.color }} />
+                <span className="text-muted-foreground truncate font-medium">{cat.name}</span>
+                <span className="font-bold text-foreground ml-auto">{cat.value}%</span>
               </div>
             ))}
           </div>
@@ -502,17 +504,17 @@ export default function TouristDashboard() {
       {/* ── 4. Mid-Bottom Row: Area Trajectory Curve + Concentric Profile Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Hourly Visitor Pressure Trajectory (7 cols) */}
-        <div className="lg:col-span-7 p-6 sm:p-7 rounded-3xl bg-white border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.03)] space-y-4">
+        <div className="lg:col-span-7 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-heading text-lg font-black text-black">
+              <h2 className="font-heading text-lg font-black text-foreground">
                 Hourly Visitor Pressure Trajectory
               </h2>
-              <p className="text-xs text-[#64748B]">
+              <p className="text-xs text-muted-foreground">
                 Optimal time windows to explore with zero bottleneck queues
               </p>
             </div>
-            <span className="px-3 py-1 rounded-full bg-[#F1F5F9] text-black text-xs font-bold border border-black/10">
+            <span className="px-3 py-1 rounded-full bg-muted text-foreground text-xs font-bold border border-border">
               Optimal: 06:00 - 10:00
             </span>
           </div>
@@ -523,18 +525,19 @@ export default function TouristDashboard() {
                 <AreaChart data={hourlyTrajectoryData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorConscious" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#44A6B5" stopOpacity={0.35} />
-                      <stop offset="95%" stopColor="#44A6B5" stopOpacity={0.0} />
+                      <stop offset="5%" stopColor="var(--chart-2)" stopOpacity={0.35} />
+                      <stop offset="95%" stopColor="var(--chart-2)" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-                  <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#64748B', fontSize: 11 }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748B', fontSize: 11 }} domain={[0, 100]} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
+                  <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }} domain={[0, 100]} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#FFFFFF',
+                      backgroundColor: 'var(--popover)',
+                      color: 'var(--popover-foreground)',
                       borderRadius: '16px',
-                      border: '1px solid rgba(0,0,0,0.08)',
+                      border: '1px solid var(--border)',
                       fontSize: '12px',
                     }}
                   />
@@ -542,7 +545,7 @@ export default function TouristDashboard() {
                     type="monotone"
                     dataKey="quiet"
                     name="Conscious Sanctuary Load"
-                    stroke="#44A6B5"
+                    stroke="var(--chart-2)"
                     strokeWidth={3}
                     fillOpacity={1}
                     fill="url(#colorConscious)"
@@ -551,7 +554,7 @@ export default function TouristDashboard() {
                     type="monotone"
                     dataKey="saturated"
                     name="Saturated Corridors"
-                    stroke="#111827"
+                    stroke="var(--chart-1)"
                     strokeWidth={1.5}
                     strokeDasharray="4 4"
                     fill="none"
@@ -563,18 +566,18 @@ export default function TouristDashboard() {
         </div>
 
         {/* Right: Kleon-Style Profile Summary with Concentric Rings (5 cols) */}
-        <div className="lg:col-span-5 p-6 sm:p-7 rounded-3xl bg-white border border-[#004554]/10 shadow-dashboard-card flex flex-col justify-between space-y-4">
+        <div className="lg:col-span-5 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-heading text-lg font-black text-black">
+              <h2 className="font-heading text-lg font-black text-foreground">
                 Profile Summary
               </h2>
-              <p className="text-xs text-[#5A737D]">
+              <p className="text-xs text-muted-foreground">
                 Your conscious travel compliance &amp; impact
               </p>
             </div>
-            <span className="size-8 rounded-full bg-[#EAF4F7] flex items-center justify-center text-[#004554]">
-              <ShieldCheck className="w-4 h-4 text-[#44A6B5]" />
+            <span className="size-8 rounded-full bg-muted flex items-center justify-center text-primary">
+              <ShieldCheck className="w-4 h-4 text-primary" />
             </span>
           </div>
 
@@ -582,12 +585,12 @@ export default function TouristDashboard() {
           <div className="relative h-44 w-full flex items-center justify-center">
             <svg className="size-40 -rotate-90" viewBox="0 0 100 100">
               {/* Outer Ring: Eco-Footprint (94%) */}
-              <circle cx="50" cy="50" r="42" stroke="#EAF4F7" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="42" stroke="var(--muted)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
                 r="42"
-                stroke="#004554"
+                stroke="var(--chart-1)"
                 strokeWidth="6"
                 strokeDasharray="264"
                 strokeDashoffset="264 - (264 * 0.94)"
@@ -596,12 +599,12 @@ export default function TouristDashboard() {
               />
 
               {/* Middle Ring: Homestay Benefit (88%) */}
-              <circle cx="50" cy="50" r="32" stroke="#EAF4F7" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="32" stroke="var(--muted)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
                 r="32"
-                stroke="#44A6B5"
+                stroke="var(--chart-2)"
                 strokeWidth="6"
                 strokeDasharray="201"
                 strokeDashoffset="201 - (201 * 0.88)"
@@ -610,12 +613,12 @@ export default function TouristDashboard() {
               />
 
               {/* Inner Ring: Crowd Reduction (68%) */}
-              <circle cx="50" cy="50" r="22" stroke="#EAF4F7" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="22" stroke="var(--muted)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
                 r="22"
-                stroke="#B2D5E2"
+                stroke="var(--chart-3)"
                 strokeWidth="6"
                 strokeDasharray="138"
                 strokeDashoffset="138 - (138 * 0.68)"
@@ -626,32 +629,32 @@ export default function TouristDashboard() {
 
             {/* Inner Center Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-[10px] uppercase font-bold text-[#5A737D]">Eco Tier</span>
-              <span className="font-heading text-lg font-black text-[#004554]">Pioneer</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground">Eco Tier</span>
+              <span className="font-heading text-lg font-black text-primary">Pioneer</span>
             </div>
           </div>
 
           {/* Concentric Legend List */}
-          <div className="space-y-2 pt-2 border-t border-[#004554]/10 text-xs">
+          <div className="space-y-2 pt-2 border-t border-border text-xs">
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-[#5A737D] font-medium">
-                <span className="size-2.5 rounded-full bg-[#004554]" /> Environmental Score
+              <span className="flex items-center gap-2 text-muted-foreground font-medium">
+                <span className="size-2.5 rounded-full bg-primary" /> Environmental Score
               </span>
-              <strong className="text-[#004554] font-bold">94%</strong>
+              <strong className="text-primary font-bold">94%</strong>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-[#5A737D] font-medium">
-                <span className="size-2.5 rounded-full bg-[#44A6B5]" /> Homestay Benefit
+              <span className="flex items-center gap-2 text-muted-foreground font-medium">
+                <span className="size-2.5 rounded-full bg-primary" /> Homestay Benefit
               </span>
-              <strong className="text-[#004554] font-bold">88%</strong>
+              <strong className="text-primary font-bold">88%</strong>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-[#5A737D] font-medium">
-                <span className="size-2.5 rounded-full bg-[#B2D5E2]" /> Crowd Avoidance
+              <span className="flex items-center gap-2 text-muted-foreground font-medium">
+                <span className="size-2.5 rounded-full bg-accent" /> Crowd Avoidance
               </span>
-              <strong className="text-[#004554] font-bold">68%</strong>
+              <strong className="text-primary font-bold">68%</strong>
             </div>
           </div>
         </div>
@@ -661,16 +664,16 @@ export default function TouristDashboard() {
       <div className="space-y-5 pt-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="font-heading text-xl font-black text-black">
+            <h2 className="font-heading text-xl font-black text-foreground">
               Curated Sanctuaries to Explore
             </h2>
-            <p className="text-xs text-[#5A737D]">
+            <p className="text-xs text-muted-foreground">
               {filteredDestinations.length} destinations calibrated for peace, verified homestays &amp; pristine trails
             </p>
           </div>
 
           {/* Vibe Category Tabs (Elegant Ceylon Lagoon Blue Segmented Control) */}
-          <div className="p-1.5 rounded-2xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4] flex flex-wrap items-center gap-1.5 shadow-[inset_0_1px_3px_rgba(0,69,84,0.06)]">
+          <div className="p-1.5 rounded-2xl bg-muted border border-border flex flex-wrap items-center gap-1.5 shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
             {[
               { id: 'ALL', label: 'All Sanctuaries' },
               { id: 'HIGHLANDS', label: 'Highlands' },
@@ -686,8 +689,8 @@ export default function TouristDashboard() {
                   onClick={() => setSelectedVibe(vibe.id as VibeCategory)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white shadow-[0_3px_12px_rgba(0,69,84,0.28)] ring-1 ring-white/20 font-black'
-                      : 'bg-white/60 hover:bg-white text-[#004554] hover:text-[#002D38] border border-transparent hover:border-[#B5D7E4] hover:shadow-2xs'
+                      ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--shadow-color)_28%,transparent)] ring-1 ring-overlay-foreground/20 font-black'
+                      : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border hover:shadow-2xs'
                   }`}
                 >
                   {vibe.label}
@@ -702,7 +705,7 @@ export default function TouristDashboard() {
           {filteredDestinations.slice(0, 3).map((dest) => (
             <div
               key={dest.id}
-              className="group rounded-3xl bg-white border border-[#004554]/10 overflow-hidden shadow-dashboard-card transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-3xl bg-card border border-border overflow-hidden shadow-dashboard-card transition-all duration-300 flex flex-col justify-between"
             >
               <div className="relative h-52 w-full overflow-hidden">
                 <Image
@@ -711,10 +714,10 @@ export default function TouristDashboard() {
                   fill
                   className="object-cover group-hover:scale-106 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#004554]/85 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-transparent to-transparent pointer-events-none" />
 
                 <div className="absolute top-3.5 left-3.5">
-                  <span className="text-[10px] font-black px-3 py-1 rounded-full bg-[#004554]/85 text-white backdrop-blur-md border border-white/20">
+                  <span className="text-[10px] font-black px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground backdrop-blur-md border border-overlay-foreground/20">
                     {dest.pressure.level} PRESSURE
                   </span>
                 </div>
@@ -722,21 +725,21 @@ export default function TouristDashboard() {
                 <button
                   type="button"
                   onClick={() => handleSaveToggle(dest.id, dest.name)}
-                  className="absolute top-3.5 right-3.5 p-2 rounded-full bg-white/90 hover:bg-white text-[#004554] shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
+                  className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                   title={isSaved(dest.id) ? 'Saved' : 'Save'}
                 >
                   <Heart
                     className={`w-4 h-4 ${
-                      isSaved(dest.id) ? 'fill-rose-500 text-rose-500' : 'text-[#004554]'
+                      isSaved(dest.id) ? 'fill-destructive text-destructive' : 'text-primary'
                     }`}
                   />
                 </button>
 
-                <div className="absolute bottom-3.5 inset-x-4 text-white">
-                  <span className="text-[10px] font-bold text-[#B2D5E2] uppercase tracking-wider block">
+                <div className="absolute bottom-3.5 inset-x-4 text-overlay-foreground">
+                  <span className="text-[10px] font-bold text-frosted-blue uppercase tracking-wider block">
                     {dest.district} District
                   </span>
-                  <h3 className="font-heading text-xl font-bold leading-tight mt-0.5 text-white">
+                  <h3 className="font-heading text-xl font-bold leading-tight mt-0.5 text-overlay-foreground">
                     {dest.name}
                   </h3>
                 </div>
@@ -744,20 +747,20 @@ export default function TouristDashboard() {
 
               <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between pb-2.5 border-b border-[#004554]/10 text-xs">
-                    <span className="text-[#5A737D] font-medium">Sustainability Index</span>
-                    <span className="font-black text-[#004554]">
+                  <div className="flex items-center justify-between pb-2.5 border-b border-border text-xs">
+                    <span className="text-muted-foreground font-medium">Sustainability Index</span>
+                    <span className="font-black text-primary">
                       {dest.sustainability.overall} / 100
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#5A737D] line-clamp-2 mt-2 leading-relaxed">
+                  <p className="text-xs text-muted-foreground line-clamp-2 mt-2 leading-relaxed">
                     {dest.tagline}
                   </p>
                 </div>
 
                 <div className="pt-2 flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-[11px] text-[#5A737D] font-medium">
+                  <div className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium">
                     <span>{dest.tags.slice(0, 2).join(' • ')}</span>
                   </div>
 
@@ -765,7 +768,7 @@ export default function TouristDashboard() {
                     <Button
                       size="xs"
                       variant="outline"
-                      className="rounded-xl gap-1 text-xs cursor-pointer border-[#004554]/20 text-[#004554] hover:bg-[#004554] hover:text-white transition-all font-bold"
+                      className="rounded-xl gap-1 text-xs cursor-pointer border-border text-primary hover:bg-primary hover:text-primary-foreground transition-all font-bold"
                     >
                       <span>Explore</span>
                       <ArrowRight className="w-3 h-3" />

@@ -65,9 +65,9 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
     if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score++;
     if (/[0-9!@#$%^&*(),.?":{}|<>]/.test(pwd)) score++;
 
-    if (score <= 1) return { score: 1, label: 'Weak', color: 'bg-rose-500' };
-    if (score === 2) return { score: 2, label: 'Good', color: 'bg-amber-500' };
-    return { score: 3, label: 'Strong', color: 'bg-emerald-500' };
+    if (score <= 1) return { score: 1, label: 'Weak', color: 'bg-destructive' };
+    if (score === 2) return { score: 2, label: 'Good', color: 'bg-warning' };
+    return { score: 3, label: 'Strong', color: 'bg-success' };
   };
 
   const strength = getPasswordStrength(formData.password);
@@ -187,7 +187,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
       });
       toast.success('Account created successfully!', {
         description: `Welcome to CeylonTour, ${formData.username.trim()}!`,
-        icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
+        icon: <CheckCircle2 className="w-5 h-5 text-success" />,
       });
       setTimeout(() => {
         router.push('/dashboard');
@@ -218,10 +218,10 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label htmlFor="reg-username" className="block text-xs font-semibold text-foreground">
-              Full Name <span className="text-rose-500">*</span>
+              Full Name <span className="text-destructive">*</span>
             </label>
             {isUsernameValid && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-success">
                 <Check className="w-3 h-3" /> Valid
               </span>
             )}
@@ -229,8 +229,8 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           <div className="relative group">
             <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors ${
               errors.username && (touched.username || submitAttempted)
-                ? 'text-rose-500'
-                : 'text-muted-foreground group-focus-within:text-[#44A6B5]'
+                ? 'text-destructive'
+                : 'text-muted-foreground group-focus-within:text-primary'
             }`}>
               <User className="w-4 h-4" />
             </div>
@@ -246,19 +246,19 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
               aria-invalid={Boolean(errors.username && (touched.username || submitAttempted))}
               className={`w-full pl-10 pr-10 py-2 rounded-xl text-sm text-foreground placeholder:text-muted-foreground/50 transition-all outline-none ${
                 errors.username && (touched.username || submitAttempted)
-                  ? 'border border-rose-500 bg-rose-500/[0.03] ring-2 ring-rose-500/15 focus:ring-rose-500/25'
+                  ? 'border border-destructive bg-destructive/[0.03] ring-2 ring-destructive/15 focus:ring-destructive/25'
                   : isUsernameValid
-                  ? 'border border-emerald-500/60 bg-background/80 ring-1 ring-emerald-500/20'
-                  : 'border border-border/80 bg-background/80 hover:border-[#44A6B5]/50 focus:border-[#44A6B5] focus:ring-2 focus:ring-[#44A6B5]/20'
+                  ? 'border border-success/60 bg-background/80 ring-1 ring-success/20'
+                  : 'border border-border/80 bg-background/80 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-ring/20'
               }`}
             />
             {isUsernameValid && (
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-emerald-500">
+              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-success">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
             )}
             {errors.username && (touched.username || submitAttempted) && (
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-rose-500">
+              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-destructive">
                 <AlertCircle className="w-4 h-4" />
               </div>
             )}
@@ -270,7 +270,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="text-rose-500 dark:text-rose-400 text-[11px] mt-1 font-medium flex items-center gap-1.5"
+                className="text-destructive text-[11px] mt-1 font-medium flex items-center gap-1.5"
               >
                 <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{errors.username}</span>
@@ -283,10 +283,10 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label htmlFor="reg-email" className="block text-xs font-semibold text-foreground">
-              Email Address <span className="text-rose-500">*</span>
+              Email Address <span className="text-destructive">*</span>
             </label>
             {isEmailValid && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-success">
                 <Check className="w-3 h-3" /> Valid email
               </span>
             )}
@@ -294,8 +294,8 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           <div className="relative group">
             <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors ${
               errors.email && (touched.email || submitAttempted)
-                ? 'text-rose-500'
-                : 'text-muted-foreground group-focus-within:text-[#44A6B5]'
+                ? 'text-destructive'
+                : 'text-muted-foreground group-focus-within:text-primary'
             }`}>
               <Mail className="w-4 h-4" />
             </div>
@@ -311,19 +311,19 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
               aria-invalid={Boolean(errors.email && (touched.email || submitAttempted))}
               className={`w-full pl-10 pr-10 py-2 rounded-xl text-sm text-foreground placeholder:text-muted-foreground/50 transition-all outline-none ${
                 errors.email && (touched.email || submitAttempted)
-                  ? 'border border-rose-500 bg-rose-500/[0.03] ring-2 ring-rose-500/15 focus:ring-rose-500/25'
+                  ? 'border border-destructive bg-destructive/[0.03] ring-2 ring-destructive/15 focus:ring-destructive/25'
                   : isEmailValid
-                  ? 'border border-emerald-500/60 bg-background/80 ring-1 ring-emerald-500/20'
-                  : 'border border-border/80 bg-background/80 hover:border-[#44A6B5]/50 focus:border-[#44A6B5] focus:ring-2 focus:ring-[#44A6B5]/20'
+                  ? 'border border-success/60 bg-background/80 ring-1 ring-success/20'
+                  : 'border border-border/80 bg-background/80 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-ring/20'
               }`}
             />
             {isEmailValid && (
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-emerald-500">
+              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-success">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
             )}
             {errors.email && (touched.email || submitAttempted) && (
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-rose-500">
+              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-destructive">
                 <AlertCircle className="w-4 h-4" />
               </div>
             )}
@@ -335,7 +335,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="text-rose-500 dark:text-rose-400 text-[11px] mt-1 font-medium flex items-center gap-1.5"
+                className="text-destructive text-[11px] mt-1 font-medium flex items-center gap-1.5"
               >
                 <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{errors.email}</span>
@@ -348,15 +348,15 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label htmlFor="reg-password" className="block text-xs font-semibold text-foreground">
-              Create Password <span className="text-rose-500">*</span>
+              Create Password <span className="text-destructive">*</span>
             </label>
             {formData.password && (
               <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                 strength.score === 1
-                  ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
+                  ? 'bg-destructive/15 text-destructive'
                   : strength.score === 2
-                  ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
-                  : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                  ? 'bg-warning/15 text-warning'
+                  : 'bg-success/15 text-success'
               }`}>
                 {strength.label}
               </span>
@@ -365,8 +365,8 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           <div className="relative group">
             <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors ${
               errors.password && (touched.password || submitAttempted)
-                ? 'text-rose-500'
-                : 'text-muted-foreground group-focus-within:text-[#44A6B5]'
+                ? 'text-destructive'
+                : 'text-muted-foreground group-focus-within:text-primary'
             }`}>
               <Lock className="w-4 h-4" />
             </div>
@@ -382,15 +382,15 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
               aria-invalid={Boolean(errors.password && (touched.password || submitAttempted))}
               className={`w-full pl-10 pr-20 py-2 rounded-xl text-sm text-foreground placeholder:text-muted-foreground/50 transition-all outline-none ${
                 errors.password && (touched.password || submitAttempted)
-                  ? 'border border-rose-500 bg-rose-500/[0.03] ring-2 ring-rose-500/15 focus:ring-rose-500/25'
+                  ? 'border border-destructive bg-destructive/[0.03] ring-2 ring-destructive/15 focus:ring-destructive/25'
                   : isPasswordValid
-                  ? 'border border-emerald-500/60 bg-background/80 ring-1 ring-emerald-500/20'
-                  : 'border border-border/80 bg-background/80 hover:border-[#44A6B5]/50 focus:border-[#44A6B5] focus:ring-2 focus:ring-[#44A6B5]/20'
+                  ? 'border border-success/60 bg-background/80 ring-1 ring-success/20'
+                  : 'border border-border/80 bg-background/80 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-ring/20'
               }`}
             />
             <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1.5">
               {isPasswordValid && (
-                <span className="text-emerald-500 pointer-events-none">
+                <span className="text-success pointer-events-none">
                   <CheckCircle2 className="w-4 h-4" />
                 </span>
               )}
@@ -430,21 +430,21 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           {/* Realtime Password Rules Checklist (Standard on top-tier apps) */}
           <div className="mt-2 grid grid-cols-3 gap-1.5">
             <span className={`inline-flex items-center gap-1 text-[10px] font-medium transition-colors ${
-              hasMinLength ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground/70'
+              hasMinLength ? 'text-success' : 'text-muted-foreground/70'
             }`}>
-              <Check className={`w-3 h-3 ${hasMinLength ? 'text-emerald-500 stroke-[2.5]' : 'opacity-30'}`} />
+              <Check className={`w-3 h-3 ${hasMinLength ? 'text-success stroke-[2.5]' : 'opacity-30'}`} />
               8+ chars
             </span>
             <span className={`inline-flex items-center gap-1 text-[10px] font-medium transition-colors ${
-              hasUppercase ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground/70'
+              hasUppercase ? 'text-success' : 'text-muted-foreground/70'
             }`}>
-              <Check className={`w-3 h-3 ${hasUppercase ? 'text-emerald-500 stroke-[2.5]' : 'opacity-30'}`} />
+              <Check className={`w-3 h-3 ${hasUppercase ? 'text-success stroke-[2.5]' : 'opacity-30'}`} />
               1 uppercase
             </span>
             <span className={`inline-flex items-center gap-1 text-[10px] font-medium transition-colors ${
-              hasNumberOrSpecial ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground/70'
+              hasNumberOrSpecial ? 'text-success' : 'text-muted-foreground/70'
             }`}>
-              <Check className={`w-3 h-3 ${hasNumberOrSpecial ? 'text-emerald-500 stroke-[2.5]' : 'opacity-30'}`} />
+              <Check className={`w-3 h-3 ${hasNumberOrSpecial ? 'text-success stroke-[2.5]' : 'opacity-30'}`} />
               Number/symbol
             </span>
           </div>
@@ -456,7 +456,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="text-rose-500 dark:text-rose-400 text-[11px] mt-1.5 font-medium flex items-center gap-1.5"
+                className="text-destructive text-[11px] mt-1.5 font-medium flex items-center gap-1.5"
               >
                 <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{errors.password}</span>
@@ -469,10 +469,10 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label htmlFor="reg-confirm-password" className="block text-xs font-semibold text-foreground">
-              Confirm Password <span className="text-rose-500">*</span>
+              Confirm Password <span className="text-destructive">*</span>
             </label>
             {isConfirmValid && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-success">
                 <Check className="w-3 h-3" /> Passwords match
               </span>
             )}
@@ -480,8 +480,8 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
           <div className="relative group">
             <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors ${
               errors.confirmPassword && (touched.confirmPassword || submitAttempted)
-                ? 'text-rose-500'
-                : 'text-muted-foreground group-focus-within:text-[#44A6B5]'
+                ? 'text-destructive'
+                : 'text-muted-foreground group-focus-within:text-primary'
             }`}>
               <Lock className="w-4 h-4" />
             </div>
@@ -497,15 +497,15 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
               aria-invalid={Boolean(errors.confirmPassword && (touched.confirmPassword || submitAttempted))}
               className={`w-full pl-10 pr-20 py-2 rounded-xl text-sm text-foreground placeholder:text-muted-foreground/50 transition-all outline-none ${
                 errors.confirmPassword && (touched.confirmPassword || submitAttempted)
-                  ? 'border border-rose-500 bg-rose-500/[0.03] ring-2 ring-rose-500/15 focus:ring-rose-500/25'
+                  ? 'border border-destructive bg-destructive/[0.03] ring-2 ring-destructive/15 focus:ring-destructive/25'
                   : isConfirmValid
-                  ? 'border border-emerald-500/60 bg-background/80 ring-1 ring-emerald-500/20'
-                  : 'border border-border/80 bg-background/80 hover:border-[#44A6B5]/50 focus:border-[#44A6B5] focus:ring-2 focus:ring-[#44A6B5]/20'
+                  ? 'border border-success/60 bg-background/80 ring-1 ring-success/20'
+                  : 'border border-border/80 bg-background/80 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-ring/20'
               }`}
             />
             <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1.5">
               {isConfirmValid && (
-                <span className="text-emerald-500 pointer-events-none">
+                <span className="text-success pointer-events-none">
                   <CheckCircle2 className="w-4 h-4" />
                 </span>
               )}
@@ -527,7 +527,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="text-rose-500 dark:text-rose-400 text-[11px] mt-1 font-medium flex items-center gap-1.5"
+                className="text-destructive text-[11px] mt-1 font-medium flex items-center gap-1.5"
               >
                 <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{errors.confirmPassword}</span>
@@ -544,9 +544,9 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
               type="checkbox"
               checked={formData.agreedToTerms}
               onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
-              className={`mt-0.5 w-4 h-4 rounded border text-[#44A6B5] focus:ring-[#44A6B5]/30 accent-[#44A6B5] transition-all ${
+              className={`mt-0.5 w-4 h-4 rounded border text-primary focus:ring-ring/30 accent-primary transition-all ${
                 errors.agreedToTerms && (touched.agreedToTerms || submitAttempted)
-                  ? 'border-rose-500 ring-2 ring-rose-500/20'
+                  ? 'border-destructive ring-2 ring-destructive/20'
                   : 'border-border'
               }`}
             />
@@ -565,7 +565,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="text-rose-500 dark:text-rose-400 text-[11px] mt-1 font-medium flex items-center gap-1.5"
+                className="text-destructive text-[11px] mt-1 font-medium flex items-center gap-1.5"
               >
                 <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{errors.agreedToTerms}</span>
@@ -578,10 +578,10 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#004554] via-[#00586b] to-[#44A6B5] hover:opacity-95 text-white font-bold text-sm py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed group cursor-pointer"
+          className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-primary hover:opacity-95 text-primary-foreground font-bold text-sm py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed group cursor-pointer"
         >
           {isLoading ? (
-            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
           ) : (
             <>
               <span>Create Traveler Account</span>

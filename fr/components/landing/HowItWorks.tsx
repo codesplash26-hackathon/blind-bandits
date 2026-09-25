@@ -10,21 +10,21 @@ export const HowItWorks = () => {
   const steps = [
     {
       step: "01",
-      icon: <Compass className="w-6 h-6 text-[#44A6B5]" />,
+      icon: <Compass className="w-6 h-6 text-primary" />,
       title: "Choose Your Island Vibe",
       description:
         "Select what moves you: ancient kingdom ruins, misty Ceylon tea trails, or quiet river valleys away from crowds.",
-      color: "from-[#44A6B5]/20 to-transparent",
-      accent: "text-[#44A6B5]",
+      color: "from-primary/20 to-transparent",
+      accent: "text-primary",
       previewBadge: (
         <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-border/60">
-          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[#44A6B5]/10 text-[#44A6B5] border border-[#44A6B5]/20">
+          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
             ⛰️ Tea Trails
           </span>
-          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-muted dark:bg-[#003844]/60 text-muted-foreground dark:text-[#B2D5E2] border border-transparent dark:border-[#004D5C]/40">
+          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-muted dark:bg-muted/60 text-muted-foreground dark:text-secondary border border-transparent dark:border-border/40">
             🏰 Ancient Ruins
           </span>
-          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-muted dark:bg-[#003844]/60 text-muted-foreground dark:text-[#B2D5E2] border border-transparent dark:border-[#004D5C]/40">
+          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-muted dark:bg-muted/60 text-muted-foreground dark:text-secondary border border-transparent dark:border-border/40">
             🌊 Secret Lagoons
           </span>
         </div>
@@ -32,31 +32,31 @@ export const HowItWorks = () => {
     },
     {
       step: "02",
-      icon: <Sparkles className="w-6 h-6 text-[#004554] dark:text-[#B2D5E2]" />,
+      icon: <Sparkles className="w-6 h-6 text-primary dark:text-secondary" />,
       title: "Smart Crowd Diversion",
       description:
         "When famous hotspots exceed capacity, our engine instantly highlights peaceful, equally stunning alternatives nearby.",
-      color: "from-[#004554]/15 dark:from-[#B2D5E2]/15 to-transparent",
-      accent: "text-[#004554] dark:text-[#B2D5E2]",
+      color: "from-overlay/15 dark:from-frosted-blue/15 to-transparent",
+      accent: "text-primary dark:text-secondary",
       previewBadge: (
-        <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-muted/50 dark:bg-[#00222B] border border-border/80 dark:border-[#003F4C] text-[11px]">
-          <span className="font-semibold text-red-500 dark:text-red-400">Ella (82% 🔴)</span>
+        <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-muted/50 dark:bg-muted border border-border/80 dark:border-border text-[11px]">
+          <span className="font-semibold text-destructive">Ella (82% 🔴)</span>
           <ArrowRightLeft className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-          <span className="font-semibold text-emerald-600 dark:text-emerald-400">Belihuloya (28% 🟢)</span>
+          <span className="font-semibold text-success">Belihuloya (28% 🟢)</span>
         </div>
       ),
     },
     {
       step: "03",
-      icon: <UserCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />,
+      icon: <UserCheck className="w-6 h-6 text-success" />,
       title: "Explore With Native Guardians",
       description:
         "Travel with peace of mind. Every journey is paired with certified local village guides, fair wages, and digital eco passes.",
-      color: "from-emerald-500/15 to-transparent",
-      accent: "text-emerald-600 dark:text-emerald-400",
+      color: "from-success/15 to-transparent",
+      accent: "text-success",
       previewBadge: (
-        <div className="mt-4 pt-4 border-t border-border/60 flex items-center gap-2 p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-700 dark:text-emerald-300">
-          <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+        <div className="mt-4 pt-4 border-t border-border/60 flex items-center gap-2 p-2.5 rounded-2xl bg-success/10 border border-success/20 text-[11px] text-success">
+          <Shield className="w-4 h-4 text-success shrink-0" />
           <span className="font-semibold">Verified Eco Pass • 85% Local Retention</span>
         </div>
       ),
@@ -66,7 +66,7 @@ export const HowItWorks = () => {
   return (
     <section id="how-it-works" className="py-20 md:py-28 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto w-full relative">
       {/* Background Decorative Gradient Orbs */}
-      <div className="absolute top-1/2 right-10 w-96 h-96 bg-[#004554]/10 dark:bg-[#44A6B5]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 25 }}
@@ -108,7 +108,7 @@ export const HowItWorks = () => {
                 <span className={`text-4xl sm:text-5xl font-extrabold font-heading ${item.accent} opacity-85`}>
                   {item.step}
                 </span>
-                <div className="p-3.5 rounded-2xl bg-muted/60 dark:bg-[#003844]/50 border border-border/80 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                <div className="p-3.5 rounded-2xl bg-muted/60 dark:bg-muted/50 border border-border/80 shadow-sm group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
               </div>
