@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, use } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -10,8 +10,6 @@ import {
   Sparkles,
   AlertTriangle,
   Leaf,
-  CloudSun,
-  Wind,
   Sliders,
   TrendingUp,
   Calendar,
@@ -19,9 +17,16 @@ import {
   DollarSign,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS, simulateSustainabilityScore } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import {
+  getDestination,
+  simulateDestination,
+} from '@/lib/destinations';
+import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapper';
+import type { DestinationSimulationResponse } from '@/types/destination-api';
+import describeApiError from '@/lib/apiError';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -33,18 +38,72 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
   const { isSaved, toggleSaveDestination } = useAuth();
 
-  const destination = DESTINATIONS.find((d) => d.id === destinationId);
+  const [destination, setDestination] = useState<DestinationViewModel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // What-If Simulator state (defaults at 50 / baseline)
   const [visitorSlider, setVisitorSlider] = useState(50);
   const [wasteSlider, setWasteSlider] = useState(50);
   const [infraSlider, setInfraSlider] = useState(50);
   const [showSimulator, setShowSimulator] = useState(true);
+  const [simulation, setSimulation] = useState<DestinationSimulationResponse | null>(null);
+  const [simulationError, setSimulationError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      setIsLoading(true);
+      setLoadError(null);
+      try {
+        const response = await getDestination(destinationId);
+        if (active) setDestination(mapDestination(response, response.sustainability));
+      } catch (error) {
+        if (active) setLoadError(describeApiError(error, 'Unable to load this destination.'));
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+    void load();
+    return () => {
+      active = false;
+    };
+  }, [destinationId]);
+
+  useEffect(() => {
+    if (!destination?.api.factor || !showSimulator) return;
+    let active = true;
+    const timer = window.setTimeout(async () => {
+      setSimulationError(null);
+      try {
+        const result = await simulateDestination(destination.api.id, {
+          expected_visitor_level: visitorSlider,
+          waste_management_level: wasteSlider,
+          infrastructure_level: infraSlider,
+        });
+        if (active) setSimulation(result);
+      } catch (error) {
+        if (active) {
+          setSimulation(null);
+          setSimulationError(describeApiError(error, 'Simulation is currently unavailable.'));
+        }
+      }
+    }, 400);
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+    };
+  }, [destination, infraSlider, showSimulator, visitorSlider, wasteSlider]);
+
+  if (isLoading) {
+    return <Loader label="Loading destination..." />;
+  }
 
   if (!destination) {
     return (
       <div className="p-12 text-center space-y-4">
         <h2 className="text-xl font-bold text-primary">Destination Not Found</h2>
+        {loadError && <p className="text-sm text-muted-foreground">{loadError}</p>}
         <Link href="/destinations">
           <Button variant="outline" className="rounded-full">Back to Destinations Catalog</Button>
         </Link>
@@ -54,15 +113,6 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
   const isBookmarked = isSaved(destination.id);
   const isHighPressure = destination.pressure.level === 'HIGH';
-
-  // Calculate live What-If simulation
-  const simulation = simulateSustainabilityScore(
-    destination.sustainability.overall,
-    destination.pressure.score,
-    visitorSlider,
-    wasteSlider,
-    infraSlider
-  );
 
   return (
     <div className="space-y-6 pb-16">
@@ -85,7 +135,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
         <div className="flex items-center gap-2.5 self-end md:self-auto">
           <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
             <Calendar className="w-3.5 h-3.5 text-primary" />
-            <span>Optimal: {destination.recommendedDurationDays || 3} Days</span>
+            <span>
+              Recommended: {destination.api.recommended_min_trip_duration}–{destination.api.recommended_max_trip_duration} Days
+            </span>
           </div>
 
           <button
@@ -120,7 +172,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 <span className="text-sm font-normal text-primary/50">/100</span>
               </span>
               <span className="text-[11px] text-primary font-bold block mt-0.5 flex items-center gap-1">
-                <TrendingUp className="w-3 h-3" /> Certified Eco Standard
+                <TrendingUp className="w-3 h-3" /> {destination.sustainabilityData ? 'API calculated' : 'Factor data unavailable'}
               </span>
             </div>
             {/* SVG Circular Ring */}
@@ -147,7 +199,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 2: Tourism Pressure */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Tourism Pressure</span>
+            <span className="text-xs font-semibold text-primary/60">Crowd Pressure Proxy</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sliders className="w-4 h-4" />
             </div>
@@ -158,7 +210,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 {destination.pressure.score}%
               </span>
               <span className={`text-[11px] font-bold block mt-0.5 ${isHighPressure ? 'text-destructive' : 'text-primary'}`}>
-                {destination.pressure.level} Pressure Zone
+                Derived from the {destination.api.factor?.value_type?.toLowerCase() ?? 'unavailable'} crowd score
               </span>
             </div>
             {/* Mini Sparkline */}
@@ -177,7 +229,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 3: Typical Budget */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Est. 3-Day Budget</span>
+            <span className="text-xs font-semibold text-primary/60">Typical Budget</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <DollarSign className="w-4 h-4" />
             </div>
@@ -201,25 +253,22 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* KPI 4: Climate & Air Quality */}
+        {/* KPI 4: Backend data provenance */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Microclimate &amp; AQI</span>
+            <span className="text-xs font-semibold text-primary/60">Factor Data Quality</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
-              <CloudSun className="w-4 h-4" />
+              <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
               <span className="font-heading text-xl font-bold text-primary tracking-tight">
-                {destination.weather || '24°C • Pleasant'}
+                {destination.api.factor?.confidence_level ?? 'UNAVAILABLE'} confidence
               </span>
               <span className="text-[11px] text-primary font-bold block mt-0.5">
-                {destination.airQuality || 'AQI 15 • Pristine Air'}
+                {destination.api.factor?.value_type ?? 'No factor data'}
               </span>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
-              <Wind className="w-4 h-4 text-primary" />
             </div>
           </div>
         </div>
@@ -233,6 +282,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
             alt={destination.name}
             fill
             priority
+            unoptimized={destination.image.startsWith('http')}
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-overlay/95 via-overlay/40 to-transparent" />
@@ -241,7 +291,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
           <div className="absolute top-4 left-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-overlay/50 backdrop-blur-md border border-overlay-foreground/20 text-xs font-semibold text-overlay-foreground">
               <MapPin className="w-3.5 h-3.5 text-primary" />
-              <span>{destination.district} District, {destination.province}</span>
+              <span>{destination.district} District, {destination.api.region}</span>
             </span>
             <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-overlay/50 backdrop-blur-md border border-overlay-foreground/20 text-xs font-medium text-overlay-foreground/90">
               {destination.landscape}
@@ -270,14 +320,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-destructive">
-                  Overtourism Alert: High Visitor Pressure ({destination.pressure.score}%)
+                  High Crowd Pressure Proxy ({destination.pressure.score}%)
                 </h2>
                 <span className="px-2.5 py-0.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold">
                   PEAK DENSITY
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-destructive/80 leading-relaxed">
-                This destination is currently experiencing peak visitor concentration. High footfall along viewpoints and trail bottlenecks causes stress on local waste processing and roads.
+                This display is derived from the destination&apos;s crowd-condition factor. It is not the separate regional monthly pressure forecast.
               </p>
             </div>
           </div>
@@ -285,20 +335,20 @@ export default function DestinationDetailPage({ params }: PageProps) {
           {/* Pressure Factor Breakdown */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-destructive/25">
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Visitor Density</span>
-              <span className="text-base font-extrabold text-destructive">{destination.pressure.visitorDensity}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Crowd Condition</span>
+              <span className="text-base font-extrabold text-destructive">{destination.sustainability.crowd}%</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Infra Pressure</span>
-              <span className="text-base font-extrabold text-destructive">{destination.pressure.infrastructurePressure}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Infrastructure</span>
+              <span className="text-base font-extrabold text-destructive">{destination.sustainability.infrastructure}%</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Waste Strain</span>
-              <span className="text-base font-extrabold text-destructive">{destination.pressure.wastePressure}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Environment</span>
+              <span className="text-base font-extrabold text-destructive">{destination.sustainability.environmental}%</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Traffic Density</span>
-              <span className="text-base font-extrabold text-destructive">{destination.pressure.traffic}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Suitability</span>
+              <span className="text-base font-extrabold text-destructive">{destination.sustainability.touristSuitability}%</span>
             </div>
           </div>
 
@@ -347,7 +397,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
       {/* Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column (7 Cols): Sustainability Breakdown & XAI TreeSHAP */}
+        {/* Left Column (7 Cols): sustainability breakdown and configured weights */}
         <div className="lg:col-span-7 space-y-6">
           {/* Sustainability 5-Dimension Breakdown */}
           <div className="p-6 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
@@ -385,22 +435,22 @@ export default function DestinationDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Explainable AI (XAI) Why this was recommended */}
+          {/* Authoritative sustainability calculation */}
           <div className="p-6 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-primary" />
                   <h2 className="text-base font-black text-foreground">
-                    AI Evaluation &amp; TreeSHAP Analysis
+                    Sustainability Calculation
                   </h2>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Algorithmic feature contribution towards recommendation
+                  Weighted contributions returned by the API
                 </p>
               </div>
               <Badge variant="outline" className="border-primary/30 text-primary bg-muted/50">
-                XAI Model
+                {destination.sustainabilityData?.configuration_version ?? 'No factors'}
               </Badge>
             </div>
 
@@ -410,10 +460,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
               </p>
             </div>
 
-            {/* TreeSHAP Contribution Bar Chart */}
+            {/* Weighted contribution bar chart */}
             <div className="space-y-3 pt-2">
               <span className="text-xs font-bold text-primary/70 uppercase tracking-wider block">
-                Factor Contribution Weights
+                Weighted Factor Contributions
               </span>
 
               {destination.xaiExplanation.contributions.map((c) => (
@@ -472,9 +522,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 {/* Slider 1: Expected Visitors */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">Expected Weekly Visitors</span>
+                    <span className="font-semibold text-primary">Expected Visitor Level</span>
                     <span className="font-mono font-bold text-primary">
-                      {Math.round(2000 + visitorSlider * 100)} / week
+                      {visitorSlider} / 100
                     </span>
                   </div>
                   <input
@@ -486,8 +536,8 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                   />
                   <div className="flex justify-between text-[10px] text-primary/50">
-                    <span>2,000 (Tranquil)</span>
-                    <span>12,000 (Congested)</span>
+                    <span>Low</span>
+                    <span>High</span>
                   </div>
                 </div>
 
@@ -527,6 +577,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   />
                 </div>
 
+                {simulationError && (
+                  <p className="text-xs text-destructive">{simulationError}</p>
+                )}
+
                 {/* Simulation Output Card */}
                 <div className="p-4 rounded-2xl bg-muted/50 border border-border space-y-2">
                   <div className="grid grid-cols-2 gap-4 text-center divide-x divide-border">
@@ -545,23 +599,25 @@ export default function DestinationDetailPage({ params }: PageProps) {
                       </span>
                       <div className="flex items-center justify-center gap-1.5 mt-1">
                         <span className="text-2xl font-black text-primary">
-                          {simulation.simulatedSustainability}
+                          {simulation ? Number(simulation.simulated_score).toFixed(1) : '—'}
                         </span>
                         <span
                           className={`text-xs font-bold ${
-                            simulation.deltaSustainability >= 0 ? 'text-primary' : 'text-destructive'
+                            Number(simulation?.score_delta ?? 0) >= 0 ? 'text-primary' : 'text-destructive'
                           }`}
                         >
-                          {simulation.deltaSustainability >= 0
-                            ? `↑ ${simulation.deltaSustainability}`
-                            : `↓ ${Math.abs(simulation.deltaSustainability)}`}
+                          {simulation
+                            ? Number(simulation.score_delta) >= 0
+                              ? `↑ ${Number(simulation.score_delta).toFixed(1)}`
+                              : `↓ ${Math.abs(Number(simulation.score_delta)).toFixed(1)}`
+                            : ''}
                         </span>
                       </div>
                     </div>
                   </div>
 
                   <p className="text-xs text-primary/70 text-center italic pt-1">
-                    {simulation.alertMessage}
+                    {simulation?.explanation ?? 'Adjust the controls to run the backend simulation.'}
                   </p>
                 </div>
               </div>
@@ -584,9 +640,12 @@ export default function DestinationDetailPage({ params }: PageProps) {
             </div>
 
             <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-primary/70">
-              <span>Data Telemetry Reliability</span>
+              <span>Factor provenance</span>
               <span className="font-bold text-primary flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Verified 2026
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
+                {destination.api.factor
+                  ? `${destination.api.factor.value_type} • ${destination.api.factor.confidence_level}`
+                  : 'Unavailable'}
               </span>
             </div>
           </div>

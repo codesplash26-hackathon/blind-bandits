@@ -5,8 +5,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.dependencies import AdminUser
+from app.api.routes.destinations import destination_response
 from app.db.session import get_db
-from app.models.destination import Destination
 from app.schemas.destination import (
     DestinationCreate,
     DestinationResponse,
@@ -46,7 +46,7 @@ async def create_admin_destination(
     data: DestinationCreate,
     _: AdminUser,
     db: Annotated[Session, Depends(get_db)],
-) -> Destination:
+) -> DestinationResponse:
     if find_destination_by_slug(db, data.slug) is not None:
         raise duplicate_slug()
     destination = create_destination(db, data)
@@ -56,7 +56,7 @@ async def create_admin_destination(
         db.rollback()
         raise duplicate_slug() from None
     db.refresh(destination)
-    return destination
+    return destination_response(destination)
 
 
 @router.patch("/{destination_id}", response_model=DestinationResponse)
@@ -65,7 +65,7 @@ async def update_admin_destination(
     data: DestinationUpdate,
     _: AdminUser,
     db: Annotated[Session, Depends(get_db)],
-) -> Destination:
+) -> DestinationResponse:
     destination = get_destination_by_id(db, destination_id)
     if destination is None:
         raise destination_not_found()
@@ -106,7 +106,7 @@ async def update_admin_destination(
         db.rollback()
         raise duplicate_slug() from None
     db.refresh(destination)
-    return destination
+    return destination_response(destination)
 
 
 @router.delete("/{destination_id}", status_code=status.HTTP_204_NO_CONTENT)

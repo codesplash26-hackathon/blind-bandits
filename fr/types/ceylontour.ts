@@ -54,7 +54,7 @@ export interface Destination {
   image: string;
   tags: string[];
   activities: string[];
-  landscape: 'Mountains' | 'Coastal' | 'Rainforest' | 'Cultural' | 'Wildlife' | 'Rural';
+  landscape: string;
   typicalBudgetLKR: number;
   recommendedDurationDays: number;
   coordinates: {

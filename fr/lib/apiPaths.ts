@@ -12,6 +12,24 @@ const apiPaths = {
     register: "/auth/register",
     me: "/auth/me",
   },
+  destinations: {
+    list: "/destinations",
+    detail: (identifier: number | string) => `/destinations/${identifier}`,
+    sustainability: (destinationId: number) =>
+      `/destinations/${destinationId}/sustainability`,
+    pressure: (destinationId: number) => `/destinations/${destinationId}/pressure`,
+    pressureExplanation: (destinationId: number) =>
+      `/destinations/${destinationId}/pressure/explanation`,
+    alternatives: (destinationId: number) =>
+      `/destinations/${destinationId}/alternatives`,
+    simulate: (destinationId: number) =>
+      `/destinations/${destinationId}/simulate`,
+  },
+  adminDestinations: {
+    create: "/admin/destinations",
+    update: (destinationId: number) => `/admin/destinations/${destinationId}`,
+    deactivate: (destinationId: number) => `/admin/destinations/${destinationId}`,
+  },
 };
 
 export default apiPaths;

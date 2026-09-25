@@ -94,6 +94,7 @@ class Destination(Base):
     district: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     region: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     description: Mapped[str] = mapped_column(Text, nullable=False)
+    image_url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
     latitude: Mapped[Decimal] = mapped_column(Numeric(9, 6), nullable=False)
     longitude: Mapped[Decimal] = mapped_column(Numeric(10, 6), nullable=False)
     landscape_type: Mapped[str] = mapped_column(

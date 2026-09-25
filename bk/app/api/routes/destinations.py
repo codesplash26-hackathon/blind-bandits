@@ -38,6 +38,32 @@ from app.services.what_if import simulate_destination
 router = APIRouter(prefix="/destinations", tags=["destinations"])
 
 
+def destination_response(destination: Destination) -> DestinationResponse:
+    response = DestinationResponse.model_validate(destination)
+    if destination.factor is None:
+        return response
+    factor = destination.factor
+    result = calculate_sustainability_score(
+        SustainabilityFactorScores(
+            environmental=factor.environmental_score,
+            community=factor.community_benefit_score,
+            crowd=factor.crowd_score,
+            infrastructure=factor.infrastructure_score,
+            suitability=factor.tourist_suitability_score,
+        ),
+        get_settings().sustainability_weights,
+    )
+    return response.model_copy(
+        update={
+            "sustainability": DestinationSustainabilityResponse(
+                destination_id=destination.id,
+                destination_slug=destination.slug,
+                **result.model_dump(),
+            )
+        }
+    )
+
+
 @router.post("/{destination_id}/simulate", response_model=DestinationSimulationResponse)
 async def simulate_destination_sustainability(
     destination_id: int,
@@ -196,7 +222,7 @@ async def list_destinations(
     landscape: Annotated[str | None, Query(min_length=1, max_length=100)] = None,
     activity: Annotated[str | None, Query(min_length=1, max_length=100)] = None,
     active: bool = True,
-) -> list[Destination]:
+) -> list[DestinationResponse]:
     statement = (
         select(Destination)
         .where(Destination.is_active.is_(active))
@@ -218,7 +244,7 @@ async def list_destinations(
             .join(Activity, Activity.id == destination_activities.c.activity_id)
             .where(func.lower(Activity.slug) == activity.lower())
         )
-    return list(db.scalars(statement).unique())
+    return [destination_response(item) for item in db.scalars(statement).unique()]
 
 
 @router.get(
@@ -265,11 +291,11 @@ async def read_destination(
     identifier: str,
     _: CurrentUser,
     db: Annotated[Session, Depends(get_db)],
-) -> Destination:
+) -> DestinationResponse:
     destination = get_destination_by_identifier(db, identifier)
     if destination is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Destination not found",
         )
-    return destination
+    return destination_response(destination)

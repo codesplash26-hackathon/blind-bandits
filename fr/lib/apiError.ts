@@ -9,6 +9,11 @@ import { isAxiosError } from "axios";
  */
 export const describeApiError = (error: unknown, fallback: string) => {
   if (isAxiosError(error)) {
+    const detail = error.response?.data?.detail;
+    if (typeof detail === "string") return detail;
+    if (Array.isArray(detail) && typeof detail[0]?.msg === "string") {
+      return detail[0].msg.replace(/^Value error, /, "");
+    }
     return error.response?.data?.message || error.message || fallback;
   }
   return error instanceof Error ? error.message : fallback;

@@ -19,6 +19,7 @@ EXAMPLE_DESTINATION: dict[str, Any] = {
     "district": "Example District",
     "region": "Southern",
     "description": "Example destination used only by automated tests.",
+    "image_url": "https://images.example.com/coastal-trail.jpg",
     "latitude": "6.123456",
     "longitude": "80.123456",
     "landscape_type": "coastal",
@@ -79,6 +80,7 @@ async def test_destination_creation_by_admin(
 
     assert response_data["slug"] == EXAMPLE_DESTINATION["slug"]
     assert response_data["activities"] == ["nature", "hiking"]
+    assert response_data["image_url"] == EXAMPLE_DESTINATION["image_url"]
     assert response_data["factor"]["value_type"] == "PROXY"
     stored = db_session.scalar(select(Destination))
     assert stored is not None
@@ -119,6 +121,7 @@ async def test_destination_listing(
 
     assert response.status_code == 200
     assert [item["slug"] for item in response.json()] == [EXAMPLE_DESTINATION["slug"]]
+    assert float(response.json()[0]["sustainability"]["total_score"]) == 50.05
 
 
 async def test_destination_retrieval_by_id_and_slug(
