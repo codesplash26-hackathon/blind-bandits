@@ -25,6 +25,9 @@ const apiPaths = {
     simulate: (destinationId: number) =>
       `/destinations/${destinationId}/simulate`,
   },
+  recommendations: {
+    create: "/recommendations",
+  },
   adminDestinations: {
     create: "/admin/destinations",
     update: (destinationId: number) => `/admin/destinations/${destinationId}`,

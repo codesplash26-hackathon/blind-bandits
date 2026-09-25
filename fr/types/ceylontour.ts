@@ -80,13 +80,6 @@ export interface TouristPreferences {
   sustainabilityImportance: number; // 0 - 100
 }
 
-export interface RecommendationResult {
-  rank: number;
-  destination: Destination;
-  matchScore: number; // 0 - 100%
-  whyMatches: string;
-}
-
 export interface SearchHistoryItem {
   id: string;
   date: string;

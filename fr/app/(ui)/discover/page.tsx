@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { useRouter } from 'next/navigation';
+import { isAxiosError } from 'axios';
 import {
   Sparkles,
   ArrowRight,
@@ -13,24 +14,63 @@ import {
   Check,
   RotateCcw,
 } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
-import { INTEREST_OPTIONS } from '@/lib/mockData';
-import { CrowdPreference, TouristPreferences } from '@/types/ceylontour';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import describeApiError from '@/lib/apiError';
+import {
+  createRecommendations,
+  loadRecommendationSession,
+  storeRecommendationSession,
+} from '@/lib/recommendations';
+import type {
+  RecommendationCrowdPreference,
+  RecommendationRequest,
+  RecommendationSustainabilityPreference,
+} from '@/types/recommendation-api';
+
+const INTEREST_OPTIONS = [
+  { value: 'nature', label: 'Nature' },
+  { value: 'beach', label: 'Beach' },
+  { value: 'wildlife', label: 'Wildlife' },
+  { value: 'adventure', label: 'Adventure' },
+  { value: 'culture', label: 'Culture' },
+  { value: 'heritage', label: 'Heritage' },
+  { value: 'hiking', label: 'Hiking' },
+  { value: 'relaxation', label: 'Relaxation' },
+  { value: 'waterfalls', label: 'Waterfalls' },
+  { value: 'photography', label: 'Photography' },
+] as const;
+
+const SUSTAINABILITY_LEVELS: RecommendationSustainabilityPreference[] = [
+  'LOW',
+  'MEDIUM',
+  'HIGH',
+];
+
+const emptySubscribe = () => () => {};
 
 export default function DiscoverPage() {
-  const router = useRouter();
-  const { currentPreferences, updatePreferences, addSearchHistory } = useAuth();
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  if (!mounted) return <Loader label="Loading recommendation form..." />;
+  return <DiscoverForm previousRequest={loadRecommendationSession()?.request} />;
+}
 
-  const [budget, setBudget] = useState<number>(currentPreferences.budgetLKR || 50000);
-  const [duration, setDuration] = useState<number>(currentPreferences.durationDays || 4);
+function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationRequest }) {
+  const router = useRouter();
+
+  const [budget, setBudget] = useState<number>(previousRequest?.budget ?? 50000);
+  const [duration, setDuration] = useState<number>(previousRequest?.trip_duration ?? 4);
   const [selectedInterests, setSelectedInterests] = useState<string[]>(
-    currentPreferences.interests?.length ? currentPreferences.interests : ['Nature', 'Hiking']
+    previousRequest?.interests.length ? previousRequest.interests : ['nature', 'hiking'],
   );
-  const [crowd, setCrowd] = useState<CrowdPreference>(currentPreferences.crowdPreference || 'quiet');
-  const [sustainability, setSustainability] = useState<number>(
-    currentPreferences.sustainabilityImportance || 85
+  const [crowd, setCrowd] = useState<RecommendationCrowdPreference>(
+    previousRequest?.crowd_preference ?? 'QUIET',
   );
+  const [sustainability, setSustainability] = useState<RecommendationSustainabilityPreference>(
+    previousRequest?.sustainability_preference ?? 'HIGH',
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -41,25 +81,25 @@ export default function DiscoverPage() {
   };
 
   const crowdOptions: Array<{
-    id: CrowdPreference;
+    id: RecommendationCrowdPreference;
     title: string;
     description: string;
     icon: string;
   }> = [
     {
-      id: 'quiet',
+      id: 'QUIET',
       title: 'Quiet & Peaceful',
       description: 'Fewer visitors, serene nature trails, and non-motorized tranquility.',
       icon: '🌿',
     },
     {
-      id: 'balanced',
+      id: 'BALANCED',
       title: 'Balanced Atmosphere',
       description: 'Some active local life and amenities without heavy crowds or queues.',
       icon: '⚖️',
     },
     {
-      id: 'popular',
+      id: 'LIVELY',
       title: 'Popular & Bustling',
       description: 'Iconic landmarks, bustling cafes, and lively tourist hubs.',
       icon: '🌟',
@@ -70,42 +110,54 @@ export default function DiscoverPage() {
     setBudget(amount);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+    if (!Number.isFinite(budget) || budget <= 0) {
+      setSubmitError('Enter a budget greater than zero.');
+      return;
+    }
+    if (!Number.isInteger(duration) || duration < 1 || duration > 365) {
+      setSubmitError('Trip duration must be between 1 and 365 days.');
+      return;
+    }
+    if (selectedInterests.length === 0) {
+      setSubmitError('Select at least one travel interest.');
+      return;
+    }
 
-    const newPrefs: TouristPreferences = {
-      budgetLKR: budget,
-      durationDays: duration,
-      interests: selectedInterests.length > 0 ? selectedInterests : ['Nature'],
-      crowdPreference: crowd,
-      sustainabilityImportance: sustainability,
+    const request: RecommendationRequest = {
+      budget,
+      trip_duration: duration,
+      interests: selectedInterests,
+      crowd_preference: crowd,
+      sustainability_preference: sustainability,
     };
 
-    updatePreferences(newPrefs);
-
-    addSearchHistory({
-      preferences: newPrefs,
-      recommendations: [
-        { id: 'belihuloya', name: 'Belihuloya', score: 89, pressureLevel: 'LOW' },
-        { id: 'haputale', name: 'Haputale', score: 84, pressureLevel: 'MEDIUM' },
-        { id: 'meemure', name: 'Meemure', score: 81, pressureLevel: 'LOW' },
-      ],
-    });
-
-    router.push('/discover/results');
+    setIsSubmitting(true);
+    try {
+      const response = await createRecommendations(request);
+      storeRecommendationSession({ request, response });
+      router.push('/discover/results');
+    } catch (error) {
+      setSubmitError(
+        isAxiosError(error) && error.response?.status === 401
+          ? 'Your session has expired. Please sign in again.'
+          : describeApiError(error, 'Unable to generate recommendations. Please try again.'),
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setBudget(50000);
     setDuration(4);
-    setSelectedInterests(['Nature', 'Hiking']);
-    setCrowd('quiet');
-    setSustainability(85);
+    setSelectedInterests(['nature', 'hiking']);
+    setCrowd('QUIET');
+    setSustainability('HIGH');
+    setSubmitError(null);
   };
-
-  // Predicted dynamic match metrics
-  const predictedScore = Math.min(98, Math.max(70, Math.round(75 + (sustainability * 0.15) + (crowd === 'quiet' ? 8 : 4))));
-  const predictedCrowdReduction = crowd === 'quiet' ? '72%' : crowd === 'balanced' ? '45%' : '15%';
 
   return (
     <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
@@ -286,12 +338,12 @@ export default function DiscoverPage() {
 
               <div className="flex flex-wrap gap-2 pt-1">
                 {INTEREST_OPTIONS.map((interest) => {
-                  const isSelected = selectedInterests.includes(interest);
+                  const isSelected = selectedInterests.includes(interest.value);
                   return (
                     <button
                       type="button"
-                      key={interest}
-                      onClick={() => toggleInterest(interest)}
+                      key={interest.value}
+                      onClick={() => toggleInterest(interest.value)}
                       className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                         isSelected
                           ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground border-border shadow-xs font-black'
@@ -299,7 +351,7 @@ export default function DiscoverPage() {
                       }`}
                     >
                       {isSelected && <Check className="w-3.5 h-3.5 text-primary stroke-[3]" />}
-                      <span>{interest}</span>
+                      <span>{interest.label}</span>
                     </button>
                   );
                 })}
@@ -361,17 +413,18 @@ export default function DiscoverPage() {
                   <h3 className="text-sm font-black text-foreground">Carrying Capacity &amp; Sustainability Weight</h3>
                 </div>
                 <span className="text-xs font-black text-foreground px-2.5 py-0.5 rounded-lg bg-muted border border-border">
-                  {sustainability >= 75 ? 'High Priority' : sustainability >= 45 ? 'Balanced' : 'Standard'} ({sustainability}%)
+                  {sustainability === 'HIGH' ? 'High Priority' : sustainability === 'MEDIUM' ? 'Balanced' : 'Low Priority'}
                 </span>
               </div>
 
               <div className="space-y-2 pt-1 p-4 rounded-2xl bg-background border border-border shadow-dashboard-panel">
                 <input
                   type="range"
-                  min={10}
-                  max={100}
-                  value={sustainability}
-                  onChange={(e) => setSustainability(Number(e.target.value))}
+                  min={0}
+                  max={2}
+                  step={1}
+                  value={SUSTAINABILITY_LEVELS.indexOf(sustainability)}
+                  onChange={(e) => setSustainability(SUSTAINABILITY_LEVELS[Number(e.target.value)])}
                   className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                 />
 
@@ -386,6 +439,9 @@ export default function DiscoverPage() {
 
           {/* Form Footer Action Bar */}
           <div className="p-5 sm:p-6 bg-background border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-auto">
+            {submitError && (
+              <p className="text-xs font-semibold text-destructive sm:basis-full">{submitError}</p>
+            )}
             <button
               type="button"
               onClick={handleReset}
@@ -398,10 +454,11 @@ export default function DiscoverPage() {
             <Button
               type="submit"
               size="lg"
+              disabled={isSubmitting}
               className="bg-gradient-to-r from-primary via-primary to-secondary hover:opacity-95 text-primary-foreground font-extrabold px-6 py-3 rounded-xl shadow-md transition-all cursor-pointer gap-2"
             >
               <Sparkles className="w-4 h-4 text-secondary" />
-              <span>Generate AI Route Recommendations</span>
+              <span>{isSubmitting ? 'Finding destinations...' : 'Generate Recommendations'}</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
@@ -413,10 +470,10 @@ export default function DiscoverPage() {
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
-                  AI Calibrator Preview
+                  Request Preview
                 </span>
                 <h3 className="font-heading text-lg font-black text-foreground">
-                  Predicted Trip Profile
+                  Submitted Preference Profile
                 </h3>
               </div>
               <span className="size-8 rounded-2xl bg-muted border border-border flex items-center justify-center text-primary shadow-2xs">
@@ -424,42 +481,16 @@ export default function DiscoverPage() {
               </span>
             </div>
 
-            {/* Circular Gauge Ring */}
-            <div className="relative h-40 w-full flex items-center justify-center">
-              <svg className="size-36 -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" stroke="var(--muted)" strokeWidth="7" fill="none" />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  stroke="var(--chart-1)"
-                  strokeWidth="7"
-                  strokeDasharray="251"
-                  strokeDashoffset={251 - (251 * (predictedScore / 100))}
-                  strokeLinecap="round"
-                  fill="none"
-                  className="transition-all duration-500"
-                />
-              </svg>
-
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="font-heading text-2xl font-black text-primary">
-                  {predictedScore}%
-                </span>
-                <span className="text-[10px] uppercase font-bold text-muted-foreground">Eco Match</span>
-              </div>
-            </div>
-
-            {/* Impact Metric Chips */}
+            {/* Exact API request summary */}
             <div className="space-y-2.5 pt-2 border-t border-border text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground font-medium">Crowd Reduction:</span>
-                <span className="font-black text-primary">{predictedCrowdReduction} vs peak Ella</span>
+                <span className="text-muted-foreground font-medium">Crowd preference:</span>
+                <span className="font-black text-primary">{crowd}</span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground font-medium">Homestay Support:</span>
-                <span className="font-black text-primary">85%+ Local Families</span>
+                <span className="text-muted-foreground font-medium">Sustainability preference:</span>
+                <span className="font-black text-primary">{sustainability}</span>
               </div>
 
               <div className="flex items-center justify-between">
@@ -479,10 +510,11 @@ export default function DiscoverPage() {
             <Button
               type="submit"
               size="lg"
+              disabled={isSubmitting}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-extrabold py-5 rounded-2xl shadow-md hover:shadow-xl transition-all cursor-pointer gap-2 mt-2"
             >
               <Sparkles className="w-4 h-4 text-primary" />
-              <span>Find My Sustainable Trip</span>
+              <span>{isSubmitting ? 'Finding destinations...' : 'Find My Sustainable Trip'}</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </div>

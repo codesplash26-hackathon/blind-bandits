@@ -2,7 +2,6 @@ import {
   Destination,
   TouristPreferences,
   SearchHistoryItem,
-  RecommendationResult,
 } from '@/types/ceylontour';
 
 export const DESTINATIONS: Destination[] = [
@@ -614,78 +613,6 @@ export const INTEREST_OPTIONS = [
   'Waterfalls',
   'Photography',
 ];
-
-/**
- * Recommendation matching engine simulating the backend decision system.
- * Scores destinations based on user's 5 inputs: budget, duration, interests, crowd, sustainability.
- */
-export function getRecommendations(
-  prefs: TouristPreferences,
-  destinations: Destination[] = DESTINATIONS
-): RecommendationResult[] {
-  const scored = destinations.map((d) => {
-    let matchScore = 60; // base score
-
-    // 1. Sustainability weight matching
-    const sustWeight = (prefs.sustainabilityImportance || 50) / 100;
-    const sustComponent = (d.sustainability.overall / 100) * 35 * (0.6 + sustWeight * 0.8);
-    matchScore += sustComponent;
-
-    // 2. Crowd preference matching
-    if (prefs.crowdPreference === 'quiet') {
-      if (d.pressure.level === 'LOW') matchScore += 20;
-      else if (d.pressure.level === 'MEDIUM') matchScore += 5;
-      else matchScore -= 25; // Penalize high pressure
-    } else if (prefs.crowdPreference === 'balanced') {
-      if (d.pressure.level === 'MEDIUM') matchScore += 18;
-      else if (d.pressure.level === 'LOW') matchScore += 14;
-      else matchScore -= 5;
-    } else {
-      // popular
-      if (d.pressure.level === 'HIGH' || d.pressure.level === 'MEDIUM') matchScore += 15;
-    }
-
-    // 3. Interest overlap
-    const matchingInterests = prefs.interests.filter((i) =>
-      d.tags.map((t) => t.toLowerCase()).includes(i.toLowerCase())
-    );
-    const interestBonus = Math.min(25, matchingInterests.length * 9);
-    matchScore += interestBonus;
-
-    // 4. Budget fit
-    const budgetRatio = prefs.budgetLKR / (d.typicalBudgetLKR || 50000);
-    if (budgetRatio >= 0.85 && budgetRatio <= 1.4) matchScore += 10;
-    else if (budgetRatio < 0.8) matchScore -= 8;
-
-    // Clamp score
-    const finalScore = Math.min(99, Math.max(45, Math.round(matchScore)));
-
-    let whyMatches = '';
-    if (d.pressure.level === 'LOW' && d.sustainability.overall >= 85) {
-      whyMatches = `Strong environmental conditions (${d.sustainability.environmental}/100) and low visitor pressure make ${d.name} an exceptional match for your sustainable travel priorities.`;
-    } else if (d.pressure.level === 'MEDIUM') {
-      whyMatches = `Balanced visitor activity, strong community connection, and rich ${d.tags.slice(0, 2).join(' & ')} offerings match your trip preferences well.`;
-    } else {
-      whyMatches = `Offers unmatched iconic sights and amenities, though higher visitor volumes are currently monitored during this period.`;
-    }
-
-    return {
-      destination: d,
-      matchScore: finalScore,
-      whyMatches,
-    };
-  });
-
-  // Sort descending by matchScore
-  scored.sort((a, b) => b.matchScore - a.matchScore);
-
-  return scored.map((item, index) => ({
-    rank: index + 1,
-    destination: item.destination,
-    matchScore: item.matchScore,
-    whyMatches: item.whyMatches,
-  }));
-}
 
 /**
  * Interactive What-If Simulator calculation function:
