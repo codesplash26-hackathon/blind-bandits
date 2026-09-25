@@ -202,11 +202,11 @@ export const Destinations = () => {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-overlay/80 via-overlay/25 to-transparent z-10" />
 
               {/* Floating Badges */}
               <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-overlay/50 backdrop-blur-md border border-overlay-foreground/20 text-overlay-foreground text-xs font-medium">
                   {dest.tag}
                 </span>
 
@@ -214,28 +214,28 @@ export const Destinations = () => {
                   onClick={(e) => toggleFavorite(dest.id, e)}
                   className={`w-9 h-9 rounded-full backdrop-blur-md border flex items-center justify-center transition-all ${
                     favorites[dest.id]
-                      ? "bg-red-500/90 border-red-400 text-white"
-                      : "bg-black/40 border-white/20 text-white hover:bg-white/20"
+                      ? "bg-destructive/90 border-destructive text-destructive-foreground"
+                      : "bg-overlay/40 border-overlay-foreground/20 text-overlay-foreground hover:bg-overlay-foreground/20"
                   }`}
                   aria-label="Save destination"
                 >
                   <Heart
                     size={16}
-                    className={favorites[dest.id] ? "fill-current text-white" : "text-white"}
+                    className={favorites[dest.id] ? "fill-current text-destructive-foreground" : "text-overlay-foreground"}
                   />
                 </button>
               </div>
 
               {/* Location Badge over Image bottom */}
-              <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between text-white text-xs">
+              <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between text-overlay-foreground text-xs">
                 <div className="flex items-center gap-1.5 drop-shadow">
-                  <MapPin className="w-4 h-4 text-[#44A6B5]" />
+                  <MapPin className="w-4 h-4 text-primary" />
                   <span className="font-medium">{dest.location}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 font-medium">
-                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <div className="flex items-center gap-1 bg-overlay/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-overlay-foreground/10 font-medium">
+                  <Star className="w-3.5 h-3.5 fill-warning text-warning" />
                   <span>{dest.rating}</span>
-                  <span className="text-white/60">({dest.reviews})</span>
+                  <span className="text-overlay-foreground/60">({dest.reviews})</span>
                 </div>
               </div>
             </div>

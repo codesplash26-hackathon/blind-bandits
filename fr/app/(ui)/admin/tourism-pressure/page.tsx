@@ -54,16 +54,16 @@ export default function AdminTourismPressurePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Tourism Pressure Engine
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               TreeSHAP Explainable AI Active
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Tourism Pressure &amp; Carrying Capacity Simulator
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -194,10 +194,10 @@ export default function AdminTourismPressurePage() {
               key={dest.id}
               className={`p-5 rounded-3xl border transition-all ${
                 dest.simulatedLevel === 'HIGH'
-                  ? 'border-rose-500/40 bg-card shadow-xs'
+                  ? 'border-destructive/40 bg-card shadow-xs'
                   : dest.simulatedLevel === 'MEDIUM'
-                  ? 'border-amber-500/30 bg-card'
-                  : 'border-emerald-500/30 bg-card'
+                  ? 'border-warning/30 bg-card'
+                  : 'border-success/30 bg-card'
               }`}
             >
               <div className="flex items-start justify-between gap-2">
@@ -227,9 +227,9 @@ export default function AdminTourismPressurePage() {
                     <span
                       className={`text-[10px] ${
                         dest.scoreDiff > 0
-                          ? 'text-rose-500'
+                          ? 'text-destructive'
                           : dest.scoreDiff < 0
-                          ? 'text-emerald-500'
+                          ? 'text-success'
                           : 'text-muted-foreground'
                       }`}
                     >
@@ -242,10 +242,10 @@ export default function AdminTourismPressurePage() {
                   <div
                     className={`h-full rounded-full transition-all ${
                       dest.simulatedLevel === 'HIGH'
-                        ? 'bg-rose-500'
+                        ? 'bg-destructive'
                         : dest.simulatedLevel === 'MEDIUM'
-                        ? 'bg-amber-500'
-                        : 'bg-emerald-500'
+                        ? 'bg-warning'
+                        : 'bg-success'
                     }`}
                     style={{ width: `${dest.simulatedScore}%` }}
                   />

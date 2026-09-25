@@ -9,56 +9,56 @@ export const WhyCeylonTour = () => {
 
   const values = [
     {
-      icon: <Compass className="w-6 h-6 text-[#44A6B5] dark:text-[#B2D5E2]" />,
+      icon: <Compass className="w-6 h-6 text-primary dark:text-secondary" />,
       title: "Discover Without the Crowds",
       description:
         "Skip packed tourist bottlenecks. We connect you with peaceful, untouched waterfalls, beaches, and tea valleys that offer identical beauty with far fewer crowds.",
       tag: "Crowd-Free Escapes",
-      borderAccent: "hover:border-[#44A6B5]/60 hover:shadow-[#44A6B5]/10",
-      tagColor: "text-[#004554] dark:text-[#B2D5E2] bg-[#44A6B5]/15 dark:bg-[#44A6B5]/25 border-[#44A6B5]/30 dark:border-[#44A6B5]/50",
-      iconBg: "bg-[#44A6B5]/15 dark:bg-[#44A6B5]/25 text-[#44A6B5] dark:text-[#B2D5E2]",
-      gradientBg: "from-[#44A6B5]/5 to-transparent",
+      borderAccent: "hover:border-primary/60 hover:shadow-primary/10",
+      tagColor: "text-primary dark:text-secondary bg-primary/15 dark:bg-primary/25 border-primary/30 dark:border-primary/50",
+      iconBg: "bg-primary/15 dark:bg-primary/25 text-primary dark:text-secondary",
+      gradientBg: "from-primary/5 to-transparent",
     },
     {
-      icon: <Sparkles className="w-6 h-6 text-primary dark:text-[#B2D5E2]" />,
+      icon: <Sparkles className="w-6 h-6 text-primary dark:text-secondary" />,
       title: "Honest, Transparent Reasons",
       description:
         "No hidden sponsor bias or confusing ratings. We clearly explain why each place is recommended—showing real crowd levels, nature conditions, and seasonality.",
       tag: "Clear & Trustworthy",
       borderAccent: "hover:border-primary/60 hover:shadow-primary/10",
-      tagColor: "text-primary dark:text-[#B2D5E2] bg-primary/15 dark:bg-[#44A6B5]/25 border-primary/25 dark:border-[#44A6B5]/50",
-      iconBg: "bg-primary/15 dark:bg-[#44A6B5]/25 text-primary dark:text-[#B2D5E2]",
+      tagColor: "text-primary dark:text-secondary bg-primary/15 dark:bg-primary/25 border-primary/25 dark:border-primary/50",
+      iconBg: "bg-primary/15 dark:bg-primary/25 text-primary dark:text-secondary",
       gradientBg: "from-primary/5 to-transparent",
     },
     {
-      icon: <HeartHandshake className="w-6 h-6 text-[#004554] dark:text-[#B2D5E2]" />,
+      icon: <HeartHandshake className="w-6 h-6 text-primary dark:text-secondary" />,
       title: "Direct Support to Local Villages",
       description:
         "Your journey makes a real difference. Over 85% of money spent on certified village homestays, meals, and native guides stays directly with Sri Lankan families.",
       tag: "Community-First",
-      borderAccent: "hover:border-[#44A6B5]/60 hover:shadow-[#44A6B5]/10",
-      tagColor: "text-[#004554] dark:text-[#B2D5E2] bg-[#B2D5E2]/30 dark:bg-[#44A6B5]/25 border-[#B2D5E2]/40 dark:border-[#44A6B5]/50",
-      iconBg: "bg-[#004554]/10 dark:bg-[#44A6B5]/25 text-[#004554] dark:text-[#B2D5E2]",
-      gradientBg: "from-[#B2D5E2]/10 dark:from-[#44A6B5]/5 to-transparent",
+      borderAccent: "hover:border-primary/60 hover:shadow-primary/10",
+      tagColor: "text-primary dark:text-secondary bg-frosted-blue/30 dark:bg-primary/25 border-border/40 dark:border-primary/50",
+      iconBg: "bg-primary/10 dark:bg-primary/25 text-primary dark:text-secondary",
+      gradientBg: "from-frosted-blue/10 dark:from-primary/5 to-transparent",
     },
     {
-      icon: <ShieldCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-300" />,
+      icon: <ShieldCheck className="w-6 h-6 text-success" />,
       title: "Sustainable & Safe Travel",
       description:
         "Every recommended stay and trail adheres to zero-single-use-plastic and wildlife safety guidelines, ensuring Sri Lanka stays green for generations to come.",
       tag: "Nature-Safe",
-      borderAccent: "hover:border-emerald-500/60 hover:shadow-emerald-500/10",
-      tagColor: "text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 dark:bg-emerald-500/25 border-emerald-500/30 dark:border-emerald-500/50",
-      iconBg: "bg-emerald-500/15 dark:bg-emerald-500/25 text-emerald-600 dark:text-emerald-300",
-      gradientBg: "from-emerald-500/5 to-transparent",
+      borderAccent: "hover:border-success/60 hover:shadow-success/10",
+      tagColor: "text-success bg-success/15 dark:bg-success/25 border-success/30 dark:border-success/50",
+      iconBg: "bg-success/15 dark:bg-success/25 text-success",
+      gradientBg: "from-success/5 to-transparent",
     },
   ];
 
   return (
     <section id="why-us" className="py-20 md:py-28 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto w-full relative">
       {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#B2D5E2]/10 dark:bg-[#004554]/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-[#44A6B5]/10 dark:bg-[#44A6B5]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-frosted-blue/10 dark:bg-muted/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-primary/10 dark:bg-primary/15 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header with Scroll Fade */}
       <motion.div
@@ -68,7 +68,7 @@ export const WhyCeylonTour = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center max-w-2xl mx-auto mb-16 relative z-10"
       >
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-[#44A6B5]/25 border border-primary/25 dark:border-[#44A6B5]/50 text-primary dark:text-[#B2D5E2] text-xs font-bold uppercase tracking-wider mb-3.5 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-primary/25 border border-primary/25 dark:border-primary/50 text-primary dark:text-secondary text-xs font-bold uppercase tracking-wider mb-3.5 shadow-sm">
           <Sparkles className="w-3.5 h-3.5" />
           <span>A Better Way to Travel</span>
         </div>
@@ -122,7 +122,7 @@ export const WhyCeylonTour = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-14 p-6 sm:p-9 rounded-3xl bg-muted/70 dark:bg-gradient-to-r dark:from-[#002D37] dark:via-[#003844] dark:to-[#002D37] border border-border/80 dark:border-[#004D5C] flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm relative z-10"
+        className="mt-14 p-6 sm:p-9 rounded-3xl bg-muted/70 dark:bg-gradient-to-r dark:from-muted dark:via-primary dark:to-muted border border-border/80 dark:border-border flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm relative z-10"
       >
         <div>
           <h4 className="text-lg sm:text-xl font-bold font-heading text-foreground">

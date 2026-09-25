@@ -17,16 +17,6 @@ const throttle = <Args extends unknown[], R>(func: (...args: Args) => R, limit: 
   };
 };
 
-function hexToRgb(hex: string) {
-  const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
-  if (!m) return { r: 0, g: 0, b: 0 };
-  return {
-    r: parseInt(m[1], 16),
-    g: parseInt(m[2], 16),
-    b: parseInt(m[3], 16)
-  };
-}
-
 export interface DotGridProps {
   dotSize?: number;
   gap?: number;
@@ -54,8 +44,8 @@ interface Dot {
 const DotGrid: React.FC<DotGridProps> = ({
   dotSize = 16,
   gap = 32,
-  baseColor = '#004554',
-  activeColor = '#44A6B5',
+  baseColor = 'var(--muted-foreground)',
+  activeColor = 'var(--primary)',
   proximity = 150,
   speedTrigger = 100,
   shockRadius = 250,
@@ -79,9 +69,6 @@ const DotGrid: React.FC<DotGridProps> = ({
     lastX: 0,
     lastY: 0
   });
-
-  const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
-  const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
 
   const circlePath = useMemo(() => {
     if (typeof window === 'undefined' || !window.Path2D) return null;
@@ -131,7 +118,40 @@ const DotGrid: React.FC<DotGridProps> = ({
   }, [dotSize, gap]);
 
   useEffect(() => {
-    if (!circlePath) return;
+    const wrapper = wrapperRef.current;
+    if (!circlePath || !wrapper) return;
+
+    // Canvas cannot resolve CSS variables itself. Resolve them on an element
+    // in the grid's theme scope, then sample RGB for the proximity animation.
+    const probe = document.createElement('span');
+    probe.hidden = true;
+    wrapper.appendChild(probe);
+    const sample = document.createElement('canvas');
+    sample.width = sample.height = 1;
+    const sampleContext = sample.getContext('2d', { willReadFrequently: true });
+    if (!sampleContext) {
+      probe.remove();
+      return;
+    }
+    const resolveColor = (color: string) => {
+      probe.style.color = color;
+      const resolved = getComputedStyle(probe).color;
+      sampleContext.clearRect(0, 0, 1, 1);
+      sampleContext.fillStyle = resolved;
+      sampleContext.fillRect(0, 0, 1, 1);
+      const [r, g, b] = sampleContext.getImageData(0, 0, 1, 1).data;
+      return { resolved, r, g, b };
+    };
+    let baseRgb = resolveColor(baseColor);
+    let activeRgb = resolveColor(activeColor);
+    const observer = new MutationObserver(() => {
+      baseRgb = resolveColor(baseColor);
+      activeRgb = resolveColor(activeColor);
+    });
+    // Observe ancestor theme classes, including a locally scoped theme.
+    for (let ancestor: Element | null = wrapper; ancestor; ancestor = ancestor.parentElement) {
+      observer.observe(ancestor, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
 
     let rafId: number;
     const proxSq = proximity * proximity;
@@ -152,7 +172,7 @@ const DotGrid: React.FC<DotGridProps> = ({
         const dy = dot.cy - py;
         const dsq = dx * dx + dy * dy;
 
-        let dotStyle = baseColor;
+        let dotStyle = baseRgb.resolved;
         if (dsq <= proxSq) {
           const dist = Math.sqrt(dsq);
           const t = 1 - dist / proximity;
@@ -173,8 +193,12 @@ const DotGrid: React.FC<DotGridProps> = ({
     };
 
     draw();
-    return () => cancelAnimationFrame(rafId);
-  }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+      probe.remove();
+    };
+  }, [proximity, baseColor, activeColor, circlePath]);
 
   useEffect(() => {
     buildGrid();

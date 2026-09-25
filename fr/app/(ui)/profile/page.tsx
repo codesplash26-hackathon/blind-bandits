@@ -87,17 +87,17 @@ export default function ProfilePage() {
       {/* Top Search & Actions Bar */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search account settings or preferences..."
-            className="w-full pl-11 pr-4 py-2.5 rounded-full bg-white border border-black/10 text-xs font-bold text-black placeholder:text-neutral-400 focus:outline-none focus:border-black shadow-xs"
+            className="w-full pl-11 pr-4 py-2.5 rounded-full bg-card border border-border text-xs font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border shadow-xs"
           />
         </div>
 
         <div className="flex items-center gap-2.5 self-end md:self-auto">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-[#004554]/12 text-xs font-bold text-[#004554] shadow-xs">
-            <Calendar className="w-3.5 h-3.5 text-[#44A6B5]" />
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-bold text-primary shadow-xs">
+            <Calendar className="w-3.5 h-3.5 text-primary" />
             <span>Member Since 2026</span>
           </div>
 
@@ -106,33 +106,33 @@ export default function ProfilePage() {
               loginAs('ADMIN');
               toast.info('Switched session to Tourism Authority Official profile');
             }}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#004554] hover:bg-[#003844] text-white text-xs font-bold transition-all cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold transition-all cursor-pointer shadow-xs"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-[#44A6B5]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-primary" />
             <span>Switch to Authority</span>
           </button>
         </div>
       </div>
 
       {/* Profile Welcome Banner */}
-      <div className="bg-white p-6 rounded-3xl border border-[#004554]/10 shadow-[0_8px_30px_rgba(0,69,84,0.03)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-card p-6 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-16 h-16 rounded-full bg-[#004554] text-white flex items-center justify-center font-heading text-2xl font-black shadow-md">
+            <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-heading text-2xl font-black shadow-md">
               {name.charAt(0) || 'N'}
             </div>
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white" title="Verified Traveler">
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-success border-2 border-overlay-foreground flex items-center justify-center text-success-foreground" title="Verified Traveler">
               <CheckCircle2 className="w-3.5 h-3.5" />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading text-2xl font-black text-black tracking-tight">{name}</h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#EAF4F7] text-[#004554] text-[10px] font-bold border border-[#004554]/12">
+              <h1 className="font-heading text-2xl font-black text-foreground tracking-tight">{name}</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-muted text-primary text-[10px] font-bold border border-border">
                 Gold Explorer
               </span>
             </div>
-            <p className="text-xs text-[#5A737D] font-medium mt-0.5">
+            <p className="text-xs text-muted-foreground font-medium mt-0.5">
               {user?.email || 'nipun@ceylontour.lk'} • {country}
             </p>
           </div>
@@ -140,9 +140,9 @@ export default function ProfilePage() {
 
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <span className="text-[11px] font-bold text-neutral-500 block uppercase tracking-wider">Account Status</span>
-            <span className="text-xs font-black text-black flex items-center gap-1.5 justify-end">
-              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] font-bold text-muted-foreground block uppercase tracking-wider">Account Status</span>
+            <span className="text-xs font-black text-foreground flex items-center gap-1.5 justify-end">
+              <span className="size-2 rounded-full bg-success animate-pulse" />
               Active Conscious Traveler
             </span>
           </div>
@@ -152,53 +152,53 @@ export default function ProfilePage() {
       {/* 4 Top Metric KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1: Sustainability Index */}
-        <div className="bg-white p-5 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Eco Priority</span>
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Eco Priority</span>
+            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <Leaf className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-black tracking-tight">{sustainability}%</span>
-              <span className="text-[11px] text-emerald-600 font-bold block mt-0.5 flex items-center gap-1">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{sustainability}%</span>
+              <span className="text-[11px] text-success font-bold block mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" /> Top 5% conscious
               </span>
             </div>
             {/* SVG Circular Ring */}
             <div className="relative w-12 h-12 flex items-center justify-center">
               <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#F1F5F9" strokeWidth="3" />
+                <circle cx="18" cy="18" r="14" fill="none" stroke="var(--muted)" strokeWidth="3" />
                 <circle
                   cx="18"
                   cy="18"
                   r="14"
                   fill="none"
-                  stroke="#000000"
+                  stroke="var(--chart-1)"
                   strokeWidth="3"
                   strokeDasharray="88"
                   strokeDashoffset={88 - (88 * sustainability) / 100}
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="absolute text-[10px] font-black text-black">{sustainability}%</span>
+              <span className="absolute text-[10px] font-black text-foreground">{sustainability}%</span>
             </div>
           </div>
         </div>
 
         {/* KPI 2: Saved Sanctuaries */}
-        <div className="bg-white p-5 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Saved Sanctuaries</span>
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Saved Sanctuaries</span>
+            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <Heart className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-black tracking-tight">{savedDestinationIds.length}</span>
-              <span className="text-[11px] text-neutral-500 font-bold block mt-0.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{savedDestinationIds.length}</span>
+              <span className="text-[11px] text-muted-foreground font-bold block mt-0.5">
                 Bookmarked spots
               </span>
             </div>
@@ -207,7 +207,7 @@ export default function ProfilePage() {
               <path
                 d="M 0 18 Q 15 5, 30 15 T 60 4"
                 fill="none"
-                stroke="#000000"
+                stroke="var(--chart-1)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
@@ -216,62 +216,62 @@ export default function ProfilePage() {
         </div>
 
         {/* KPI 3: Carbon Offset Avoided */}
-        <div className="bg-white p-5 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Carbon Dispersal</span>
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Carbon Dispersal</span>
+            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <Sparkles className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-black tracking-tight">-38.4<span className="text-sm font-bold text-neutral-500">kg</span></span>
-              <span className="text-[11px] text-emerald-600 font-bold block mt-0.5 flex items-center gap-1">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">-38.4<span className="text-sm font-bold text-muted-foreground">kg</span></span>
+              <span className="text-[11px] text-success font-bold block mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" /> +14.2% vs regular tours
               </span>
             </div>
             {/* Mini SVG Bars */}
             <div className="flex items-end gap-1 h-8">
-              <div className="w-1.5 h-3 bg-neutral-200 rounded-full" />
-              <div className="w-1.5 h-5 bg-neutral-400 rounded-full" />
-              <div className="w-1.5 h-7 bg-moonstone rounded-full" />
-              <div className="w-1.5 h-8 bg-black rounded-full" />
+              <div className="w-1.5 h-3 bg-muted rounded-full" />
+              <div className="w-1.5 h-5 bg-muted rounded-full" />
+              <div className="w-1.5 h-7 bg-primary rounded-full" />
+              <div className="w-1.5 h-8 bg-primary rounded-full" />
             </div>
           </div>
         </div>
 
         {/* KPI 4: Explorer Tier */}
-        <div className="bg-white p-5 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Explorer Tier</span>
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Explorer Tier</span>
+            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <Award className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-black tracking-tight">Level 4</span>
-              <span className="text-[11px] text-neutral-500 font-bold block mt-0.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">Level 4</span>
+              <span className="text-[11px] text-muted-foreground font-bold block mt-0.5">
                 8 journeys completed
               </span>
             </div>
             {/* SVG Circular Ring */}
             <div className="relative w-12 h-12 flex items-center justify-center">
               <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#F1F5F9" strokeWidth="3" />
+                <circle cx="18" cy="18" r="14" fill="none" stroke="var(--muted)" strokeWidth="3" />
                 <circle
                   cx="18"
                   cy="18"
                   r="14"
                   fill="none"
-                  stroke="#000000"
+                  stroke="var(--chart-1)"
                   strokeWidth="3"
                   strokeDasharray="88"
                   strokeDashoffset={22}
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="absolute text-[10px] font-black text-black">75%</span>
+              <span className="absolute text-[10px] font-black text-foreground">75%</span>
             </div>
           </div>
         </div>
@@ -282,42 +282,42 @@ export default function ProfilePage() {
         {/* Left Column (7 cols): Personal Info & Travel Preferences */}
         <div className="lg:col-span-7 space-y-6">
           {/* Personal Information */}
-          <div className="bg-white p-6 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] space-y-4">
+          <div className="bg-card p-6 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
                 <User className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-black text-black">Personal Information</h2>
+              <h2 className="text-base font-black text-foreground">Personal Information</h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-neutral-500">Full Name</label>
+                <label className="text-xs font-bold text-muted-foreground">Full Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-2xl border border-black/10 bg-white text-xs font-bold text-black focus:border-black outline-none shadow-xs"
+                  className="w-full px-3.5 py-2.5 rounded-2xl border border-border bg-card text-xs font-bold text-foreground focus:border-border outline-none shadow-xs"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-neutral-500">Email Address</label>
+                <label className="text-xs font-bold text-muted-foreground">Email Address</label>
                 <input
                   type="email"
                   value={user?.email || 'nipun@ceylontour.lk'}
                   disabled
-                  className="w-full px-3.5 py-2.5 rounded-2xl border border-black/10 bg-neutral-100 text-xs font-mono text-neutral-500 cursor-not-allowed"
+                  className="w-full px-3.5 py-2.5 rounded-2xl border border-border bg-muted text-xs font-mono text-muted-foreground cursor-not-allowed"
                 />
               </div>
 
               <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-bold text-neutral-500">Country / Origin</label>
+                <label className="text-xs font-bold text-muted-foreground">Country / Origin</label>
                 <input
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-2xl border border-black/10 bg-white text-xs font-bold text-black focus:border-black outline-none shadow-xs"
+                  className="w-full px-3.5 py-2.5 rounded-2xl border border-border bg-card text-xs font-bold text-foreground focus:border-border outline-none shadow-xs"
                 />
               </div>
             </div>
@@ -325,25 +325,25 @@ export default function ProfilePage() {
 
           {/* Travel Preferences Form */}
           <form onSubmit={handleSavePreferences}>
-            <div className="bg-white p-6 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] space-y-6">
+            <div className="bg-card p-6 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
                     <Sliders className="w-4 h-4" />
                   </div>
                   <div>
-                    <h2 className="text-base font-black text-black">AI Travel Preferences</h2>
-                    <p className="text-xs text-neutral-500 font-medium">Default calibration parameters for discovery</p>
+                    <h2 className="text-base font-black text-foreground">AI Travel Preferences</h2>
+                    <p className="text-xs text-muted-foreground font-medium">Default calibration parameters for discovery</p>
                   </div>
                 </div>
-                <Badge variant="outline" className="border-black/10 text-black bg-neutral-100 text-[10px] font-black">
+                <Badge variant="outline" className="border-border text-foreground bg-muted text-[10px] font-black">
                   Auto Calibrated
                 </Badge>
               </div>
 
               {/* Interests Selector Tabs */}
               <div className="space-y-2">
-                <span className="text-xs font-black text-[#004554] uppercase tracking-wider block">
+                <span className="text-xs font-black text-primary uppercase tracking-wider block">
                   Favorite Interests &amp; Themes
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -356,8 +356,8 @@ export default function ProfilePage() {
                         onClick={() => toggleInterest(int)}
                         className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
                           isSelected
-                            ? 'bg-gradient-to-r from-[#003E4C] via-[#004E5F] to-[#04667C] text-white border-[#004554] shadow-xs font-black'
-                            : 'bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] text-[#004554] hover:bg-white hover:border-[#B5D7E4] border-[#B5D7E4]'
+                            ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground border-border shadow-xs font-black'
+                            : 'bg-muted text-primary hover:bg-card hover:border-border border-border'
                         }`}
                       >
                         {int}
@@ -369,7 +369,7 @@ export default function ProfilePage() {
 
               {/* Preferred Crowd Atmosphere Tabs */}
               <div className="space-y-2">
-                <span className="text-xs font-black text-[#004554] uppercase tracking-wider block">
+                <span className="text-xs font-black text-primary uppercase tracking-wider block">
                   Preferred Crowd Atmosphere
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -384,24 +384,24 @@ export default function ProfilePage() {
                       onClick={() => setCrowd(opt.id as CrowdPreference)}
                       className={`p-3 rounded-2xl text-left border transition-all cursor-pointer ${
                         crowd === opt.id
-                          ? 'bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border-[#004554] ring-2 ring-[#004554]/25 text-[#004554] font-black shadow-xs'
-                          : 'border-[#B5D7E4] bg-white text-[#5A737D] hover:border-[#004554]/40 hover:bg-[#F8FBFC]'
+                          ? 'bg-muted border-border ring-2 ring-ring/25 text-primary font-black shadow-xs'
+                          : 'border-border bg-card text-muted-foreground hover:border-border hover:bg-background'
                       }`}
                     >
-                      <span className="text-xs font-black text-[#004554] block">{opt.label}</span>
-                      <span className="text-[10px] text-[#5A737D] font-medium block mt-0.5">{opt.sub}</span>
+                      <span className="text-xs font-black text-primary block">{opt.label}</span>
+                      <span className="text-[10px] text-muted-foreground font-medium block mt-0.5">{opt.sub}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Sustainability Weight Priority */}
-              <div className="space-y-3 p-4 rounded-2xl bg-gradient-to-b from-[#F2F8FB] to-[#E3F0F6] border border-[#B5D7E4]">
+              <div className="space-y-3 p-4 rounded-2xl bg-muted border border-border">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-black text-[#004554] uppercase tracking-wider text-[11px]">
+                  <span className="font-black text-primary uppercase tracking-wider text-[11px]">
                     Sustainability Dispersal Priority
                   </span>
-                  <span className="text-[#004554] font-heading font-black text-base">{sustainability}%</span>
+                  <span className="text-primary font-heading font-black text-base">{sustainability}%</span>
                 </div>
                 <input
                   type="range"
@@ -409,21 +409,21 @@ export default function ProfilePage() {
                   max={100}
                   value={sustainability}
                   onChange={(e) => setSustainability(Number(e.target.value))}
-                  className="w-full h-2 bg-[#EAF4F7] rounded-lg appearance-none cursor-pointer accent-[#004554]"
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                 />
-                <div className="flex items-center justify-between text-[10px] text-[#5A737D] font-bold">
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground font-bold">
                   <span>Economic Focus</span>
                   <span>Balanced Eco Impact</span>
-                  <span className="text-[#004554] font-black">Strict Conservation</span>
+                  <span className="text-primary font-black">Strict Conservation</span>
                 </div>
               </div>
 
               <div className="flex justify-end pt-2">
                 <Button
                   type="submit"
-                  className="rounded-full px-5 py-2.5 bg-[#004554] hover:bg-[#003844] text-white text-xs font-bold gap-2 cursor-pointer shadow-xs transition-all"
+                  className="rounded-full px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold gap-2 cursor-pointer shadow-xs transition-all"
                 >
-                  <Save className="w-3.5 h-3.5 text-[#44A6B5]" />
+                  <Save className="w-3.5 h-3.5 text-primary" />
                   <span>Save Traveler Preferences</span>
                 </Button>
               </div>
@@ -434,13 +434,13 @@ export default function ProfilePage() {
         {/* Right Column (5 cols): Conscious Impact Rings & Security */}
         <div className="lg:col-span-5 space-y-6">
           {/* Impact Concentric Rings Card */}
-          <div className="bg-white p-6 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] space-y-5">
+          <div className="bg-card p-6 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-heading text-base font-black text-black">Eco Impact Footprint</h3>
-                <p className="text-xs text-neutral-500 font-medium">Your contribution to Sri Lanka balance</p>
+                <h3 className="font-heading text-base font-black text-foreground">Eco Impact Footprint</h3>
+                <p className="text-xs text-muted-foreground font-medium">Your contribution to Sri Lanka balance</p>
               </div>
-              <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
                 <Sparkles className="w-4 h-4" />
               </div>
             </div>
@@ -450,13 +450,13 @@ export default function ProfilePage() {
               <div className="relative w-36 h-36 flex items-center justify-center">
                 <svg className="w-36 h-36 -rotate-90" viewBox="0 0 100 100">
                   {/* Outer Ring: Carbon Dispersal (92%) */}
-                  <circle cx="50" cy="50" r="42" fill="none" stroke="#EAF4F7" strokeWidth="6" />
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="var(--muted)" strokeWidth="6" />
                   <circle
                     cx="50"
                     cy="50"
                     r="42"
                     fill="none"
-                    stroke="#004554"
+                    stroke="var(--chart-1)"
                     strokeWidth="6"
                     strokeDasharray="264"
                     strokeDashoffset="21"
@@ -464,13 +464,13 @@ export default function ProfilePage() {
                   />
 
                   {/* Middle Ring: Biodiversity Protection (85%) */}
-                  <circle cx="50" cy="50" r="32" fill="none" stroke="#EAF4F7" strokeWidth="6" />
+                  <circle cx="50" cy="50" r="32" fill="none" stroke="var(--muted)" strokeWidth="6" />
                   <circle
                     cx="50"
                     cy="50"
                     r="32"
                     fill="none"
-                    stroke="#44A6B5"
+                    stroke="var(--chart-2)"
                     strokeWidth="6"
                     strokeDasharray="201"
                     strokeDashoffset="30"
@@ -478,13 +478,13 @@ export default function ProfilePage() {
                   />
 
                   {/* Inner Ring: Rural Economy (96%) */}
-                  <circle cx="50" cy="50" r="22" fill="none" stroke="#EAF4F7" strokeWidth="6" />
+                  <circle cx="50" cy="50" r="22" fill="none" stroke="var(--muted)" strokeWidth="6" />
                   <circle
                     cx="50"
                     cy="50"
                     r="22"
                     fill="none"
-                    stroke="#B2D5E2"
+                    stroke="var(--chart-3)"
                     strokeWidth="6"
                     strokeDasharray="138"
                     strokeDashoffset="5"
@@ -493,62 +493,62 @@ export default function ProfilePage() {
                 </svg>
 
                 <div className="absolute text-center">
-                  <span className="font-heading text-lg font-black text-[#004554] block leading-none">94%</span>
-                  <span className="text-[9px] font-bold text-[#5A737D] uppercase tracking-wider block mt-0.5">Overall</span>
+                  <span className="font-heading text-lg font-black text-primary block leading-none">94%</span>
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mt-0.5">Overall</span>
                 </div>
               </div>
             </div>
 
             {/* Impact Legend */}
-            <div className="space-y-2 pt-2 border-t border-[#004554]/10 text-xs">
+            <div className="space-y-2 pt-2 border-t border-border text-xs">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="size-2.5 rounded-full bg-[#004554]" />
-                  <span className="text-[#004554] font-bold">Overtourism Dispersal</span>
+                  <span className="size-2.5 rounded-full bg-primary" />
+                  <span className="text-primary font-bold">Overtourism Dispersal</span>
                 </div>
-                <span className="font-black text-[#004554]">92%</span>
+                <span className="font-black text-primary">92%</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="size-2.5 rounded-full bg-[#44A6B5]" />
-                  <span className="text-[#004554] font-bold">Biodiversity Preservation</span>
+                  <span className="size-2.5 rounded-full bg-primary" />
+                  <span className="text-primary font-bold">Biodiversity Preservation</span>
                 </div>
-                <span className="font-black text-[#004554]">85%</span>
+                <span className="font-black text-primary">85%</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="size-2.5 rounded-full bg-[#B2D5E2]" />
-                  <span className="text-[#004554] font-bold">Rural Community Direct Spend</span>
+                  <span className="size-2.5 rounded-full bg-accent" />
+                  <span className="text-primary font-bold">Rural Community Direct Spend</span>
                 </div>
-                <span className="font-black text-[#004554]">96%</span>
+                <span className="font-black text-primary">96%</span>
               </div>
             </div>
           </div>
 
           {/* Privacy & Account Security */}
-          <div className="bg-white p-6 rounded-3xl border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] space-y-4">
+          <div className="bg-card p-6 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
                 <Shield className="w-4 h-4" />
               </div>
-              <h3 className="font-heading text-base font-black text-black">Privacy &amp; Security</h3>
+              <h3 className="font-heading text-base font-black text-foreground">Privacy &amp; Security</h3>
             </div>
 
-            <p className="text-xs text-neutral-600 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               CeylonTour follows strict sustainable tourism data minimization. Your location telemetry is anonymized and never shared with third-party advertisers.
             </p>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 border-t border-black/8">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 border-t border-border">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => toast.info('Password reset instructions sent to your registered email.')}
-                className="rounded-full text-xs font-bold gap-1.5 border-black/15 text-black hover:bg-neutral-100"
+                className="rounded-full text-xs font-bold gap-1.5 border-border text-foreground hover:bg-muted"
               >
-                <KeyRound className="w-3.5 h-3.5 text-moonstone" />
+                <KeyRound className="w-3.5 h-3.5 text-primary" />
                 <span>Reset Password</span>
               </Button>
 
@@ -557,7 +557,7 @@ export default function ProfilePage() {
                 variant="destructive"
                 size="sm"
                 onClick={handleDeleteAccount}
-                className="rounded-full text-xs font-bold gap-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 shadow-none cursor-pointer"
+                className="rounded-full text-xs font-bold gap-1.5 bg-destructive/10 text-destructive hover:bg-destructive/10 border border-destructive/25 shadow-none cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Delete Account</span>

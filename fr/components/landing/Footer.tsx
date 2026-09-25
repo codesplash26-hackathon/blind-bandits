@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/logo.svg";
+import logo from "@/public/logo.png";
 import { Compass, Globe, Shield, Heart } from "lucide-react";
 
 export const Footer = () => {
@@ -21,7 +21,7 @@ export const Footer = () => {
               Sri Lanka&apos;s premier smart & sustainable travel platform. Discover authentic experiences while preserving nature and empowering local communities.
             </p>
             <div className="flex items-center gap-3 text-muted-foreground text-xs mt-1">
-              <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold dark:text-emerald-400">
+              <span className="inline-flex items-center gap-1 text-success font-semibold">
                 <Shield className="w-4 h-4" /> 100% Verified Eco Tourism
               </span>
             </div>

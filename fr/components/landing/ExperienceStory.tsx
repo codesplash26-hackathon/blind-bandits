@@ -12,21 +12,21 @@ export const ExperienceStory = () => {
 
   const benefits = [
     {
-      icon: <HeartHandshake className="w-5 h-5 text-[#44A6B5]" />,
+      icon: <HeartHandshake className="w-5 h-5 text-primary" />,
       title: "Direct Community Co-ops (85% Retention)",
       description:
         "Every rupee spent on certified homestays, trail permits, and village excursions stays directly with local families, village schools, and native guides.",
       badge: "Local First",
     },
     {
-      icon: <Leaf className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+      icon: <Leaf className="w-5 h-5 text-success" />,
       title: "Zero-Plastic & Bio-Certified Sanctuaries",
       description:
         "Rest in handpicked mountain glamping, river treehouses, and heritage colonial bungalows committed to solar power, rainwater harvesting, and organic dining.",
       badge: "Eco-Verified",
     },
     {
-      icon: <ShieldCheck className="w-5 h-5 text-[#004554] dark:text-[#B2D5E2]" />,
+      icon: <ShieldCheck className="w-5 h-5 text-primary dark:text-secondary" />,
       title: "Accredited Wildlife & Cultural Guardians",
       description:
         "Explore alongside licensed environmentalists who protect natural elephant and leopard corridors, prioritizing animal welfare and ancient heritage preservation.",
@@ -35,10 +35,10 @@ export const ExperienceStory = () => {
   ];
 
   return (
-    <section className="w-full bg-muted/60 dark:bg-[#00252E] border-y border-border/80 dark:border-[#003F4C] py-20 md:py-28 relative overflow-hidden">
+    <section className="w-full bg-muted/60 dark:bg-muted border-y border-border/80 dark:border-border py-20 md:py-28 relative overflow-hidden">
       {/* Background Soft Glows */}
-      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-[#B2D5E2]/25 dark:bg-[#004554]/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#44A6B5]/15 dark:bg-[#44A6B5]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-frosted-blue/25 dark:bg-muted/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-primary/15 dark:bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
@@ -51,7 +51,7 @@ export const ExperienceStory = () => {
           className="lg:col-span-6 relative pb-10 sm:pb-14 pr-0 sm:pr-8"
         >
           {/* Main Visual Image - Misty Ella */}
-          <div className="relative h-[380px] sm:h-[460px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-white/10 group">
+          <div className="relative h-[380px] sm:h-[460px] w-full rounded-3xl overflow-hidden shadow-2xl border border-overlay-foreground/20 dark:border-overlay-foreground/10 group">
             <Image
               src={ellaImg}
               alt="Sri Lanka misty highlands and scenic railway"
@@ -59,11 +59,11 @@ export const ExperienceStory = () => {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-overlay/70 via-overlay/20 to-transparent" />
 
             {/* Embedded Bottom Image Caption */}
-            <div className="absolute bottom-6 left-6 right-6 text-white z-10">
-              <span className="text-[11px] uppercase tracking-widest text-[#B2D5E2] font-semibold">
+            <div className="absolute bottom-6 left-6 right-6 text-overlay-foreground z-10">
+              <span className="text-[11px] uppercase tracking-widest text-secondary font-semibold">
                 Central Highlands
               </span>
               <p className="font-heading text-lg sm:text-xl font-bold">
@@ -73,7 +73,7 @@ export const ExperienceStory = () => {
           </div>
 
           {/* Overlapping Secondary Image - Sigiriya Rock */}
-          <div className="absolute -bottom-2 right-0 sm:right-2 w-44 sm:w-56 h-40 sm:h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-card dark:border-[#003541] hidden sm:block group">
+          <div className="absolute -bottom-2 right-0 sm:right-2 w-44 sm:w-56 h-40 sm:h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-card dark:border-border hidden sm:block group">
             <Image
               src={sigiriyaImg}
               alt="Sigiriya ancient rock fortress in Sri Lanka"
@@ -81,8 +81,8 @@ export const ExperienceStory = () => {
               sizes="224px"
               className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <span className="absolute bottom-2.5 left-3 text-[10px] font-bold text-white uppercase tracking-wider">
+            <div className="absolute inset-0 bg-gradient-to-t from-overlay/60 to-transparent" />
+            <span className="absolute bottom-2.5 left-3 text-[10px] font-bold text-overlay-foreground uppercase tracking-wider">
               Sigiriya Citadel
             </span>
           </div>
@@ -95,7 +95,7 @@ export const ExperienceStory = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="absolute -top-5 -left-3 sm:-left-6 bg-card/90 backdrop-blur-xl border border-border/80 p-3.5 sm:p-4 rounded-2xl shadow-xl flex items-center gap-3 z-20"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-success/15 text-success flex items-center justify-center font-bold shadow-sm">
               <Leaf className="w-5 h-5" />
             </div>
             <div>
@@ -140,7 +140,7 @@ export const ExperienceStory = () => {
                     <h4 className="font-heading text-base font-bold text-foreground">
                       {benefit.title}
                     </h4>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-muted dark:bg-[#003844] text-muted-foreground dark:text-[#B2D5E2] border border-border/50 dark:border-[#004D5C]">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground dark:text-secondary border border-border/50 dark:border-border">
                       {benefit.badge}
                     </span>
                   </div>

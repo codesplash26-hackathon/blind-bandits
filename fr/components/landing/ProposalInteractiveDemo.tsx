@@ -84,7 +84,7 @@ export const ProposalInteractiveDemo = () => {
           {/* Left Column: Recommendation Result */}
           <div className="lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border pb-8 lg:pb-0 lg:pr-8">
             <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full mb-3">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-success bg-success/10 px-3 py-1 rounded-full mb-3">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Top Sustainable Match
               </span>
               <h3 className="text-3xl font-bold font-heading text-foreground">
@@ -117,7 +117,7 @@ export const ProposalInteractiveDemo = () => {
             <div className="space-y-3 text-xs">
               <div className="flex items-center justify-between py-1 border-b border-border/50">
                 <span className="flex items-center gap-2 text-muted-foreground">
-                  <Leaf className="w-3.5 h-3.5 text-emerald-500" /> Environmental Condition
+                  <Leaf className="w-3.5 h-3.5 text-success" /> Environmental Condition
                 </span>
                 <strong className="text-foreground font-semibold">92 / 100</strong>
               </div>
@@ -135,13 +135,13 @@ export const ProposalInteractiveDemo = () => {
               </div>
               <div className="flex items-center justify-between py-1 border-b border-border/50">
                 <span className="flex items-center gap-2 text-muted-foreground">
-                  <Building className="w-3.5 h-3.5 text-amber-500" /> Infrastructure
+                  <Building className="w-3.5 h-3.5 text-warning" /> Infrastructure
                 </span>
                 <strong className="text-foreground font-semibold">76 / 100</strong>
               </div>
               <div className="flex items-center justify-between py-1">
                 <span className="flex items-center gap-2 text-muted-foreground">
-                  <Compass className="w-3.5 h-3.5 text-blue-500" /> Tourist Suitability
+                  <Compass className="w-3.5 h-3.5 text-primary" /> Tourist Suitability
                 </span>
                 <strong className="text-foreground font-semibold">90 / 100</strong>
               </div>
@@ -173,7 +173,7 @@ export const ProposalInteractiveDemo = () => {
                   <span className="text-primary font-bold">32% Contribution</span>
                 </div>
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: "32%" }} />
+                  <div className="h-full bg-success rounded-full" style={{ width: "32%" }} />
                 </div>
               </div>
 
@@ -203,7 +203,7 @@ export const ProposalInteractiveDemo = () => {
                   <span className="text-primary font-bold">13% Contribution</span>
                 </div>
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 rounded-full" style={{ width: "13%" }} />
+                  <div className="h-full bg-primary rounded-full" style={{ width: "13%" }} />
                 </div>
               </div>
 
@@ -213,7 +213,7 @@ export const ProposalInteractiveDemo = () => {
                   <span className="text-primary font-bold">10% Contribution</span>
                 </div>
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-amber-500 rounded-full" style={{ width: "10%" }} />
+                  <div className="h-full bg-warning rounded-full" style={{ width: "10%" }} />
                 </div>
               </div>
             </div>
@@ -243,12 +243,12 @@ export const ProposalInteractiveDemo = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {/* Selected Congested Destination: Ella */}
-            <div className="flex flex-col justify-between p-6 rounded-2xl border-2 border-red-500/40 bg-red-500/5 relative">
+            <div className="flex flex-col justify-between p-6 rounded-2xl border-2 border-destructive/40 bg-destructive/5 relative">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 bg-red-500/10 px-3 py-1 rounded-full">
+                <span className="text-xs font-bold uppercase tracking-wider text-destructive bg-destructive/10 px-3 py-1 rounded-full">
                   ⚠️ High Overtourism Risk
                 </span>
-                <span className="text-2xl font-black text-red-600 dark:text-red-400">82%</span>
+                <span className="text-2xl font-black text-destructive">82%</span>
               </div>
 
               <div>
@@ -262,47 +262,47 @@ export const ProposalInteractiveDemo = () => {
                   <div>
                     <div className="flex justify-between text-[11px] mb-1">
                       <span className="text-muted-foreground">Visitor Density</span>
-                      <strong className="text-red-500">40%</strong>
+                      <strong className="text-destructive">40%</strong>
                     </div>
                     <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-red-500 rounded-full" style={{ width: "40%" }} />
+                      <div className="h-full bg-destructive rounded-full" style={{ width: "40%" }} />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex justify-between text-[11px] mb-1">
                       <span className="text-muted-foreground">Infrastructure Pressure</span>
-                      <strong className="text-red-500">25%</strong>
+                      <strong className="text-destructive">25%</strong>
                     </div>
                     <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-red-500 rounded-full" style={{ width: "25%" }} />
+                      <div className="h-full bg-destructive rounded-full" style={{ width: "25%" }} />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex justify-between text-[11px] mb-1">
                       <span className="text-muted-foreground">Waste Management Strain</span>
-                      <strong className="text-red-500">20%</strong>
+                      <strong className="text-destructive">20%</strong>
                     </div>
                     <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-red-500 rounded-full" style={{ width: "20%" }} />
+                      <div className="h-full bg-destructive rounded-full" style={{ width: "20%" }} />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="p-3 bg-red-500/10 rounded-xl text-xs text-red-600 dark:text-red-300">
+              <div className="p-3 bg-destructive/10 rounded-xl text-xs text-destructive">
                 <strong>Impact Alert:</strong> Carrying capacity exceeded by 210%. Extended wait times at Nine Arch Bridge.
               </div>
             </div>
 
             {/* Smart Suggested Alternative: Belihuloya & Haputale */}
-            <div className="flex flex-col justify-between p-6 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/5 relative">
+            <div className="flex flex-col justify-between p-6 rounded-2xl border-2 border-success/40 bg-success/5 relative">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">
+                <span className="text-xs font-bold uppercase tracking-wider text-success bg-success/10 px-3 py-1 rounded-full">
                   🌿 Recommended Alternative (76% Similarity)
                 </span>
-                <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">28% Low Risk</span>
+                <span className="text-2xl font-black text-success">28% Low Risk</span>
               </div>
 
               <div>
@@ -313,21 +313,21 @@ export const ProposalInteractiveDemo = () => {
 
                 <div className="space-y-2 my-5 text-xs text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
                     <span>Same landscape type, waterfalls & pine hiking paths</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
                     <span>68% fewer crowds for a peaceful, immersive experience</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
                     <span>Direct financial impact to rural Sabaragamuwa hosts</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-3 bg-emerald-500/10 rounded-xl text-xs text-emerald-700 dark:text-emerald-300">
+              <div className="p-3 bg-success/10 rounded-xl text-xs text-success">
                 <strong>Alternative XAI Summary:</strong> &quot;Belihuloya provides a similar high-altitude nature experience with 68% lower estimated tourism pressure.&quot;
               </div>
             </div>
@@ -382,7 +382,7 @@ export const ProposalInteractiveDemo = () => {
               <div className="p-4 rounded-2xl bg-muted/40 border border-border/60">
                 <div className="flex justify-between items-center mb-2">
                   <label className="text-xs sm:text-sm font-semibold text-foreground flex items-center gap-2">
-                    <Leaf className="w-4 h-4 text-emerald-500" /> Waste & Renewable Energy Score
+                    <Leaf className="w-4 h-4 text-success" /> Waste & Renewable Energy Score
                   </label>
                   <span className="text-sm font-bold text-foreground">{wasteMgmt}%</span>
                 </div>
@@ -393,7 +393,7 @@ export const ProposalInteractiveDemo = () => {
                   step="5"
                   value={wasteMgmt}
                   onChange={(e) => setWasteMgmt(Number(e.target.value))}
-                  className="w-full accent-emerald-500 cursor-pointer"
+                  className="w-full accent-success cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
                   <span>20% (Inadequate Waste Facilities)</span>
@@ -434,10 +434,10 @@ export const ProposalInteractiveDemo = () => {
               <div
                 className={`w-32 h-32 rounded-full border-4 flex flex-col items-center justify-center my-2 transition-all ${
                   calculatedScore >= 75
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                    ? "border-success bg-success/10 text-success"
                     : calculatedScore >= 55
-                    ? "border-amber-500 bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                    : "border-red-500 bg-red-500/10 text-red-600 dark:text-red-400"
+                    ? "border-warning bg-warning/10 text-warning"
+                    : "border-destructive bg-destructive/10 text-destructive"
                 }`}
               >
                 <span className="text-4xl font-black font-heading">{calculatedScore}</span>

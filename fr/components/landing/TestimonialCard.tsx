@@ -21,9 +21,9 @@ export function TestimonialCard({
   onComplete,
 }: TestimonialCardProps) {
   return (
-    <div className="bg-card rounded-3xl p-8 sm:p-9 border border-[#B2D5E2]/50 dark:border-[#003F4C] shadow-xl max-w-xl relative overflow-hidden group">
+    <div className="bg-card rounded-3xl p-8 sm:p-9 border border-border/50 dark:border-border shadow-xl max-w-xl relative overflow-hidden group">
       {/* Decorative Large Background Quote Mark */}
-      <div className="absolute top-4 right-6 text-7xl font-serif text-[#44A6B5]/15 dark:text-[#44A6B5]/20 select-none pointer-events-none">
+      <div className="absolute top-4 right-6 text-7xl font-serif text-primary/15 dark:text-primary/20 select-none pointer-events-none">
         “
       </div>
 
@@ -32,7 +32,7 @@ export function TestimonialCard({
           {/* Circular Progress Timer */}
           <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
             <circle
-              className="text-[#004554]/15 dark:text-white/10"
+              className="text-primary/15 dark:text-foreground/10"
               strokeWidth="3.5"
               stroke="currentColor"
               fill="transparent"
@@ -41,7 +41,7 @@ export function TestimonialCard({
               cy="32"
             />
             <motion.circle
-              className="text-[#44A6B5]"
+              className="text-primary"
               strokeWidth="3.5"
               stroke="currentColor"
               fill="transparent"
@@ -56,7 +56,7 @@ export function TestimonialCard({
             />
           </svg>
 
-          <div className="absolute inset-1.5 rounded-full overflow-hidden shadow-inner border border-white/20">
+          <div className="absolute inset-1.5 rounded-full overflow-hidden shadow-inner border border-overlay-foreground/20">
             <Image
               src={image}
               alt={name}
@@ -72,14 +72,14 @@ export function TestimonialCard({
             <h3 className="font-heading text-lg font-bold text-foreground">
               {name}
             </h3>
-            <CheckCircle2 className="w-4 h-4 text-[#44A6B5]" />
+            <CheckCircle2 className="w-4 h-4 text-primary" />
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">
             {role}
           </p>
           <div className="flex items-center gap-1 mt-1">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <Star key={i} className="w-3.5 h-3.5 fill-warning text-warning" />
             ))}
           </div>
         </div>

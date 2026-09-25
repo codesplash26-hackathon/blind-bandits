@@ -162,16 +162,16 @@ export default function AdminUsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#44A6B5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Identity &amp; Stakeholders
             </span>
-            <span className="text-[#94A3B8]">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-black">
-              <span className="size-2 rounded-full bg-[#44A6B5] animate-pulse" />
+            <span className="text-muted-foreground">•</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
               Directory Active
             </span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-black tracking-tight mt-0.5">
+          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Travelers &amp; Eco-Operators Directory
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -261,7 +261,7 @@ export default function AdminUsersPage() {
                   </TableCell>
 
                   <TableCell className="py-3.5 px-3">
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono text-xs">
+                    <span className="font-bold text-success font-mono text-xs">
                       {user.ecoScore} / 100
                     </span>
                   </TableCell>

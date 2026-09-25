@@ -26,23 +26,23 @@ export const AuthorityDashboardTeaser = () => {
             </p>
 
             <div className="grid grid-cols-3 gap-4 pt-2">
-              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-                <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">7</span>
-                <p className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 mt-0.5">
+              <div className="p-3 rounded-2xl bg-success/10 border border-success/20 text-center">
+                <span className="text-2xl font-black text-success">7</span>
+                <p className="text-[11px] font-semibold text-success mt-0.5">
                   Low Pressure Zones
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
-                <span className="text-2xl font-black text-amber-600 dark:text-amber-400">5</span>
-                <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-300 mt-0.5">
+              <div className="p-3 rounded-2xl bg-warning/10 border border-warning/20 text-center">
+                <span className="text-2xl font-black text-warning">5</span>
+                <p className="text-[11px] font-semibold text-warning mt-0.5">
                   Medium Pressure
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-center">
-                <span className="text-2xl font-black text-red-600 dark:text-red-400">3</span>
-                <p className="text-[11px] font-semibold text-red-700 dark:text-red-300 mt-0.5">
+              <div className="p-3 rounded-2xl bg-destructive/10 border border-destructive/20 text-center">
+                <span className="text-2xl font-black text-destructive">3</span>
+                <p className="text-[11px] font-semibold text-destructive mt-0.5">
                   High Risk (Alert)
                 </p>
               </div>
@@ -73,41 +73,41 @@ export const AuthorityDashboardTeaser = () => {
 
             {/* List of High Pressure Hotspots */}
             <div className="space-y-3">
-              <div className="p-3 bg-card rounded-xl border border-red-500/30 flex items-center justify-between">
+              <div className="p-3 bg-card rounded-xl border border-destructive/30 flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    <span className="w-2 h-2 rounded-full bg-destructive" />
                     <strong className="text-xs text-foreground">Ella Mountain Corridor</strong>
                   </div>
                   <p className="text-[11px] text-muted-foreground mt-0.5">Carrying capacity exceeded by 210%</p>
                 </div>
-                <span className="text-xs font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-2 py-1 rounded-md">
+                <span className="text-xs font-bold text-destructive bg-destructive/10 px-2 py-1 rounded-md">
                   82% Risk
                 </span>
               </div>
 
-              <div className="p-3 bg-card rounded-xl border border-red-500/30 flex items-center justify-between">
+              <div className="p-3 bg-card rounded-xl border border-destructive/30 flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    <span className="w-2 h-2 rounded-full bg-destructive" />
                     <strong className="text-xs text-foreground">Sigiriya Rock Sanctuary</strong>
                   </div>
                   <p className="text-[11px] text-muted-foreground mt-0.5">Peak bottleneck at lion paw stairwell</p>
                 </div>
-                <span className="text-xs font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-2 py-1 rounded-md">
+                <span className="text-xs font-bold text-destructive bg-destructive/10 px-2 py-1 rounded-md">
                   79% Risk
                 </span>
               </div>
 
-              <div className="p-3 bg-card rounded-xl border border-red-500/30 flex items-center justify-between">
+              <div className="p-3 bg-card rounded-xl border border-destructive/30 flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    <span className="w-2 h-2 rounded-full bg-destructive" />
                     <strong className="text-xs text-foreground">Yala Block 1 Safari Trail</strong>
                   </div>
                   <p className="text-[11px] text-muted-foreground mt-0.5">Jeep congestion near waterhole tracks</p>
                 </div>
-                <span className="text-xs font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-2 py-1 rounded-md">
+                <span className="text-xs font-bold text-destructive bg-destructive/10 px-2 py-1 rounded-md">
                   74% Risk
                 </span>
               </div>

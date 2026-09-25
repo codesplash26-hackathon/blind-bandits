@@ -14,10 +14,10 @@ const badgeVariants = cva(
         destructive:
           "bg-destructive/15 text-destructive border border-destructive/25",
         success:
-          "bg-secondary/15 text-secondary border border-secondary/30 font-semibold",
+          "bg-success/15 text-success border border-success/30 font-semibold",
         warning:
-          "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/25",
-        info: "bg-light-blue/20 text-midnight-green dark:text-light-blue border border-light-blue/30",
+          "bg-warning/10 text-warning border border-warning/25",
+        info: "bg-frosted-blue/20 text-primary dark:text-secondary border border-border/30",
       },
     },
     defaultVariants: {

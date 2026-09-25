@@ -13,7 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logo from "@/public/logo.svg"
+import logo from "@/public/logo.png"
 
 const navItems = [
   { name: "Why CeylonTour", href: "#why-us" },
@@ -155,7 +155,7 @@ export const Navigation = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 z-[1001] bg-black/50 backdrop-blur-sm sm:hidden"
+              className="fixed inset-0 z-[1001] bg-overlay/50 backdrop-blur-sm sm:hidden"
             />
             <motion.aside
               initial={{ x: "100%" }}
