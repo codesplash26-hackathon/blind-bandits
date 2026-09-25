@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -15,21 +15,45 @@ import {
   Coins,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import { listDestinations } from '@/lib/destinations';
+import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
+import describeApiError from '@/lib/apiError';
 
 export default function SavedDestinationsPage() {
   const { savedDestinationIds, toggleSaveDestination } = useAuth();
+  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    listDestinations({ active: true })
+      .then((response) => {
+        if (active) setDestinations(mapDestinations(response));
+      })
+      .catch((error) => {
+        if (active) setLoadError(describeApiError(error, 'Unable to load saved destinations.'));
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+    return () => { active = false; };
+  }, []);
 
   const savedList = useMemo(() => {
-    return DESTINATIONS.filter((d) => savedDestinationIds.includes(d.id));
-  }, [savedDestinationIds]);
+    return destinations.filter((d) => savedDestinationIds.includes(d.id));
+  }, [destinations, savedDestinationIds]);
 
   const totalDays = savedList.reduce((acc, d) => acc + d.recommendedDurationDays, 0);
   const totalBudget = savedList.reduce((acc, d) => acc + d.typicalBudgetLKR, 0);
   const avgSustainability = savedList.length > 0
     ? Math.round(savedList.reduce((acc, d) => acc + d.sustainability.overall, 0) / savedList.length)
     : 0;
+
+  if (isLoading) return <Loader label="Loading saved destinations..." />;
+  if (loadError) return <div className="p-12 text-center text-sm text-muted-foreground">{loadError}</div>;
 
   return (
     <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
@@ -172,6 +196,7 @@ export default function SavedDestinationsPage() {
                   src={dest.image}
                   alt={dest.name}
                   fill
+                  unoptimized={dest.image.startsWith('http')}
                   className="object-cover group-hover:scale-106 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-transparent to-transparent pointer-events-none" />

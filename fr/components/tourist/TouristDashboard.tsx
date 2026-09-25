@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -30,8 +30,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
+import { listDestinations } from '@/lib/destinations';
+import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
+import describeApiError from '@/lib/apiError';
 
 type VibeCategory = 'ALL' | 'HIGHLANDS' | 'WATERFALLS' | 'HERITAGE' | 'COASTAL';
 
@@ -76,19 +78,37 @@ export default function TouristDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [lastSavedNotice, setLastSavedNotice] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState(false);
+  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
+  const [destinationsLoading, setDestinationsLoading] = useState(true);
+  const [destinationsError, setDestinationsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    listDestinations({ active: true })
+      .then((response) => {
+        if (active) setDestinations(mapDestinations(response));
+      })
+      .catch((error) => {
+        if (active) setDestinationsError(describeApiError(error, 'Unable to load destinations.'));
+      })
+      .finally(() => {
+        if (active) setDestinationsLoading(false);
+      });
+    return () => { active = false; };
+  }, []);
 
   // Vibe filter logic
   const filteredDestinations = useMemo(() => {
-    let list = DESTINATIONS;
+    let list = destinations;
 
     if (selectedVibe === 'HIGHLANDS') {
-      list = list.filter((d) => ['haputale', 'belihuloya', 'knuckles', 'ella'].includes(d.id));
+      list = list.filter((d) => d.landscape.toLowerCase().includes('mountain'));
     } else if (selectedVibe === 'WATERFALLS') {
-      list = list.filter((d) => ['belihuloya', 'haputale', 'kitulgala'].includes(d.id));
+      list = list.filter((d) => d.tags.some((tag) => tag.toLowerCase() === 'waterfalls'));
     } else if (selectedVibe === 'HERITAGE') {
-      list = list.filter((d) => ['meemure', 'sigiriya', 'jaffna', 'ritigala'].includes(d.id));
+      list = list.filter((d) => d.tags.some((tag) => tag.toLowerCase() === 'heritage'));
     } else if (selectedVibe === 'COASTAL') {
-      list = list.filter((d) => ['kalpitiya', 'mirissa', 'tangalle', 'mannar'].includes(d.id));
+      list = list.filter((d) => d.landscape.toLowerCase().includes('coastal'));
     }
 
     if (searchQuery.trim()) {
@@ -102,7 +122,7 @@ export default function TouristDashboard() {
     }
 
     return list;
-  }, [selectedVibe, searchQuery]);
+  }, [destinations, selectedVibe, searchQuery]);
 
   const handleSaveToggle = (destId: string, destName: string) => {
     const currentlySaved = isSaved(destId);
@@ -700,8 +720,15 @@ export default function TouristDashboard() {
           </div>
         </div>
 
+        {destinationsLoading && (
+          <p className="text-sm text-muted-foreground">Loading destination sustainability data...</p>
+        )}
+        {destinationsError && (
+          <p className="text-sm text-destructive">{destinationsError}</p>
+        )}
+
         {/* 3 Destination Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {!destinationsLoading && !destinationsError && <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {filteredDestinations.slice(0, 3).map((dest) => (
             <div
               key={dest.id}
@@ -778,7 +805,7 @@ export default function TouristDashboard() {
               </div>
             </div>
           ))}
-        </div>
+        </div>}
       </div>
     </div>
   );

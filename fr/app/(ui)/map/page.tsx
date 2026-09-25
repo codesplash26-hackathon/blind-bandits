@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -13,24 +13,53 @@ import {
   Leaf,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS } from '@/lib/mockData';
-import { Destination, PressureLevel } from '@/types/ceylontour';
+import { PressureLevel } from '@/types/ceylontour';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import { listDestinations } from '@/lib/destinations';
+import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
+import describeApiError from '@/lib/apiError';
 
 export default function SriLankaMapPage() {
   const { isSaved, toggleSaveDestination } = useAuth();
 
-  // Selected destination on map (defaults to Belihuloya)
-  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(
-    DESTINATIONS.find((d) => d.id === 'belihuloya') || DESTINATIONS[0]
-  );
+  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
+  const [selectedDestination, setSelectedDestination] = useState<DestinationViewModel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const [activePressureFilter, setActivePressureFilter] = useState<'ALL' | PressureLevel>('ALL');
 
-  const filteredDestinations = DESTINATIONS.filter((d) => {
+  useEffect(() => {
+    let active = true;
+    listDestinations({ active: true })
+      .then((response) => {
+        if (!active) return;
+        const mapped = mapDestinations(response);
+        setDestinations(mapped);
+        setSelectedDestination(mapped.find((item) => item.id === 'belihuloya') ?? mapped[0] ?? null);
+      })
+      .catch((error) => {
+        if (active) setLoadError(describeApiError(error, 'Unable to load the sustainability map.'));
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+    return () => { active = false; };
+  }, []);
+
+  const filteredDestinations = destinations.filter((d) => {
     if (activePressureFilter === 'ALL') return true;
     return d.pressure.level === activePressureFilter;
   });
+  const scoredDestinations = destinations.filter((item) => item.sustainabilityData);
+  const averageSustainability = scoredDestinations.length
+    ? Math.round(scoredDestinations.reduce((sum, item) => sum + item.sustainability.overall, 0) / scoredDestinations.length)
+    : null;
+  const lowPressureCount = destinations.filter((item) => item.pressure.level === 'LOW').length;
+
+  if (isLoading) return <Loader label="Loading sustainability map..." />;
+  if (loadError) return <div className="p-12 text-center text-sm text-muted-foreground">{loadError}</div>;
 
   const getPinColor = (level: PressureLevel) => {
     switch (level) {
@@ -55,14 +84,14 @@ export default function SriLankaMapPage() {
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              12 Active Carrying Capacity Nodes
+              {destinations.length} Active Destination Nodes
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Sri Lanka Sustainability Map
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-            Explore monitored regional destinations across green (low), amber (medium), and red (high) visitor density.
+            Explore API-backed destination sustainability and crowd-condition indicators across Sri Lanka.
           </p>
         </div>
 
@@ -77,7 +106,7 @@ export default function SriLankaMapPage() {
                 : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border hover:shadow-2xs font-bold'
             }`}
           >
-            All Sanctuaries ({DESTINATIONS.length})
+            All Sanctuaries ({destinations.length})
           </button>
           <button
             type="button"
@@ -126,11 +155,11 @@ export default function SriLankaMapPage() {
               Plotted Sanctuaries
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-primary">{DESTINATIONS.length}</span>
+              <span className="font-heading text-3xl font-black text-primary">{destinations.length}</span>
               <span className="text-xs text-muted-foreground font-bold">nodes</span>
             </div>
             <p className="text-[11px] text-primary font-bold mt-0.5">
-              Active telemetry
+              Active API records
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -144,11 +173,13 @@ export default function SriLankaMapPage() {
               Uncrowded Havens
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-primary">8</span>
+              <span className="font-heading text-3xl font-black text-primary">{lowPressureCount}</span>
               <span className="text-xs text-muted-foreground font-bold">low crowd</span>
             </div>
             <p className="text-[11px] text-success font-bold mt-0.5">
-              ● 67% tranquility buffer
+              {destinations.length > 0
+                ? `${Math.round((lowPressureCount / destinations.length) * 100)}% of active destinations`
+                : 'No active destinations'}
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -162,11 +193,11 @@ export default function SriLankaMapPage() {
               Island Avg Eco Index
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-primary">86</span>
+              <span className="font-heading text-3xl font-black text-primary">{averageSustainability ?? '—'}</span>
               <span className="text-xs text-muted-foreground font-bold">/100</span>
             </div>
             <p className="text-[11px] text-success font-bold mt-0.5">
-              Verified sustainable
+              API calculated
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -307,6 +338,7 @@ export default function SriLankaMapPage() {
                   src={selectedDestination.image}
                   alt={selectedDestination.name}
                   fill
+                  unoptimized={selectedDestination.image.startsWith('http')}
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-overlay/20 to-transparent" />
@@ -389,7 +421,7 @@ export default function SriLankaMapPage() {
                     Why Choose This Sanctuary
                   </span>
                   <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                    {selectedDestination.xaiExplanation.summary}
+                    {selectedDestination.sustainabilityExplanation.summary}
                   </p>
                 </div>
 

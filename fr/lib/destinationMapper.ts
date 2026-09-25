@@ -12,9 +12,19 @@ const FALLBACK_IMAGES = [
   '/musthaqsms-temple-204803_1920.jpg',
 ];
 
-export interface DestinationViewModel extends Destination {
+export interface SustainabilityContributionViewModel {
+  factor: string;
+  value: number;
+  weight: number;
+}
+
+export interface DestinationViewModel extends Omit<Destination, 'xaiExplanation'> {
   api: DestinationResponse;
   sustainabilityData: DestinationSustainabilityResponse | null;
+  sustainabilityExplanation: {
+    summary: string;
+    contributions: SustainabilityContributionViewModel[];
+  };
 }
 
 function titleCase(value: string) {
@@ -30,6 +40,15 @@ function pressureLevel(score: number): 'LOW' | 'MEDIUM' | 'HIGH' {
   return 'LOW';
 }
 
+function mapCoordinates(latitude: number, longitude: number) {
+  const x = 30 + ((longitude - 79.7) / (81.9 - 79.7)) * 42;
+  const y = 92 - ((latitude - 5.8) / (9.8 - 5.8)) * 82;
+  return {
+    mapXPercent: Math.min(75, Math.max(25, x)),
+    mapYPercent: Math.min(95, Math.max(4, y)),
+  };
+}
+
 export function mapDestination(
   destination: DestinationResponse,
   sustainability: DestinationSustainabilityResponse | null,
@@ -40,6 +59,10 @@ export function mapDestination(
   // Invert it only for legacy UI compatibility and label it as a proxy in screens.
   const crowdPressureProxy = Math.round(100 - crowdCondition);
   const contributions = sustainability?.weighted_contributions;
+  const weights = sustainability?.configured_weights;
+  const latitude = Number(destination.latitude);
+  const longitude = Number(destination.longitude);
+  const mapPosition = mapCoordinates(latitude, longitude);
 
   return {
     id: destination.slug,
@@ -55,10 +78,9 @@ export function mapDestination(
     typicalBudgetLKR: Number(destination.typical_budget),
     recommendedDurationDays: destination.recommended_max_trip_duration,
     coordinates: {
-      lat: Number(destination.latitude),
-      lng: Number(destination.longitude),
-      mapXPercent: 0,
-      mapYPercent: 0,
+      lat: latitude,
+      lng: longitude,
+      ...mapPosition,
     },
     sustainability: {
       overall: Number(sustainability?.total_score ?? 0),
@@ -76,21 +98,21 @@ export function mapDestination(
       wastePressure: 0,
       traffic: 0,
     },
-    xaiExplanation: {
+    sustainabilityExplanation: {
       summary: sustainability
-        ? `Calculated with sustainability configuration ${sustainability.configuration_version}.`
+        ? `The API calculated this deterministic weighted index with configuration ${sustainability.configuration_version}.`
         : 'No sustainability factor data is available for this destination.',
       contributions: contributions
         ? [
-            ['Environmental', contributions.environmental],
-            ['Community benefit', contributions.community],
-            ['Crowd condition', contributions.crowd],
-            ['Infrastructure', contributions.infrastructure],
-            ['Tourist suitability', contributions.suitability],
-          ].map(([factor, value]) => ({
+            ['Environmental', contributions.environmental, weights?.environmental],
+            ['Community benefit', contributions.community, weights?.community],
+            ['Crowd condition', contributions.crowd, weights?.crowd],
+            ['Infrastructure', contributions.infrastructure, weights?.infrastructure],
+            ['Tourist suitability', contributions.suitability, weights?.suitability],
+          ].map(([factor, value, weight]) => ({
             factor: String(factor),
-            percentage: Number(value),
-            positive: Number(value) >= 0,
+            value: Number(value),
+            weight: Number(weight),
           }))
         : [],
     },

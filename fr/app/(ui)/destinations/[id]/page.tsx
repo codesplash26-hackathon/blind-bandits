@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
 import {
   getDestination,
+  getDestinationSustainability,
   simulateDestination,
 } from '@/lib/destinations';
 import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapper';
@@ -57,7 +58,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
       setLoadError(null);
       try {
         const response = await getDestination(destinationId);
-        if (active) setDestination(mapDestination(response, response.sustainability));
+        const sustainability = response.factor
+          ? await getDestinationSustainability(response.id)
+          : null;
+        if (active) setDestination(mapDestination(response, sustainability));
       } catch (error) {
         if (active) setLoadError(describeApiError(error, 'Unable to load this destination.'));
       } finally {
@@ -456,7 +460,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
             <div className="p-4 rounded-2xl bg-muted/40 border border-border">
               <p className="text-xs sm:text-sm text-primary leading-relaxed">
-                &ldquo;{destination.xaiExplanation.summary}&rdquo;
+                &ldquo;{destination.sustainabilityExplanation.summary}&rdquo;
               </p>
             </div>
 
@@ -466,28 +470,23 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 Weighted Factor Contributions
               </span>
 
-              {destination.xaiExplanation.contributions.map((c) => (
-                <div key={c.factor} className="space-y-1">
+              {destination.sustainabilityExplanation.contributions.map((contribution) => (
+                <div key={contribution.factor} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">{c.factor}</span>
-                    <span className={`font-bold font-mono ${c.positive ? 'text-primary' : 'text-destructive'}`}>
-                      {c.percentage > 0 ? `+${c.percentage}%` : `${c.percentage}%`}
+                    <span className="font-semibold text-primary">
+                      {contribution.factor} ({(contribution.weight * 100).toFixed(0)}% weight)
+                    </span>
+                    <span className="font-bold font-mono text-primary">
+                      {contribution.value.toFixed(2)} points
                     </span>
                   </div>
 
                   <div className="h-2 w-full bg-muted rounded-full overflow-hidden flex">
                     <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        c.positive
-                          ? 'bg-primary'
-                          : 'bg-destructive'
-                      }`}
-                      style={{ width: `${Math.abs(c.percentage)}%` }}
+                      className="h-full rounded-full transition-all duration-500 bg-primary"
+                      style={{ width: `${Math.max(0, Math.min(100, contribution.value))}%` }}
                     />
                   </div>
-                  {c.description && (
-                    <span className="text-[10px] text-primary/60 block">{c.description}</span>
-                  )}
                 </div>
               ))}
             </div>
