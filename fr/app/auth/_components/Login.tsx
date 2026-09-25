@@ -5,7 +5,8 @@ import { Mail, Lock, Eye as EyeIcon, EyeOff, ArrowRight, CheckCircle2, AlertCirc
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
-import { login } from '@/lib/auth';
+import { getAuthErrorMessage } from '@/lib/auth';
+import { useAuth } from '@/context/AuthContext';
 
 interface LoginProps {
   onSwitchToSignup: () => void;
@@ -31,6 +32,7 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { login } = useAuth();
 
   const validateField = (field: 'email' | 'password', value: string) => {
     if (field === 'email') {
@@ -104,17 +106,14 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
 
     setIsLoading(true);
     try {
-      await login({ email: formData.email.trim(), password: formData.password });
+      const user = await login({ email: formData.email.trim(), password: formData.password });
       toast.success('Welcome back to CeylonTour!', {
-        description: `Signed in as ${formData.email.trim()}. Redirecting...`,
+        description: `Signed in as ${user.name}. Redirecting...`,
         icon: <CheckCircle2 className="w-5 h-5 text-success" />,
       });
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 700);
+      router.replace(user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard');
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Login failed. Please try again.';
-      toast.error(message);
+      toast.error(getAuthErrorMessage(err, 'login'));
     } finally {
       setIsLoading(false);
     }

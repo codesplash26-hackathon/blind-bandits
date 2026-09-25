@@ -6,7 +6,6 @@ import {
   AlertTriangle,
   MapPin,
   TrendingUp,
-  Compass,
   ArrowRight,
   CheckCircle2,
   BarChart3,
@@ -33,10 +32,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useAuth } from '@/context/AuthContext';
 
 export default function AdminDashboard() {
-  const { loginAs } = useAuth();
   const [isRedistributing, setIsRedistributing] = useState(false);
   const [redistributeStatus, setRedistributeStatus] = useState<string | null>(null);
   const [pressureFilter, setPressureFilter] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
@@ -108,15 +105,6 @@ export default function AdminDashboard() {
             <span>{isRedistributing ? rebalanceStep || 'Broadcasting...' : 'Trigger Rebalance'}</span>
           </Button>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => loginAs('TOURIST')}
-            className="rounded-xl gap-1.5 cursor-pointer bg-card border-border hover:border-secondary/40"
-          >
-            <Compass className="w-4 h-4 text-primary" />
-            <span>Switch to Tourist View</span>
-          </Button>
         </div>
       </div>
 

@@ -100,11 +100,11 @@ export interface SearchHistoryItem {
 }
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   role: Role;
-  country: string;
-  avatar?: string;
-  preferences: TouristPreferences;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }

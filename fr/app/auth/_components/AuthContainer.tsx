@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
@@ -8,6 +8,9 @@ import { ArrowLeft } from 'lucide-react';
 import Login from './Login';
 import Register from './Register';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import logo from '@/public/logo.png';
 import visualBg from '@/public/andrei-alekseev-VVltlbkjMwQ-unsplash.jpg';
 import sigiriyaImg from '@/public/poswiecie-sigiriya-459197_1920.jpg';
@@ -16,6 +19,24 @@ import galleImg from '@/public/hendrik-cornelissen-svZvPZ54uBI-unsplash.jpg';
 
 export default function AuthContainer() {
   const [isSignup, setIsSignup] = useState(false);
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      router.replace(user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard');
+    }
+  }, [isLoading, router, user]);
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      const message = sessionStorage.getItem('ceylontour_auth_message');
+      if (message) {
+        sessionStorage.removeItem('ceylontour_auth_message');
+        toast.error(message);
+      }
+    }
+  }, [isLoading, user]);
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden selection:bg-primary/20 selection:text-sky-aqua">

@@ -1,4 +1,6 @@
 .agents
 .codex
 bk/artifacts/
+.vscode/
+.ruff_cache
 

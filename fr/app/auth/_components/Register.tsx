@@ -15,7 +15,8 @@ import {
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
-import { register } from '@/lib/auth';
+import { getAuthErrorMessage } from '@/lib/auth';
+import { useAuth } from '@/context/AuthContext';
 
 interface RegisterProps {
   onSwitchToLogin: () => void;
@@ -52,6 +53,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
   const termsRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
+  const { register } = useAuth();
 
   // Dynamic Password Criteria Calculations
   const hasMinLength = formData.password.length >= 8;
@@ -93,8 +95,6 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
       const pwd = String(value || '');
       if (!pwd) return 'Password is required';
       if (pwd.length < 8) return 'Password must be at least 8 characters';
-      if (!/[A-Z]/.test(pwd)) return 'Password must include at least one uppercase letter';
-      if (!/[0-9!@#$%^&*(),.?":{}|<>]/.test(pwd)) return 'Password must include a number or symbol';
       return '';
     }
 
@@ -153,7 +153,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
 
   const isUsernameValid = touched.username && !errors.username && formData.username.trim().length >= 2;
   const isEmailValid = touched.email && !errors.email && formData.email.trim().length > 0;
-  const isPasswordValid = touched.password && !errors.password && hasMinLength && hasUppercase && hasNumberOrSpecial;
+  const isPasswordValid = touched.password && !errors.password && hasMinLength;
   const isConfirmValid = touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword && formData.confirmPassword === formData.password;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -179,22 +179,18 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
 
     setIsLoading(true);
     try {
-      await register({
+      const user = await register({
+        name: formData.username.trim(),
         email: formData.email.trim(),
-        username: formData.username.trim(),
         password: formData.password,
-        role: 'TOURIST',
       });
       toast.success('Account created successfully!', {
         description: `Welcome to CeylonTour, ${formData.username.trim()}!`,
         icon: <CheckCircle2 className="w-5 h-5 text-success" />,
       });
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 700);
+      router.replace(user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard');
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Registration failed. Please try again.';
-      toast.error(message);
+      toast.error(getAuthErrorMessage(err, 'register'));
     } finally {
       setIsLoading(false);
     }

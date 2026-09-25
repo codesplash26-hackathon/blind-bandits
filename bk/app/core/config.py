@@ -11,6 +11,10 @@ from app.services.what_if import SimulationPolicy
 
 class Settings(BaseSettings):
     app_name: str = "CeylonTour API"
+    cors_origins: list[str] = Field(
+        default=["http://localhost:3000", "http://127.0.0.1:3000"],
+        validation_alias="CORS_ORIGINS",
+    )
     database_url: str = Field(validation_alias="DATABASE_URL")
     jwt_secret_key: str = Field(min_length=32, validation_alias="JWT_SECRET_KEY")
     jwt_algorithm: str = Field(default="HS256", validation_alias="JWT_ALGORITHM")

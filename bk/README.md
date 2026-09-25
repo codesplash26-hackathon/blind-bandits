@@ -1,12 +1,14 @@
 # CeylonTour backend
 
 Copy the repository `.env.example` to `bk/.env`, replace all placeholder values,
-then run commands from the `bk` directory.
+then run commands from the `bk` directory. Use the virtual environment's Python
+to ensure Uvicorn and the application load the same installed dependencies.
 
 ```bash
-python -m pip install -r requirements-dev.txt
-alembic upgrade head
-uvicorn app.main:app --reload
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+.venv/bin/python -m alembic upgrade head
+.venv/bin/python -m uvicorn app.main:app --reload
 ```
 
 Create the initial administrator after applying migrations. The password is read
