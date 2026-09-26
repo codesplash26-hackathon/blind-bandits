@@ -25,6 +25,9 @@ const apiPaths = {
     simulate: (destinationId: number) =>
       `/destinations/${destinationId}/simulate`,
   },
+  map: {
+    destinations: "/map/destinations",
+  },
   recommendations: {
     create: "/recommendations",
     history: "/recommendations/history",

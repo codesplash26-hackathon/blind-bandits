@@ -10,6 +10,7 @@ import type {
   DestinationSimulationResponse,
   DestinationSustainabilityResponse,
   DestinationUpdate,
+  MapDestinationsResponse,
   SimulationScenario,
 } from '@/types/destination-api';
 
@@ -17,6 +18,14 @@ export async function listDestinations(filters: DestinationFilters = {}) {
   const response = await axiosInstance.get<DestinationResponse[]>(apiPaths.destinations.list, {
     params: filters,
   });
+  return response.data;
+}
+
+export async function getMapDestinations(month: string) {
+  const response = await axiosInstance.get<MapDestinationsResponse>(
+    apiPaths.map.destinations,
+    { params: { month } },
+  );
   return response.data;
 }
 

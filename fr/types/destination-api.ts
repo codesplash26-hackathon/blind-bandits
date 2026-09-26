@@ -209,3 +209,24 @@ export interface DestinationFilters {
   activity?: string;
   active?: boolean;
 }
+
+export interface MapDestination {
+  id: number;
+  slug: string;
+  name: string;
+  region: string;
+  latitude: number;
+  longitude: number;
+  sustainability_score: number | null;
+  tourism_pressure_level: PressureBand | null;
+  tourism_pressure_value: number | null;
+  environmental_score: number | null;
+  community_score: number | null;
+}
+
+export interface MapDestinationsResponse {
+  month: string;
+  pressure_scope: 'REGIONAL';
+  pressure_model_version: string | null;
+  destinations: MapDestination[];
+}

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   MapPin,
   Heart,
@@ -14,54 +13,103 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { PressureLevel } from '@/types/ceylontour';
+import type { MapDestination } from '@/types/destination-api';
 import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
-import { listDestinations } from '@/lib/destinations';
-import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
+import { getMapDestinations } from '@/lib/destinations';
 import describeApiError from '@/lib/apiError';
+
+interface MapMarker extends MapDestination {
+  mapXPercent: number;
+  mapYPercent: number;
+}
+
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7);
+}
+
+function mapCoordinates(latitude: number, longitude: number) {
+  const x = 30 + ((longitude - 79.7) / (81.9 - 79.7)) * 42;
+  const y = 92 - ((latitude - 5.8) / (9.8 - 5.8)) * 82;
+  return {
+    mapXPercent: Math.min(75, Math.max(25, x)),
+    mapYPercent: Math.min(95, Math.max(4, y)),
+  };
+}
 
 export default function SriLankaMapPage() {
   const { isSaved, toggleSaveDestination } = useAuth();
 
-  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
-  const [selectedDestination, setSelectedDestination] = useState<DestinationViewModel | null>(null);
+  const [destinations, setDestinations] = useState<MapMarker[]>([]);
+  const [selectedDestination, setSelectedDestination] = useState<MapMarker | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [mapMonth, setMapMonth] = useState(currentMonth);
+  const [reloadKey, setReloadKey] = useState(0);
 
   const [activePressureFilter, setActivePressureFilter] = useState<'ALL' | PressureLevel>('ALL');
 
   useEffect(() => {
     let active = true;
-    listDestinations({ active: true })
-      .then((response) => {
-        if (!active) return;
-        const mapped = mapDestinations(response);
-        setDestinations(mapped);
-        setSelectedDestination(mapped.find((item) => item.id === 'belihuloya') ?? mapped[0] ?? null);
-      })
-      .catch((error) => {
-        if (active) setLoadError(describeApiError(error, 'Unable to load the sustainability map.'));
-      })
-      .finally(() => {
-        if (active) setIsLoading(false);
-      });
-    return () => { active = false; };
-  }, []);
+    const timer = window.setTimeout(() => {
+      setIsLoading(true);
+      setLoadError(null);
+      getMapDestinations(mapMonth)
+        .then((response) => {
+          if (!active) return;
+          const mapped = response.destinations.map((destination) => ({
+            ...destination,
+            ...mapCoordinates(destination.latitude, destination.longitude),
+          }));
+          setDestinations(mapped);
+          setSelectedDestination(mapped[0] ?? null);
+        })
+        .catch((error) => {
+          if (active) setLoadError(describeApiError(error, 'Unable to load the sustainability map.'));
+        })
+        .finally(() => {
+          if (active) setIsLoading(false);
+        });
+    }, 0);
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+    };
+  }, [mapMonth, reloadKey]);
 
   const filteredDestinations = destinations.filter((d) => {
     if (activePressureFilter === 'ALL') return true;
-    return d.pressure.level === activePressureFilter;
+    return d.tourism_pressure_level === activePressureFilter;
   });
-  const scoredDestinations = destinations.filter((item) => item.sustainabilityData);
+  const scoredDestinations = destinations.filter((item) => item.sustainability_score !== null);
   const averageSustainability = scoredDestinations.length
-    ? Math.round(scoredDestinations.reduce((sum, item) => sum + item.sustainability.overall, 0) / scoredDestinations.length)
+    ? Math.round(scoredDestinations.reduce((sum, item) => sum + (item.sustainability_score ?? 0), 0) / scoredDestinations.length)
     : null;
-  const lowPressureCount = destinations.filter((item) => item.pressure.level === 'LOW').length;
+  const lowPressureCount = destinations.filter((item) => item.tourism_pressure_level === 'LOW').length;
 
   if (isLoading) return <Loader label="Loading sustainability map..." />;
-  if (loadError) return <div className="p-12 text-center text-sm text-muted-foreground">{loadError}</div>;
+  if (loadError) {
+    return (
+      <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
+        <h2 className="text-lg font-bold text-foreground">Sustainability map unavailable</h2>
+        <p className="text-sm text-muted-foreground">{loadError}</p>
+        <button type="button" onClick={() => setReloadKey((value) => value + 1)} className="text-sm font-bold text-primary hover:underline">
+          Retry
+        </button>
+      </div>
+    );
+  }
+  if (destinations.length === 0) {
+    return (
+      <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-2">
+        <MapPin className="w-8 h-8 text-muted-foreground/60 mx-auto" />
+        <h2 className="text-lg font-bold text-foreground">No active destinations found</h2>
+        <p className="text-sm text-muted-foreground">There are no map markers for {mapMonth}.</p>
+      </div>
+    );
+  }
 
-  const getPinColor = (level: PressureLevel) => {
+  const getPinColor = (level: PressureLevel | null) => {
     switch (level) {
       case 'LOW':
         return 'bg-success text-success-foreground ring-success/40';
@@ -69,6 +117,8 @@ export default function SriLankaMapPage() {
         return 'bg-warning text-warning-foreground ring-warning/40';
       case 'HIGH':
         return 'bg-destructive text-destructive-foreground ring-destructive/40';
+      default:
+        return 'bg-muted text-muted-foreground ring-border';
     }
   };
 
@@ -97,6 +147,15 @@ export default function SriLankaMapPage() {
 
         {/* Pressure Filter Tabs (Segmented Control in theme primary and muted surfaces) */}
         <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-muted border border-border shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)] shrink-0">
+          <label className="flex items-center gap-2 px-2 text-[10px] font-bold text-muted-foreground">
+            Forecast month
+            <input
+              type="month"
+              value={mapMonth}
+              onChange={(event) => setMapMonth(event.target.value)}
+              className="h-8 rounded-lg border border-border bg-background px-2 text-[10px] text-foreground"
+            />
+          </label>
           <button
             type="button"
             onClick={() => setActivePressureFilter('ALL')}
@@ -216,7 +275,7 @@ export default function SriLankaMapPage() {
               </span>
             </div>
             <p className="text-[11px] text-muted-foreground font-bold mt-0.5">
-              {selectedDestination?.district} District
+                {selectedDestination?.region} Region
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-foreground">
@@ -292,20 +351,20 @@ export default function SriLankaMapPage() {
             {/* Plotted Interactive Destination Pins */}
             {filteredDestinations.map((dest) => {
               const isSelected = selectedDestination?.id === dest.id;
-              const pinColor = getPinColor(dest.pressure.level);
+              const pinColor = getPinColor(dest.tourism_pressure_level);
 
               return (
                 <div
                   key={dest.id}
                   style={{
-                    left: `${dest.coordinates.mapXPercent}%`,
-                    top: `${dest.coordinates.mapYPercent}%`,
+                    left: `${dest.mapXPercent}%`,
+                    top: `${dest.mapYPercent}%`,
                   }}
                   onClick={() => setSelectedDestination(dest)}
                   className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
                 >
                   {/* Outer animated ping ring if high pressure */}
-                  {dest.pressure.level === 'HIGH' && (
+                  {dest.tourism_pressure_level === 'HIGH' && (
                     <span className="absolute -inset-1 rounded-full bg-destructive/40 animate-ping" />
                   )}
 
@@ -320,7 +379,7 @@ export default function SriLankaMapPage() {
 
                   {/* Hover Tag */}
                   <div className="absolute left-1/2 -translate-x-1/2 -top-8 hidden group-hover:flex items-center px-2.5 py-1 rounded-xl bg-overlay/90 backdrop-blur-md text-overlay-foreground text-[11px] font-bold whitespace-nowrap shadow-md pointer-events-none">
-                    {dest.name} ({dest.sustainability.overall})
+                    {dest.name} ({dest.sustainability_score ?? '—'})
                   </div>
                 </div>
               );
@@ -332,26 +391,19 @@ export default function SriLankaMapPage() {
         <div className="lg:col-span-4 sticky top-24 space-y-4">
           {selectedDestination ? (
             <div className="rounded-3xl border border-border/40 bg-card overflow-hidden shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
-              {/* Destination Image Preview */}
-              <div className="relative h-48 w-full overflow-hidden">
-                <Image
-                  src={selectedDestination.image}
-                  alt={selectedDestination.name}
-                  fill
-                  unoptimized={selectedDestination.image.startsWith('http')}
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-overlay/20 to-transparent" />
-
+              <div className="relative h-32 w-full overflow-hidden bg-muted border-b border-border">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-muted to-card" />
                 <div className="absolute top-3.5 left-3.5">
                   <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground border border-overlay-foreground/20 backdrop-blur-md">
-                    {selectedDestination.pressure.score}% {selectedDestination.pressure.level}
+                    {selectedDestination.tourism_pressure_value === null
+                      ? 'Pressure unavailable'
+                      : `${selectedDestination.tourism_pressure_value.toFixed(1)}% ${selectedDestination.tourism_pressure_level ?? ''}`}
                   </span>
                 </div>
 
                 <button
                   type="button"
-                  onClick={() => void toggleSaveDestination(selectedDestination.api.id)}
+                  onClick={() => void toggleSaveDestination(selectedDestination.id)}
                   className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                 >
                   <Heart
@@ -363,7 +415,7 @@ export default function SriLankaMapPage() {
 
                 <div className="absolute bottom-3.5 inset-x-4 text-overlay-foreground">
                   <span className="text-[11px] font-bold text-frosted-blue uppercase tracking-wider block">
-                    {selectedDestination.district} District
+                    {selectedDestination.region} Region
                   </span>
                   <h3 className="font-heading text-xl font-bold leading-tight mt-0.5">
                     {selectedDestination.name}
@@ -373,16 +425,12 @@ export default function SriLankaMapPage() {
 
               {/* Panel Details */}
               <div className="p-5 space-y-4 pt-0">
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {selectedDestination.tagline}
-                </p>
-
                 {/* Scores Matrix */}
                 <div className="p-4 rounded-2xl bg-muted/60 border border-border space-y-2.5 text-xs">
                   <div className="flex items-center justify-between pb-2 border-b border-border">
                     <span className="font-black text-primary">Sustainability Score</span>
                     <span className="font-black text-primary">
-                      {selectedDestination.sustainability.overall} / 100
+                      {selectedDestination.sustainability_score ?? '—'} / 100
                     </span>
                   </div>
 
@@ -390,25 +438,25 @@ export default function SriLankaMapPage() {
                     <div>
                       <span className="text-muted-foreground font-semibold block">Environmental</span>
                       <span className="font-black text-primary">
-                        {selectedDestination.sustainability.environmental}/100
+                        {selectedDestination.environmental_score ?? '—'}/100
                       </span>
                     </div>
                     <div>
                       <span className="text-muted-foreground font-semibold block">Community Benefit</span>
                       <span className="font-black text-primary">
-                        {selectedDestination.sustainability.communityBenefit}/100
+                        {selectedDestination.community_score ?? '—'}/100
                       </span>
                     </div>
                     <div>
                       <span className="text-muted-foreground font-semibold block">Crowd Index</span>
                       <span className="font-black text-primary">
-                        {selectedDestination.sustainability.crowd}/100
+                        {selectedDestination.tourism_pressure_value ?? '—'}/100
                       </span>
                     </div>
                     <div>
                       <span className="text-muted-foreground font-semibold block">Traveler Fit</span>
                       <span className="font-black text-primary">
-                        {selectedDestination.sustainability.touristSuitability}/100
+                        —/100
                       </span>
                     </div>
                   </div>
@@ -421,12 +469,14 @@ export default function SriLankaMapPage() {
                     Why Choose This Sanctuary
                   </span>
                   <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                    {selectedDestination.sustainabilityExplanation.summary}
+                    {selectedDestination.tourism_pressure_level
+                      ? `Regional pressure is ${selectedDestination.tourism_pressure_level.toLowerCase()} at ${selectedDestination.tourism_pressure_value?.toFixed(1) ?? '—'}% for ${mapMonth}.`
+                      : 'Regional pressure is unavailable for this destination and month.'}
                   </p>
                 </div>
 
                 {/* Actions */}
-                <Link href={`/destinations/${selectedDestination.id}`} className="block">
+                <Link href={`/destinations/${selectedDestination.slug}`} className="block">
                   <Button size="sm" className="w-full rounded-2xl gap-2 cursor-pointer bg-primary text-primary-foreground hover:bg-primary shadow-md font-bold py-5">
                     <span>View Destination Dossier</span>
                     <ArrowRight className="w-4 h-4 text-primary" />

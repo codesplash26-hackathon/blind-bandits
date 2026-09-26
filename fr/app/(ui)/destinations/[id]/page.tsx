@@ -112,6 +112,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const [showSimulator, setShowSimulator] = useState(true);
   const [simulation, setSimulation] = useState<DestinationSimulationResponse | null>(null);
   const [simulationError, setSimulationError] = useState<string | null>(null);
+  const [simulationLoading, setSimulationLoading] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -221,6 +222,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
     if (!destination?.api.factor || !showSimulator) return;
     let active = true;
     const timer = window.setTimeout(async () => {
+      setSimulationLoading(true);
       setSimulationError(null);
       try {
         const result = await simulateDestination(destination.api.id, {
@@ -228,11 +230,15 @@ export default function DestinationDetailPage({ params }: PageProps) {
           waste_management_level: wasteSlider,
           infrastructure_level: infraSlider,
         });
-        if (active) setSimulation(result);
+        if (active) {
+          setSimulation(result);
+          setSimulationLoading(false);
+        }
       } catch (error) {
         if (active) {
           setSimulation(null);
           setSimulationError(describeApiError(error, 'Simulation is currently unavailable.'));
+          setSimulationLoading(false);
         }
       }
     }, 400);
@@ -910,10 +916,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   <div className="grid grid-cols-2 gap-4 text-center divide-x divide-border">
                     <div>
                       <span className="text-[10px] uppercase font-bold text-primary/60 block">
-                        Current Score
+                        Original Score
                       </span>
                       <span className="text-2xl font-black text-primary mt-1 block">
-                        {destination.sustainability.overall}
+                        {simulation ? Number(simulation.original_score).toFixed(1) : '—'}
                       </span>
                     </div>
 
@@ -939,6 +945,31 @@ export default function DestinationDetailPage({ params }: PageProps) {
                       </div>
                     </div>
                   </div>
+
+                  {simulationLoading && (
+                    <p className="text-xs text-primary/60 text-center pt-1">Calculating scenario...</p>
+                  )}
+
+                  {simulation && Object.keys(simulation.changed_factors).length > 0 && (
+                    <div className="pt-2 border-t border-border space-y-2">
+                      <span className="text-[10px] uppercase font-bold text-primary/60 block">
+                        Changed Factors
+                      </span>
+                      {Object.entries(simulation.changed_factors).map(([factor, change]) => (
+                        <div key={factor} className="flex items-center justify-between gap-3 text-xs">
+                          <span className="font-semibold text-primary capitalize">
+                            {factor.replaceAll('_', ' ')}
+                          </span>
+                          <span className="font-mono text-primary/70">
+                            {Number(change.original).toFixed(1)} → {Number(change.simulated).toFixed(1)}
+                            <span className={Number(change.delta) >= 0 ? 'text-success' : 'text-destructive'}>
+                              {' '}({Number(change.delta) >= 0 ? '+' : ''}{Number(change.delta).toFixed(1)})
+                            </span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   <p className="text-xs text-primary/70 text-center italic pt-1">
                     {simulation?.explanation ?? 'Adjust the controls to run the backend simulation.'}
