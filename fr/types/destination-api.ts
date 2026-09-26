@@ -53,6 +53,45 @@ export interface DestinationResponse {
   sustainability: DestinationSustainabilityResponse | null;
 }
 
+export interface RegionalPressureSummary {
+  scope: 'REGIONAL';
+  region: string;
+  predicted_occupancy_rate: number;
+  band: PressureBand;
+  model_version: string;
+}
+
+export interface AlternativeReason {
+  same_landscape: boolean;
+  shared_activities: string[];
+  pressure_reduction_percentage_points: number;
+  straight_line_distance_km: number;
+}
+
+export interface AlternativeDestination {
+  destination: DestinationResponse;
+  similarity_score: number;
+  similarity_percentage: number;
+  pressure: RegionalPressureSummary;
+  sustainability_score: ApiDecimal;
+  sustainability_configuration_version: string;
+  reason: AlternativeReason;
+}
+
+export type DestinationAlternativesStatus =
+  | 'ALTERNATIVES_FOUND'
+  | 'SOURCE_NOT_HIGH_PRESSURE'
+  | 'NO_ELIGIBLE_ALTERNATIVES';
+
+export interface DestinationAlternativesResponse {
+  source_destination_id: number;
+  source_destination_slug: string;
+  month: string;
+  source_pressure: RegionalPressureSummary;
+  status: DestinationAlternativesStatus;
+  alternatives: AlternativeDestination[];
+}
+
 export interface DestinationCreate {
   slug: string;
   name: string;

@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
 import {
   getDestination,
+  getDestinationAlternatives,
   getDestinationPressure,
   getDestinationPressureExplanation,
   getDestinationSustainability,
@@ -35,6 +36,7 @@ import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapp
 import type {
   DestinationPressureResponse,
   DestinationPressureExplanationResponse,
+  DestinationAlternativesResponse,
   PressureFeatureContribution,
   DestinationSimulationResponse,
   PressureBand,
@@ -99,6 +101,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const [pressureError, setPressureError] = useState<string | null>(null);
   const [explanationError, setExplanationError] = useState<string | null>(null);
   const [pressureReloadKey, setPressureReloadKey] = useState(0);
+  const [alternatives, setAlternatives] = useState<DestinationAlternativesResponse | null>(null);
+  const [alternativesLoading, setAlternativesLoading] = useState(false);
+  const [alternativesError, setAlternativesError] = useState<string | null>(null);
 
   // What-If Simulator state (defaults at 50 / baseline)
   const [visitorSlider, setVisitorSlider] = useState(50);
@@ -172,6 +177,33 @@ export default function DestinationDetailPage({ params }: PageProps) {
       active = false;
     };
   }, [destination?.api.id, pressureMonth, pressureReloadKey]);
+
+  useEffect(() => {
+    const apiId = destination?.api.id;
+    if (!apiId || !pressureMonth) return;
+    let active = true;
+    const loadAlternatives = async () => {
+      setAlternativesLoading(true);
+      setAlternatives(null);
+      setAlternativesError(null);
+      try {
+        const response = await getDestinationAlternatives(apiId, pressureMonth);
+        if (active) setAlternatives(response);
+      } catch (error) {
+        if (active) {
+          setAlternativesError(
+            describeApiError(error, 'Alternative destinations are unavailable.'),
+          );
+        }
+      } finally {
+        if (active) setAlternativesLoading(false);
+      }
+    };
+    void loadAlternatives();
+    return () => {
+      active = false;
+    };
+  }, [destination?.api.id, pressureMonth]);
 
   useEffect(() => {
     const apiId = destination?.api.id;
@@ -515,39 +547,73 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
 
           {/* Alternatives Callout */}
-          {destination.alternatives && destination.alternatives.length > 0 && (
+          {alternativesLoading && (
+            <div className="pt-3">
+              <Loader label="Finding lower-pressure alternatives..." />
+            </div>
+          )}
+
+          {!alternativesLoading && alternativesError && (
+            <p className="pt-3 text-xs text-destructive">{alternativesError}</p>
+          )}
+
+          {!alternativesLoading && !alternativesError && alternatives?.status === 'NO_ELIGIBLE_ALTERNATIVES' && (
+            <p className="pt-3 text-xs text-destructive/80">
+              No lower-pressure destinations with a strong enough match were found for this forecast month.
+            </p>
+          )}
+
+          {!alternativesLoading && !alternativesError && alternatives?.status === 'ALTERNATIVES_FOUND' && (
             <div className="pt-3 space-y-3">
               <h3 className="text-sm font-bold text-primary">
                 Consider these serene, low-pressure alternatives
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {destination.alternatives.map((alt) => (
+                {alternatives.alternatives.map((alt) => (
                   <Link
-                    key={alt.id}
-                    href={`/destinations/${alt.id}`}
+                    key={alt.destination.id}
+                    href={`/destinations/${alt.destination.id}`}
+                    onClick={() => {
+                      void recordInteraction({
+                        destination_id: alt.destination.id,
+                        event_type: 'ALTERNATIVE_SELECTED',
+                        source_destination_id: destination.api.id,
+                        pressure_month: pressureMonth,
+                      }).catch(() => undefined);
+                    }}
                     className="p-4 rounded-2xl bg-card border border-border hover:border-primary transition-all hover:shadow-md space-y-2 flex flex-col justify-between group"
                   >
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-primary">
-                          {alt.similarity}% match
+                          {alt.similarity_percentage.toFixed(0)}% match
                         </span>
                         <span className="px-2 py-0.5 rounded-full bg-muted text-primary text-[10px] font-bold">
-                          {alt.pressureLevel}
+                          {alt.pressure.band}
                         </span>
                       </div>
                       <h4 className="text-sm font-bold text-primary mt-1 group-hover:text-primary transition-colors">
-                        {alt.name}
+                        {alt.destination.name}
                       </h4>
                       <p className="text-[11px] text-primary/60 mt-0.5 line-clamp-2">
-                        {alt.tagline}
+                        {alt.reason.same_landscape ? 'Same landscape' : 'Different landscape'}
+                        {alt.reason.shared_activities.length > 0 && ` • ${alt.reason.shared_activities.join(', ')}`}
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-border flex items-center justify-between text-xs">
-                      <span className="text-primary/60">Sustainability:</span>
-                      <span className="font-bold text-primary">{alt.sustainabilityScore}/100</span>
+                    <div className="pt-2 border-t border-border space-y-1 text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-primary/60">Sustainability</span>
+                        <span className="font-bold text-primary">{Number(alt.sustainability_score).toFixed(1)}/100</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-primary/60">Tourism pressure</span>
+                        <span className="font-bold text-primary">{alt.pressure.predicted_occupancy_rate.toFixed(1)}%</span>
+                      </div>
+                      <p className="text-[10px] text-primary/60">
+                        {alt.reason.pressure_reduction_percentage_points.toFixed(1)} points lower pressure
+                      </p>
                     </div>
                   </Link>
                 ))}

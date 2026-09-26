@@ -5,6 +5,7 @@ import type {
   DestinationFilters,
   DestinationPressureExplanationResponse,
   DestinationPressureResponse,
+  DestinationAlternativesResponse,
   DestinationResponse,
   DestinationSimulationResponse,
   DestinationSustainabilityResponse,
@@ -47,6 +48,14 @@ export async function getDestinationPressureExplanation(
 ) {
   const response = await axiosInstance.get<DestinationPressureExplanationResponse>(
     apiPaths.destinations.pressureExplanation(destinationId),
+    { params: { month } },
+  );
+  return response.data;
+}
+
+export async function getDestinationAlternatives(destinationId: number, month: string) {
+  const response = await axiosInstance.get<DestinationAlternativesResponse>(
+    apiPaths.destinations.alternatives(destinationId),
     { params: { month } },
   );
   return response.data;
