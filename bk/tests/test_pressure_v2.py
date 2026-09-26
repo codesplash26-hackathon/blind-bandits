@@ -160,11 +160,18 @@ async def test_v2_endpoint_insufficient_history_and_unmapped_region(
     assert "Insufficient exact lag history" in unavailable.json()["detail"]
 
     payload = deepcopy(EXAMPLE_DESTINATION)
-    payload.update({"slug": "unmapped", "name": "Unmapped", "region": "Unmapped"})
+    payload.update(
+        {
+            "slug": "unmapped",
+            "name": "Unmapped",
+            "region": "Sabaragamuwa",
+            "pressure_region": None,
+        }
+    )
     unknown = await create_example_destination(client, admin_user, payload)
     response = await client.get(
         f"/api/v1/destinations/{unknown['id']}/pressure?month=2024-05",
         headers=headers,
     )
-    assert response.status_code == 422
-    assert "not mapped" in response.json()["detail"]
+    assert response.status_code == 404
+    assert "unavailable" in response.json()["detail"]

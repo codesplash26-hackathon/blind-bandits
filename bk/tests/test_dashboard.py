@@ -45,7 +45,7 @@ def dashboard_forecasts(monkeypatch: pytest.MonkeyPatch) -> list[str]:
         calls.append(region)
         if month != "2026-01":
             raise ForecastContextUnavailableError("No forecast for this month")
-        scores = {"Central": 90.0, "Southern": 60.0, "Western": 20.0}
+        scores = {"Hill Country": 90.0, "South Coast": 60.0, "Greater Colombo": 20.0}
         if region not in scores:
             raise ForecastContextUnavailableError("No forecast for region")
         return scores[region], "synthetic-dashboard-v1"
@@ -69,6 +69,12 @@ async def create_dashboard_destination(
         slug=slug,
         name=slug.replace("-", " ").title(),
         region=region,
+        pressure_region={
+            "Central": "Hill Country",
+            "Southern": "South Coast",
+            "Western": "Greater Colombo",
+            "Northern": "Northern Region",
+        }.get(region),
         is_active=active,
     )
     if not with_factor:
@@ -149,7 +155,12 @@ async def test_dashboard_counts_order_sustainability_and_high_pressure_action(
     assert action["priority"] == "HIGH"
     assert action["destination_ids"] == [high_a["id"], high_b["id"]]
     assert "2 high-pressure" in action["message"]
-    assert dashboard_forecasts == ["Central", "Southern", "Western", "Northern"]
+    assert dashboard_forecasts == [
+        "Hill Country",
+        "South Coast",
+        "Greater Colombo",
+        "Northern Region",
+    ]
 
 
 @pytest.mark.anyio

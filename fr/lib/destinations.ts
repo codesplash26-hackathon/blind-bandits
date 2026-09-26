@@ -3,6 +3,8 @@ import apiPaths from '@/lib/apiPaths';
 import type {
   DestinationCreate,
   DestinationFilters,
+  DestinationPressureExplanationResponse,
+  DestinationPressureResponse,
   DestinationResponse,
   DestinationSimulationResponse,
   DestinationSustainabilityResponse,
@@ -27,6 +29,25 @@ export async function getDestination(identifier: number | string) {
 export async function getDestinationSustainability(destinationId: number) {
   const response = await axiosInstance.get<DestinationSustainabilityResponse>(
     apiPaths.destinations.sustainability(destinationId),
+  );
+  return response.data;
+}
+
+export async function getDestinationPressure(destinationId: number, month: string) {
+  const response = await axiosInstance.get<DestinationPressureResponse>(
+    apiPaths.destinations.pressure(destinationId),
+    { params: { month } },
+  );
+  return response.data;
+}
+
+export async function getDestinationPressureExplanation(
+  destinationId: number,
+  month: string,
+) {
+  const response = await axiosInstance.get<DestinationPressureExplanationResponse>(
+    apiPaths.destinations.pressureExplanation(destinationId),
+    { params: { month } },
   );
   return response.data;
 }

@@ -11,7 +11,7 @@ from pydantic import (
     model_validator,
 )
 
-from app.models.destination import ConfidenceLevel, FactorValueType
+from app.models.destination import ConfidenceLevel, FactorValueType, PressureRegion
 from app.schemas.sustainability import DestinationSustainabilityResponse
 
 Slug = Annotated[
@@ -69,6 +69,7 @@ class DestinationBase(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     district: str = Field(min_length=1, max_length=100)
     region: str = Field(min_length=1, max_length=100)
+    pressure_region: PressureRegion | None = None
     description: str = Field(min_length=1)
     image_url: str | None = Field(default=None, min_length=1, max_length=2048)
     latitude: Decimal = Field(ge=-90, le=90, max_digits=9, decimal_places=6)
@@ -124,6 +125,7 @@ class DestinationUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=255)
     district: str | None = Field(default=None, min_length=1, max_length=100)
     region: str | None = Field(default=None, min_length=1, max_length=100)
+    pressure_region: PressureRegion | None = None
     description: str | None = Field(default=None, min_length=1)
     image_url: str | None = Field(default=None, min_length=1, max_length=2048)
     latitude: Decimal | None = Field(

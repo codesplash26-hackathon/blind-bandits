@@ -22,15 +22,38 @@ import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
 import {
   getDestination,
+  getDestinationPressure,
   getDestinationSustainability,
   simulateDestination,
 } from '@/lib/destinations';
 import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapper';
-import type { DestinationSimulationResponse } from '@/types/destination-api';
+import type {
+  DestinationPressureResponse,
+  DestinationSimulationResponse,
+  PressureBand,
+} from '@/types/destination-api';
 import describeApiError from '@/lib/apiError';
 import { recordInteraction } from '@/lib/engagement';
 
 const recordedDestinationViews = new Set<string>();
+
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7);
+}
+
+function formatForecastMonth(month: string) {
+  const [year, monthNumber] = month.split('-').map(Number);
+  if (!year || !monthNumber) return month;
+  return new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(
+    new Date(Date.UTC(year, monthNumber - 1, 1)),
+  );
+}
+
+const pressureTone: Record<PressureBand, { text: string; background: string; stroke: string }> = {
+  LOW: { text: 'text-success', background: 'bg-success', stroke: 'var(--success)' },
+  MEDIUM: { text: 'text-warning', background: 'bg-warning', stroke: 'var(--warning)' },
+  HIGH: { text: 'text-destructive', background: 'bg-destructive', stroke: 'var(--destructive)' },
+};
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -45,6 +68,11 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const [destination, setDestination] = useState<DestinationViewModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [pressureMonth, setPressureMonth] = useState(currentMonth);
+  const [pressure, setPressure] = useState<DestinationPressureResponse | null>(null);
+  const [pressureLoading, setPressureLoading] = useState(false);
+  const [pressureError, setPressureError] = useState<string | null>(null);
+  const [pressureReloadKey, setPressureReloadKey] = useState(0);
 
   // What-If Simulator state (defaults at 50 / baseline)
   const [visitorSlider, setVisitorSlider] = useState(50);
@@ -76,6 +104,33 @@ export default function DestinationDetailPage({ params }: PageProps) {
       active = false;
     };
   }, [destinationId]);
+
+  useEffect(() => {
+    const apiId = destination?.api.id;
+    if (!apiId || !pressureMonth) return;
+    let active = true;
+    const loadPressure = async () => {
+      setPressureLoading(true);
+      setPressure(null);
+      setPressureError(null);
+      try {
+        const result = await getDestinationPressure(apiId, pressureMonth);
+        if (active) setPressure(result);
+      } catch (error) {
+        if (active) {
+          setPressureError(
+            describeApiError(error, 'Regional visitor-pressure prediction is unavailable.'),
+          );
+        }
+      } finally {
+        if (active) setPressureLoading(false);
+      }
+    };
+    void loadPressure();
+    return () => {
+      active = false;
+    };
+  }, [destination?.api.id, pressureMonth, pressureReloadKey]);
 
   useEffect(() => {
     const apiId = destination?.api.id;
@@ -131,7 +186,12 @@ export default function DestinationDetailPage({ params }: PageProps) {
   }
 
   const isBookmarked = isSaved(destination.id);
-  const isHighPressure = destination.pressure.level === 'HIGH';
+  const pressureBand = pressure?.pressure_band ?? pressure?.band ?? null;
+  const pressureValue = pressure?.predicted_occupancy
+    ?? pressure?.predicted_regional_occupancy_rate
+    ?? null;
+  const isHighPressure = pressureBand === 'HIGH';
+  const activePressureTone = pressureBand ? pressureTone[pressureBand] : null;
 
   return (
     <div className="space-y-6 pb-16">
@@ -215,10 +275,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* KPI 2: Tourism Pressure */}
+        {/* KPI 2: Regional visitor-pressure model */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Crowd Pressure Proxy</span>
+            <span className="text-xs font-semibold text-primary/60">Regional Visitor Pressure</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sliders className="w-4 h-4" />
             </div>
@@ -226,22 +286,58 @@ export default function DestinationDetailPage({ params }: PageProps) {
           <div className="flex items-center justify-between mt-3">
             <div>
               <span className="font-heading text-3xl font-black text-primary tracking-tight">
-                {destination.pressure.score}%
+                {pressureLoading ? '…' : pressureValue === null ? '—' : `${pressureValue.toFixed(1)}%`}
               </span>
-              <span className={`text-[11px] font-bold block mt-0.5 ${isHighPressure ? 'text-destructive' : 'text-primary'}`}>
-                Derived from the {destination.api.factor?.value_type?.toLowerCase() ?? 'unavailable'} crowd score
-              </span>
+              {pressureBand && activePressureTone ? (
+                <span className={`text-[11px] font-bold mt-0.5 flex items-center gap-1.5 ${activePressureTone.text}`}>
+                  <span className={`size-2 rounded-full ${activePressureTone.background}`} />
+                  {pressureBand} • {pressure?.scope} forecast
+                </span>
+              ) : (
+                <span className="text-[11px] font-bold block mt-0.5 text-muted-foreground">
+                  {pressureLoading ? 'Loading model prediction…' : 'No prediction for this month'}
+                </span>
+              )}
             </div>
-            {/* Mini Sparkline */}
+            {/* Existing traffic-light sparkline, now driven by the backend band. */}
             <svg className="w-16 h-8 overflow-visible" viewBox="0 0 60 25">
               <path
                 d="M 0 16 Q 15 5, 30 14 T 60 4"
                 fill="none"
-                stroke={isHighPressure ? 'var(--destructive)' : 'var(--chart-1)'}
+                stroke={activePressureTone?.stroke ?? 'var(--muted-foreground)'}
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
             </svg>
+          </div>
+          <div className="mt-3 pt-2 border-t border-border space-y-1.5">
+            <label className="flex items-center justify-between gap-2 text-[10px] font-bold text-muted-foreground">
+              Forecast month
+              <input
+                type="month"
+                value={pressureMonth}
+                onChange={(event) => setPressureMonth(event.target.value)}
+                className="h-7 rounded-lg border border-border bg-background px-2 text-[10px] text-foreground"
+              />
+            </label>
+            {pressure && (
+              <p className="text-[10px] text-muted-foreground leading-relaxed">
+                {pressure.region} • {formatForecastMonth(pressure.forecast_month ?? pressure.month)}<br />
+                {pressure.forecast_mode.replaceAll('_', ' ')} • model {pressure.model_version}
+              </p>
+            )}
+            {pressureError && (
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-[10px] leading-relaxed text-destructive">{pressureError}</p>
+                <button
+                  type="button"
+                  onClick={() => setPressureReloadKey((value) => value + 1)}
+                  className="text-[10px] font-bold text-primary hover:underline"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -339,35 +435,35 @@ export default function DestinationDetailPage({ params }: PageProps) {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-destructive">
-                  High Crowd Pressure Proxy ({destination.pressure.score}%)
+                  High Regional Visitor Pressure ({pressureValue?.toFixed(1)}%)
                 </h2>
                 <span className="px-2.5 py-0.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold">
                   PEAK DENSITY
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-destructive/80 leading-relaxed">
-                This display is derived from the destination&apos;s crowd-condition factor. It is not the separate regional monthly pressure forecast.
+                The trained model forecasts regional monthly accommodation occupancy for {pressure?.region}, not destination-level footfall.
               </p>
             </div>
           </div>
 
-          {/* Pressure Factor Breakdown */}
+          {/* Authoritative model context returned by the pressure API. */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-destructive/25">
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Crowd Condition</span>
-              <span className="text-base font-extrabold text-destructive">{destination.sustainability.crowd}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Prediction Month</span>
+              <span className="text-sm font-extrabold text-destructive">{formatForecastMonth(pressure?.forecast_month ?? pressureMonth)}</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Infrastructure</span>
-              <span className="text-base font-extrabold text-destructive">{destination.sustainability.infrastructure}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Previous Occupancy</span>
+              <span className="text-base font-extrabold text-destructive">{pressure?.previous_occupancy?.toFixed(1) ?? '—'}%</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Environment</span>
-              <span className="text-base font-extrabold text-destructive">{destination.sustainability.environmental}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Predicted Change</span>
+              <span className="text-base font-extrabold text-destructive">{pressure?.predicted_residual === null || pressure?.predicted_residual === undefined ? '—' : `${pressure.predicted_residual >= 0 ? '+' : ''}${pressure.predicted_residual.toFixed(1)}`}</span>
             </div>
             <div className="p-3 rounded-2xl bg-card border border-destructive/25 text-center">
-              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Suitability</span>
-              <span className="text-base font-extrabold text-destructive">{destination.sustainability.touristSuitability}%</span>
+              <span className="text-[10px] uppercase font-bold text-destructive/60 block">Model Version</span>
+              <span className="text-[10px] font-extrabold text-destructive break-all">{pressure?.model_version}</span>
             </div>
           </div>
 

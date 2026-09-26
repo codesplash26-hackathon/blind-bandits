@@ -81,6 +81,10 @@ async def update_admin_destination(
         exclude_none=True,
         exclude={"activities", "factor"},
     )
+    # Unlike ordinary optional fields, an explicit null removes a reviewed
+    # pressure mapping when model coverage is unavailable.
+    if "pressure_region" in data.model_fields_set:
+        scalar_values["pressure_region"] = data.pressure_region
     for field, value in scalar_values.items():
         setattr(destination, field, value)
     if data.activities is not None:

@@ -39,6 +39,15 @@ from app.services.what_if import simulate_destination
 router = APIRouter(prefix="/destinations", tags=["destinations"])
 
 
+def pressure_region_or_404(destination: Destination) -> str:
+    if destination.pressure_region is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Regional pressure prediction is unavailable for this destination",
+        )
+    return destination.pressure_region
+
+
 def destination_response(destination: Destination) -> DestinationResponse:
     response = DestinationResponse.model_validate(destination)
     if destination.factor is None:
@@ -116,6 +125,7 @@ async def read_destination_alternatives(
     source = get_destination_by_id(db, destination_id)
     if source is None or not source.is_active:
         raise HTTPException(status_code=404, detail="Destination not found")
+    pressure_region_or_404(source)
     settings = get_settings()
     if settings.pressure_band_thresholds is None:
         raise HTTPException(status_code=503, detail="Pressure bands are not configured")
@@ -161,7 +171,7 @@ async def read_destination_pressure_explanation(
             settings.pressure_model_artifact_dir,
             destination_id=destination.id,
             destination_slug=destination.slug,
-            region=destination.region,
+            region=pressure_region_or_404(destination),
             month=month,
             thresholds=settings.pressure_band_thresholds,
         )
@@ -193,7 +203,7 @@ async def read_destination_pressure(
     try:
         prediction = predict_visitor_pressure(
             settings.pressure_model_artifact_dir,
-            region=destination.region,
+            region=pressure_region_or_404(destination),
             month=month,
             thresholds=settings.pressure_band_thresholds,
         )

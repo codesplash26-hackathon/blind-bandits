@@ -43,7 +43,7 @@ from tests.test_destinations import (
 @pytest.fixture
 def sample_observations() -> pd.DataFrame:
     records = []
-    for region, offset in (("Southern", 0), ("Central", 12)):
+    for region, offset in (("South Coast", 0), ("Hill Country", 12)):
         for index, month in enumerate(
             pd.date_range("2023-01-01", periods=36, freq="MS")
         ):
@@ -65,7 +65,7 @@ def sample_calendar() -> pd.DataFrame:
     return pd.DataFrame(
         [
             {"month": "2026-01", "region": region, "is_holiday": 0, "is_peak_season": 1}
-            for region in ("Southern", "Central")
+            for region in ("South Coast", "Hill Country")
         ]
     )
 
@@ -102,7 +102,7 @@ def test_feature_preparation_uses_previous_months_only(
 ) -> None:
     features = engineer_features(sample_observations)
     row = features.loc[
-        (features["region"] == "Southern")
+        (features["region"] == "South Coast")
         & (features["month"] == pd.Timestamp("2023-04-01"))
     ].iloc[0]
     assert row["occupancy_lag_1"] == pytest.approx(33 + 2 / 3)
@@ -118,13 +118,13 @@ def test_feature_preparation_rejects_gaps_and_bad_input(
 ) -> None:
     missing = sample_observations.loc[
         ~(
-            (sample_observations["region"] == "Southern")
+            (sample_observations["region"] == "South Coast")
             & (sample_observations["month"] == "2023-02")
         )
     ]
     features = engineer_features(missing)
     assert not (
-        (features["region"] == "Southern")
+        (features["region"] == "South Coast")
         & (features["month"] == pd.Timestamp("2023-04-01"))
     ).any()
     bad = sample_observations.copy()
@@ -156,14 +156,14 @@ def test_chronological_split_falls_back_to_recent_months(
 def test_mae_and_seasonal_average_baseline() -> None:
     train = pd.DataFrame(
         {
-            "region": ["Southern", "Southern", "Southern"],
+            "region": ["South Coast", "South Coast", "South Coast"],
             "month": pd.to_datetime(["2022-01-01", "2023-01-01", "2023-02-01"]),
             "occupancy_rate": [20.0, 40.0, 60.0],
         }
     )
     test = pd.DataFrame(
         {
-            "region": ["Southern", "Southern"],
+            "region": ["South Coast", "South Coast"],
             "month": pd.to_datetime(["2024-01-01", "2024-03-01"]),
             "occupancy_rate": [50.0, 50.0],
         }
@@ -198,7 +198,7 @@ def test_training_rejects_missing_future_calendar_context(
         [
             {
                 "month": "2026-02",
-                "region": "Southern",
+                "region": "South Coast",
                 "is_holiday": 0,
                 "is_peak_season": 0,
             }
@@ -215,15 +215,15 @@ def test_training_rejects_missing_future_calendar_context(
 
 def test_inference_uses_saved_context(trained_artifact: Path) -> None:
     score, version = predict_regional_pressure(
-        trained_artifact, region="Southern", month="2026-01"
+        trained_artifact, region="South Coast", month="2026-01"
     )
     assert 0 <= score <= 100
     assert version == "synthetic-test-v1"
     assert predict_regional_pressure(
-        trained_artifact, region="Southern", month="2026-01"
+        trained_artifact, region="South Coast", month="2026-01"
     ) == (score, version)
     with pytest.raises(ForecastContextUnavailableError):
-        predict_regional_pressure(trained_artifact, region="Southern", month="2026-02")
+        predict_regional_pressure(trained_artifact, region="South Coast", month="2026-02")
 
 
 def test_pressure_band_boundaries() -> None:
@@ -255,7 +255,7 @@ async def test_pressure_endpoint_response_and_authentication(
     body = response.json()
     assert body["destination_id"] == destination["id"]
     assert body["scope"] == "REGIONAL"
-    assert body["region"] == "Southern"
+    assert body["region"] == "South Coast"
     assert body["month"] == "2026-01"
     assert 0 <= body["predicted_regional_occupancy_rate"] <= 100
     assert body["band"] in ("LOW", "MEDIUM", "HIGH")
@@ -310,7 +310,7 @@ def test_tree_shap_explanation_aligns_with_original_features(
         trained_artifact,
         destination_id=42,
         destination_slug="example-coastal-trail",
-        region="Southern",
+        region="South Coast",
         month="2026-01",
         thresholds=PressureBandThresholds(low_max=40, medium_max=70),
     )
@@ -318,7 +318,7 @@ def test_tree_shap_explanation_aligns_with_original_features(
     assert explanation.contribution_kind == "model_explanation"
     assert explanation.model_version == "synthetic-test-v1"
     assert explanation.destination_id == 42
-    assert explanation.region == "Southern"
+    assert explanation.region == "South Coast"
     assert explanation.month == "2026-01"
     assert list(explanation.input_features) == list(FEATURE_NAMES)
     assert {item.feature_name for item in explanation.feature_contributions} == set(
@@ -331,7 +331,7 @@ def test_tree_shap_explanation_aligns_with_original_features(
         item.shap_value for item in explanation.feature_contributions
     ) == pytest.approx(explanation.raw_model_prediction, abs=1e-5)
     expected_forecast, _ = predict_regional_pressure(
-        trained_artifact, region="Southern", month="2026-01"
+        trained_artifact, region="South Coast", month="2026-01"
     )
     assert explanation.predicted_regional_occupancy_rate == pytest.approx(
         expected_forecast
@@ -349,7 +349,7 @@ def test_template_explanation_is_deterministic(trained_artifact: Path) -> None:
     kwargs = {
         "destination_id": 42,
         "destination_slug": "example-coastal-trail",
-        "region": "Southern",
+        "region": "South Coast",
         "month": "2026-01",
         "thresholds": PressureBandThresholds(low_max=40, medium_max=70),
     }
@@ -363,7 +363,7 @@ def test_template_explanation_is_deterministic(trained_artifact: Path) -> None:
 
 def test_template_handles_neutral_contributions() -> None:
     text = plain_language_explanation(
-        region="Southern",
+        region="South Coast",
         month="2026-01",
         forecast=50,
         base_value=50,
@@ -397,7 +397,7 @@ def test_template_selects_two_strongest_model_drivers() -> None:
         ),
     ]
     text = plain_language_explanation(
-        region="Southern",
+        region="South Coast",
         month="2026-01",
         forecast=52,
         base_value=50,
@@ -414,7 +414,7 @@ def test_explanation_uses_requested_region_context(trained_artifact: Path) -> No
         trained_artifact,
         destination_id=1,
         destination_slug="southern-example",
-        region="Southern",
+        region="South Coast",
         month="2026-01",
         thresholds=thresholds,
     )
@@ -422,12 +422,12 @@ def test_explanation_uses_requested_region_context(trained_artifact: Path) -> No
         trained_artifact,
         destination_id=2,
         destination_slug="central-example",
-        region="Central",
+        region="Hill Country",
         month="2026-01",
         thresholds=thresholds,
     )
-    assert southern.input_features["region"] == "Southern"
-    assert central.input_features["region"] == "Central"
+    assert southern.input_features["region"] == "South Coast"
+    assert central.input_features["region"] == "Hill Country"
     assert (
         southern.input_features["occupancy_lag_1"]
         != central.input_features["occupancy_lag_1"]

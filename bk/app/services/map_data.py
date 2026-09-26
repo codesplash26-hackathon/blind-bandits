@@ -41,6 +41,7 @@ def get_map_destinations(
             Destination.slug,
             Destination.name,
             Destination.region,
+            Destination.pressure_region,
             Destination.latitude,
             Destination.longitude,
             DestinationFactor.environmental_score,
@@ -69,15 +70,15 @@ def get_map_destinations(
     regional_pressure: dict[str, tuple[float, PressureBand] | None] = {}
     markers: list[MapDestination] = []
     for row in rows:
-        if row.region not in regional_pressure:
+        if row.pressure_region is not None and row.pressure_region not in regional_pressure:
             try:
                 rate, _ = predict_regional_pressure_from_artifact(
-                    artifact, region=row.region, month=month
+                    artifact, region=row.pressure_region, month=month
                 )
-                regional_pressure[row.region] = (rate, pressure_band(rate, thresholds))
+                regional_pressure[row.pressure_region] = (rate, pressure_band(rate, thresholds))
             except ForecastContextUnavailableError:
-                regional_pressure[row.region] = None
-        forecast = regional_pressure[row.region]
+                regional_pressure[row.pressure_region] = None
+        forecast = regional_pressure.get(row.pressure_region)
         if pressure_filter is not None and (
             forecast is None or forecast[1] != pressure_filter
         ):

@@ -12,11 +12,23 @@ import { createDestination, deactivateDestination, listDestinations, updateDesti
 import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
 import describeApiError from '@/lib/apiError';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import type { PressureRegion } from '@/types/destination-api';
+
+const PRESSURE_REGIONS: PressureRegion[] = [
+  'Ancient Cities',
+  'Colombo City',
+  'East Coast',
+  'Greater Colombo',
+  'Hill Country',
+  'Northern Region',
+  'South Coast',
+];
 
 interface EditValues {
   name: string;
   district: string;
   region: string;
+  pressure_region: PressureRegion | '';
   landscape_type: string;
   image_url: string;
   typical_budget: number;
@@ -45,7 +57,7 @@ interface CreateValues extends EditValues {
 }
 
 const EMPTY_CREATE: CreateValues = {
-  slug: '', name: '', district: '', region: '', description: '', image_url: '',
+  slug: '', name: '', district: '', region: '', pressure_region: '', description: '', image_url: '',
   latitude: 7, longitude: 80, landscape_type: '', typical_budget: 0,
   recommended_min_trip_duration: 1, recommended_max_trip_duration: 1,
   is_active: true, activities: '', includeFactor: false,
@@ -116,6 +128,7 @@ export default function AdminDestinationsRegistryPage() {
       name: destination.api.name,
       district: destination.api.district,
       region: destination.api.region,
+      pressure_region: destination.api.pressure_region ?? '',
       landscape_type: destination.api.landscape_type,
       image_url: destination.api.image_url ?? '',
       typical_budget: Number(destination.api.typical_budget),
@@ -133,6 +146,7 @@ export default function AdminDestinationsRegistryPage() {
       const { image_url, ...values } = editValues;
       await updateDestination(editingDest.api.id, {
         ...values,
+        pressure_region: values.pressure_region || null,
         ...(image_url ? { image_url } : {}),
       });
       setEditingDest(null);
@@ -171,6 +185,7 @@ export default function AdminDestinationsRegistryPage() {
         name: createValues.name,
         district: createValues.district,
         region: createValues.region,
+        pressure_region: createValues.pressure_region || null,
         description: createValues.description,
         image_url: createValues.image_url || null,
         latitude: createValues.latitude,
@@ -254,7 +269,7 @@ export default function AdminDestinationsRegistryPage() {
               {filteredList.map((destination) => (
                 <TableRow key={destination.api.id}>
                   <TableCell className="font-bold"><div className="flex gap-2"><MapPin className="w-3.5 h-3.5 text-secondary" /><div>{destination.name}<span className="text-[10px] text-muted-foreground block font-normal">{destination.api.activities.join(' • ') || 'No activities'}</span></div></div></TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{destination.district}<span className="block">{destination.api.region}</span></TableCell>
+                  <TableCell className="text-xs text-muted-foreground">{destination.district}<span className="block">{destination.api.region}</span><span className="block text-[10px] text-secondary">Pressure: {destination.api.pressure_region ?? 'Unavailable'}</span></TableCell>
                   <TableCell><span className="text-xs font-bold">{destination.api.factor?.value_type ?? 'NONE'}</span><span className="text-[10px] text-muted-foreground block">{destination.api.factor?.confidence_level ?? 'No confidence'}</span></TableCell>
                   <TableCell className="text-xs font-mono">LKR {Number(destination.api.typical_budget).toLocaleString()}</TableCell>
                   <TableCell>{destination.sustainabilityData ? <span className="font-bold text-success text-xs">{Number(destination.sustainabilityData.total_score).toFixed(1)} / 100</span> : <span className="text-xs text-muted-foreground">Unavailable</span>}</TableCell>
@@ -274,6 +289,7 @@ export default function AdminDestinationsRegistryPage() {
             <div className="flex justify-between border-b border-border pb-3"><div><span className="text-[10px] font-bold uppercase text-secondary">Backend destination record</span><h3 className="font-heading text-lg font-bold">Edit {editingDest.name}</h3></div><button onClick={() => setEditingDest(null)}><X className="w-5 h-5" /></button></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {(['name', 'district', 'region', 'landscape_type', 'image_url'] as const).map((field) => <label key={field} className="text-xs font-bold capitalize">{field.replace('_', ' ')}<Input value={editValues[field]} onChange={(event) => setEditValues({ ...editValues, [field]: event.target.value })} className="mt-1" /></label>)}
+              <label className="text-xs font-bold">Pressure model region<select value={editValues.pressure_region} onChange={(event) => setEditValues({ ...editValues, pressure_region: event.target.value as PressureRegion | '' })} className="mt-1 w-full h-9 rounded-md border border-border bg-background px-3"><option value="">Unavailable / unmapped</option>{PRESSURE_REGIONS.map((region) => <option key={region} value={region}>{region}</option>)}</select></label>
               <label className="text-xs font-bold">Typical budget<Input type="number" min={0} value={editValues.typical_budget} onChange={(event) => setEditValues({ ...editValues, typical_budget: Number(event.target.value) })} className="mt-1" /></label>
               <label className="text-xs font-bold">Minimum trip days<Input type="number" min={1} value={editValues.recommended_min_trip_duration} onChange={(event) => setEditValues({ ...editValues, recommended_min_trip_duration: Number(event.target.value) })} className="mt-1" /></label>
               <label className="text-xs font-bold">Maximum trip days<Input type="number" min={1} value={editValues.recommended_max_trip_duration} onChange={(event) => setEditValues({ ...editValues, recommended_max_trip_duration: Number(event.target.value) })} className="mt-1" /></label>
@@ -291,6 +307,7 @@ export default function AdminDestinationsRegistryPage() {
             <div className="flex justify-between border-b border-border pb-3"><div><span className="text-[10px] font-bold uppercase text-secondary">New backend record</span><h3 className="font-heading text-lg font-bold">Create destination</h3></div><button onClick={() => setCreateValues(null)}><X className="w-5 h-5" /></button></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {(['slug', 'name', 'district', 'region', 'landscape_type', 'image_url'] as const).map((field) => <label key={field} className="text-xs font-bold capitalize">{field.replace('_', ' ')}{field !== 'image_url' && ' *'}<Input value={createValues[field]} onChange={(event) => setCreateValues({ ...createValues, [field]: event.target.value })} className="mt-1" placeholder={field === 'slug' ? 'lowercase-hyphenated-slug' : undefined} /></label>)}
+              <label className="text-xs font-bold">Pressure model region<select value={createValues.pressure_region} onChange={(event) => setCreateValues({ ...createValues, pressure_region: event.target.value as PressureRegion | '' })} className="mt-1 w-full h-9 rounded-md border border-border bg-background px-3"><option value="">Unavailable / unmapped</option>{PRESSURE_REGIONS.map((region) => <option key={region} value={region}>{region}</option>)}</select></label>
               <label className="text-xs font-bold sm:col-span-2">Description *<textarea value={createValues.description} onChange={(event) => setCreateValues({ ...createValues, description: event.target.value })} className="mt-1 min-h-24 w-full rounded-xl border border-border bg-background p-3 text-sm" /></label>
               {(['latitude', 'longitude', 'typical_budget', 'recommended_min_trip_duration', 'recommended_max_trip_duration'] as const).map((field) => <label key={field} className="text-xs font-bold capitalize">{field.replaceAll('_', ' ')} *<Input type="number" value={createValues[field]} onChange={(event) => setCreateValues({ ...createValues, [field]: Number(event.target.value) })} className="mt-1" /></label>)}
               <label className="text-xs font-bold sm:col-span-2">Activities <span className="font-normal text-muted-foreground">(comma-separated slugs)</span><Input value={createValues.activities} onChange={(event) => setCreateValues({ ...createValues, activities: event.target.value })} className="mt-1" placeholder="nature, hiking" /></label>

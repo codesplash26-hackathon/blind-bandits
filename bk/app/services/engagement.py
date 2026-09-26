@@ -196,12 +196,14 @@ def record_interaction(
         if artifact_dir is None or pressure_thresholds is None:
             raise PressureContextUnavailableError
         artifact = load_artifact(artifact_dir)
-        source_value, version = predict_regional_pressure_from_artifact(
-            artifact, region=source.region, month=pressure_month
-        )
         selected = _active_destination(db, destination_id)
+        if source.pressure_region is None or selected.pressure_region is None:
+            raise PressureContextUnavailableError
+        source_value, version = predict_regional_pressure_from_artifact(
+            artifact, region=source.pressure_region, month=pressure_month
+        )
         selected_value, _ = predict_regional_pressure_from_artifact(
-            artifact, region=selected.region, month=pressure_month
+            artifact, region=selected.pressure_region, month=pressure_month
         )
         context = AlternativeSelectionContext(
             source_destination_id=source_destination_id,

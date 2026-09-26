@@ -1,6 +1,8 @@
 export type ConfidenceLevel = 'LOW' | 'MEDIUM' | 'HIGH';
 export type FactorValueType = 'MEASURED' | 'ESTIMATED' | 'PROXY';
 export type ApiDecimal = string;
+export type PressureBand = 'LOW' | 'MEDIUM' | 'HIGH';
+export type PressureRegion = 'Ancient Cities' | 'Colombo City' | 'East Coast' | 'Greater Colombo' | 'Hill Country' | 'Northern Region' | 'South Coast';
 
 export interface DestinationFactorInput {
   environmental_score: number;
@@ -34,6 +36,7 @@ export interface DestinationResponse {
   name: string;
   district: string;
   region: string;
+  pressure_region: PressureRegion | null;
   description: string;
   image_url: string | null;
   latitude: ApiDecimal;
@@ -55,6 +58,7 @@ export interface DestinationCreate {
   name: string;
   district: string;
   region: string;
+  pressure_region?: PressureRegion | null;
   description: string;
   image_url?: string | null;
   latitude: number;
@@ -94,6 +98,48 @@ export interface DestinationSustainabilityResponse {
   configured_weights: SustainabilityValues;
   weighted_contributions: SustainabilityValues;
   configuration_version: string;
+}
+
+export interface DestinationPressureResponse {
+  destination_id: number;
+  destination_slug: string;
+  scope: 'REGIONAL';
+  region: string;
+  month: string;
+  predicted_regional_occupancy_rate: number;
+  band: PressureBand;
+  model_version: string;
+  prediction_type: string;
+  forecast_mode: string;
+  forecast_month: string | null;
+  previous_occupancy: number | null;
+  predicted_residual: number | null;
+  predicted_occupancy: number | null;
+  pressure_band: PressureBand | null;
+}
+
+export interface PressureFeatureContribution {
+  feature_name: string;
+  feature: string | null;
+  display_name: string;
+  input_value: string | number;
+  feature_value: string | number | null;
+  shap_value: number;
+  direction: 'increase' | 'decrease' | 'neutral' | 'INCREASES' | 'DECREASES' | 'NEUTRAL';
+}
+
+export interface DestinationPressureExplanationResponse extends DestinationPressureResponse {
+  explanation_method: 'TreeSHAP';
+  contribution_kind: 'model_explanation';
+  raw_model_prediction: number;
+  base_value: number;
+  input_features: Record<string, string | number>;
+  feature_contributions: PressureFeatureContribution[];
+  plain_language_explanation: string;
+  base_residual: number | null;
+  top_positive_factors: PressureFeatureContribution[];
+  top_negative_factors: PressureFeatureContribution[];
+  explanation_text: string | null;
 }
 
 export interface SimulationScenario {
