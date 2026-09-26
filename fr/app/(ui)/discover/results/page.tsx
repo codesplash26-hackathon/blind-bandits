@@ -9,7 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
 import { mapDestination } from '@/lib/destinationMapper';
 import { loadRecommendationSession } from '@/lib/recommendations';
+import { recordInteraction } from '@/lib/engagement';
 import type { RecommendationItemResponse, RecommendationSession } from '@/types/recommendation-api';
+
+const recordedRecommendationSelections = new Set<string>();
 
 function titleCase(value: string) {
   return value.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
@@ -68,6 +71,18 @@ export default function RecommendationResultsPage() {
   const request = session.request;
   const allResults = session.response.results;
   const topRankingScore = allResults[0] ? Number(allResults[0].preference_match.ranking_score).toFixed(2) : null;
+
+  const recordRecommendationSelection = (destinationId: number) => {
+    if (!session.recommendation_search_id) return;
+    const key = `${session.recommendation_search_id}:${destinationId}`;
+    if (recordedRecommendationSelections.has(key)) return;
+    recordedRecommendationSelections.add(key);
+    void recordInteraction({
+      destination_id: destinationId,
+      event_type: 'RECOMMENDATION_SELECTED',
+      recommendation_search_id: session.recommendation_search_id,
+    }).catch(() => recordedRecommendationSelections.delete(key));
+  };
 
   return (
     <div className="space-y-6 pb-16">
@@ -150,10 +165,10 @@ export default function RecommendationResultsPage() {
                   </div>
 
                   <div className="pt-3 border-t border-border flex items-center justify-between gap-3">
-                    <button type="button" onClick={() => toggleSaveDestination(destination.id)} className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold border ${bookmarked ? 'bg-destructive/10 text-destructive border-destructive/25' : 'bg-card text-primary border-border'}`}>
+                    <button type="button" onClick={() => void toggleSaveDestination(destination.api.id)} className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold border ${bookmarked ? 'bg-destructive/10 text-destructive border-destructive/25' : 'bg-card text-primary border-border'}`}>
                       <Heart className={`w-3.5 h-3.5 ${bookmarked ? 'fill-destructive' : ''}`} />{bookmarked ? 'Saved' : 'Bookmark'}
                     </button>
-                    <Link href={`/destinations/${destination.id}`}><Button size="sm" className="rounded-full gap-1.5">Explore Destination <ArrowRight className="w-3.5 h-3.5" /></Button></Link>
+                    <Link href={`/destinations/${destination.id}`} onClick={() => recordRecommendationSelection(destination.api.id)}><Button size="sm" className="rounded-full gap-1.5">Explore Destination <ArrowRight className="w-3.5 h-3.5" /></Button></Link>
                   </div>
                 </div>
               </article>

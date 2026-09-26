@@ -34,4 +34,5 @@ export interface RecommendationResponse {
 export interface RecommendationSession {
   request: RecommendationRequest;
   response: RecommendationResponse;
+  recommendation_search_id?: number;
 }

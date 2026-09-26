@@ -27,6 +27,15 @@ const apiPaths = {
   },
   recommendations: {
     create: "/recommendations",
+    history: "/recommendations/history",
+  },
+  saved: {
+    list: "/saved",
+    create: (destinationId: number) => `/saved/${destinationId}`,
+    remove: (destinationId: number) => `/saved/${destinationId}`,
+  },
+  interactions: {
+    create: "/interactions",
   },
   adminDestinations: {
     create: "/admin/destinations",

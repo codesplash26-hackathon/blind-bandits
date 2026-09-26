@@ -28,6 +28,9 @@ import {
 import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapper';
 import type { DestinationSimulationResponse } from '@/types/destination-api';
 import describeApiError from '@/lib/apiError';
+import { recordInteraction } from '@/lib/engagement';
+
+const recordedDestinationViews = new Set<string>();
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -37,7 +40,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const resolvedParams = use(params);
   const destinationId = resolvedParams.id;
 
-  const { isSaved, toggleSaveDestination } = useAuth();
+  const { user, isSaved, toggleSaveDestination } = useAuth();
 
   const [destination, setDestination] = useState<DestinationViewModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,6 +76,18 @@ export default function DestinationDetailPage({ params }: PageProps) {
       active = false;
     };
   }, [destinationId]);
+
+  useEffect(() => {
+    const apiId = destination?.api.id;
+    if (!apiId || !user) return;
+    const viewKey = `${user.id}:${apiId}`;
+    if (recordedDestinationViews.has(viewKey)) return;
+    recordedDestinationViews.add(viewKey);
+    void recordInteraction({
+      destination_id: apiId,
+      event_type: 'DESTINATION_VIEWED',
+    }).catch(() => recordedDestinationViews.delete(viewKey));
+  }, [destination, user]);
 
   useEffect(() => {
     if (!destination?.api.factor || !showSimulator) return;
@@ -146,7 +161,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
           <button
             type="button"
-            onClick={() => toggleSaveDestination(destination.id)}
+            onClick={() => void toggleSaveDestination(destination.api.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer shadow-sm ${
               isBookmarked
                 ? 'bg-destructive/10 text-destructive border-destructive/25'

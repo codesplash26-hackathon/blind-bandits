@@ -80,18 +80,6 @@ export interface TouristPreferences {
   sustainabilityImportance: number; // 0 - 100
 }
 
-export interface SearchHistoryItem {
-  id: string;
-  date: string;
-  preferences: TouristPreferences;
-  recommendations: Array<{
-    id: string;
-    name: string;
-    score: number;
-    pressureLevel: PressureLevel;
-  }>;
-}
-
 export interface User {
   id: number;
   name: string;

@@ -1,7 +1,6 @@
 import {
   Destination,
   TouristPreferences,
-  SearchHistoryItem,
 } from '@/types/ceylontour';
 
 export const DESTINATIONS: Destination[] = [
@@ -566,40 +565,6 @@ export const DEFAULT_TOURIST_PREFERENCES: TouristPreferences = {
   crowdPreference: 'quiet',
   sustainabilityImportance: 85,
 };
-
-export const MOCK_SEARCH_HISTORY: SearchHistoryItem[] = [
-  {
-    id: 'hist_01',
-    date: '18 Sep 2026',
-    preferences: {
-      budgetLKR: 50000,
-      durationDays: 4,
-      interests: ['Nature', 'Hiking'],
-      crowdPreference: 'quiet',
-      sustainabilityImportance: 85,
-    },
-    recommendations: [
-      { id: 'belihuloya', name: 'Belihuloya', score: 89, pressureLevel: 'LOW' },
-      { id: 'haputale', name: 'Haputale', score: 84, pressureLevel: 'MEDIUM' },
-      { id: 'meemure', name: 'Meemure', score: 81, pressureLevel: 'LOW' },
-    ],
-  },
-  {
-    id: 'hist_02',
-    date: '12 Sep 2026',
-    preferences: {
-      budgetLKR: 65000,
-      durationDays: 3,
-      interests: ['Beach', 'Wildlife'],
-      crowdPreference: 'balanced',
-      sustainabilityImportance: 70,
-    },
-    recommendations: [
-      { id: 'mirissa', name: 'Mirissa', score: 75, pressureLevel: 'MEDIUM' },
-      { id: 'sinharaja', name: 'Sinharaja Rainforest', score: 94, pressureLevel: 'LOW' },
-    ],
-  },
-];
 
 export const INTEREST_OPTIONS = [
   'Nature',

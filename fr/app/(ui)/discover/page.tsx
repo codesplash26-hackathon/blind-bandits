@@ -19,9 +19,11 @@ import { Loader } from '@/components/Loader';
 import describeApiError from '@/lib/apiError';
 import {
   createRecommendations,
+  loadRecommendationDraft,
   loadRecommendationSession,
   storeRecommendationSession,
 } from '@/lib/recommendations';
+import { listRecommendationHistory } from '@/lib/engagement';
 import type {
   RecommendationCrowdPreference,
   RecommendationRequest,
@@ -52,7 +54,7 @@ const emptySubscribe = () => () => {};
 export default function DiscoverPage() {
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   if (!mounted) return <Loader label="Loading recommendation form..." />;
-  return <DiscoverForm previousRequest={loadRecommendationSession()?.request} />;
+  return <DiscoverForm previousRequest={loadRecommendationSession()?.request ?? loadRecommendationDraft() ?? undefined} />;
 }
 
 function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationRequest }) {
@@ -137,7 +139,27 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
     setIsSubmitting(true);
     try {
       const response = await createRecommendations(request);
-      storeRecommendationSession({ request, response });
+      let recommendationSearchId: number | undefined;
+      try {
+        const history = await listRecommendationHistory();
+        const resultIds = response.results.map((item) => item.destination.id);
+        const matchingSearch = history.find((item) =>
+          Number(item.request.budget) === request.budget
+          && item.request.trip_duration === request.trip_duration
+          && item.request.crowd_preference === request.crowd_preference
+          && item.request.sustainability_preference === request.sustainability_preference
+          && JSON.stringify(item.request.interests) === JSON.stringify(request.interests)
+          && JSON.stringify(item.result_destination_ids) === JSON.stringify(resultIds)
+        );
+        recommendationSearchId = matchingSearch?.id;
+      } catch {
+        // Results remain usable if optional interaction context cannot be loaded.
+      }
+      storeRecommendationSession({
+        request,
+        response,
+        recommendation_search_id: recommendationSearchId,
+      });
       router.push('/discover/results');
     } catch (error) {
       setSubmitError(

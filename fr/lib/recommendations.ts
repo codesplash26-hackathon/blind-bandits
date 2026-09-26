@@ -7,6 +7,7 @@ import type {
 } from '@/types/recommendation-api';
 
 const RECOMMENDATION_SESSION_KEY = 'ceylontour_recommendation_session';
+const RECOMMENDATION_DRAFT_KEY = 'ceylontour_recommendation_draft';
 
 export async function createRecommendations(request: RecommendationRequest) {
   const response = await axiosInstance.post<RecommendationResponse>(
@@ -27,6 +28,22 @@ export function loadRecommendationSession(): RecommendationSession | null {
   try {
     const value = sessionStorage.getItem(RECOMMENDATION_SESSION_KEY);
     return value ? JSON.parse(value) as RecommendationSession : null;
+  } catch {
+    return null;
+  }
+}
+
+export function storeRecommendationDraft(request: RecommendationRequest) {
+  if (typeof window !== 'undefined') {
+    sessionStorage.setItem(RECOMMENDATION_DRAFT_KEY, JSON.stringify(request));
+  }
+}
+
+export function loadRecommendationDraft(): RecommendationRequest | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const value = sessionStorage.getItem(RECOMMENDATION_DRAFT_KEY);
+    return value ? JSON.parse(value) as RecommendationRequest : null;
   } catch {
     return null;
   }

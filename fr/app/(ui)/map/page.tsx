@@ -351,7 +351,7 @@ export default function SriLankaMapPage() {
 
                 <button
                   type="button"
-                  onClick={() => toggleSaveDestination(selectedDestination.id)}
+                  onClick={() => void toggleSaveDestination(selectedDestination.api.id)}
                   className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                 >
                   <Heart

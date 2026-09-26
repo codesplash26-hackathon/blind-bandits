@@ -102,11 +102,11 @@ export default function DestinationsCatalogPage() {
     ? Math.round(scoredDestinations.reduce((total, destination) => total + destination.sustainability.overall, 0) / scoredDestinations.length)
     : null;
 
-  const handleSaveToggle = (destId: string, destName: string) => {
-    const currentlySaved = isSaved(destId);
-    toggleSaveDestination(destId);
+  const handleSaveToggle = (destination: DestinationViewModel) => {
+    const currentlySaved = isSaved(destination.api.id);
+    void toggleSaveDestination(destination.api.id);
     setLastSavedNotice(
-      currentlySaved ? `Removed ${destName} from your saved trips` : `Saved ${destName} to your journey bucketlist!`
+      currentlySaved ? `Removed ${destination.name} from your saved trips` : `Saved ${destination.name} to your journey bucketlist!`
     );
     setTimeout(() => setLastSavedNotice(null), 3000);
   };
@@ -380,7 +380,7 @@ export default function DestinationsCatalogPage() {
                   {/* Save Heart Button */}
                   <button
                     type="button"
-                    onClick={() => handleSaveToggle(dest.id, dest.name)}
+                    onClick={() => handleSaveToggle(dest)}
                     className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                     title={isBookmarked ? 'Saved' : 'Save'}
                   >

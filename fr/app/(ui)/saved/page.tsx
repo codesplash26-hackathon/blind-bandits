@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -17,34 +17,16 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
-import { listDestinations } from '@/lib/destinations';
-import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
-import describeApiError from '@/lib/apiError';
+import { mapDestination } from '@/lib/destinationMapper';
 
 export default function SavedDestinationsPage() {
-  const { savedDestinationIds, toggleSaveDestination } = useAuth();
-  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let active = true;
-    listDestinations({ active: true })
-      .then((response) => {
-        if (active) setDestinations(mapDestinations(response));
-      })
-      .catch((error) => {
-        if (active) setLoadError(describeApiError(error, 'Unable to load saved destinations.'));
-      })
-      .finally(() => {
-        if (active) setIsLoading(false);
-      });
-    return () => { active = false; };
-  }, []);
+  const { savedDestinations, isSavedLoading, toggleSaveDestination } = useAuth();
 
   const savedList = useMemo(() => {
-    return destinations.filter((d) => savedDestinationIds.includes(d.id));
-  }, [destinations, savedDestinationIds]);
+    return savedDestinations.map((item) =>
+      mapDestination(item.destination, item.destination.sustainability),
+    );
+  }, [savedDestinations]);
 
   const totalDays = savedList.reduce((acc, d) => acc + d.recommendedDurationDays, 0);
   const totalBudget = savedList.reduce((acc, d) => acc + d.typicalBudgetLKR, 0);
@@ -52,8 +34,7 @@ export default function SavedDestinationsPage() {
     ? Math.round(savedList.reduce((acc, d) => acc + d.sustainability.overall, 0) / savedList.length)
     : 0;
 
-  if (isLoading) return <Loader label="Loading saved destinations..." />;
-  if (loadError) return <div className="p-12 text-center text-sm text-muted-foreground">{loadError}</div>;
+  if (isSavedLoading) return <Loader label="Loading saved destinations..." />;
 
   return (
     <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
@@ -210,7 +191,7 @@ export default function SavedDestinationsPage() {
                 {/* Remove from Saved Button */}
                 <button
                   type="button"
-                  onClick={() => toggleSaveDestination(dest.id)}
+                  onClick={() => void toggleSaveDestination(dest.api.id)}
                   className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-destructive/10 text-muted-foreground hover:text-destructive shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                   title="Remove from saved"
                 >
