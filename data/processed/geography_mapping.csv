@@ -1,0 +1,36 @@
+original_location,original_location_type,canonical_region,mapping_method,mapping_confidence,notes
+Colombo City,resort_region,Colombo City,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+Greater Colombo,resort_region,Greater Colombo,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+South Coast,resort_region,South Coast,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+East Coast,resort_region,East Coast,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+Hill Country,resort_region,Hill Country,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+Ancient Cities,resort_region,Ancient Cities,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+Northern Region,resort_region,Northern Region,identity_sltida_top_level,high,Top-level SLTDA resort region retained unchanged.
+Ampara,district,East Coast,district_to_sltida_region,high,SLTDA East Coast geography.
+Anuradhapura,district,Ancient Cities,district_to_sltida_region,high,Matches the SLTDA Anuradhapura Area subregion.
+Badulla,district,Hill Country,district_to_sltida_region,medium,Central highlands association; retained as an explicit reviewable mapping.
+Batticaloa,district,East Coast,district_to_sltida_region,high,SLTDA East Coast geography.
+Colombo,district,,unresolved,unresolved,District contains Colombo City and areas associated with Greater Colombo; no split is available in district observations.
+Galle,district,South Coast,district_to_sltida_region,high,Matches the SLTDA South Coast geography.
+Gampaha,district,Greater Colombo,district_to_sltida_region,medium,Defensible approximation to the North of Colombo subregion; district and resort boundaries are not identical.
+Hambantota,district,South Coast,district_to_sltida_region,high,Matches the SLTDA South Coast geography.
+Jaffna,district,Northern Region,district_to_sltida_region,high,SLTDA Northern Region geography.
+Kalutara,district,Greater Colombo,district_to_sltida_region,medium,Defensible approximation to the South of Colombo subregion; district and resort boundaries are not identical.
+Kandy,district,Ancient Cities,district_to_sltida_region,high,Matches the SLTDA Kandy Area subregion under Ancient Cities.
+Kegalle,district,,unresolved,unresolved,No defensible one-to-one SLTDA top-level resort-region mapping.
+Kilinochchi,district,Northern Region,district_to_sltida_region,high,SLTDA Northern Region geography.
+Kurunegala,district,,unresolved,unresolved,No defensible one-to-one SLTDA top-level resort-region mapping.
+Mannar,district,Northern Region,district_to_sltida_region,high,SLTDA Northern Region geography.
+Matale,district,Ancient Cities,district_to_sltida_region,medium,Includes locations represented by the Habarana/Sigiriya/Dambulla subregion; district and resort boundaries are not identical.
+Matara,district,South Coast,district_to_sltida_region,high,Matches the SLTDA South Coast geography.
+Monaragala,district,,unresolved,unresolved,Source spelling in the 2024 room table; no defensible one-to-one SLTDA top-level resort-region mapping.
+Moneragala,district,,unresolved,unresolved,Source spelling in occupancy tables; no defensible one-to-one SLTDA top-level resort-region mapping.
+Mullaitivu,district,Northern Region,district_to_sltida_region,high,SLTDA Northern Region geography.
+Nuwara Eliya,district,Hill Country,district_to_sltida_region,high,SLTDA Hill Country geography.
+Polonnaruwa,district,Ancient Cities,district_to_sltida_region,high,Matches the SLTDA Polonnaruwa/Giritale subregion.
+Puttalam,district,,unresolved,unresolved,No defensible one-to-one SLTDA top-level resort-region mapping.
+Ratnapura,district,,unresolved,unresolved,Source spelling in 2020 and 2021 tables; no defensible one-to-one SLTDA top-level resort-region mapping.
+Rathnapura,district,,unresolved,unresolved,Source spelling in 2023 and 2024 tables; no defensible one-to-one SLTDA top-level resort-region mapping.
+Trincomalee,district,East Coast,district_to_sltida_region,high,SLTDA East Coast geography.
+Vavuniya,district,Northern Region,district_to_sltida_region,high,SLTDA Northern Region geography.
+Sri Lanka,national,Sri Lanka,identity_national,high,National annual observation retained outside monthly target rows.

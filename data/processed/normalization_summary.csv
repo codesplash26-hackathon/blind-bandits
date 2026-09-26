@@ -1,0 +1,23 @@
+section,key,count
+candidate_rows_by_year,2017,84
+candidate_rows_by_year,2018,84
+candidate_rows_by_year,2019,84
+candidate_rows_by_year,2020,228
+candidate_rows_by_year,2024,192
+candidate_rows_by_canonical_region,Ancient Cities,132
+candidate_rows_by_canonical_region,Colombo City,36
+candidate_rows_by_canonical_region,East Coast,108
+candidate_rows_by_canonical_region,Greater Colombo,84
+candidate_rows_by_canonical_region,Hill Country,84
+candidate_rows_by_canonical_region,Northern Region,120
+candidate_rows_by_canonical_region,South Coast,108
+metrics,visitor_pressure_raw_rows,816
+metrics,model_candidate_rows,672
+metrics,unresolved_mapping_config_entries,8
+metrics,visitor_rows_with_unresolved_geography,144
+metrics,rows_excluded_due_to_missing_monthly_target,26
+metrics,rows_excluded_due_to_unresolved_geography,144
+metrics,rows_still_requiring_manual_review,23
+metrics,visitor_rows_requiring_manual_review,0
+metrics,pandemic_period_visitor_rows,300
+metrics,pandemic_period_candidate_rows,228

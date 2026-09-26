@@ -1,0 +1,702 @@
+[
+  {
+    "absolute_error": 0.1143327872104436,
+    "actual_occupancy": 42.940534,
+    "base_residual": -0.0524103957324319,
+    "example_type": "relatively_accurate",
+    "explanation_text": "Visitor pressure is forecast to fall compared with the previous month. Tourist arrivals two months ago, Recent tourist arrival growth contributed most to the model adjustment. SHAP values describe how inputs pushed the predicted residual upward or downward; they do not establish causation.",
+    "feature_contributions": [
+      {
+        "direction": "decrease",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 209181.0,
+        "shap_value": -1.7369310749569666
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": -0.2883340265129242,
+        "shap_value": -0.8254285373938639
+      },
+      {
+        "direction": "increase",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": 1.7763360000000006,
+        "shap_value": 0.6130570558168713
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's occupancy",
+        "feature": "occupancy_lag_1",
+        "feature_value": 44.864389,
+        "shap_value": -0.5209057662107112
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": 2.2150000000000034,
+        "shap_value": 0.410340738170613
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy two months ago",
+        "feature": "occupancy_lag_2",
+        "feature_value": 42.649389,
+        "shap_value": 0.35998455127234247
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (sine component)",
+        "feature": "month_sin",
+        "feature_value": 0.5,
+        "shap_value": 0.3177215582951891
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's tourist arrivals",
+        "feature": "arrivals_lag_1",
+        "feature_value": 148867.0,
+        "shap_value": -0.2839660288463973
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 5,
+        "shap_value": -0.23219396114065574
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 218350.0,
+        "shap_value": 0.15420983180591288
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent three-month occupancy average",
+        "feature": "occupancy_rolling_3",
+        "feature_value": 42.79561,
+        "shap_value": -0.10377114995741757
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (cosine component)",
+        "feature": "month_cos",
+        "feature_value": -0.8660254038,
+        "shap_value": 0.0635235693234339
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 40.873053,
+        "shap_value": 0.024633663017996545
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent change in tourist arrivals",
+        "feature": "arrivals_change_lag_1",
+        "feature_value": -60314.0,
+        "shap_value": 0.002613733746530815
+      },
+      {
+        "direction": "neutral",
+        "display_name": "Tourism region",
+        "feature": "canonical_region",
+        "feature_value": "East Coast",
+        "shap_value": 0.0
+      }
+    ],
+    "forecast_mode": "one_month_ahead_walk_forward",
+    "forecast_month": "2024-05",
+    "model_metadata": {
+      "algorithm": "LightGBM",
+      "explained_target": "predicted_residual",
+      "target": "residual occupancy change"
+    },
+    "model_version": "v2_20260926T104528Z_residual_lightgbm_r2",
+    "month": 5,
+    "predicted_occupancy": 43.05486678721044,
+    "predicted_residual": -1.8095222127895563,
+    "prediction_type": "regional_monthly_occupancy",
+    "previous_occupancy": 44.864389,
+    "region": "East Coast",
+    "top_negative_factors": [
+      {
+        "direction": "decrease",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 209181.0,
+        "shap_value": -1.7369310749569666
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": -0.2883340265129242,
+        "shap_value": -0.8254285373938639
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's occupancy",
+        "feature": "occupancy_lag_1",
+        "feature_value": 44.864389,
+        "shap_value": -0.5209057662107112
+      }
+    ],
+    "top_positive_factors": [
+      {
+        "direction": "increase",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": 1.7763360000000006,
+        "shap_value": 0.6130570558168713
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": 2.2150000000000034,
+        "shap_value": 0.410340738170613
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy two months ago",
+        "feature": "occupancy_lag_2",
+        "feature_value": 42.649389,
+        "shap_value": 0.35998455127234247
+      }
+    ],
+    "year": 2024
+  },
+  {
+    "absolute_error": 23.25426232930457,
+    "actual_occupancy": 30.354466,
+    "base_residual": -0.0524103957324319,
+    "example_type": "large_error",
+    "explanation_text": "Visitor pressure is forecast to fall compared with the previous month. Recent occupancy change, Forecast month contributed most to the model adjustment. SHAP values describe how inputs pushed the predicted residual upward or downward; they do not establish causation.",
+    "feature_contributions": [
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": -21.170419999999993,
+        "shap_value": -2.059691095682541
+      },
+      {
+        "direction": "increase",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 10,
+        "shap_value": 1.6186901575042312
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 164609.0,
+        "shap_value": 1.5498881805109836
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": -0.2579992588497591,
+        "shap_value": -1.0391802767922846
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": 9.14958,
+        "shap_value": -0.7519523489217433
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 187810.0,
+        "shap_value": 0.2517969315573521
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (sine component)",
+        "feature": "month_sin",
+        "feature_value": -0.8660254038,
+        "shap_value": 0.2349683249285384
+      },
+      {
+        "direction": "increase",
+        "display_name": "Previous month's occupancy",
+        "feature": "occupancy_lag_1",
+        "feature_value": 53.659733,
+        "shap_value": 0.2147996639980321
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 65.680573,
+        "shap_value": 0.19257475212498293
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Seasonality (cosine component)",
+        "feature": "month_cos",
+        "feature_value": 0.5,
+        "shap_value": -0.13037318795108677
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's tourist arrivals",
+        "feature": "arrivals_lag_1",
+        "feature_value": 122140.0,
+        "shap_value": -0.05046943610984114
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Occupancy two months ago",
+        "feature": "occupancy_lag_2",
+        "feature_value": 74.830153,
+        "shap_value": -0.03965591461071376
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent three-month occupancy average",
+        "feature": "occupancy_rolling_3",
+        "feature_value": 64.723486,
+        "shap_value": 0.007929295848707755
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent change in tourist arrivals",
+        "feature": "arrivals_change_lag_1",
+        "feature_value": -42469.0,
+        "shap_value": 0.0020806786323805935
+      },
+      {
+        "direction": "neutral",
+        "display_name": "Tourism region",
+        "feature": "canonical_region",
+        "feature_value": "East Coast",
+        "shap_value": 0.0
+      }
+    ],
+    "forecast_mode": "one_month_ahead_walk_forward",
+    "forecast_month": "2024-10",
+    "model_metadata": {
+      "algorithm": "LightGBM",
+      "explained_target": "predicted_residual",
+      "target": "residual occupancy change"
+    },
+    "model_version": "v2_20260926T104528Z_residual_lightgbm_r2",
+    "month": 10,
+    "predicted_occupancy": 53.60872832930457,
+    "predicted_residual": -0.05100467069543438,
+    "prediction_type": "regional_monthly_occupancy",
+    "previous_occupancy": 53.659733,
+    "region": "East Coast",
+    "top_negative_factors": [
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": -21.170419999999993,
+        "shap_value": -2.059691095682541
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": -0.2579992588497591,
+        "shap_value": -1.0391802767922846
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": 9.14958,
+        "shap_value": -0.7519523489217433
+      }
+    ],
+    "top_positive_factors": [
+      {
+        "direction": "increase",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 10,
+        "shap_value": 1.6186901575042312
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 164609.0,
+        "shap_value": 1.5498881805109836
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 187810.0,
+        "shap_value": 0.2517969315573521
+      }
+    ],
+    "year": 2024
+  },
+  {
+    "absolute_error": 4.277382679455947,
+    "actual_occupancy": 53.104446,
+    "base_residual": -0.0524103957324319,
+    "example_type": "increasing_residual",
+    "explanation_text": "Visitor pressure is forecast to rise compared with the previous month. Recent tourist arrival growth, Forecast month contributed most to the model adjustment. SHAP values describe how inputs pushed the predicted residual upward or downward; they do not establish causation.",
+    "feature_contributions": [
+      {
+        "direction": "increase",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": 0.6551511412708205,
+        "shap_value": 6.854620005560093
+      },
+      {
+        "direction": "increase",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 8,
+        "shap_value": 1.6528246411732248
+      },
+      {
+        "direction": "increase",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": -5.457397,
+        "shap_value": 1.4043989976258848
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 113470.0,
+        "shap_value": 1.3945607847706982
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": 11.493695000000002,
+        "shap_value": -0.48129590248180654
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's tourist arrivals",
+        "feature": "arrivals_lag_1",
+        "feature_value": 187810.0,
+        "shap_value": -0.40454551556269785
+      },
+      {
+        "direction": "increase",
+        "display_name": "Previous month's occupancy",
+        "feature": "occupancy_lag_1",
+        "feature_value": 46.1173,
+        "shap_value": 0.3861497555560383
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy two months ago",
+        "feature": "occupancy_lag_2",
+        "feature_value": 34.623605,
+        "shap_value": 0.3612809663021358
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (sine component)",
+        "feature": "month_sin",
+        "feature_value": -0.8660254038,
+        "shap_value": 0.30094889722321805
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 112128.0,
+        "shap_value": 0.2296526740982976
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 40.081002,
+        "shap_value": -0.1960319362124568
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent change in tourist arrivals",
+        "feature": "arrivals_change_lag_1",
+        "feature_value": 74340.0,
+        "shap_value": -0.09807800662333249
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Seasonality (cosine component)",
+        "feature": "month_cos",
+        "feature_value": -0.5,
+        "shap_value": -0.06054606326163372
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent three-month occupancy average",
+        "feature": "occupancy_rolling_3",
+        "feature_value": 40.273969,
+        "shap_value": -0.027000222979282937
+      },
+      {
+        "direction": "neutral",
+        "display_name": "Tourism region",
+        "feature": "canonical_region",
+        "feature_value": "Greater Colombo",
+        "shap_value": 0.0
+      }
+    ],
+    "forecast_mode": "one_month_ahead_walk_forward",
+    "forecast_month": "2024-08",
+    "model_metadata": {
+      "algorithm": "LightGBM",
+      "explained_target": "predicted_residual",
+      "target": "residual occupancy change"
+    },
+    "model_version": "v2_20260926T104528Z_residual_lightgbm_r2",
+    "month": 8,
+    "predicted_occupancy": 57.38182867945595,
+    "predicted_residual": 11.26452867945595,
+    "prediction_type": "regional_monthly_occupancy",
+    "previous_occupancy": 46.1173,
+    "region": "Greater Colombo",
+    "top_negative_factors": [
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": 11.493695000000002,
+        "shap_value": -0.48129590248180654
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's tourist arrivals",
+        "feature": "arrivals_lag_1",
+        "feature_value": 187810.0,
+        "shap_value": -0.40454551556269785
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 40.081002,
+        "shap_value": -0.1960319362124568
+      }
+    ],
+    "top_positive_factors": [
+      {
+        "direction": "increase",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": 0.6551511412708205,
+        "shap_value": 6.854620005560093
+      },
+      {
+        "direction": "increase",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 8,
+        "shap_value": 1.6528246411732248
+      },
+      {
+        "direction": "increase",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": -5.457397,
+        "shap_value": 1.4043989976258848
+      }
+    ],
+    "year": 2024
+  },
+  {
+    "absolute_error": 9.385841545498511,
+    "actual_occupancy": 30.064184,
+    "base_residual": -0.0524103957324319,
+    "example_type": "decreasing_residual",
+    "explanation_text": "Visitor pressure is forecast to fall compared with the previous month. Recent occupancy change, Tourist arrivals two months ago contributed most to the model adjustment. SHAP values describe how inputs pushed the predicted residual upward or downward; they do not establish causation.",
+    "feature_contributions": [
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": -13.964786000000004,
+        "shap_value": -3.8680515469527377
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 209181.0,
+        "shap_value": -3.348122398795859
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": -1.765938999999996,
+        "shap_value": -1.1307445508955745
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent tourist arrival growth",
+        "feature": "arrivals_growth_lagged",
+        "feature_value": -0.2883340265129242,
+        "shap_value": -0.8445977795786576
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's occupancy",
+        "feature": "occupancy_lag_1",
+        "feature_value": 49.915557,
+        "shap_value": -0.679074639995867
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Forecast month",
+        "feature": "month",
+        "feature_value": 5,
+        "shap_value": -0.5823981539935911
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Previous month's tourist arrivals",
+        "feature": "arrivals_lag_1",
+        "feature_value": 148867.0,
+        "shap_value": -0.33903680827141686
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (sine component)",
+        "feature": "month_sin",
+        "feature_value": 0.5,
+        "shap_value": 0.32291781072849807
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Recent three-month occupancy average",
+        "feature": "occupancy_rolling_3",
+        "feature_value": 59.814061,
+        "shap_value": -0.0819764763017274
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 65.646282,
+        "shap_value": 0.06776453316411396
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 218350.0,
+        "shap_value": 0.039185570930926304
+      },
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (cosine component)",
+        "feature": "month_cos",
+        "feature_value": -0.8660254038,
+        "shap_value": 0.03791757081350787
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Occupancy two months ago",
+        "feature": "occupancy_lag_2",
+        "feature_value": 63.880343,
+        "shap_value": -0.009517923367204228
+      },
+      {
+        "direction": "increase",
+        "display_name": "Recent change in tourist arrivals",
+        "feature": "arrivals_change_lag_1",
+        "feature_value": -60314.0,
+        "shap_value": 0.002613733746530815
+      },
+      {
+        "direction": "neutral",
+        "display_name": "Tourism region",
+        "feature": "canonical_region",
+        "feature_value": "South Coast",
+        "shap_value": 0.0
+      }
+    ],
+    "forecast_mode": "one_month_ahead_walk_forward",
+    "forecast_month": "2024-05",
+    "model_metadata": {
+      "algorithm": "LightGBM",
+      "explained_target": "predicted_residual",
+      "target": "residual occupancy change"
+    },
+    "model_version": "v2_20260926T104528Z_residual_lightgbm_r2",
+    "month": 5,
+    "predicted_occupancy": 39.45002554549851,
+    "predicted_residual": -10.465531454501487,
+    "prediction_type": "regional_monthly_occupancy",
+    "previous_occupancy": 49.915557,
+    "region": "South Coast",
+    "top_negative_factors": [
+      {
+        "direction": "decrease",
+        "display_name": "Recent occupancy change",
+        "feature": "occupancy_change_lag_1",
+        "feature_value": -13.964786000000004,
+        "shap_value": -3.8680515469527377
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Tourist arrivals two months ago",
+        "feature": "arrivals_lag_2",
+        "feature_value": 209181.0,
+        "shap_value": -3.348122398795859
+      },
+      {
+        "direction": "decrease",
+        "display_name": "Earlier occupancy change",
+        "feature": "occupancy_change_lag_2",
+        "feature_value": -1.765938999999996,
+        "shap_value": -1.1307445508955745
+      }
+    ],
+    "top_positive_factors": [
+      {
+        "direction": "increase",
+        "display_name": "Seasonality (sine component)",
+        "feature": "month_sin",
+        "feature_value": 0.5,
+        "shap_value": 0.32291781072849807
+      },
+      {
+        "direction": "increase",
+        "display_name": "Occupancy three months ago",
+        "feature": "occupancy_lag_3",
+        "feature_value": 65.646282,
+        "shap_value": 0.06776453316411396
+      },
+      {
+        "direction": "increase",
+        "display_name": "Tourist arrivals three months ago",
+        "feature": "arrivals_lag_3",
+        "feature_value": 218350.0,
+        "shap_value": 0.039185570930926304
+      }
+    ],
+    "year": 2024
+  }
+]

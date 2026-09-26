@@ -1,0 +1,29 @@
+experiment,role,years,feature_requirement,row_count,notes
+A,train,2017;2018;2019,A_no_occupancy_lags,252,Train on pre-pandemic years. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,train,2017;2018;2019,B_lag_1,245,Train on pre-pandemic years. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,train,2017;2018;2019,C_lag_1_lag_2_lag_3,231,Train on pre-pandemic years. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,train,2017;2018;2019,D_rolling_3,231,Train on pre-pandemic years. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,validation,2020,A_no_occupancy_lags,72,Optional pandemic validation period. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,validation,2020,B_lag_1,72,Optional pandemic validation period. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,validation,2020,C_lag_1_lag_2_lag_3,72,Optional pandemic validation period. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,validation,2020,D_rolling_3,72,Optional pandemic validation period. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,test,2024,A_no_occupancy_lags,72,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,test,2024,B_lag_1,66,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,test,2024,C_lag_1_lag_2_lag_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+A,test,2024,D_rolling_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,train,2017;2018;2019;2020,A_no_occupancy_lags,324,Train includes pandemic observations. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,train,2017;2018;2019;2020,B_lag_1,317,Train includes pandemic observations. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,train,2017;2018;2019;2020,C_lag_1_lag_2_lag_3,303,Train includes pandemic observations. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,train,2017;2018;2019;2020,D_rolling_3,303,Train includes pandemic observations. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,test,2024,A_no_occupancy_lags,72,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,test,2024,B_lag_1,66,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,test,2024,C_lag_1_lag_2_lag_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+B,test,2024,D_rolling_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,train,2017;2018;2019,A_no_occupancy_lags,252,Pandemic year excluded. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,train,2017;2018;2019,B_lag_1,245,Pandemic year excluded. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,train,2017;2018;2019,C_lag_1_lag_2_lag_3,231,Pandemic year excluded. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,train,2017;2018;2019,D_rolling_3,231,Pandemic year excluded. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,test,2024,A_no_occupancy_lags,72,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,test,2024,B_lag_1,66,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,test,2024,C_lag_1_lag_2_lag_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.
+C,test,2024,D_rolling_3,54,Final held-out period after the 2021–2023 target gap. Occupancy lags require exact calendar-month continuity; 2024 never links back to 2020.

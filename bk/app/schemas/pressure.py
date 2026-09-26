@@ -30,14 +30,33 @@ class DestinationPressureResponse(BaseModel):
     predicted_regional_occupancy_rate: float = Field(ge=0, le=100)
     band: PressureBand
     model_version: str
+    prediction_type: str = "regional_monthly_occupancy"
+    forecast_mode: str = "one_month_ahead"
+    forecast_month: str | None = None
+    previous_occupancy: float | None = Field(default=None, ge=0, le=100)
+    predicted_residual: float | None = None
+    predicted_occupancy: float | None = Field(default=None, ge=0, le=100)
+    pressure_band: PressureBand | None = None
 
 
 class PressureFeatureContribution(BaseModel):
     feature_name: str
+    feature: str | None = None
     display_name: str
     input_value: str | int | float
+    feature_value: str | int | float | None = None
     shap_value: float
-    direction: Literal["INCREASES", "DECREASES", "NEUTRAL"]
+    direction: Literal[
+        "increase", "decrease", "neutral", "INCREASES", "DECREASES", "NEUTRAL"
+    ]
+
+    @model_validator(mode="after")
+    def populate_public_names(self) -> "PressureFeatureContribution":
+        if self.feature is None:
+            self.feature = self.feature_name
+        if self.feature_value is None:
+            self.feature_value = self.input_value
+        return self
 
 
 class DestinationPressureExplanationResponse(DestinationPressureResponse):
@@ -48,3 +67,7 @@ class DestinationPressureExplanationResponse(DestinationPressureResponse):
     input_features: dict[str, str | int | float]
     feature_contributions: list[PressureFeatureContribution]
     plain_language_explanation: str
+    base_residual: float | None = None
+    top_positive_factors: list[PressureFeatureContribution] = []
+    top_negative_factors: list[PressureFeatureContribution] = []
+    explanation_text: str | None = None

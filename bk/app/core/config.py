@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         validation_alias="SUSTAINABILITY_WEIGHTS"
     )
     pressure_model_artifact_dir: Path = Field(
-        default=Path("artifacts/visitor_pressure"),
+        default=Path(__file__).resolve().parents[3] / "ml" / "artifacts",
         validation_alias="PRESSURE_MODEL_ARTIFACT_DIR",
     )
     pressure_band_thresholds: PressureBandThresholds | None = Field(
