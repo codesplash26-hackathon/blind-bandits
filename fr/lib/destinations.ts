@@ -6,6 +6,7 @@ import type {
   DestinationPressureExplanationResponse,
   DestinationPressureResponse,
   DestinationAlternativesResponse,
+  AdminDashboardResponse,
   DestinationResponse,
   DestinationSimulationResponse,
   DestinationSustainabilityResponse,
@@ -24,6 +25,14 @@ export async function listDestinations(filters: DestinationFilters = {}) {
 export async function getMapDestinations(month: string) {
   const response = await axiosInstance.get<MapDestinationsResponse>(
     apiPaths.map.destinations,
+    { params: { month } },
+  );
+  return response.data;
+}
+
+export async function getAdminDashboard(month: string) {
+  const response = await axiosInstance.get<AdminDashboardResponse>(
+    apiPaths.adminDashboard.summary,
     { params: { month } },
   );
   return response.data;

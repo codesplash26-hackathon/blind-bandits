@@ -45,6 +45,9 @@ const apiPaths = {
     update: (destinationId: number) => `/admin/destinations/${destinationId}`,
     deactivate: (destinationId: number) => `/admin/destinations/${destinationId}`,
   },
+  adminDashboard: {
+    summary: "/admin/dashboard",
+  },
 };
 
 export default apiPaths;

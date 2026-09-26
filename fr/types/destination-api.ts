@@ -230,3 +230,40 @@ export interface MapDestinationsResponse {
   pressure_model_version: string | null;
   destinations: MapDestination[];
 }
+
+export interface AdminDashboardResponse {
+  month: string;
+  pressure_scope: 'REGIONAL';
+  pressure_model_version: string | null;
+  total_active_destinations: number;
+  monitored_destinations: number;
+  without_pressure_forecast: number;
+  pressure_counts: {
+    low: number;
+    medium: number;
+    high: number;
+  };
+  highest_pressure_destinations: Array<{
+    id: number;
+    slug: string;
+    name: string;
+    region: string;
+    pressure_level: PressureBand;
+    predicted_regional_occupancy_rate: number;
+    sustainability_score: number | null;
+  }>;
+  sustainability: {
+    scored_destinations: number;
+    average_score: number | null;
+    minimum_score: number | null;
+    maximum_score: number | null;
+    average_environmental_score: number | null;
+    average_community_score: number | null;
+  };
+  recommended_action: {
+    code: 'REVIEW_HIGH_PRESSURE' | 'MONITOR_MEDIUM_PRESSURE' | 'MAINTAIN_MONITORING' | 'NO_FORECAST_DATA';
+    priority: 'HIGH' | 'MEDIUM' | 'LOW' | 'INFO';
+    message: string;
+    destination_ids: number[];
+  };
+}
