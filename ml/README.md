@@ -1,8 +1,22 @@
 # Visitor-pressure model experiments
 
 This directory contains the offline, reproducible LightGBM evaluation workflow for
-canonical regional monthly occupancy. It does not calculate SHAP values and is not
-connected to the FastAPI application.
+canonical regional monthly occupancy. The selected v2 residual model also has a
+deterministic TreeSHAP evaluation and is consumed by the FastAPI pressure service.
+
+## Selected v2 explanations
+
+Run `python -m ml.evaluation.generate_shap_v2` from the repository root after
+installing `ml/requirements.txt`. The command loads the existing selected model;
+it does not fit, tune, or replace it. It writes mean absolute SHAP importance,
+bar and beeswarm plots, and representative held-out examples under
+`ml/evaluation`, plus `ml/artifacts/explanation_metadata_v2.json`.
+
+TreeSHAP explains `predicted_residual`, where the residual target is
+`occupancy_rate - occupancy_lag_1`. The final occupancy prediction is reconstructed
+as `occupancy_lag_1 + predicted_residual`; SHAP is not presented as a direct
+decomposition of final occupancy. One-hot region contributions are grouped back
+to `canonical_region`, and user-facing text is deterministic and non-causal.
 
 ## Forecast interpretation
 

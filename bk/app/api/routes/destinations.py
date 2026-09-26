@@ -11,7 +11,8 @@ from app.ml.pressure.artifact import MissingPressureModelError
 from app.ml.pressure.explanation import explain_regional_pressure
 from app.ml.pressure.inference import (
     ForecastContextUnavailableError,
-    predict_regional_pressure,
+    UnknownPressureRegionError,
+    predict_visitor_pressure,
     pressure_band,
 )
 from app.models.destination import Activity, Destination, destination_activities
@@ -105,10 +106,10 @@ async def read_destination_alternatives(
         raise HTTPException(
             status_code=503, detail="Regional pressure model unavailable"
         ) from None
-    except ForecastContextUnavailableError:
-        raise HTTPException(
-            status_code=404, detail="Regional forecast unavailable for month"
-        ) from None
+    except ForecastContextUnavailableError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from None
+    except UnknownPressureRegionError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from None
 
 
 @router.get(
@@ -142,10 +143,10 @@ async def read_destination_pressure_explanation(
         raise HTTPException(
             status_code=503, detail="Regional pressure model unavailable"
         ) from None
-    except ForecastContextUnavailableError:
-        raise HTTPException(
-            status_code=404, detail="Regional forecast unavailable for month"
-        ) from None
+    except ForecastContextUnavailableError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from None
+    except UnknownPressureRegionError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from None
 
 
 @router.get("/{destination_id}/pressure", response_model=DestinationPressureResponse)
@@ -164,27 +165,38 @@ async def read_destination_pressure(
     if settings.pressure_band_thresholds is None:
         raise HTTPException(status_code=503, detail="Pressure bands are not configured")
     try:
-        score, model_version = predict_regional_pressure(
+        prediction = predict_visitor_pressure(
             settings.pressure_model_artifact_dir,
             region=destination.region,
             month=month,
+            thresholds=settings.pressure_band_thresholds,
         )
     except MissingPressureModelError:
         raise HTTPException(
             status_code=503, detail="Regional pressure model unavailable"
         ) from None
-    except ForecastContextUnavailableError:
-        raise HTTPException(
-            status_code=404, detail="Regional forecast unavailable for month"
-        ) from None
+    except ForecastContextUnavailableError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from None
+    except UnknownPressureRegionError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from None
+    band = prediction.pressure_band or pressure_band(
+        prediction.predicted_occupancy, settings.pressure_band_thresholds
+    )
     return DestinationPressureResponse(
         destination_id=destination.id,
         destination_slug=destination.slug,
-        region=destination.region,
+        region=prediction.region,
         month=month,
-        predicted_regional_occupancy_rate=score,
-        band=pressure_band(score, settings.pressure_band_thresholds),
-        model_version=model_version,
+        predicted_regional_occupancy_rate=prediction.predicted_occupancy,
+        band=band,
+        model_version=prediction.model_version,
+        prediction_type=prediction.prediction_type,
+        forecast_mode=prediction.forecast_mode,
+        forecast_month=prediction.forecast_month,
+        previous_occupancy=prediction.previous_occupancy,
+        predicted_residual=prediction.predicted_residual,
+        predicted_occupancy=prediction.predicted_occupancy,
+        pressure_band=band,
     )
 
 
