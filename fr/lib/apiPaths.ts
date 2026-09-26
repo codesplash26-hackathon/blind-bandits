@@ -48,6 +48,9 @@ const apiPaths = {
   adminDashboard: {
     summary: "/admin/dashboard",
   },
+  adminAnalytics: {
+    summary: "/admin/analytics",
+  },
 };
 
 export default apiPaths;

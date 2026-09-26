@@ -14,6 +14,7 @@ import type {
   MapDestinationsResponse,
   SimulationScenario,
 } from '@/types/destination-api';
+import type { AdminAnalyticsResponse } from '@/types/analytics-api';
 
 export async function listDestinations(filters: DestinationFilters = {}) {
   const response = await axiosInstance.get<DestinationResponse[]>(apiPaths.destinations.list, {
@@ -34,6 +35,14 @@ export async function getAdminDashboard(month: string) {
   const response = await axiosInstance.get<AdminDashboardResponse>(
     apiPaths.adminDashboard.summary,
     { params: { month } },
+  );
+  return response.data;
+}
+
+export async function getAdminAnalytics(startDate: string, endDate: string) {
+  const response = await axiosInstance.get<AdminAnalyticsResponse>(
+    apiPaths.adminAnalytics.summary,
+    { params: { start_date: startDate, end_date: endDate } },
   );
   return response.data;
 }
