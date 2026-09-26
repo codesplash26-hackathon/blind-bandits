@@ -1,0 +1,15 @@
+{
+  "common_test_rows": 54,
+  "persistence_mae": 9.067225037037037,
+  "best_non_baseline_model": "residual_lightgbm_r2",
+  "best_non_baseline_mae": 6.729765157383127,
+  "selected_model": "residual_lightgbm_r2",
+  "persistence_remains_strongest": false,
+  "residual_search_run": true,
+  "artifact_paths": [
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/visitor_pressure_model_v2.joblib",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/model_metadata_v2.json",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/visitor_pressure_model_v2_20260926T104528Z_residual_lightgbm_r2.joblib",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/model_metadata_v2_20260926T104528Z_residual_lightgbm_r2.json"
+  ]
+}

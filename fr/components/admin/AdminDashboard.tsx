@@ -15,12 +15,18 @@ import {
   Layers,
   Sparkles,
   Search,
-  Filter,
   Eye,
   Activity,
-  ArrowUpRight,
-  Radio,
 } from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { DESTINATIONS } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -32,6 +38,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+
+const emptySubscribe = () => () => {};
 
 export default function AdminDashboard() {
   const [isRedistributing, setIsRedistributing] = useState(false);
@@ -53,6 +61,13 @@ export default function AdminDashboard() {
     return matchesFilter && matchesSearch;
   }).sort((a, b) => b.pressure.score - a.pressure.score);
 
+  // Chart data from destinations
+  const overviewChartData = DESTINATIONS.slice(0, 7).map((d) => ({
+    name: d.name,
+    pressure: d.pressure.score,
+    sustainability: d.sustainability.overall,
+  }));
+
   const handleTriggerRedistribution = () => {
     setIsRedistributing(true);
     setRebalanceStep('Analyzing real-time sensor surge vectors...');
@@ -71,9 +86,9 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-8 pb-16 max-w-7xl mx-auto w-full">
+      {/* ── 1. Top Action Bar & Header ─────────────────────────────────────────── */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
@@ -124,70 +139,133 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* Top 4 KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Monitored Pilot Sites
-          </span>
-          <div className="flex items-center justify-between pt-1">
-            <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-              {DESTINATIONS.length}
+      {/* ── 2. Top 4 Modern KPI Cards with Sparklines & Donut Rings ──────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Monitored Sites */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Monitored Pilot Sites
             </span>
-            <div className="p-2.5 rounded-2xl bg-muted text-primary">
-              <MapPin className="w-5 h-5 text-primary" />
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
+                {DESTINATIONS.length}
+              </span>
+              <span className="text-xs text-muted-foreground font-semibold">nodes</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">● Active</span>
+              <span className="text-muted-foreground font-normal">sensor coverage</span>
             </div>
           </div>
-          <span className="text-[11px] text-muted-foreground font-medium block">Island-wide sensor coverage</span>
+
+          <div className="p-3 rounded-2xl bg-muted text-primary">
+            <MapPin className="w-6 h-6 text-primary" />
+          </div>
         </div>
 
-        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Low Pressure Sites
-          </span>
-          <div className="flex items-center justify-between pt-1">
-            <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-              {lowPressureList.length}
+        {/* Card 2: Low Pressure Sites with Mini Donut Ring */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Safe Carrying Capacity
             </span>
-            <div className="p-2.5 rounded-2xl bg-success/10 text-success">
-              <CheckCircle2 className="w-5 h-5" />
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
+                {lowPressureList.length}
+              </span>
+              <span className="text-xs text-muted-foreground font-semibold">/ {DESTINATIONS.length} sites</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">★ Optimal</span>
+              <span className="text-muted-foreground font-normal">low pressure</span>
             </div>
           </div>
-          <span className="text-[11px] text-success font-semibold block">Within safe carrying capacity</span>
+
+          {/* Mini Donut Progress Ring */}
+          <div className="relative size-14 shrink-0 flex items-center justify-center">
+            <svg className="size-full -rotate-90" viewBox="0 0 36 36">
+              <path
+                className="text-muted"
+                strokeWidth="3.5"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="text-primary"
+                strokeDasharray={`${(lowPressureList.length / DESTINATIONS.length) * 100}, 100`}
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span className="absolute text-[11px] font-black text-foreground">
+              {Math.round((lowPressureList.length / DESTINATIONS.length) * 100)}%
+            </span>
+          </div>
         </div>
 
-        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Moderate Pressure
-          </span>
-          <div className="flex items-center justify-between pt-1">
-            <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-              {mediumPressureList.length}
+        {/* Card 3: Moderate Pressure with Mini Wave Sparkline */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Moderate Footfall
             </span>
-            <div className="p-2.5 rounded-2xl bg-warning/10 text-warning">
-              <TrendingUp className="w-5 h-5" />
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
+                {mediumPressureList.length}
+              </span>
+              <span className="text-xs text-muted-foreground font-semibold">sites</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">▲ Watch</span>
+              <span className="text-muted-foreground font-normal">seasonal surge</span>
             </div>
           </div>
-          <span className="text-[11px] text-muted-foreground font-medium block">Seasonal footfall peak watch</span>
+
+          {/* Mini Wave SVG Sparkline */}
+          <div className="w-16 h-10 shrink-0">
+            <svg viewBox="0 0 70 35" className="w-full h-full overflow-visible">
+              <path
+                d="M 0 25 Q 20 8, 35 18 T 60 12 T 70 14"
+                fill="none"
+                stroke="var(--chart-2)"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+              <circle cx="70" cy="14" r="3.5" fill="var(--chart-1)" />
+            </svg>
+          </div>
         </div>
 
-        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            High Pressure Alerts
-          </span>
-          <div className="flex items-center justify-between pt-1">
-            <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-              {highPressureList.length}
+        {/* Card 4: High Pressure Alerts */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              High Pressure Alerts
             </span>
-            <div className="p-2.5 rounded-2xl bg-destructive/10 text-destructive">
-              <AlertTriangle className="w-5 h-5" />
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-destructive tracking-tight">
+                {highPressureList.length}
+              </span>
+              <span className="text-xs text-muted-foreground font-semibold">over-capacity</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-destructive pt-0.5">
+              <span>▲ Alert</span>
+              <span className="text-muted-foreground font-normal">exceeds limits</span>
             </div>
           </div>
-          <span className="text-[11px] text-destructive font-semibold block">Carrying capacity threshold exceeded</span>
+
+          <div className="p-3 rounded-2xl bg-destructive/10 text-destructive">
+            <AlertTriangle className="w-6 h-6" />
+          </div>
         </div>
       </div>
 
-      {/* Quick Access Authority Modules Grid */}
+      {/* ── 3. Quick Access Authority Modules Grid ─────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Link href="/admin/destinations" className="group">
           <div className="p-4 rounded-2xl border border-border bg-card shadow-dashboard-panel hover:shadow-dashboard-card hover:-translate-y-0.5 transition-all">
@@ -246,7 +324,84 @@ export default function AdminDashboard() {
         </Link>
       </div>
 
-      {/* Live Redistribution Flow Card */}
+      {/* ── 4. Real-Time Capacity & Sustainability Load Bar Chart ─────────────── */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-muted text-primary">
+                <BarChart3 className="w-4 h-4 text-primary" />
+              </div>
+              <h2 className="font-heading text-lg font-black text-foreground">
+                Regional Carrying Capacity vs. Sustainability Score
+              </h2>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Compares visitor pressure strain against eco-sustainability performance index across monitored sites.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 text-xs font-bold">
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-1" />
+              <span>Visitor Pressure %</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-2" />
+              <span>Sustainability Score</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-64 sm:h-72 w-full">
+          
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={overviewChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 12, fontWeight: 600 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
+                  domain={[0, 100]}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--popover)',
+                    color: 'var(--popover-foreground)',
+                    borderRadius: '16px',
+                    border: '1px solid var(--border)',
+                    boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
+                    fontSize: '12px',
+                  }}
+                  cursor={{ fill: 'var(--muted)', opacity: 0.6 }}
+                />
+                <Bar
+                  dataKey="pressure"
+                  name="Visitor Pressure %"
+                  fill="var(--chart-1)"
+                  radius={[6, 6, 0, 0]}
+                  barSize={16}
+                />
+                <Bar
+                  dataKey="sustainability"
+                  name="Sustainability Index"
+                  fill="var(--chart-2)"
+                  radius={[6, 6, 0, 0]}
+                  barSize={16}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          
+        </div>
+      </div>
+
+      {/* ── 5. Live Redistribution Flow Card ───────────────────────────────────── */}
       <div className="rounded-3xl border border-border bg-card p-6 sm:p-7 shadow-dashboard-card space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -305,7 +460,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Highest Pressure Destinations Table with Interactive Filtering */}
+      {/* ── 6. Highest Pressure Destinations Table with Interactive Filtering ──── */}
       <div className="rounded-3xl border border-border bg-card shadow-dashboard-card overflow-hidden space-y-4">
         <div className="p-6 pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -352,7 +507,7 @@ export default function AdminDashboard() {
             </div>
 
             <Link href="/admin/destinations">
-              <Button size="xs" variant="outline" className="rounded-xl gap-1">
+              <Button size="xs" variant="outline" className="rounded-xl gap-1 shadow-xs">
                 <span>Registry</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>

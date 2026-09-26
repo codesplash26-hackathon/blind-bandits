@@ -150,7 +150,16 @@ responses and never call live providers.
 
 ## Regional visitor-pressure forecasting
 
-Training runs offline and requires reviewed external CSV data; this repository
+The deployed visitor-pressure service uses the finalized v2 residual LightGBM
+artifact in `ml/artifacts`. It predicts the one-month occupancy change
+(`occupancy_rate - occupancy_lag_1`) and reconstructs occupancy as the previous
+month's occupancy plus that predicted residual. The saved model is loaded and
+cached by file version; API requests never retrain it. Requests are served only
+for region/month contexts with all exact lag inputs, and configured regional
+aliases (for example, `Southern` to `South Coast`) are resolved before lookup.
+
+The earlier training utility below remains available for isolated development
+fixtures. Training runs offline and requires reviewed external CSV data; this repository
 does not include or manufacture production tourism observations. The monthly
 observations CSV needs `month` (`YYYY-MM`), `region`, `occupancy_rate` (0–100),
 `tourist_arrivals`, `is_holiday` (0/1), and `is_peak_season` (0/1). The calendar
@@ -181,13 +190,14 @@ included in the artifact. It does not claim destination-level precision.
 
 `GET /api/v1/destinations/{id}/pressure/explanation?month=YYYY-MM` returns
 the same regional forecast and band, plus the original input values, TreeSHAP
-attributions, an expected/base value, and a deterministic plain-language
-summary of the two strongest model drivers. The one-hot region columns are
-combined into one `region` attribution. SHAP values add to the **raw** model
-output; the displayed occupancy percentage is bounded to 0–100. These are
-model explanations, not causal claims or the exact weighted contributions used
-by the Sustainability Index. The backend reuses an explainer while the deployed
-artifact files remain unchanged. No LLM is used.
+attributions, the base residual, and a deterministic plain-language summary.
+The one-hot canonical-region columns are combined into one tourism-region
+attribution. SHAP values add to the **predicted residual**, not directly to the
+final occupancy forecast. The final forecast is reconstructed separately from
+the previous occupancy and residual. These are learned-model attributions, not
+causal claims and not the exact weighted arithmetic contributions used by the
+Sustainability Index. The backend caches both the artifact and explainer while
+the deployed files remain unchanged. No LLM is used.
 
 ## Lower-pressure alternatives
 

@@ -1,0 +1,147 @@
+year,location,location_type,rooms,units_or_hotels,source_report,source_table,source_page,needs_manual_review
+2017,Colombo City,resort_region,5310,41,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,Greater Colombo,resort_region,3225,62,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,South Coast,resort_region,8270,145,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,East Coast,resort_region,1129,27,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,Hill Country,resort_region,1356,36,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,Ancient Cities,resort_region,4024,84,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2017,Northern Region,resort_region,163,6,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,false
+2018,Colombo City,resort_region,5607,43,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,Greater Colombo,resort_region,3269,63,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,South Coast,resort_region,8676,173,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,East Coast,resort_region,1149,28,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,Hill Country,resort_region,1489,46,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,Ancient Cities,resort_region,4360,97,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2018,Northern Region,resort_region,207,7,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,false
+2019,Colombo City,resort_region,5638,44,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,Greater Colombo,resort_region,3052,60,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,South Coast,resort_region,8695,182,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,East Coast,resort_region,1201,31,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,Hill Country,resort_region,1548,48,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,Ancient Cities,resort_region,4462,101,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2019,Northern Region,resort_region,235,8,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,true
+2020,Colombo,district,8396,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Galle,district,6370,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Gampaha,district,3956,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Kandy,district,3482,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Kalutara,district,3465,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Matale,district,1942,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Hambantota,district,1863,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Nuwara Eliya,district,1850,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Matara,district,1717,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Badulla,district,1484,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Anuradhapura,district,1301,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Puttalam,district,1185,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Batticaloa,district,949,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Ampara,district,720,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Polonnaruwa,district,678,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Trincomalee,district,671,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Ratnapura,district,605,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Moneragala,district,544,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Jaffna,district,522,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Kurunegala,district,454,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Kegalle,district,365,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Vavuniya,district,81,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Kilinochchi,district,63,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Mullaitivu,district,50,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2020,Mannar,district,37,,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,false
+2021,Colombo,district,8575,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Galle,district,7865,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Gampaha,district,4191,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Kalutara,district,3723,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Kandy,district,3698,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Matale,district,2166,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Matara,district,2145,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Nuwara Eliya,district,2127,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Hambantota,district,2084,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Badulla,district,1775,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Anuradhapura,district,1619,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Puttalam,district,1355,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Batticaloa,district,914,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Ampara,district,778,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Trincomalee,district,740,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Polonnaruwa,district,683,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Ratnapura,district,630,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Moneragala,district,606,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Jaffna,district,541,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Kurunegala,district,479,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Kegalle,district,407,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Vavuniya,district,81,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Kilinochchi,district,68,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Mullaitivu,district,50,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2021,Mannar,district,37,,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,false
+2022,Colombo,district,8758,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Galle,district,8135,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Gampaha,district,4261,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Kaluthara,district,3809,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,kandy,district,3637,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Matale,district,2177,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Matara,district,2292,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Nuwara Eliya,district,2206,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Hambantota,district,2088,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Badulla,district,1986,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Anuradhapura,district,1543,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Puttalam,district,1364,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Batticaloa,district,869,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Ampara,district,725,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Trincomalee,district,720,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Polonnaruwa,district,615,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Ratnapura,district,601,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Moneragala,district,604,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Jaffna,district,540,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Kurunegala,district,520,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Kegalle,district,424,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Vavuniya,district,77,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Kilinochchi,district,85,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Mullaitivu,district,58,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2022,Mannar,district,26,,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,false
+2023,Colombo,district,9545,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Galle,district,8973,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Gampaha,district,4603,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Kandy,district,3956,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Kalutara,district,3947,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Matara,district,2694,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Hambantota,district,2477,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Matale,district,2451,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Nuwara Eliya,district,2409,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Badulla,district,2082,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Anuradhapura,district,1677,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Puttlam,district,1509,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Batticaloa,district,970,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Ampara,district,800,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Trincomalee,district,782,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Monaragala,district,711,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Rathnapura,district,703,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Polonnaruwa,district,676,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Kegalle,district,669,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Jaffna,district,647,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Kurunegala,district,640,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Vavuniya,district,102,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Kilinochchi,district,97,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Mullaitivu,district,64,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2023,Mannar,district,45,,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,false
+2024,Ampara,district,831,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Anuradhapura,district,1784,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Badulla,district,2055,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Batticaloa,district,991,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Colombo,district,11110,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Galle,district,8885,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Gampaha,district,4606,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Hambantota,district,2556,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Jaffna,district,712,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Kalutara,district,4053,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Kandy,district,4038,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Kegalle,district,686,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Kilinochchi,district,108,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Kurunegala,district,580,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Mannar,district,45,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Matale,district,2404,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Matara,district,2681,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Monaragala,district,814,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Mullaitivu,district,63,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Nuwara Eliya,district,2553,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Polonnaruwa,district,640,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Puttalam,district,1558,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Rathnapura,district,769,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Trincomalee,district,798,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false
+2024,Vavuniya,district,135,,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,false

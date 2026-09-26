@@ -1,0 +1,51 @@
+{
+  "algorithm": "LightGBM residual regressor inside a scikit-learn preprocessing pipeline",
+  "categorical_handling": "Training-fitted OneHotEncoder(handle_unknown='ignore') inside the saved pipeline.",
+  "created_timestamp": "2026-09-26T10:45:28.639831+00:00",
+  "evaluated_regions": [
+    "Ancient Cities",
+    "East Coast",
+    "Greater Colombo",
+    "Hill Country",
+    "Northern Region",
+    "South Coast"
+  ],
+  "feature_names": [
+    "canonical_region",
+    "month",
+    "month_sin",
+    "month_cos",
+    "arrivals_lag_1",
+    "arrivals_lag_2",
+    "arrivals_lag_3",
+    "arrivals_growth_lagged",
+    "arrivals_change_lag_1",
+    "occupancy_lag_1",
+    "occupancy_lag_2",
+    "occupancy_lag_3",
+    "occupancy_rolling_3",
+    "occupancy_change_lag_1",
+    "occupancy_change_lag_2"
+  ],
+  "improvement_vs_persistence": 2.3374598796539097,
+  "known_limitations": "Small dataset; 2021-2023 occupancy gap; only April-December 2024 has three exact occupancy lags; district-to-region aggregation and source-era changes; final evidence is one test year.",
+  "mae": 6.729765157383127,
+  "model_version": "v2_20260926T104528Z_residual_lightgbm_r2",
+  "persistence_baseline_mae": 9.067225037037037,
+  "prediction_interpretation": "One-month-ahead walk-forward prediction reconstructed as occupancy_lag_1 + predicted residual.",
+  "r2": 0.35915337866826846,
+  "residual_target": "occupancy_rate - occupancy_lag_1",
+  "rmse": 8.465034464560135,
+  "schema_version": 2,
+  "seasonal_baseline_mae": 11.016898402777779,
+  "target": "occupancy_rate",
+  "target_type": "residual",
+  "test_rows": 54,
+  "test_year": 2024,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020
+  ]
+}

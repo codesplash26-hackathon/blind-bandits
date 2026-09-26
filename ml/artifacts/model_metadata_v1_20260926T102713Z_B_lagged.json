@@ -1,0 +1,51 @@
+{
+  "aggregation_caveats": "2020/2024 district targets are room-weighted into defensible canonical regions. 2024 weights use registered-accommodation room capacity while occupancy covers graded establishments. Colombo City has no defensible 2020/2024 target.",
+  "algorithm": "LightGBM LGBMRegressor inside a scikit-learn Pipeline",
+  "beats_persistence_baseline": false,
+  "beats_seasonal_baseline": true,
+  "candidate_status": "Experimental candidate; not production-ready because persistence is stronger and regional performance is mixed.",
+  "categorical_handling": "Fitted OneHotEncoder(handle_unknown='ignore') saved inside the model pipeline.",
+  "created_timestamp": "2026-09-26T10:27:13.636283+00:00",
+  "evaluated_regions": [
+    "Ancient Cities",
+    "East Coast",
+    "Greater Colombo",
+    "Hill Country",
+    "Northern Region",
+    "South Coast"
+  ],
+  "feature_names": [
+    "canonical_region",
+    "month_sin",
+    "month_cos",
+    "arrivals_lag_1",
+    "arrivals_rolling_3",
+    "occupancy_lag_1",
+    "occupancy_lag_2",
+    "occupancy_lag_3",
+    "occupancy_rolling_3"
+  ],
+  "improvement_vs_baseline": 1.2779887823315192,
+  "known_2021_2023_gap": "No monthly occupancy targets exist and none were fabricated or interpolated.",
+  "mae": 9.73890962044626,
+  "model_version": "v1_20260926T102713Z_B_lagged",
+  "pandemic_data_included": true,
+  "persistence_baseline_mae": 9.067225037037037,
+  "prediction_interpretation": "One-month-ahead walk-forward regional occupancy forecast. If occupancy lags are used, later months may use actual earlier-month occupancy; this is not a 12-month-ahead forecast.",
+  "r2": -0.36786160700481685,
+  "rmse": 12.367239211452345,
+  "same_month_arrivals_excluded": true,
+  "schema_version": 1,
+  "seasonal_baseline_mae": 11.016898402777779,
+  "selection_rule": "Lowest 2024 MAE among models beating their same-row seasonal baseline; ties consider worst-region MAE then coverage. If none beat baseline, retain the lowest-MAE candidate and state that limitation.",
+  "target": "occupancy_rate",
+  "test_rows": 54,
+  "test_year": 2024,
+  "training_rows": 303,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020
+  ]
+}

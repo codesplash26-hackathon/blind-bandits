@@ -1,0 +1,7 @@
+configuration,objective,n_estimators,learning_rate,num_leaves,max_depth,min_child_samples,reg_lambda,validation_year,validation_rows,validation_mae,persistence_mae,selected
+base,regression_l1,120,0.03,7,3,12,0.1,2019,84,10.236175092448311,11.56988095238095,False
+candidate_1,regression_l1,100,0.03,5,2,8,0.1,2019,84,10.424817964388176,11.56988095238095,False
+candidate_2,regression_l1,160,0.03,7,3,8,0.1,2019,84,10.431019384188641,11.56988095238095,False
+candidate_3,regression_l1,180,0.02,7,3,12,0.1,2019,84,10.24523665686859,11.56988095238095,False
+candidate_4,regression_l1,120,0.03,9,4,12,0.1,2019,84,10.284413989426852,11.56988095238095,False
+candidate_5,regression_l1,80,0.05,7,3,18,0.1,2019,84,10.191310038767309,11.56988095238095,True
