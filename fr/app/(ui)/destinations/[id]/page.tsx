@@ -15,6 +15,10 @@ import {
   Calendar,
   CheckCircle2,
   DollarSign,
+  BarChart3,
+  ArrowUp,
+  ArrowDown,
+  Minus,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Badge } from '@/components/ui/badge';
@@ -23,12 +27,15 @@ import { Loader } from '@/components/Loader';
 import {
   getDestination,
   getDestinationPressure,
+  getDestinationPressureExplanation,
   getDestinationSustainability,
   simulateDestination,
 } from '@/lib/destinations';
 import { mapDestination, type DestinationViewModel } from '@/lib/destinationMapper';
 import type {
   DestinationPressureResponse,
+  DestinationPressureExplanationResponse,
+  PressureFeatureContribution,
   DestinationSimulationResponse,
   PressureBand,
 } from '@/types/destination-api';
@@ -47,6 +54,23 @@ function formatForecastMonth(month: string) {
   return new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(
     new Date(Date.UTC(year, monthNumber - 1, 1)),
   );
+}
+
+function formatFeatureValue(value: string | number | null) {
+  if (value === null) return 'Not provided';
+  if (typeof value === 'number') {
+    return Number.isInteger(value) ? value.toLocaleString() : value.toLocaleString(undefined, {
+      maximumFractionDigits: 3,
+    });
+  }
+  return value;
+}
+
+function contributionDirection(contribution: PressureFeatureContribution) {
+  const direction = contribution.direction.toLowerCase();
+  if (direction === 'increase' || direction === 'increases') return 'higher';
+  if (direction === 'decrease' || direction === 'decreases') return 'lower';
+  return 'neutral';
 }
 
 const pressureTone: Record<PressureBand, { text: string; background: string; stroke: string }> = {
@@ -70,8 +94,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [pressureMonth, setPressureMonth] = useState(currentMonth);
   const [pressure, setPressure] = useState<DestinationPressureResponse | null>(null);
+  const [pressureExplanation, setPressureExplanation] = useState<DestinationPressureExplanationResponse | null>(null);
   const [pressureLoading, setPressureLoading] = useState(false);
   const [pressureError, setPressureError] = useState<string | null>(null);
+  const [explanationError, setExplanationError] = useState<string | null>(null);
   const [pressureReloadKey, setPressureReloadKey] = useState(0);
 
   // What-If Simulator state (defaults at 50 / baseline)
@@ -112,15 +138,30 @@ export default function DestinationDetailPage({ params }: PageProps) {
     const loadPressure = async () => {
       setPressureLoading(true);
       setPressure(null);
+      setPressureExplanation(null);
       setPressureError(null);
+      setExplanationError(null);
       try {
-        const result = await getDestinationPressure(apiId, pressureMonth);
-        if (active) setPressure(result);
-      } catch (error) {
+        const explanation = await getDestinationPressureExplanation(apiId, pressureMonth);
         if (active) {
-          setPressureError(
-            describeApiError(error, 'Regional visitor-pressure prediction is unavailable.'),
+          setPressureExplanation(explanation);
+          setPressure(explanation);
+        }
+      } catch (explanationFailure) {
+        if (active) {
+          setExplanationError(
+            describeApiError(explanationFailure, 'The model explanation is unavailable.'),
           );
+        }
+        try {
+          const forecast = await getDestinationPressure(apiId, pressureMonth);
+          if (active) setPressure(forecast);
+        } catch (forecastFailure) {
+          if (active) {
+            setPressureError(
+              describeApiError(forecastFailure, 'Regional visitor-pressure prediction is unavailable.'),
+            );
+          }
         }
       } finally {
         if (active) setPressureLoading(false);
@@ -192,6 +233,12 @@ export default function DestinationDetailPage({ params }: PageProps) {
     ?? null;
   const isHighPressure = pressureBand === 'HIGH';
   const activePressureTone = pressureBand ? pressureTone[pressureBand] : null;
+  const maxAbsoluteContribution = pressureExplanation
+    ? Math.max(
+      ...pressureExplanation.feature_contributions.map((item) => Math.abs(item.shap_value)),
+      0,
+    )
+    : 0;
 
   return (
     <div className="space-y-6 pb-16">
@@ -514,6 +561,107 @@ export default function DestinationDetailPage({ params }: PageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column (7 Cols): sustainability breakdown and configured weights */}
         <div className="lg:col-span-7 space-y-6">
+          {/* TreeSHAP model explanation. This is deliberately separate from the index below. */}
+          <div className="p-6 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-secondary" />
+                  <h2 className="text-base font-black text-foreground">Visitor-Pressure Model Explanation</h2>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  TreeSHAP attribution for the model prediction—not Sustainability Index weighting.
+                </p>
+              </div>
+              <Badge variant="outline" className="border-secondary/30 text-secondary bg-secondary/5">
+                {pressureExplanation?.explanation_method ?? 'TreeSHAP'}
+              </Badge>
+            </div>
+
+            {pressureLoading && <Loader label="Calculating model explanation..." />}
+
+            {!pressureLoading && explanationError && (
+              <div className="rounded-2xl border border-warning/30 bg-warning/10 p-4 space-y-2">
+                <p className="text-xs font-bold text-foreground">Explanation unavailable</p>
+                <p className="text-xs text-muted-foreground">{explanationError}</p>
+                <Button size="sm" variant="outline" onClick={() => setPressureReloadKey((value) => value + 1)}>
+                  Retry explanation
+                </Button>
+              </div>
+            )}
+
+            {!pressureLoading && pressureExplanation && (
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="rounded-2xl bg-muted/40 border border-border p-3">
+                    <span className="text-[10px] uppercase font-bold text-muted-foreground block">Prediction</span>
+                    <span className="text-lg font-black text-foreground">{pressureExplanation.predicted_regional_occupancy_rate.toFixed(1)}%</span>
+                  </div>
+                  <div className="rounded-2xl bg-muted/40 border border-border p-3">
+                    <span className="text-[10px] uppercase font-bold text-muted-foreground block">{pressureExplanation.base_residual === null ? 'Base value' : 'Base residual'}</span>
+                    <span className="text-lg font-black text-foreground">{(pressureExplanation.base_residual ?? pressureExplanation.base_value).toFixed(2)}</span>
+                  </div>
+                  <div className="rounded-2xl bg-muted/40 border border-border p-3">
+                    <span className="text-[10px] uppercase font-bold text-muted-foreground block">Predicted residual</span>
+                    <span className="text-lg font-black text-foreground">{pressureExplanation.predicted_residual === null ? '—' : `${pressureExplanation.predicted_residual >= 0 ? '+' : ''}${pressureExplanation.predicted_residual.toFixed(2)}`}</span>
+                  </div>
+                  <div className="rounded-2xl bg-muted/40 border border-border p-3">
+                    <span className="text-[10px] uppercase font-bold text-muted-foreground block">Model</span>
+                    <span className="text-[10px] font-bold text-foreground break-all">{pressureExplanation.model_version}</span>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-secondary/20 bg-secondary/5 p-4">
+                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">
+                    {pressureExplanation.plain_language_explanation}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-bold text-foreground uppercase tracking-wider">SHAP feature contributions</span>
+                    <span className="text-[10px] text-muted-foreground">Model-output points relative to the base</span>
+                  </div>
+                  {pressureExplanation.feature_contributions.length === 0 && (
+                    <p className="text-xs text-muted-foreground">No feature contributions were returned.</p>
+                  )}
+                  {pressureExplanation.feature_contributions.map((contribution) => {
+                    const direction = contributionDirection(contribution);
+                    const width = maxAbsoluteContribution === 0
+                      ? 0
+                      : Math.max(2, (Math.abs(contribution.shap_value) / maxAbsoluteContribution) * 100);
+                    const DirectionIcon = direction === 'higher' ? ArrowUp : direction === 'lower' ? ArrowDown : Minus;
+                    return (
+                      <div key={contribution.feature_name} className="rounded-2xl border border-border p-3 space-y-2">
+                        <div className="flex items-start justify-between gap-3 text-xs">
+                          <div>
+                            <span className="font-bold text-foreground block">{contribution.display_name}</span>
+                            <span className="text-[10px] text-muted-foreground">
+                              Input: {formatFeatureValue(contribution.feature_value ?? contribution.input_value)}
+                            </span>
+                          </div>
+                          <div className={`text-right font-bold ${direction === 'higher' ? 'text-destructive' : direction === 'lower' ? 'text-success' : 'text-muted-foreground'}`}>
+                            <span className="flex items-center justify-end gap-1">
+                              <DirectionIcon className="w-3 h-3" />
+                              {direction === 'neutral' ? 'Neutral' : `Pushes ${direction}`}
+                            </span>
+                            <span className="font-mono">{contribution.shap_value >= 0 ? '+' : ''}{contribution.shap_value.toFixed(3)}</span>
+                          </div>
+                        </div>
+                        <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${direction === 'higher' ? 'bg-destructive' : direction === 'lower' ? 'bg-success' : 'bg-muted-foreground'}`}
+                            style={{ width: `${width}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
+
           {/* Sustainability 5-Dimension Breakdown */}
           <div className="p-6 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
             <div>

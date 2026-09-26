@@ -18,7 +18,7 @@ export interface SustainabilityContributionViewModel {
   weight: number;
 }
 
-export interface DestinationViewModel extends Omit<Destination, 'xaiExplanation'> {
+export interface DestinationViewModel extends Destination {
   api: DestinationResponse;
   sustainabilityData: DestinationSustainabilityResponse | null;
   sustainabilityExplanation: {

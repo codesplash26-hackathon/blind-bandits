@@ -40,17 +40,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 28,
       traffic: 12,
     },
-    xaiExplanation: {
-      summary:
-        'Belihuloya was recommended mainly because of its exceptionally strong environmental condition (92) and relatively low visitor pressure (28%).',
-      contributions: [
-        { factor: 'Environmental sustainability', percentage: 32, positive: true, description: 'Dense forest cover and pristine waterways' },
-        { factor: 'Low visitor pressure', percentage: 25, positive: true, description: 'Only 28% of estimated carrying capacity used' },
-        { factor: 'Community benefit', percentage: 20, positive: true, description: '88% of expenditures directly support local homestays' },
-        { factor: 'Tourist suitability', percentage: 13, positive: true, description: 'Matches peaceful nature hiking profile' },
-        { factor: 'Infrastructure resilience', percentage: 10, positive: true, description: 'Eco-lodges with decentralized solar & composting' },
-      ],
-    },
     weather: '23°C • Clear & Crisp',
     airQuality: 'AQI 18 • Excellent',
     dataConfidence: 'HIGH',
@@ -90,16 +79,6 @@ export const DESTINATIONS: Destination[] = [
       infrastructurePressure: 25,
       wastePressure: 20,
       traffic: 15,
-    },
-    xaiExplanation: {
-      summary:
-        'Ella experiences high tourism pressure (82%). While visitor infrastructure and suitability are strong, excessive crowd density and waste stress significantly drag down its overall sustainability score.',
-      contributions: [
-        { factor: 'Peak visitor congestion', percentage: -38, positive: false, description: 'Carrying capacity exceeded by 240% on peak weekends' },
-        { factor: 'Waste collection stress', percentage: -24, positive: false, description: 'Single-use plastic influx along trails' },
-        { factor: 'Tourist suitability', percentage: 22, positive: true, description: 'Established hospitality, guiding, and dining' },
-        { factor: 'Community revenue flow', percentage: 16, positive: true, description: 'High tourism income distribution to drivers and cafes' },
-      ],
     },
     alternatives: [
       {
@@ -170,16 +149,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 24,
       traffic: 16,
     },
-    xaiExplanation: {
-      summary:
-        'Haputale balances scenic tea mountain charm with moderate visitor density (54%). It provides an ideal lower-impact alternative to Ella.',
-      contributions: [
-        { factor: 'Controlled visitor density', percentage: 28, positive: true, description: 'Manageable tourist footfall across viewpoints' },
-        { factor: 'Tea community integration', percentage: 26, positive: true, description: 'Direct benefits to regional estate communities' },
-        { factor: 'Preserved forest corridors', percentage: 24, positive: true, description: 'Thangamale Bird Sanctuary buffer zone' },
-        { factor: 'Infrastructure adequacy', percentage: 22, positive: true, description: 'Scenic railway access without vehicle gridlocks' },
-      ],
-    },
     weather: '19°C • Cool Breezes',
     airQuality: 'AQI 14 • Excellent',
     dataConfidence: 'HIGH',
@@ -220,16 +189,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 22,
       traffic: 22,
     },
-    xaiExplanation: {
-      summary:
-        'Meemure stands out for pristine biodiversity and near-zero commercial overcrowding, though limited access roads require prepared eco-travelers.',
-      contributions: [
-        { factor: 'Pristine ecology', percentage: 38, positive: true, description: 'Knuckles conservation buffer with zero industrial runoff' },
-        { factor: 'Grassroots village livelihood', percentage: 32, positive: true, description: '100% locally operated meals and homestays' },
-        { factor: 'Minimal crowd density', percentage: 20, positive: true, description: 'Vehicle restrictions maintain quiet atmosphere' },
-        { factor: 'Rugged access', percentage: 10, positive: false, description: 'Requires 4x4 or trekking readiness' },
-      ],
-    },
     weather: '24°C • Humid & Sunny',
     airQuality: 'AQI 12 • Pristine',
     dataConfidence: 'MEDIUM',
@@ -269,16 +228,6 @@ export const DESTINATIONS: Destination[] = [
       infrastructurePressure: 22,
       wastePressure: 18,
       traffic: 15,
-    },
-    xaiExplanation: {
-      summary:
-        'Sigiriya offers world-class cultural heritage and well-developed tourist amenities, but heavy morning and sunset crowds result in high visitor pressure (79%).',
-      contributions: [
-        { factor: 'Historic preservation', percentage: 30, positive: true, description: 'Rigorous archaeological protection' },
-        { factor: 'Heritage infrastructure', percentage: 26, positive: true, description: 'Signage, paved trails, and museum interpretation' },
-        { factor: 'Peak queuing bottlenecks', percentage: -34, positive: false, description: 'Staircase congestion on Lion Rock summit' },
-        { factor: 'Vehicle parking overflow', percentage: -10, positive: false, description: 'Tour bus congestion along approach roads' },
-      ],
     },
     alternatives: [
       {
@@ -331,16 +280,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 16,
       traffic: 18,
     },
-    xaiExplanation: {
-      summary:
-        'Yala protects vital wildlife habitats, but intense safari jeep clustering around animal sightings creates elevated pressure (74%).',
-      contributions: [
-        { factor: 'Endangered fauna conservation', percentage: 32, positive: true, description: 'Critical habitat for Panthera pardus kotiya' },
-        { factor: 'Safari jeep clustering', percentage: -36, positive: false, description: 'Speeding and dust disturbing wildlife corridors' },
-        { factor: 'Park revenue generation', percentage: 22, positive: true, description: 'Funds department of wildlife conservation' },
-        { factor: 'Seasonal gate crowding', percentage: -10, positive: false, description: 'Early morning Palatupana gate queues' },
-      ],
-    },
     alternatives: [
       {
         id: 'sinharaja',
@@ -392,16 +331,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 22,
       traffic: 16,
     },
-    xaiExplanation: {
-      summary:
-        'Mirissa offers vibrant beach culture and marine encounters. Moderate tourism pressure (60%) is influenced by harbor vessel traffic.',
-      contributions: [
-        { factor: 'Community hospitality footprint', percentage: 30, positive: true, description: 'Family-owned beachside restaurants and surf schools' },
-        { factor: 'Marine ecotourism potential', percentage: 24, positive: true, description: 'Certified distance protocols for cetacean viewing' },
-        { factor: 'Coastal plastic runoff', percentage: -26, positive: false, description: 'Beachfront night venue waste management' },
-        { factor: 'Seasonal bay crowding', percentage: -20, positive: false, description: 'Peak surf season density from Dec to April' },
-      ],
-    },
     weather: '29°C • Tropical Ocean Breeze',
     airQuality: 'AQI 20 • Excellent',
     dataConfidence: 'HIGH',
@@ -441,16 +370,6 @@ export const DESTINATIONS: Destination[] = [
       infrastructurePressure: 26,
       wastePressure: 15,
       traffic: 10,
-    },
-    xaiExplanation: {
-      summary:
-        'Knuckles achieves a leading sustainability score (92) owing to rigorous nature reserve status, low crowd impact (22%), and expert community guiding.',
-      contributions: [
-        { factor: 'Ecological intactness', percentage: 36, positive: true, description: 'Pristine watershed supplying Mahaweli system' },
-        { factor: 'Minimal footprint recreation', percentage: 28, positive: true, description: 'Strict carry-in carry-out waste policies' },
-        { factor: 'Certified local trail guides', percentage: 22, positive: true, description: 'Guiding jobs directly empower mountain villages' },
-        { factor: 'Trail infrastructure care', percentage: 14, positive: true, description: 'Erosion prevention along high-altitude ridges' },
-      ],
     },
     weather: '20°C • Fresh Mountain Breeze',
     airQuality: 'AQI 8 • Pristine',
@@ -492,16 +411,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 10,
       traffic: 8,
     },
-    xaiExplanation: {
-      summary:
-        'Sinharaja is Sri Lanka’s gold standard for ecological conservation (98) with extremely low visitor density (18%) and mandatory local naturalist accompaniment.',
-      contributions: [
-        { factor: 'Primary rainforest conservation', percentage: 40, positive: true, description: 'World-recognized biodiversity hotspot' },
-        { factor: 'Community naturalist program', percentage: 28, positive: true, description: 'Local youth trained as accredited birding naturalists' },
-        { factor: 'No motorized vehicular access', percentage: 20, positive: true, description: 'Zero vehicle noise or exhaust inside boundary' },
-        { factor: 'Strict quota regulation', percentage: 12, positive: true, description: 'Gate quotas prevent forest canopy disruption' },
-      ],
-    },
     weather: '25°C • Tropical Rainforest Showers',
     airQuality: 'AQI 6 • Pristine',
     dataConfidence: 'HIGH',
@@ -541,16 +450,6 @@ export const DESTINATIONS: Destination[] = [
       infrastructurePressure: 28,
       wastePressure: 20,
       traffic: 22,
-    },
-    xaiExplanation: {
-      summary:
-        'Kandy hosts unmatched religious and botanical history with mature tourism amenities. Medium-high pressure (68%) arises primarily from valley bottleneck traffic.',
-      contributions: [
-        { factor: 'Cultural landmark value', percentage: 34, positive: true, description: 'UNESCO Living World Heritage status' },
-        { factor: 'Hospitality infrastructure', percentage: 26, positive: true, description: 'Wide range of hotels, rail connections, and dining' },
-        { factor: 'Valley traffic congestion', percentage: -25, positive: false, description: 'Peradeniya corridor bottlenecks at peak hours' },
-        { factor: 'Temple crowd flow', percentage: -15, positive: false, description: 'Poya day and puja queue density' },
-      ],
     },
     weather: '26°C • Mild & Pleasant',
     airQuality: 'AQI 42 • Moderate',

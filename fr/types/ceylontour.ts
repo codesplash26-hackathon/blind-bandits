@@ -22,18 +22,6 @@ export interface PressureBreakdown {
   traffic: number; // e.g. 15%
 }
 
-export interface XAIContribution {
-  factor: string;
-  percentage: number;
-  positive: boolean;
-  description?: string;
-}
-
-export interface XAIExplanation {
-  summary: string;
-  contributions: XAIContribution[];
-}
-
 export interface DestinationAlternative {
   id: string;
   name: string;
@@ -65,7 +53,6 @@ export interface Destination {
   };
   sustainability: SustainabilityBreakdown;
   pressure: PressureBreakdown;
-  xaiExplanation: XAIExplanation;
   alternatives?: DestinationAlternative[];
   weather?: string;
   airQuality?: string;
