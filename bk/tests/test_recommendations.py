@@ -273,6 +273,7 @@ async def test_valid_recommendation_request(
 
     assert response.status_code == 200
     body = response.json()
+    assert isinstance(body["recommendation_search_id"], int)
     assert len(body["results"]) == 1
     assert body["results"][0]["rank"] == 1
     assert body["results"][0]["destination"]["id"] == destination["id"]

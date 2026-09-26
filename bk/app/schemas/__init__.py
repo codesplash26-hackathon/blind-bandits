@@ -23,6 +23,7 @@ from app.schemas.recommendation import (
     RecommendationItemResponse,
     RecommendationRequest,
     RecommendationResponse,
+    RecommendationResults,
     SustainabilityPreference,
 )
 from app.schemas.sustainability import DestinationSustainabilityResponse
@@ -44,6 +45,7 @@ __all__ = [
     "RecommendationItemResponse",
     "RecommendationRequest",
     "RecommendationResponse",
+    "RecommendationResults",
     "RegistrationRequest",
     "SavedDestinationResponse",
     "SustainabilityPreference",

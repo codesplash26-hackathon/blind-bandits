@@ -28,6 +28,7 @@ export interface RecommendationItemResponse {
 }
 
 export interface RecommendationResponse {
+  recommendation_search_id: number;
   results: RecommendationItemResponse[];
 }
 

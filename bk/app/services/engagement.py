@@ -23,7 +23,7 @@ from app.schemas.engagement import (
     history_item_from_record,
 )
 from app.schemas.pressure import PressureBandThresholds
-from app.schemas.recommendation import RecommendationRequest, RecommendationResponse
+from app.schemas.recommendation import RecommendationRequest, RecommendationResults
 from app.services.recommendations import RANKING_VERSION
 from app.services.sustainability import SustainabilityWeightConfiguration
 
@@ -52,7 +52,7 @@ def record_recommendation_search(
     db: Session,
     user_id: int,
     request: RecommendationRequest,
-    response: RecommendationResponse,
+    response: RecommendationResults,
     configuration: SustainabilityWeightConfiguration,
 ) -> RecommendationSearch:
     record = RecommendationSearch(
