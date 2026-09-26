@@ -38,19 +38,19 @@ export default function SavedDestinationsPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Your Travel List
+              Your Saved Places
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {savedList.length} Selected Places
+              {savedList.length} Saved Places
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             My Saved Places
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Your personalized bucket list of peaceful destinations ready for your next trip.
+            Your personal list of places you want to visit.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function SavedDestinationsPage() {
               className="rounded-2xl gap-2 bg-card border-border text-primary hover:bg-muted text-xs font-bold shadow-2xs"
             >
               <Compass className="w-3.5 h-3.5 text-primary" />
-              <span>Browse Catalog</span>
+              <span>Browse Places</span>
             </Button>
           </Link>
 
@@ -73,7 +73,7 @@ export default function SavedDestinationsPage() {
                 className="rounded-2xl gap-2 bg-primary hover:bg-overlay text-primary-foreground text-xs font-bold shadow-md hover:shadow-lg transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span>Plan Trip with Saved Places</span>
+                <span>Plan a Trip</span>
               </Button>
             </Link>
           )}
@@ -93,7 +93,7 @@ export default function SavedDestinationsPage() {
                 <span className="text-xs text-muted-foreground font-semibold">places</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Ready for your trip plan
+                Ready to plan
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -111,7 +111,7 @@ export default function SavedDestinationsPage() {
                 <span className="text-xs text-muted-foreground font-semibold">days</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Total suggested journey
+                Total time needed
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -122,14 +122,14 @@ export default function SavedDestinationsPage() {
           <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-                Eco-Friendly Score
+                Eco Score
               </span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-heading text-3xl font-black text-foreground">{avgSustainability}</span>
                 <span className="text-xs text-muted-foreground font-semibold">/100</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Eco-friendly choices
+                How green your trip is
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -140,7 +140,7 @@ export default function SavedDestinationsPage() {
           <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-                Total Est. Budget
+                Estimated Cost
               </span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-heading text-xl sm:text-2xl font-black text-foreground">
@@ -206,7 +206,7 @@ export default function SavedDestinationsPage() {
               <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-xs pb-2.5 border-b border-border">
-                    <span className="text-muted-foreground font-semibold">Eco-Friendly Score</span>
+                    <span className="text-muted-foreground font-semibold">Eco Score</span>
                     <span className="font-black text-primary">
                       {dest.sustainability.overall} / 100
                     </span>

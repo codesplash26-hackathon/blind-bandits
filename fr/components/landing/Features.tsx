@@ -15,15 +15,15 @@ import {
 export const Features = () => {
   const features = [
     {
-      title: "AI Eco-Route Planner",
+      title: "Smart Eco-Planner",
       description:
-        "Smart itinerary builder optimizing routes to minimize travel emissions and discover hidden gems.",
+        "Smart planner that helps you travel green and find hidden gems.",
       icon: <Map className="w-7 h-7" />,
     },
     {
-      title: "100% Eco Stays",
+      title: "100% Green Stays",
       description:
-        "Handpicked eco-villas, jungle lodges, and treehouses certified for zero plastic & solar energy.",
+        "Handpicked eco-villas and treehouses that use solar energy and no plastic.",
       icon: <Leaf className="w-7 h-7" />,
     },
     {
@@ -33,21 +33,21 @@ export const Features = () => {
       icon: <Train className="w-7 h-7" />,
     },
     {
-      title: "Community Direct Impact",
+      title: "Support Locals",
       description:
-        "Over 85% of your trip booking fees go directly to local rural hosts, guides, and conservationists.",
+        "Over 85% of your booking fee goes directly to local hosts and guides.",
       icon: <HeartHandshake className="w-7 h-7" />,
     },
     {
-      title: "24/7 Verified Guide Grid",
+      title: "Verified Local Guides",
       description:
-        "Access licensed local experts for safe hiking, wildlife safaris, and cultural immersion.",
+        "Connect with friendly local experts for safe hiking and cultural tours.",
       icon: <ShieldCheck className="w-7 h-7" />,
     },
     {
-      title: "Offline Trail Navigation",
+      title: "Offline Maps",
       description:
-        "Interactive GPS maps for remote treks in Knuckles Mountain Range & Devil's Staircase without internet.",
+        "Use interactive GPS maps for remote treks even when you don't have internet.",
       icon: <WifiOff className="w-7 h-7" />,
     },
     {
@@ -69,13 +69,13 @@ export const Features = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-primary/15 border border-border dark:border-primary/30 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Smart Travel Engine</span>
+          <span>Smart Features</span>
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight mb-4">
-          Core Platform Features
+          Everything You Need
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Everything you need to plan, explore, and experience Sri Lanka authentically, responsibly, and effortlessly.
+          Everything you need to plan, explore, and experience Sri Lanka easily and responsibly.
         </p>
       </div>
 

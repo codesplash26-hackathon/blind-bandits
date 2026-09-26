@@ -123,19 +123,19 @@ export default function AdminSettingsPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              System Policy Engine
+              AI Settings
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              TreeSHAP Model v3.2 Active
+              AI Settings Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Sustainability &amp; Algorithm Policy Console
+            AI Routing Settings
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Configure carrying capacity thresholds, real-time routing biases, and external sensor data pipelines.
+            Change how the AI redirects travelers and connects to data sources.
           </p>
         </div>
 
@@ -146,7 +146,7 @@ export default function AdminSettingsPage() {
             className="rounded-xl gap-1.5 cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
           >
             <Save className="w-4 h-4 text-secondary" />
-            <span>Deploy Policy Updates</span>
+            <span>Save Settings</span>
           </Button>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function AdminSettingsPage() {
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
             <span className="font-semibold">
-              Authority policy updated and synced across all traveler recommendation endpoints.
+              Settings saved and live for all travelers.
             </span>
           </div>
           <span className="font-mono text-[10px] text-muted-foreground">ACK: 200 OK</span>
@@ -169,10 +169,10 @@ export default function AdminSettingsPage() {
           <div className="space-y-0.5">
             <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
               <SlidersHorizontal className="w-3.5 h-3.5 text-secondary" />
-              Quick Policy Archetypes
+              Quick Settings
             </span>
             <p className="text-[11px] text-muted-foreground">
-              Select an established operational preset or fine-tune parameters below.
+              Choose a quick setup or change the settings below manually.
             </p>
           </div>
 
@@ -186,7 +186,7 @@ export default function AdminSettingsPage() {
                   : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
               }`}
             >
-              Eco-Dominant (Strict)
+              Eco-First
             </button>
             <button
               type="button"
@@ -197,7 +197,7 @@ export default function AdminSettingsPage() {
                   : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
               }`}
             >
-              Balanced Redistribution (Recommended)
+              Balanced (Recommended)
             </button>
             <button
               type="button"
@@ -208,7 +208,7 @@ export default function AdminSettingsPage() {
                   : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
               }`}
             >
-              High-Mobility Peak Surge
+              Relaxed
             </button>
           </div>
         </div>
@@ -224,10 +224,10 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <h2 className="text-base font-bold text-foreground">
-                Recommendation Algorithm Calibration
+                AI Recommendations Setup
               </h2>
               <p className="text-xs text-muted-foreground">
-                TreeSHAP multi-factor weights governing tourist destination rerouting.
+                Adjust how the AI chooses places for travelers.
               </p>
             </div>
           </div>
@@ -236,9 +236,9 @@ export default function AdminSettingsPage() {
             {/* Slider 1: Warning Threshold */}
             <div className="space-y-2.5 p-4 rounded-2xl bg-muted/30 border border-border/60">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-foreground">Critical Carrying Capacity Alert Threshold</span>
+                <span className="font-bold text-foreground">Crowd Warning Limit</span>
                 <span className="font-mono font-bold text-destructive px-2 py-0.5 rounded-md bg-destructive/10 text-xs">
-                  {warningThreshold}% Footfall Limit
+                  {warningThreshold}% Full
                 </span>
               </div>
               <input
@@ -254,21 +254,21 @@ export default function AdminSettingsPage() {
                 className="w-full accent-destructive cursor-pointer h-2 bg-muted rounded-lg appearance-none"
               />
               <div className="flex justify-between text-[10px] text-muted-foreground font-medium">
-                <span>Conservative (60%)</span>
+                <span>Strict (60%)</span>
                 <span>Standard (75%)</span>
-                <span>High Tolerance (90%)</span>
+                <span>Relaxed (90%)</span>
               </div>
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Destinations exceeding this threshold trigger automated overtourism warnings and immediate diversion vectors.
+                Places over this limit will show warnings, and the AI will send travelers elsewhere.
               </p>
             </div>
 
             {/* Slider 2: Diversion Bias */}
             <div className="space-y-2.5 p-4 rounded-2xl bg-muted/30 border border-border/60">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-foreground">Alternative Redistribution Routing Bias</span>
+                <span className="font-bold text-foreground">How strongly to redirect</span>
                 <span className="font-mono font-bold text-secondary px-2 py-0.5 rounded-md bg-secondary/15 text-xs">
-                  +{diversionBias}% Steering Bias
+                  +{diversionBias}% Bias
                 </span>
               </div>
               <input
@@ -289,14 +289,14 @@ export default function AdminSettingsPage() {
                 <span>Aggressive (+60%)</span>
               </div>
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Determines how aggressively conscious travelers are rerouted away from Ella and Sigiriya to Belihuloya and Haputale.
+                Controls how often the AI pushes travelers away from busy places to quieter ones.
               </p>
             </div>
 
             {/* Slider 3: Eco Weight in Matching */}
             <div className="space-y-2.5 p-4 rounded-2xl bg-muted/30 border border-border/60">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-foreground">Sustainability Score Weight in Ranking</span>
+                <span className="font-bold text-foreground">Eco-Friendly Importance</span>
                 <span className="font-mono font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10 text-xs">
                   {ecoWeight}% Eco-Priority
                 </span>
@@ -314,12 +314,12 @@ export default function AdminSettingsPage() {
                 className="w-full accent-primary cursor-pointer h-2 bg-muted rounded-lg appearance-none"
               />
               <div className="flex justify-between text-[10px] text-muted-foreground font-medium">
-                <span>Preference Dominant (20%)</span>
+                <span>Less Important (20%)</span>
                 <span>Balanced (50%)</span>
-                <span>Eco-First (80%)</span>
+                <span>Very Important (80%)</span>
               </div>
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Higher ratio favors rural stewardship, low-emissions transit, and eco-homestays in traveler match scores.
+                A higher score means the AI will strongly suggest eco-friendly places.
               </p>
             </div>
           </div>
@@ -335,10 +335,10 @@ export default function AdminSettingsPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-foreground">
-                    Live Policy Impact Simulator
+                    Live Simulator
                   </h3>
                   <span className="text-[10px] font-mono text-secondary">
-                    Dynamic Real-Time Projection
+                    Preview Changes
                   </span>
                 </div>
               </div>
@@ -352,7 +352,7 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between text-xs">
                 <span className="text-muted-foreground flex items-center gap-1.5">
                   <Leaf className="w-3.5 h-3.5 text-secondary" />
-                  Projected Overcrowding Relief
+                  Expected Crowd Reduction
                 </span>
                 <span className="font-mono font-bold text-foreground text-sm">
                   {projectedReliefRate}%
@@ -365,7 +365,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <span className="text-[10px] text-muted-foreground block">
-                Estimated {Math.round(projectedReliefRate * 0.42)}% drop in peak trail queues at Ella &amp; Sigiriya
+                Estimated {Math.round(projectedReliefRate * 0.42)}% drop in crowds at busy places
               </span>
             </div>
 
@@ -374,7 +374,7 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between text-xs">
                 <span className="text-muted-foreground flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-primary" />
-                  Daily Dispersed Travelers
+                  Travelers Redirected Daily
                 </span>
                 <span className="font-mono font-bold text-foreground text-sm">
                   ~{projectedDispersedDaily.toLocaleString()} / day
@@ -387,7 +387,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <span className="text-[10px] text-muted-foreground block">
-                Redirected toward Belihuloya, Meemure, and rural Knuckles homestays
+                Sent to quieter places like Belihuloya and Meemure
               </span>
             </div>
 
@@ -396,21 +396,21 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between text-xs">
                 <span className="text-muted-foreground flex items-center gap-1.5">
                   <DollarSign className="w-3.5 h-3.5 text-secondary" />
-                  Monthly Rural Village Revenue
+                  Local Earnings Expected
                 </span>
                 <span className="font-mono font-bold text-secondary text-base">
                   LKR {projectedMonthlyRevenue}M
                 </span>
               </div>
               <span className="text-[10px] text-muted-foreground block">
-                Direct economic injection into local guides, tea estate stays, and artisans
+                Money earned by local guides and homestays
               </span>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 flex items-center gap-2.5 text-xs">
               <Sparkles className="w-4 h-4 text-secondary shrink-0" />
               <span className="text-foreground leading-relaxed">
-                Algorithm status: <strong>Optimal Balance</strong>. Zero carrying capacity threshold breach projected for Q4.
+                Algorithm status: <strong>Optimal Balance</strong>. No places are expected to become overcrowded.
               </span>
             </div>
           </Card>
@@ -426,10 +426,10 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <h2 className="text-base font-bold text-foreground">
-                Environmental Telemetry Feeds &amp; Sensor Grid
+                Live Data Sources
               </h2>
               <p className="text-xs text-muted-foreground">
-                Live sensor pipelines providing ground-truth environmental carrying capacity inputs.
+                Live data feeds that help the AI measure crowds and eco-impact.
               </p>
             </div>
           </div>

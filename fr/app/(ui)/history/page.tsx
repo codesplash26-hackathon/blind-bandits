@@ -27,19 +27,19 @@ export default function HistoryPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Continuous Intelligence Log
+              Your Search History
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {searchHistory.length} Recorded Queries
+              {searchHistory.length} Past Searches
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Recommendation History
+            Past Trip Ideas
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-            Audit past AI recommendation runs, calibrated parameters, and ranked sustainability matches.
+            See your past trip searches and the places we recommended for you.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default function HistoryPage() {
             className="rounded-2xl gap-2 bg-primary hover:bg-overlay text-primary-foreground text-xs font-bold shadow-xs transition-all cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span>New AI Trip Query</span>
+            <span>Start a New Search</span>
           </Button>
         </Link>
       </div>
@@ -69,7 +69,7 @@ export default function HistoryPage() {
                     #{searchHistory.length - qIdx}
                   </span>
                   <div>
-                    <span className="text-xs font-black text-foreground block">AI Query Calibrated</span>
+                    <span className="text-xs font-black text-foreground block">Search Details</span>
                     <span className="text-[11px] text-muted-foreground flex items-center gap-1 font-semibold">
                       <Clock className="w-3 h-3 text-primary" />
                       {item.date}
@@ -97,9 +97,9 @@ export default function HistoryPage() {
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black text-foreground uppercase tracking-wider">
-                    Ranked Output Sanctuaries ({item.recommendations.length})
+                    Recommended Places ({item.recommendations.length})
                   </span>
-                  <span className="text-[11px] text-muted-foreground font-bold">Highest Eco-Match First</span>
+                  <span className="text-[11px] text-muted-foreground font-bold">Best Matches First</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
@@ -117,7 +117,7 @@ export default function HistoryPage() {
                           <span className="text-xs font-black text-foreground group-hover:text-foreground transition-colors block">
                             {rec.name}
                           </span>
-                          <span className="text-[10px] text-muted-foreground font-semibold">Eco Match</span>
+                          <span className="text-[10px] text-muted-foreground font-semibold">Match</span>
                         </div>
                       </div>
 
@@ -136,7 +136,7 @@ export default function HistoryPage() {
               <div className="pt-3 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <span className="text-[11px] text-muted-foreground flex items-center gap-1.5 font-bold">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                  Query logged with zero sponsor bias and transparent carrying capacity balancing.
+                  Results are honest and help keep places from getting too crowded.
                 </span>
 
                 <Link href="/discover/results" onClick={() => handleRerun(item)}>
@@ -145,7 +145,7 @@ export default function HistoryPage() {
                     variant="outline"
                     className="rounded-xl gap-1 text-xs cursor-pointer border-border text-primary hover:bg-primary hover:text-primary-foreground transition-all font-bold"
                   >
-                    <span>View Result Dossier</span>
+                    <span>View Full Results</span>
                     <ArrowRight className="w-3 h-3" />
                   </Button>
                 </Link>
@@ -160,16 +160,16 @@ export default function HistoryPage() {
           </div>
           <div className="space-y-1.5">
             <h3 className="text-lg font-black text-foreground">
-              No recommendations logged yet
+              No searches yet
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
-              Run destination queries on Discover to have your personalized recommendation sets recorded and audited here.
+              Search for places on the Discover page and your history will show up here.
             </p>
           </div>
           <Link href="/discover">
             <Button size="sm" className="rounded-2xl gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-xs">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span>Discover Sanctuaries</span>
+              <span>Discover Places</span>
             </Button>
           </Link>
         </div>

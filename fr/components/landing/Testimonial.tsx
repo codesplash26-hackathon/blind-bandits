@@ -39,7 +39,7 @@ export function Testimonial() {
             Loved by Travelers from Around the Globe
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg max-w-lg leading-relaxed font-normal mb-6">
-            Hear how conscious adventurers and Sri Lankan local hosts create unforgettable, sustainable memories together with Ceylon Tour.
+            Hear how travelers and local hosts create unforgettable memories together with Ceylon Tour.
           </p>
 
           <div className="flex items-center gap-2 text-warning mb-2">
@@ -113,6 +113,6 @@ const testimonials = [
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     testimonial:
-      "The smart trip planner saved us days of stress. We spent 2 weeks exploring Yala safari points, Mirissa blue whale sanctuaries, and misty tea plantations with absolute ease.",
+      "The trip planner saved us days of stress. We spent 2 weeks exploring Yala safari points, Mirissa blue whale spots, and misty tea plantations with absolute ease.",
   },
 ];
