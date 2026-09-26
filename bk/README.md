@@ -11,8 +11,26 @@ python3 -m venv .venv
 .venv/bin/python -m uvicorn app.main:app --reload
 ```
 
-Create the initial administrator after applying migrations. The password is read
-interactively and is not accepted as a command-line argument:
+For the local hackathon demonstration, apply migrations and then use the
+repeatable combined seed. It creates or refreshes the documented demo admin and
+adds only the bundled destinations that are not already present:
+
+```bash
+python -m app.cli.seed_demo
+```
+
+Demo administrator login:
+
+```text
+Email: admin@ceylontour.demo
+Password: CeylonTourDemo2026!
+```
+
+Public registration always creates a `TOURIST`; it cannot create an `ADMIN`.
+The public demo credentials must not be used in a production deployment.
+
+To create a private administrator instead, use the interactive command. The
+password is not accepted as a command-line argument:
 
 ```bash
 python -m app.cli.create_admin --name "Site Admin" --email admin@example.com
@@ -32,9 +50,11 @@ python -m app.cli.seed_destinations --input /path/to/reviewed-destinations.json
 Each object uses the same fields as the admin destination-create API. `activities`
 is a list of lowercase slugs, and `factor` is optional. If a factor is provided,
 all five scores, `data_source`, `confidence_level`, `value_type`, and
-`last_updated` are required. This repository intentionally does not bundle seed
-scores: values in automated tests are examples only and are not project research
-data.
+`last_updated` are required. The repository includes
+`data/demo/destinations.json` only to reproduce the hackathon demonstration
+flow. Its factor values are explicitly labelled as low-confidence proxies and
+are not project research data. Replace them with reviewed, cited values before
+any real-world use.
 
 ## Sustainability weights
 

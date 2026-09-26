@@ -131,10 +131,10 @@ export const Navigation = () => {
             <ThemeToggle />
             <div className="hidden sm:flex gap-4">
               <Button
-                onClick={() => router.push("/dashboard")}
+                onClick={() => router.push("/auth")}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm cursor-pointer"
               >
-                Tourist Dashboard
+                Login
               </Button>
             </div>
             <button

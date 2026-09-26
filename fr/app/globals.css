@@ -5,16 +5,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  /* Ocean Blue Serenity: reserve the brightest shades for small accents. */
-  --color-deep-twilight: #03045E;
-  --color-french-blue: #023E8A;
-  --color-bright-teal-blue: #0077B6;
-  --color-blue-green: #0096C7;
-  --color-turquoise-surf: #00B4D8;
-  --color-sky-aqua: #48CAE4;
-  --color-frosted-blue: #90E0EF;
-  --color-pale-frosted-blue: #ADE8F4;
-  --color-light-cyan: #CAF0F8;
+  /* Ocean Blue Serenity: brand colors stay vivid while surfaces stay neutral. */
+  --color-deep-twilight: #03045e;
+  --color-french-blue: #023e8a;
+  --color-bright-teal-blue: #0077b6;
+  --color-blue-green: #0096c7;
+  --color-turquoise-surf: #00b4d8;
+  --color-sky-aqua: #48cae4;
+  --color-frosted-blue: #90e0ef;
+  --color-pale-frosted-blue: #ade8f4;
+  --color-light-cyan: #caf0f8;
 
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
@@ -23,7 +23,6 @@
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-destructive-foreground: var(--destructive-foreground);
-
   --color-on-surface: var(--foreground);
   --color-on-surface-variant: var(--muted-foreground);
   --color-surface-container-low: var(--muted);
@@ -127,47 +126,45 @@
 :root {
   color-scheme: light;
   --font-heading: var(--font-sans);
-  /* Near-white surfaces keep the saturated ocean blues intentional. */
-  --background: #F7FAFC;
-  --foreground: #14263D;
-  --card: #FFFFFF;
+  /* Neutral layers let ocean blue read as an accent instead of a page tint. */
+  --background: #f8fafc;
+  --foreground: #172033;
+  --card: #ffffff;
   --card-foreground: var(--foreground);
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: var(--foreground);
-  --primary: #0077B6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #00B4D8;
-  --secondary-foreground: #FFFFFF;
-  --muted: #EDF3F7;
-  --muted-foreground: #536779;
-  --accent: #CAF0F8;
-  --accent-foreground: #03045E;
-  /* Error states remain distinct from informational blues. */
-  --destructive: #BE3455;
-  --destructive-foreground: #FFFFFF;
+  --primary: #0077b6;
+  --primary-foreground: #ffffff;
+  --secondary: #00b4d8;
+  --secondary-foreground: #062438;
+  --muted: #eef2f6;
+  --muted-foreground: #5d6878;
+  --accent: #e5f6fb;
+  --accent-foreground: #023e8a;
+  --destructive: #be3455;
+  --destructive-foreground: #ffffff;
   --success: #187052;
-  --success-foreground: #FFFFFF;
+  --success-foreground: #ffffff;
   --warning: #946000;
-  --warning-foreground: #FFFFFF;
-  /* Photo overlays retain their contrast independently of the UI mode. */
-  --overlay: #0B1423;
-  --overlay-foreground: #FFFFFF;
-  --shadow-color: #14263D;
-  --border: #D4E1EA;
-  --input: #859CAD;
-  --ring: #0077B6;
-  --chart-1: #023E8A;
-  --chart-2: #0077B6;
-  --chart-3: #0096C7;
-  --chart-4: #00B4D8;
-  --chart-5: #03045E;
+  --warning-foreground: #ffffff;
+  --overlay: #0a0f18;
+  --overlay-foreground: #ffffff;
+  --shadow-color: #172033;
+  --border: #d8e0e8;
+  --input: #a8b5c3;
+  --ring: #0096c7;
+  --chart-1: #023e8a;
+  --chart-2: #0077b6;
+  --chart-3: #0096c7;
+  --chart-4: #00b4d8;
+  --chart-5: #48cae4;
   --radius: 0.75rem;
-  --sidebar: #FFFFFF;
+  --sidebar: #ffffff;
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: #EAF4F8;
-  --sidebar-accent-foreground: #023E8A;
+  --sidebar-accent: #eaf4f8;
+  --sidebar-accent-foreground: #023e8a;
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
 }
@@ -179,43 +176,45 @@
 
 .dark {
   color-scheme: dark;
-  /* Desaturated navy surfaces avoid a vivid blue cast across the page. */
-  --background: #0B1423;
-  --foreground: #E8F0F7;
-  --card: #121F32;
+  /* Charcoal layers create depth; blue is reserved for actions and data. */
+  --background: #0b0f17;
+  --foreground: #edf2f7;
+  --card: #141b26;
   --card-foreground: var(--foreground);
-  --popover: #18283D;
+  --popover: #1a2330;
   --popover-foreground: var(--foreground);
-  --primary: #00B4D8;
-  --primary-foreground: #0B1423;
-  --secondary: #0077B6;
-  --secondary-foreground: #0B1423;
-  --muted: #192A40;
-  --muted-foreground: #A2B5C8;
-  --accent: #203D54;
-  --accent-foreground: #CAF0F8;
-  --destructive: #F08A9D;
-  --destructive-foreground: #0B1423;
-  --success: #75D5AE;
-  --success-foreground: #0B1423;
-  --warning: #E9BF68;
-  --warning-foreground: #0B1423;
+  --primary: #48cae4;
+  --primary-foreground: #07131c;
+  --secondary: #0077b6;
+  --secondary-foreground: #f5fbff;
+  --muted: #202936;
+  --muted-foreground: #a6b2c1;
+  --accent: #203344;
+  --accent-foreground: #caf0f8;
+  --destructive: #f08a9d;
+  --destructive-foreground: #19070c;
+  --success: #75d5ae;
+  --success-foreground: #071510;
+  --warning: #e9bf68;
+  --warning-foreground: #1b1305;
+  --overlay: #070b11;
+  --overlay-foreground: #ffffff;
   --shadow-color: #000000;
-  --border: #2C4057;
-  --input: #607A94;
-  --ring: #48CAE4;
-  --chart-1: #48CAE4;
-  --chart-2: #90E0EF;
-  --chart-3: #00B4D8;
-  --chart-4: #0096C7;
-  --chart-5: #CAF0F8;
-  --sidebar: #0E192A;
+  --border: #344052;
+  --input: #526174;
+  --ring: #48cae4;
+  --chart-1: #90e0ef;
+  --chart-2: #48cae4;
+  --chart-3: #00b4d8;
+  --chart-4: #0096c7;
+  --chart-5: #5b8def;
+  --sidebar: #101620;
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--muted);
-  --sidebar-accent-foreground: #CAF0F8;
-  --sidebar-border: var(--border);
+  --sidebar-accent: #1d2836;
+  --sidebar-accent-foreground: #caf0f8;
+  --sidebar-border: #2d3949;
   --sidebar-ring: var(--ring);
 }
 
@@ -259,7 +258,6 @@ html:not(.light) body::before {
 
 /* ── Scrollbar ─────────────────────────────────────────────── */
 @layer base {
-  /* ── Universal Heading Consistency ────────────────────── */
   h1, h2, h3, h4, h5, h6 {
     color: var(--foreground);
     letter-spacing: -0.015em;
@@ -338,7 +336,6 @@ html:not(.light) body::before {
   }
 }
 
-/* Charts use the same surfaces and typography as the surrounding UI. */
 .recharts-default-tooltip {
   background-color: var(--popover) !important;
   border-color: var(--border) !important;
