@@ -69,19 +69,19 @@ export default function AdminDestinationsRegistryPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Tourism Authority
+              Admin System
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Registry v2.4 Active
+              Destinations Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Destinations Carrying Capacity Registry
+            Manage Places &amp; Crowd Limits
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Official monitoring database of ecological limits, footfall caps, and carrying capacity compliance.
+            Monitor and manage crowd limits and eco-friendly rules for all places.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export default function AdminDestinationsRegistryPage() {
             size="sm"
             variant="outline"
             onClick={() => {
-              setToastMessage('Exported official national carrying capacity audit to CSV.');
+              setToastMessage('Exported crowd limit report to CSV.');
               setTimeout(() => setToastMessage(null), 3000);
             }}
             className="rounded-xl gap-1.5 cursor-pointer"
@@ -101,7 +101,7 @@ export default function AdminDestinationsRegistryPage() {
           <Link href="/admin/tourism-pressure">
             <Button size="sm" className="rounded-xl gap-1.5 cursor-pointer bg-primary text-primary-foreground">
               <SlidersHorizontal className="w-4 h-4 text-secondary" />
-              <span>Simulate Pressure</span>
+              <span>Crowd Simulator</span>
             </Button>
           </Link>
         </div>
@@ -168,10 +168,10 @@ export default function AdminDestinationsRegistryPage() {
         <div className="p-6 pb-2 flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-foreground">
-              Pilot Destinations Registry ({filteredList.length} of {destinations.length})
+              Tracked Places ({filteredList.length} of {destinations.length})
             </h2>
             <p className="text-xs text-muted-foreground">
-              Carrying capacity thresholds established under the Sri Lanka Sustainable Tourism Strategy.
+              Manage crowd limits to protect nature and improve traveler experience.
             </p>
           </div>
         </div>
@@ -182,10 +182,10 @@ export default function AdminDestinationsRegistryPage() {
               <TableRow className="text-muted-foreground uppercase tracking-wider text-[11px]">
                 <TableHead className="py-3 px-3">Destination</TableHead>
                 <TableHead className="py-3 px-3">District</TableHead>
-                <TableHead className="py-3 px-3">Pressure Load</TableHead>
-                <TableHead className="py-3 px-3">Daily Footfall Cap</TableHead>
-                <TableHead className="py-3 px-3">Sustainability</TableHead>
-                <TableHead className="py-3 px-3">Carrying Status</TableHead>
+                <TableHead className="py-3 px-3">Crowd Level</TableHead>
+                <TableHead className="py-3 px-3">Daily Visitor Limit</TableHead>
+                <TableHead className="py-3 px-3">Eco Score</TableHead>
+                <TableHead className="py-3 px-3">Status</TableHead>
                 <TableHead className="py-3 px-3 text-right">Management</TableHead>
               </TableRow>
             </TableHeader>
@@ -240,15 +240,15 @@ export default function AdminDestinationsRegistryPage() {
                     <TableCell className="py-3.5 px-3">
                       {dest.pressure.level === 'HIGH' ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-destructive">
-                          <AlertTriangle className="w-3.5 h-3.5" /> Over Capacity
+                          <AlertTriangle className="w-3.5 h-3.5" /> Overcrowded
                         </span>
                       ) : dest.pressure.level === 'MEDIUM' ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-warning">
-                          Near Threshold
+                          Getting Busy
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-success">
-                          <CheckCircle2 className="w-3.5 h-3.5" /> Eco-Safe
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Safe
                         </span>
                       )}
                     </TableCell>
@@ -287,10 +287,10 @@ export default function AdminDestinationsRegistryPage() {
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-secondary">
-                  Authority Parameter Override
+                  Update Limit
                 </span>
                 <h3 className="font-heading text-lg font-bold text-foreground">
-                  Adjust Capacity Cap: {editingDest.name}
+                  Change Visitor Limit: {editingDest.name}
                 </h3>
               </div>
               <button
@@ -304,16 +304,16 @@ export default function AdminDestinationsRegistryPage() {
 
             <div className="space-y-3">
               <div className="p-3 rounded-2xl bg-muted/40 text-xs space-y-1">
-                <span className="text-muted-foreground">Current Environmental Footprint:</span>
+                <span className="text-muted-foreground">Current Status:</span>
                 <div className="flex items-center justify-between font-bold text-foreground">
-                  <span>Pressure Load: {editingDest.pressure.score}%</span>
-                  <span>Sustainability: {editingDest.sustainability.overall}/100</span>
+                  <span>Crowds: {editingDest.pressure.score}%</span>
+                  <span>Eco Score: {editingDest.sustainability.overall}/100</span>
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <label htmlFor="capacity-input" className="text-xs font-bold text-foreground block">
-                  Max Daily Visitor Footfall Limit
+                  Max Daily Visitors
                 </label>
                 <Input
                   id="capacity-input"
@@ -323,7 +323,7 @@ export default function AdminDestinationsRegistryPage() {
                   className="bg-muted/50 rounded-xl font-mono text-sm"
                 />
                 <span className="text-[10px] text-muted-foreground">
-                  Exceeding this number triggers dynamic redistribution in tourist recommendation feeds.
+                  If visitors exceed this number, the AI will suggest other quieter places.
                 </span>
               </div>
             </div>
@@ -333,7 +333,7 @@ export default function AdminDestinationsRegistryPage() {
                 Cancel
               </Button>
               <Button size="sm" onClick={handleSaveCapacity} className="rounded-xl bg-primary text-primary-foreground">
-                Apply & Propagate Policy
+                Save Changes
               </Button>
             </div>
           </Card>

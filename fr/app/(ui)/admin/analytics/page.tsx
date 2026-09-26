@@ -94,19 +94,19 @@ export default function AdminAnalyticsPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Authority Macro Analytics
+              Analytics Overview
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              National Dispersal Audit 2026
+              Live Impact Report 2026
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Redistribution &amp; Ecological Impact Analytics
+            Travel Trends &amp; Eco Impact
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Interactive charts, visitor dispersal trajectories, and carbon offset audits from AI visitor routing.
+            View how our AI is helping travelers find quieter places and reducing our carbon footprint.
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export default function AdminAnalyticsPage() {
         <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center gap-2 text-xs text-foreground animate-in fade-in duration-300">
           <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
           <span className="font-semibold">
-            Tourism Authority Sustainable Redistribution Report ({timeframe} 2026) exported successfully.
+            Eco Impact Report ({timeframe} 2026) downloaded successfully.
           </span>
         </div>
       )}
@@ -196,15 +196,15 @@ export default function AdminAnalyticsPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Travelers Dispersed
+              Travelers Rerouted
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">3,840</span>
-              <span className="text-xs text-muted-foreground font-semibold">tourists</span>
+              <span className="text-xs text-muted-foreground font-semibold">travelers</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">▲ +34%</span>
-              <span className="text-muted-foreground font-normal">to rural sites</span>
+              <span className="text-muted-foreground font-normal">to quieter places</span>
             </div>
           </div>
 
@@ -227,15 +227,15 @@ export default function AdminAnalyticsPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Rural Eco-Revenue
+              Local Revenue
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">24.6M</span>
               <span className="text-xs text-muted-foreground font-semibold">LKR</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">● Injected</span>
-              <span className="text-muted-foreground font-normal">to local homestays</span>
+              <span className="text-primary">● Earned</span>
+              <span className="text-muted-foreground font-normal">by local families</span>
             </div>
           </div>
 
@@ -252,15 +252,15 @@ export default function AdminAnalyticsPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Satisfaction Index
+              Happy Travelers
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">94.2%</span>
-              <span className="text-xs text-muted-foreground font-semibold">score</span>
+              <span className="text-xs text-muted-foreground font-semibold">rating</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">★ Optimal</span>
-              <span className="text-muted-foreground font-normal">visitor feedback</span>
+              <span className="text-primary">★ Great</span>
+              <span className="text-muted-foreground font-normal">positive reviews</span>
             </div>
           </div>
 
@@ -298,22 +298,22 @@ export default function AdminAnalyticsPage() {
                 <Activity className="w-4 h-4 text-primary" />
               </div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Visitor Dispersal Trajectory (2026)
+                Where Travelers Are Going (2026)
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Footfall strain reduction on saturated hotspots vs. regenerative absorption by alternative eco-destinations.
+              Showing how we are moving people away from crowded areas into quieter, greener places.
             </p>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-bold">
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-1" />
-              <span>Saturated Hubs (Ella, Sigiriya)</span>
+              <span>Busy Places (Ella, Sigiriya)</span>
             </div>
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-2" />
-              <span>Eco-Destinations (Belihuloya, Meemure)</span>
+              <span>Quiet Places (Belihuloya, Meemure)</span>
             </div>
           </div>
         </div>
@@ -416,19 +416,19 @@ export default function AdminAnalyticsPage() {
                   <BarChart3 className="w-4 h-4 text-primary" />
                 </div>
                 <h2 className="font-heading text-lg font-black text-foreground">
-                  Baseline vs. Optimized Carrying Capacity
+                  Before vs. After AI Routing
                 </h2>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Pre-AI visitor overload vs. Post-AI balanced load across monitored destinations.
+                How our AI has balanced the number of visitors across different locations.
               </p>
             </div>
             <div className="flex items-center gap-3 text-xs font-bold">
               <span className="flex items-center gap-1.5 text-foreground">
-                <span className="size-2.5 rounded-full bg-chart-1" /> Pre-AI
+                <span className="size-2.5 rounded-full bg-chart-1" /> Before AI
               </span>
               <span className="flex items-center gap-1.5 text-foreground">
-                <span className="size-2.5 rounded-full bg-chart-2" /> Optimized
+                <span className="size-2.5 rounded-full bg-chart-2" /> After AI
               </span>
             </div>
           </div>
@@ -497,11 +497,11 @@ export default function AdminAnalyticsPage() {
                 <PieIcon className="w-4 h-4 text-primary" />
               </div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Dispersal Share
+                Where They Went
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Category allocation of travelers guided into regenerative activities.
+              The types of places travelers chose when given quieter options.
             </p>
           </div>
 
@@ -567,22 +567,22 @@ export default function AdminAnalyticsPage() {
                 <Layers className="w-4 h-4 text-primary" />
               </div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Carbon Offset Avoided vs. Rural Economic Inflow
+                Emissions Saved vs. Local Earnings
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Dual-metric correlation: Metric tonnes of CO2 saved (Bars) and direct LKR Millions injected into rural villages (Line).
+              How reducing carbon emissions is helping rural villages earn more money.
             </p>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-bold">
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-2" />
-              <span>CO2 Avoided (Tonnes)</span>
+              <span>CO2 Saved (Tonnes)</span>
             </div>
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-1" />
-              <span>Rural Revenue (LKR Millions)</span>
+              <span>Local Earnings (LKR Millions)</span>
             </div>
           </div>
         </div>
@@ -651,10 +651,10 @@ export default function AdminAnalyticsPage() {
       <div className="p-6 sm:p-7 rounded-3xl border border-border bg-card shadow-dashboard-card space-y-4">
         <div>
           <h2 className="font-heading text-lg font-black text-foreground">
-            Active Travel Dispersal Corridors
+            Popular Quiet Routes
           </h2>
           <p className="text-xs text-muted-foreground mt-0.5 font-medium">
-            Measured pressure relief on saturated hubs and direct economic benefit in receiving eco-destinations.
+            How moving travelers away from busy spots is helping smaller, quieter towns.
           </p>
         </div>
 

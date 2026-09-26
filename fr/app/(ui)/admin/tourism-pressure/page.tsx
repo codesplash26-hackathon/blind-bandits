@@ -55,26 +55,26 @@ export default function AdminTourismPressurePage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Tourism Pressure Engine
+              Crowd Simulator
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              TreeSHAP Explainable AI Active
+              AI Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Tourism Pressure &amp; Carrying Capacity Simulator
+            Test Crowd Limits &amp; AI Routing
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Audit TreeSHAP carrying capacity drivers and run predictive what-if scenarios on visitor surges.
+            Test how the AI handles unexpected crowds and redirects travelers to quieter spots.
           </p>
         </div>
 
         <Link href="/admin/analytics">
           <Button size="sm" variant="outline" className="rounded-xl gap-1.5 cursor-pointer">
             <TrendingUp className="w-4 h-4 text-secondary" />
-            <span>View Impact Analytics</span>
+            <span>View Reports</span>
           </Button>
         </Link>
       </div>
@@ -85,13 +85,13 @@ export default function AdminTourismPressurePage() {
           <div className="flex items-center gap-2.5">
             <SlidersHorizontal className="w-5 h-5 text-primary" />
             <div>
-              <h2 className="text-base font-bold text-foreground">Interactive Capacity Stress Simulator</h2>
-              <p className="text-xs text-muted-foreground">Simulate high-season visitor surges and test AI mitigation rules</p>
+              <h2 className="text-base font-bold text-foreground">Crowd Simulator Tool</h2>
+              <p className="text-xs text-muted-foreground">Test how different crowd levels change AI recommendations</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">High Pressure Sites:</span>
+            <span className="text-xs text-muted-foreground">Crowded Places:</span>
             <span className={`font-mono text-sm font-bold ${highPressureCount > 3 ? 'text-destructive' : 'text-secondary'}`}>
               {highPressureCount} of {DESTINATIONS.length}
             </span>
@@ -102,7 +102,7 @@ export default function AdminTourismPressurePage() {
           {/* Slider 1: Seasonal Surge */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Peak Season National Influx:</span>
+              <span className="font-bold text-foreground">Expected Visitor Increase:</span>
               <span className="font-mono font-bold text-primary text-sm">+{surgeModifier}%</span>
             </div>
             <input
@@ -124,7 +124,7 @@ export default function AdminTourismPressurePage() {
           {/* Selector 2: AI Redistribution Bias */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">AI Redistribution Aggressiveness:</span>
+              <span className="font-bold text-foreground">How strong should the AI redirect people?</span>
               <span className="font-mono font-bold text-secondary text-sm">{redistributionBias}</span>
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -145,10 +145,10 @@ export default function AdminTourismPressurePage() {
             </div>
             <span className="text-[10px] text-muted-foreground block">
               {redistributionBias === 'AGGRESSIVE'
-                ? 'Strongly suppresses over-capacity spots from tourist recommendations.'
+                ? 'Strongly avoids suggesting crowded places.'
                 : redistributionBias === 'BALANCED'
-                ? 'Standard weighted dispersal matching traveler preferences.'
-                : 'Minimal intervention; relies strictly on organic tourist choices.'}
+                ? 'Balances crowd limits and what travelers want.'
+                : 'Rarely redirects, lets travelers choose freely.'}
             </span>
           </div>
         </div>
@@ -158,12 +158,12 @@ export default function AdminTourismPressurePage() {
           <div className="flex items-center gap-2">
             <Info className="w-4 h-4 text-primary shrink-0" />
             <span>
-              Under <strong className="text-foreground">+{surgeModifier}% surge</strong> and{' '}
-              <strong className="text-foreground">{redistributionBias} policy</strong>, Ella carrying capacity stays at{' '}
+              Under <strong className="text-foreground">+{surgeModifier}% more visitors</strong> and{' '}
+              <strong className="text-foreground">{redistributionBias} policy</strong>, Ella crowds stay at{' '}
               <strong className="text-foreground font-mono">
                 {simulatedDestinations.find((d) => d.id === 'ella')?.simulatedScore}%
               </strong>{' '}
-              (vs 82% unmitigated).
+              (vs 82% without AI).
             </span>
           </div>
           <Button
@@ -184,8 +184,8 @@ export default function AdminTourismPressurePage() {
       {/* Simulated Destination Grid */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-lg font-bold text-foreground">Destination Stress Projections</h2>
-          <p className="text-xs text-muted-foreground">Compare baseline carrying capacity with simulated policy output</p>
+          <h2 className="text-lg font-bold text-foreground">Expected Crowd Levels</h2>
+          <p className="text-xs text-muted-foreground">See how the AI changes the crowd levels at each place.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -221,7 +221,7 @@ export default function AdminTourismPressurePage() {
               {/* Stress Score Bar */}
               <div className="mt-4 space-y-1.5">
                 <div className="flex items-baseline justify-between text-xs">
-                  <span className="text-muted-foreground">Projected Pressure</span>
+                  <span className="text-muted-foreground">Expected Crowd Level</span>
                   <div className="flex items-center gap-1 font-mono font-bold">
                     <span className="text-foreground text-sm">{dest.simulatedScore}%</span>
                     <span
@@ -253,10 +253,10 @@ export default function AdminTourismPressurePage() {
               </div>
 
               <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Baseline: {dest.pressure.score}%</span>
+                <span className="text-muted-foreground">Original: {dest.pressure.score}%</span>
                 <Link href={`/destinations/${dest.id}`}>
                   <span className="text-primary hover:underline font-semibold flex items-center gap-0.5">
-                    Inspect XAI <ArrowRight className="w-3 h-3" />
+                    View Details <ArrowRight className="w-3 h-3" />
                   </span>
                 </Link>
               </div>

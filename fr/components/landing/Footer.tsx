@@ -18,7 +18,7 @@ export const Footer = () => {
               Ceylon Tour
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-              Sri Lanka&apos;s premier smart & sustainable travel platform. Discover authentic experiences while preserving nature and empowering local communities.
+              Sri Lanka&apos;s smart travel planner. Discover great experiences while helping locals and protecting nature.
             </p>
             <div className="flex items-center gap-3 text-muted-foreground text-xs mt-1">
               <span className="inline-flex items-center gap-1 text-success font-semibold">

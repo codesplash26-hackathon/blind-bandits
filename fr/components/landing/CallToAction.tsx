@@ -23,15 +23,15 @@ export const CallToAction = () => {
         <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-overlay-foreground/10 backdrop-blur-md border border-overlay-foreground/20 text-xs sm:text-sm font-medium">
             <Compass className="w-4 h-4 text-sky-aqua" />
-            <span>Begin Your Sri Lankan Odyssey</span>
+            <span>Start Your Sri Lanka Trip</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight leading-[1.1] text-overlay-foreground drop-shadow-md">
-            Ready to Explore the Unseen Trails of Ceylon?
+            Ready to Explore Sri Lanka?
           </h2>
 
           <p className="text-overlay-foreground/90 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
-            Join conscious travelers discovering hidden waterfalls, ancient ruins, and quiet village retreats without the crowds.
+            Join other travelers discovering hidden waterfalls, ancient ruins, and quiet villages away from the crowds.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-3 w-full justify-center">

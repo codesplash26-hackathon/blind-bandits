@@ -75,17 +75,17 @@ export default function AdminDashboard() {
 
   const handleTriggerRedistribution = () => {
     setIsRedistributing(true);
-    setRebalanceStep('Analyzing real-time sensor surge vectors...');
+    setRebalanceStep('Analyzing real-time crowd data...');
     
     setTimeout(() => {
-      setRebalanceStep('Broadcasting +35% alternative weight to TreeSHAP routing...');
+      setRebalanceStep('Adjusting AI recommendations to promote quieter places...');
     }, 450);
 
     setTimeout(() => {
       setIsRedistributing(false);
       setRebalanceStep('');
       setRedistributeStatus(
-        'Redistribution Deployed: Dynamic bias increased by +35% for Belihuloya & Haputale alternatives. Ella footfall dropped by -22%.'
+        'Update Live: Recommended Belihuloya & Haputale to more travelers. Expected crowding in Ella reduced by 22%.'
       );
     }, 1100);
   };
@@ -97,19 +97,19 @@ export default function AdminDashboard() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Tourism Authority Oversight
+              Admin Dashboard
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              TreeSHAP Live Model Telemetry
+              Live AI Monitoring
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Tourism Authority Oversight Dashboard
+            Admin Overview
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Live visitor carrying capacity monitoring, overtourism warnings, and sustainable redistribution metrics.
+            Live crowd monitoring, congestion alerts, and eco-friendly recommendations.
           </p>
         </div>
 
@@ -159,17 +159,17 @@ export default function AdminDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Monitored Pilot Sites
+              Monitored Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {DESTINATIONS.length}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">nodes</span>
+              <span className="text-xs text-muted-foreground font-semibold">locations</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">● Active</span>
-              <span className="text-muted-foreground font-normal">sensor coverage</span>
+              <span className="text-muted-foreground font-normal">tracking</span>
             </div>
           </div>
 
@@ -182,17 +182,17 @@ export default function AdminDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Safe Carrying Capacity
+              Quiet Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {lowPressureList.length}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">/ {DESTINATIONS.length} sites</span>
+              <span className="text-xs text-muted-foreground font-semibold">/ {DESTINATIONS.length} places</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">★ Optimal</span>
-              <span className="text-muted-foreground font-normal">low pressure</span>
+              <span className="text-muted-foreground font-normal">crowd levels</span>
             </div>
           </div>
 
@@ -226,17 +226,17 @@ export default function AdminDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Moderate Footfall
+              Moderate Crowds
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {mediumPressureList.length}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">sites</span>
+              <span className="text-xs text-muted-foreground font-semibold">places</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">▲ Watch</span>
-              <span className="text-muted-foreground font-normal">seasonal surge</span>
+              <span className="text-muted-foreground font-normal">getting busy</span>
             </div>
           </div>
 
@@ -259,17 +259,17 @@ export default function AdminDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              High Pressure Alerts
+              Very Busy Alerts
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-destructive tracking-tight">
                 {highPressureList.length}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">over-capacity</span>
+              <span className="text-xs text-muted-foreground font-semibold">crowded</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-destructive pt-0.5">
               <span>▲ Alert</span>
-              <span className="text-muted-foreground font-normal">exceeds limits</span>
+              <span className="text-muted-foreground font-normal">too many visitors</span>
             </div>
           </div>
 
@@ -288,8 +288,8 @@ export default function AdminDashboard() {
                 <Layers className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <span className="text-xs font-black text-foreground block">Registry &amp; Limits</span>
-                <span className="text-[10px] text-muted-foreground">Manage carrying capacity</span>
+                <span className="text-xs font-black text-foreground block">Manage Places</span>
+                <span className="text-[10px] text-muted-foreground">Update details and rules</span>
               </div>
             </div>
           </div>
@@ -302,8 +302,8 @@ export default function AdminDashboard() {
                 <AlertTriangle className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-black text-foreground block">Pressure Simulator</span>
-                <span className="text-[10px] text-muted-foreground">TreeSHAP factor audit</span>
+                <span className="text-xs font-black text-foreground block">Crowd Simulator</span>
+                <span className="text-[10px] text-muted-foreground">Test AI routing</span>
               </div>
             </div>
           </div>
@@ -316,8 +316,8 @@ export default function AdminDashboard() {
                 <BarChart3 className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <span className="text-xs font-black text-foreground block">Impact Analytics</span>
-                <span className="text-[10px] text-muted-foreground">Charts, dispersal &amp; carbon</span>
+                <span className="text-xs font-black text-foreground block">Eco Reports</span>
+                <span className="text-[10px] text-muted-foreground">View overall impact</span>
               </div>
             </div>
           </div>
@@ -330,8 +330,8 @@ export default function AdminDashboard() {
                 <SlidersHorizontal className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <span className="text-xs font-black text-foreground block">Policy Thresholds</span>
-                <span className="text-[10px] text-muted-foreground">Live algorithm simulator</span>
+                <span className="text-xs font-black text-foreground block">AI Settings</span>
+                <span className="text-[10px] text-muted-foreground">Tweak recommendations</span>
               </div>
             </div>
           </div>
@@ -347,22 +347,22 @@ export default function AdminDashboard() {
                 <BarChart3 className="w-4 h-4 text-primary" />
               </div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Regional Carrying Capacity vs. Sustainability Score
+                Crowd Levels vs. Eco-Friendly Scores
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Compares visitor pressure strain against eco-sustainability performance index across monitored sites.
+              Compare how busy places are against their environmental scores.
             </p>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-bold">
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-1" />
-              <span>Visitor Pressure %</span>
+              <span>Crowd Level %</span>
             </div>
             <div className="flex items-center gap-1.5 text-foreground">
               <span className="size-2.5 rounded-full bg-chart-2" />
-              <span>Sustainability Score</span>
+              <span>Eco-Friendly Score</span>
             </div>
           </div>
         </div>
@@ -397,14 +397,14 @@ export default function AdminDashboard() {
                 />
                 <Bar
                   dataKey="pressure"
-                  name="Visitor Pressure %"
+                  name="Crowd Level %"
                   fill="var(--chart-1)"
                   radius={[6, 6, 0, 0]}
                   barSize={16}
                 />
                 <Bar
                   dataKey="sustainability"
-                  name="Sustainability Index"
+                  name="Eco-Friendly Score"
                   fill="var(--chart-2)"
                   radius={[6, 6, 0, 0]}
                   barSize={16}
@@ -424,10 +424,10 @@ export default function AdminDashboard() {
             </div>
             <div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Active AI Tourist Redistribution Flow
+                AI Tourist Routing Active
               </h2>
               <p className="text-xs text-muted-foreground">
-                Algorithm dynamically steers conscious travelers away from over-saturated hotspots.
+                Suggesting quieter places to travelers to reduce crowding.
               </p>
             </div>
           </div>
@@ -441,34 +441,34 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
           <div className="p-4 rounded-2xl bg-background border border-border shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-destructive">Bottleneck Origin</span>
-              <Badge variant="destructive">82% Load</Badge>
+              <span className="font-bold text-destructive">Busy Location</span>
+              <Badge variant="destructive">82% Full</Badge>
             </div>
             <p className="font-heading text-base font-black text-foreground">Ella (Badulla)</p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              Water stress index 78/100, local trail congestion peaking at 142% capacity.
+              Trails are crowded and local resources are strained.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-background border border-border shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-primary">Redistribution Vectors</span>
+              <span className="font-bold text-primary">Suggested Alternatives</span>
               <Send className="w-3.5 h-3.5 text-primary" />
             </div>
             <p className="font-heading text-base font-black text-foreground">Haputale &amp; Belihuloya</p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              34% &amp; 28% load, matching hiking and scenic tea country preferences with minimal footprint.
+              Quiet and scenic alternatives for hiking and tea country views.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-background border border-border shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-success">Net Eco-Impact</span>
+              <span className="font-bold text-success">Impact</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-success" />
             </div>
             <p className="font-heading text-base font-black text-foreground">-28% Strain on Ella</p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              +LKR 4.2M distributed to rural eco-homestays in Belihuloya and Haputale this month.
+              +LKR 4.2M earned by local homestays in quieter areas this month.
             </p>
           </div>
         </div>
@@ -481,11 +481,11 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-primary" />
               <h2 className="font-heading text-lg font-black text-foreground">
-                Pilot Destinations Carrying Capacity Audit
+                Live Destination Status
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Real-time ecological carrying capacity status across Sri Lanka pilot monitoring nodes.
+              Real-time crowd levels and eco-scores for all tracked places.
             </p>
           </div>
 
@@ -535,10 +535,10 @@ export default function AdminDashboard() {
               <TableRow className="text-muted-foreground uppercase tracking-wider text-[11px]">
                 <TableHead className="py-3 px-3">Destination</TableHead>
                 <TableHead className="py-3 px-3">District</TableHead>
-                <TableHead className="py-3 px-3">Load vs Limit</TableHead>
-                <TableHead className="py-3 px-3">Capacity Gauge</TableHead>
-                <TableHead className="py-3 px-3">Sustainability</TableHead>
-                <TableHead className="py-3 px-3">Telemetry Feed</TableHead>
+                <TableHead className="py-3 px-3">Crowd Level</TableHead>
+                <TableHead className="py-3 px-3">Status</TableHead>
+                <TableHead className="py-3 px-3">Eco Score</TableHead>
+                <TableHead className="py-3 px-3">Updates</TableHead>
                 <TableHead className="py-3 px-3 text-right">Inspect</TableHead>
               </TableRow>
             </TableHeader>
