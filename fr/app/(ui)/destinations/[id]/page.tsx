@@ -27,6 +27,7 @@ import { Loader } from '@/components/Loader';
 import {
   getDestination,
   getDestinationAlternatives,
+  getDestinationEnvironment,
   getDestinationPressure,
   getDestinationPressureExplanation,
   getDestinationSustainability,
@@ -37,6 +38,8 @@ import type {
   DestinationPressureResponse,
   DestinationPressureExplanationResponse,
   DestinationAlternativesResponse,
+  EnvironmentalObservationResponse,
+  EnvironmentalSnapshotResponse,
   PressureFeatureContribution,
   DestinationSimulationResponse,
   PressureBand,
@@ -56,6 +59,19 @@ function formatForecastMonth(month: string) {
   return new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(
     new Date(Date.UTC(year, monthNumber - 1, 1)),
   );
+}
+
+function formatObservationTime(value: string) {
+  return new Intl.DateTimeFormat('en', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'UTC',
+  }).format(new Date(value));
+}
+
+function observationValue(observation: EnvironmentalObservationResponse, key: string) {
+  const value = observation.values[key];
+  return value === undefined ? null : String(value);
 }
 
 function formatFeatureValue(value: string | number | null) {
@@ -104,6 +120,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
   const [alternatives, setAlternatives] = useState<DestinationAlternativesResponse | null>(null);
   const [alternativesLoading, setAlternativesLoading] = useState(false);
   const [alternativesError, setAlternativesError] = useState<string | null>(null);
+  const [environment, setEnvironment] = useState<EnvironmentalSnapshotResponse | null>(null);
+  const [environmentLoading, setEnvironmentLoading] = useState(false);
+  const [environmentError, setEnvironmentError] = useState<string | null>(null);
 
   // What-If Simulator state (defaults at 50 / baseline)
   const [visitorSlider, setVisitorSlider] = useState(50);
@@ -136,6 +155,33 @@ export default function DestinationDetailPage({ params }: PageProps) {
       active = false;
     };
   }, [destinationId]);
+
+  useEffect(() => {
+    const apiId = destination?.api.id;
+    if (!apiId) return;
+    let active = true;
+    const loadEnvironment = async () => {
+      setEnvironmentLoading(true);
+      setEnvironmentError(null);
+      try {
+        const response = await getDestinationEnvironment(apiId);
+        if (active) setEnvironment(response);
+      } catch (error) {
+        if (active) {
+          setEnvironment(null);
+          setEnvironmentError(
+            describeApiError(error, 'Environmental observations are unavailable.'),
+          );
+        }
+      } finally {
+        if (active) setEnvironmentLoading(false);
+      }
+    };
+    void loadEnvironment();
+    return () => {
+      active = false;
+    };
+  }, [destination?.api.id]);
 
   useEffect(() => {
     const apiId = destination?.api.id;
@@ -508,6 +554,65 @@ export default function DestinationDetailPage({ params }: PageProps) {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="rounded-3xl border border-border bg-card p-6 shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-base font-black text-foreground">Environmental Conditions</h2>
+            <p className="text-xs text-muted-foreground mt-1">Latest stored observations from backend provider integrations.</p>
+          </div>
+          {environmentLoading && <span className="text-xs text-muted-foreground">Loading...</span>}
+        </div>
+
+        {environmentError && (
+          <p className="rounded-2xl border border-warning/30 bg-warning/10 p-4 text-xs text-foreground">
+            {environmentError}
+          </p>
+        )}
+
+        {!environmentLoading && !environmentError && environment && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { label: 'Weather', observation: environment.weather, primary: 'temperature_c', details: [['Humidity', 'relative_humidity_percent', '%'], ['Precipitation', 'precipitation_mm', ' mm']] },
+              { label: 'Air quality', observation: environment.air_quality, primary: 'pm25', details: [['Unit', 'unit', ''], ['Station', 'station_name', '']] },
+            ].map((item) => (
+              <div key={item.label} className="rounded-2xl border border-border bg-muted/30 p-4 space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs font-black text-foreground">{item.label}</span>
+                  {item.observation && (
+                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${item.observation.is_stale ? 'bg-warning/15 text-warning' : 'bg-success/15 text-success'}`}>
+                      {item.observation.is_stale ? 'Stale' : 'Fresh'}
+                    </span>
+                  )}
+                </div>
+                {!item.observation ? (
+                  <p className="text-xs text-muted-foreground">No stored observation is available.</p>
+                ) : (
+                  <>
+                    <p className="text-2xl font-black text-primary">
+                      {observationValue(item.observation, item.primary) ?? '—'}
+                      {item.label === 'Weather' ? ' °C' : ' µg/m³'}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 text-[11px]">
+                      {item.details.map(([label, key, suffix]) => (
+                        <div key={key}>
+                          <span className="block text-muted-foreground">{label}</span>
+                          <span className="font-bold text-foreground">{observationValue(item.observation!, key) ?? '—'}{suffix}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="border-t border-border pt-2 text-[10px] text-muted-foreground space-y-0.5">
+                      <p>Source: <span className="font-bold text-foreground">{item.observation.source}</span> ({item.observation.source_location})</p>
+                      <p>Observed: {formatObservationTime(item.observation.observed_at)} UTC</p>
+                      <p>Fetched: {formatObservationTime(item.observation.fetched_at)} UTC · age {item.observation.age_minutes.toFixed(0)} min</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* OVERTOURISM WARNING SECTION (Shown if High Pressure) */}

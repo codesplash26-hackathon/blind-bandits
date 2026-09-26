@@ -11,6 +11,9 @@ import type {
   DestinationSimulationResponse,
   DestinationSustainabilityResponse,
   DestinationUpdate,
+  EnvironmentalObservationType,
+  EnvironmentalRefreshResponse,
+  EnvironmentalSnapshotResponse,
   MapDestinationsResponse,
   SimulationScenario,
 } from '@/types/destination-api';
@@ -57,6 +60,25 @@ export async function getDestination(identifier: number | string) {
 export async function getDestinationSustainability(destinationId: number) {
   const response = await axiosInstance.get<DestinationSustainabilityResponse>(
     apiPaths.destinations.sustainability(destinationId),
+  );
+  return response.data;
+}
+
+export async function getDestinationEnvironment(destinationId: number) {
+  const response = await axiosInstance.get<EnvironmentalSnapshotResponse>(
+    apiPaths.destinations.environment(destinationId),
+  );
+  return response.data;
+}
+
+export async function refreshDestinationEnvironment(
+  destinationId: number,
+  type: EnvironmentalObservationType,
+) {
+  const response = await axiosInstance.post<EnvironmentalRefreshResponse>(
+    apiPaths.adminDestinations.environmentRefresh(destinationId),
+    null,
+    { params: { type } },
   );
   return response.data;
 }

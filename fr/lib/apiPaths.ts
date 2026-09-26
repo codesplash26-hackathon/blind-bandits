@@ -24,6 +24,8 @@ const apiPaths = {
       `/destinations/${destinationId}/alternatives`,
     simulate: (destinationId: number) =>
       `/destinations/${destinationId}/simulate`,
+    environment: (destinationId: number) =>
+      `/destinations/${destinationId}/environment`,
   },
   map: {
     destinations: "/map/destinations",
@@ -44,6 +46,8 @@ const apiPaths = {
     create: "/admin/destinations",
     update: (destinationId: number) => `/admin/destinations/${destinationId}`,
     deactivate: (destinationId: number) => `/admin/destinations/${destinationId}`,
+    environmentRefresh: (destinationId: number) =>
+      `/admin/destinations/${destinationId}/environment/refresh`,
   },
   adminDashboard: {
     summary: "/admin/dashboard",

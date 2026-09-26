@@ -8,11 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/Loader';
-import { createDestination, deactivateDestination, listDestinations, updateDestination } from '@/lib/destinations';
+import { createDestination, deactivateDestination, listDestinations, refreshDestinationEnvironment, updateDestination } from '@/lib/destinations';
 import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
 import describeApiError from '@/lib/apiError';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { PressureRegion } from '@/types/destination-api';
+import type { EnvironmentalObservationType, PressureRegion } from '@/types/destination-api';
 
 const PRESSURE_REGIONS: PressureRegion[] = [
   'Ancient Cities',
@@ -78,6 +78,7 @@ export default function AdminDestinationsRegistryPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [refreshingEnvironment, setRefreshingEnvironment] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -172,6 +173,30 @@ export default function AdminDestinationsRegistryPage() {
       setError(describeApiError(deactivateError, 'Unable to deactivate this destination.'));
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleEnvironmentRefresh = async (
+    destination: DestinationViewModel,
+    type: EnvironmentalObservationType,
+  ) => {
+    const key = `${destination.api.id}:${type}`;
+    setRefreshingEnvironment(key);
+    setError(null);
+    try {
+      const result = await refreshDestinationEnvironment(destination.api.id, type);
+      const observation = result.observation;
+      showNotice(
+        `${type === 'WEATHER' ? 'Weather' : 'Air quality'}: ${result.status}${
+          result.status === 'FALLBACK' && observation
+            ? ` using stored data from ${observation.source}`
+            : ''
+        }.`,
+      );
+    } catch (refreshError) {
+      setError(describeApiError(refreshError, 'Unable to refresh environmental data.'));
+    } finally {
+      setRefreshingEnvironment(null);
     }
   };
 
@@ -274,7 +299,7 @@ export default function AdminDestinationsRegistryPage() {
                   <TableCell className="text-xs font-mono">LKR {Number(destination.api.typical_budget).toLocaleString()}</TableCell>
                   <TableCell>{destination.sustainabilityData ? <span className="font-bold text-success text-xs">{Number(destination.sustainabilityData.total_score).toFixed(1)} / 100</span> : <span className="text-xs text-muted-foreground">Unavailable</span>}</TableCell>
                   <TableCell><Badge variant={destination.api.is_active ? 'success' : 'secondary'}>{destination.api.is_active ? 'ACTIVE' : 'INACTIVE'}</Badge></TableCell>
-                  <TableCell className="text-right"><div className="flex justify-end gap-1.5"><Button size="xs" variant="ghost" onClick={() => handleOpenEdit(destination)}><Edit2 className="w-3 h-3" /> Edit</Button>{destination.api.is_active && <><Button size="xs" variant="ghost" disabled={isSaving} onClick={() => void handleDeactivate(destination)} className="text-destructive"><Trash2 className="w-3 h-3" /> Deactivate</Button><Link href={`/destinations/${destination.api.slug}`}><Button size="xs" variant="outline">Inspect</Button></Link></>}</div></TableCell>
+                  <TableCell className="text-right"><div className="flex flex-wrap justify-end gap-1.5"><Button size="xs" variant="ghost" onClick={() => handleOpenEdit(destination)}><Edit2 className="w-3 h-3" /> Edit</Button>{destination.api.is_active && <><Button size="xs" variant="ghost" disabled={refreshingEnvironment !== null} onClick={() => void handleEnvironmentRefresh(destination, 'WEATHER')}>Refresh weather</Button><Button size="xs" variant="ghost" disabled={refreshingEnvironment !== null} onClick={() => void handleEnvironmentRefresh(destination, 'AIR_QUALITY')}>Refresh air</Button><Button size="xs" variant="ghost" disabled={isSaving} onClick={() => void handleDeactivate(destination)} className="text-destructive"><Trash2 className="w-3 h-3" /> Deactivate</Button><Link href={`/destinations/${destination.api.slug}`}><Button size="xs" variant="outline">Inspect</Button></Link></>}</div></TableCell>
                 </TableRow>
               ))}
               {filteredList.length === 0 && <TableRow><TableCell colSpan={7} className="py-12 text-center text-sm text-muted-foreground">No destination records match these filters.</TableCell></TableRow>}

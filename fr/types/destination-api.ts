@@ -3,6 +3,35 @@ export type FactorValueType = 'MEASURED' | 'ESTIMATED' | 'PROXY';
 export type ApiDecimal = string;
 export type PressureBand = 'LOW' | 'MEDIUM' | 'HIGH';
 export type PressureRegion = 'Ancient Cities' | 'Colombo City' | 'East Coast' | 'Greater Colombo' | 'Hill Country' | 'Northern Region' | 'South Coast';
+export type EnvironmentalObservationType = 'WEATHER' | 'AIR_QUALITY';
+export type EnvironmentalValue = string | number;
+
+export interface EnvironmentalObservationResponse {
+  id: number;
+  destination_id: number;
+  observation_type: EnvironmentalObservationType;
+  values: Record<string, EnvironmentalValue>;
+  source: string;
+  source_location: string;
+  observed_at: string;
+  fetched_at: string;
+  age_minutes: number;
+  is_stale: boolean;
+}
+
+export interface EnvironmentalSnapshotResponse {
+  destination_id: number;
+  weather: EnvironmentalObservationResponse | null;
+  air_quality: EnvironmentalObservationResponse | null;
+}
+
+export type EnvironmentalRefreshStatus = 'UPDATED' | 'UNCHANGED' | 'FALLBACK' | 'UNAVAILABLE';
+
+export interface EnvironmentalRefreshResponse {
+  status: EnvironmentalRefreshStatus;
+  observation: EnvironmentalObservationResponse | null;
+  fallback_reason: string | null;
+}
 
 export interface DestinationFactorInput {
   environmental_score: number;

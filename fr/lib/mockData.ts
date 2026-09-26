@@ -40,8 +40,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 28,
       traffic: 12,
     },
-    weather: '23°C • Clear & Crisp',
-    airQuality: 'AQI 18 • Excellent',
     dataConfidence: 'HIGH',
   },
   {
@@ -109,8 +107,6 @@ export const DESTINATIONS: Destination[] = [
         tagline: 'Untouched traditional mountain village in Knuckles foothills',
       },
     ],
-    weather: '21°C • Passing Mist',
-    airQuality: 'AQI 32 • Good',
     dataConfidence: 'HIGH',
   },
   {
@@ -149,8 +145,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 24,
       traffic: 16,
     },
-    weather: '19°C • Cool Breezes',
-    airQuality: 'AQI 14 • Excellent',
     dataConfidence: 'HIGH',
   },
   {
@@ -189,8 +183,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 22,
       traffic: 22,
     },
-    weather: '24°C • Humid & Sunny',
-    airQuality: 'AQI 12 • Pristine',
     dataConfidence: 'MEDIUM',
   },
   {
@@ -240,8 +232,6 @@ export const DESTINATIONS: Destination[] = [
         tagline: 'Cloud forest peaks and ancient ruins with pristine solitude',
       },
     ],
-    weather: '30°C • Sunny',
-    airQuality: 'AQI 36 • Good',
     dataConfidence: 'HIGH',
   },
   {
@@ -291,8 +281,6 @@ export const DESTINATIONS: Destination[] = [
         tagline: 'Quiet guided canopy walks with endemic birds and reptiles',
       },
     ],
-    weather: '31°C • Warm & Dry',
-    airQuality: 'AQI 22 • Good',
     dataConfidence: 'HIGH',
   },
   {
@@ -331,8 +319,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 22,
       traffic: 16,
     },
-    weather: '29°C • Tropical Ocean Breeze',
-    airQuality: 'AQI 20 • Excellent',
     dataConfidence: 'HIGH',
   },
   {
@@ -371,8 +357,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 15,
       traffic: 10,
     },
-    weather: '20°C • Fresh Mountain Breeze',
-    airQuality: 'AQI 8 • Pristine',
     dataConfidence: 'HIGH',
   },
   {
@@ -411,8 +395,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 10,
       traffic: 8,
     },
-    weather: '25°C • Tropical Rainforest Showers',
-    airQuality: 'AQI 6 • Pristine',
     dataConfidence: 'HIGH',
   },
   {
@@ -451,8 +433,6 @@ export const DESTINATIONS: Destination[] = [
       wastePressure: 20,
       traffic: 22,
     },
-    weather: '26°C • Mild & Pleasant',
-    airQuality: 'AQI 42 • Moderate',
     dataConfidence: 'HIGH',
   },
 ];
