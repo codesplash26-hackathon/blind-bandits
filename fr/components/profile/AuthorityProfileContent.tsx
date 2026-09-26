@@ -60,6 +60,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
         </div>
 
         <div className="flex items-center gap-2.5 self-end md:self-auto">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
             <Calendar className="w-3.5 h-3.5 text-primary" />
             <span>Active Year 2026</span>
           </div>
