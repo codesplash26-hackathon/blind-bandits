@@ -134,9 +134,9 @@
   --card-foreground: var(--foreground);
   --popover: #FFFFFF;
   --popover-foreground: var(--foreground);
-  --primary: #023E8A;
+  --primary: #0077B6;
   --primary-foreground: #FFFFFF;
-  --secondary: #0077B6;
+  --secondary: #00B4D8;
   --secondary-foreground: #FFFFFF;
   --muted: #EDF3F7;
   --muted-foreground: #536779;
@@ -186,9 +186,9 @@
   --card-foreground: var(--foreground);
   --popover: #18283D;
   --popover-foreground: var(--foreground);
-  --primary: #48CAE4;
+  --primary: #00B4D8;
   --primary-foreground: #0B1423;
-  --secondary: #90E0EF;
+  --secondary: #0077B6;
   --secondary-foreground: #0B1423;
   --muted: #192A40;
   --muted-foreground: #A2B5C8;
