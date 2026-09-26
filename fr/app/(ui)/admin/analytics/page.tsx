@@ -1,14 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Leaf,
   DollarSign,
   Users,
   Download,
   CheckCircle2,
-  ArrowUpRight,
-  Sparkles,
   TrendingDown,
   TrendingUp,
   BarChart3,
@@ -16,7 +14,6 @@ import {
   Activity,
   Layers,
 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,15 +32,6 @@ import {
   ResponsiveContainer,
   ComposedChart,
 } from 'recharts';
-
-// CSS variables update chart series immediately when the theme changes.
-const chartColors = {
-  primarySeries: 'var(--chart-1)',
-  secondarySeries: 'var(--chart-2)',
-  accentSeries: 'var(--chart-3)',
-  neutralSeries: 'var(--chart-4)',
-  thresholdStroke: 'var(--destructive)',
-};
 
 // 1. Time Series Dispersal Trajectory (Jan - Oct 2026)
 const dispersalTrendData = [
@@ -80,52 +68,19 @@ const impactTimelineData = [
   { month: 'Oct (Proj)', co2Saved: 16.2, revenueM: 27.8 },
 ];
 
-// Custom Chart Tooltip
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: Array<{
-    name: string;
-    value: number | string;
-    color?: string;
-  }>;
-  label?: string;
-}
+const categoryShareData = [
+  { name: 'Eco-Trekking & Waterfalls', value: 38, color: 'var(--chart-1)' },
+  { name: 'Heritage & Ancient Sanctuaries', value: 27, color: 'var(--chart-2)' },
+  { name: 'Rural Agro & Homestays', value: 21, color: 'var(--chart-3)' },
+  { name: 'Marine & Coast Sanctuaries', value: 14, color: 'var(--chart-4)' },
+];
 
-const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="rounded-2xl border border-border bg-card p-3 shadow-xl text-xs space-y-1.5 backdrop-blur-md">
-        <p className="font-bold text-foreground">{label}</p>
-        {payload.map((item, index) => (
-          <div key={`tooltip-${index}`} className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-1.5">
-              <span
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: item.color || chartColors.secondarySeries }}
-              />
-              <span className="text-muted-foreground">{item.name}:</span>
-            </div>
-            <span className="font-mono font-bold text-foreground">
-              {item.value}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  return null;
-};
+const emptySubscribe = () => () => {};
 
 export default function AdminAnalyticsPage() {
   const [exported, setExported] = useState(false);
   const [timeframe, setTimeframe] = useState<'30D' | 'Q3' | 'YTD'>('Q3');
-
-  const categoryShareData = [
-    { name: 'Eco-Trekking & Waterfalls', value: 38, color: chartColors.secondarySeries },
-    { name: 'Heritage & Ancient Sanctuaries', value: 27, color: chartColors.primarySeries },
-    { name: 'Rural Agro & Homestays', value: 21, color: chartColors.accentSeries },
-    { name: 'Marine & Coast Sanctuaries', value: 14, color: chartColors.neutralSeries },
-  ];
+  const mounted = React.useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   const handleExport = () => {
     setExported(true);
@@ -133,9 +88,9 @@ export default function AdminAnalyticsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="space-y-8 pb-16 max-w-7xl mx-auto w-full">
+      {/* ── 1. Top Action Bar & Header ─────────────────────────────────────────── */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
@@ -150,23 +105,23 @@ export default function AdminAnalyticsPage() {
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Redistribution &amp; Ecological Impact Analytics
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
             Interactive charts, visitor dispersal trajectories, and carbon offset audits from AI visitor routing.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          {/* Timeframe Filter */}
-          <div className="flex items-center p-1 rounded-2xl bg-muted/60 border border-border text-xs font-medium">
+        <div className="flex items-center gap-3 self-start lg:self-auto">
+          {/* Segmented Timeframe Switcher */}
+          <div className="p-1 rounded-xl bg-muted border border-border flex items-center text-xs font-bold shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
             {(['30D', 'Q3', 'YTD'] as const).map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTimeframe(t)}
-                className={`px-3 py-1 rounded-xl transition-all cursor-pointer font-bold ${
+                className={`px-3.5 py-1 rounded-lg transition-all cursor-pointer ${
                   timeframe === t
-                    ? 'bg-card text-foreground shadow-xs'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-xs font-black'
+                    : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border'
                 }`}
               >
                 {t}
@@ -178,7 +133,7 @@ export default function AdminAnalyticsPage() {
             size="sm"
             variant="outline"
             onClick={handleExport}
-            className="rounded-xl gap-1.5 cursor-pointer bg-card border-border hover:border-primary/40"
+            className="rounded-xl gap-1.5 cursor-pointer bg-card border-border hover:border-primary/40 shadow-xs"
           >
             <Download className="w-4 h-4 text-primary" />
             <span>{exported ? 'Report Downloaded!' : 'Export Dossier'}</span>
@@ -187,352 +142,530 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {exported && (
-        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center gap-2 text-xs text-foreground">
+        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center gap-2 text-xs text-foreground animate-in fade-in duration-300">
           <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
           <span className="font-semibold">
-            Tourism Authority Sustainable Redistribution Report (Q3 2026) exported successfully.
+            Tourism Authority Sustainable Redistribution Report ({timeframe} 2026) exported successfully.
           </span>
         </div>
       )}
 
-      {/* Top 4 Macro Metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="rounded-3xl border border-secondary/30 bg-card hover:border-secondary/60 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Carbon Footprint Avoided
+      {/* ── 2. Top 4 Metric KPI Cards with Sparklines ─────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Carbon Footprint Avoided with Donut Gauge */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Carbon Avoided
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-secondary">
-                14.8 T
-              </span>
-              <div className="p-2.5 rounded-2xl bg-secondary/15 text-secondary">
-                <Leaf className="w-5 h-5" />
-              </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">14.8 T</span>
+              <span className="text-xs text-muted-foreground font-semibold">CO2e</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-secondary font-semibold">
-              <ArrowUpRight className="w-3.5 h-3.5" /> +22% vs last quarter
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">▲ +22%</span>
+              <span className="text-muted-foreground font-normal">vs last quarter</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="rounded-3xl border border-primary/20 bg-card hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+          {/* Mini Donut Progress Ring */}
+          <div className="relative size-14 shrink-0 flex items-center justify-center">
+            <svg className="size-full -rotate-90" viewBox="0 0 36 36">
+              <path
+                className="text-muted"
+                strokeWidth="3.5"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="text-primary"
+                strokeDasharray="86, 100"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span className="absolute text-[11px] font-black text-foreground">86%</span>
+          </div>
+        </div>
+
+        {/* Card 2: Travelers Dispersed with Wave Sparkline */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
               Travelers Dispersed
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-foreground">
-                3,840
-              </span>
-              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
-                <Users className="w-5 h-5" />
-              </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">3,840</span>
+              <span className="text-xs text-muted-foreground font-semibold">tourists</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-primary font-semibold">
-              <ArrowUpRight className="w-3.5 h-3.5" /> Redirected to rural sites
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">▲ +34%</span>
+              <span className="text-muted-foreground font-normal">to rural sites</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="rounded-3xl border border-border bg-card hover:border-secondary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Rural Community Revenue
-            </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-foreground">
-                LKR 24.6M
-              </span>
-              <div className="p-2.5 rounded-2xl bg-secondary/15 text-secondary">
-                <DollarSign className="w-5 h-5" />
-              </div>
-            </div>
-            <div className="flex items-center gap-1 text-[11px] text-secondary font-semibold">
-              <ArrowUpRight className="w-3.5 h-3.5" /> Homestays &amp; local guides
-            </div>
-          </CardContent>
-        </Card>
+          {/* Mini Wave SVG Sparkline */}
+          <div className="w-16 h-10 shrink-0">
+            <svg viewBox="0 0 70 35" className="w-full h-full overflow-visible">
+              <path
+                d="M 0 28 Q 18 6, 35 18 T 60 8 T 70 10"
+                fill="none"
+                stroke="var(--chart-2)"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+              <circle cx="70" cy="10" r="3.5" fill="var(--chart-1)" />
+            </svg>
+          </div>
+        </div>
 
-        <Card className="rounded-3xl border border-border bg-card hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Conscious Traveler Index
+        {/* Card 3: Rural Community Revenue with Mini Bar Sparkline */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Rural Eco-Revenue
             </span>
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-heading text-3xl font-bold text-foreground">
-                94.2%
-              </span>
-              <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
-                <Sparkles className="w-5 h-5 text-secondary" />
-              </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">24.6M</span>
+              <span className="text-xs text-muted-foreground font-semibold">LKR</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-muted-foreground font-semibold">
-              Positive trip satisfaction
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">● Injected</span>
+              <span className="text-muted-foreground font-normal">to local homestays</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Mini Bar SVG Sparkline */}
+          <div className="flex items-end gap-1.5 h-10 w-14 shrink-0">
+            <div className="w-2.5 bg-muted h-4 rounded-full" />
+            <div className="w-2.5 bg-accent h-6 rounded-full" />
+            <div className="w-2.5 bg-secondary h-8 rounded-full" />
+            <div className="w-2.5 bg-primary h-10 rounded-full" />
+          </div>
+        </div>
+
+        {/* Card 4: Conscious Satisfaction Index with Donut Ring */}
+        <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
+              Satisfaction Index
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">94.2%</span>
+              <span className="text-xs text-muted-foreground font-semibold">score</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
+              <span className="text-primary">★ Optimal</span>
+              <span className="text-muted-foreground font-normal">visitor feedback</span>
+            </div>
+          </div>
+
+          {/* Mini Donut Progress Ring */}
+          <div className="relative size-14 shrink-0 flex items-center justify-center">
+            <svg className="size-full -rotate-90" viewBox="0 0 36 36">
+              <path
+                className="text-muted"
+                strokeWidth="3.5"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="text-primary"
+                strokeDasharray="94, 100"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span className="absolute text-[11px] font-black text-foreground">94%</span>
+          </div>
+        </div>
       </div>
 
-      {/* Row 1: Main Dispersal Trend Chart (Area Chart) */}
-      <Card className="rounded-3xl border border-border/80 bg-card p-6 shadow-xs space-y-4">
+      {/* ── 3. Main Dispersal Trend Trajectory Chart (Area Chart) ──────────────── */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-primary/10 text-primary">
-                <Activity className="w-4 h-4" />
-              </span>
-              <h2 className="text-lg font-bold text-foreground">
+              <div className="p-2 rounded-xl bg-muted text-primary">
+                <Activity className="w-4 h-4 text-primary" />
+              </div>
+              <h2 className="font-heading text-lg font-black text-foreground">
                 Visitor Dispersal Trajectory (2026)
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-muted-foreground mt-1">
               Footfall strain reduction on saturated hotspots vs. regenerative absorption by alternative eco-destinations.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: chartColors.primarySeries }} />
-              <span className="text-muted-foreground">Saturated Hubs (Ella, Sigiriya)</span>
+          <div className="flex items-center gap-4 text-xs font-bold">
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-1" />
+              <span>Saturated Hubs (Ella, Sigiriya)</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: chartColors.secondarySeries }} />
-              <span className="text-muted-foreground">Eco-Destinations (Belihuloya, Meemure)</span>
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-2" />
+              <span>Eco-Destinations (Belihuloya, Meemure)</span>
             </div>
           </div>
         </div>
 
-        <div className="h-80 w-full pt-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={dispersalTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorEco" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={chartColors.secondarySeries} stopOpacity={0.4} />
-                  <stop offset="95%" stopColor={chartColors.secondarySeries} stopOpacity={0.0} />
-                </linearGradient>
-                <linearGradient id="colorHotspots" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={chartColors.primarySeries} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={chartColors.primarySeries} stopOpacity={0.0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" strokeOpacity={0.08} />
-              <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} />
-              <YAxis domain={[0, 100]} tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} unit="%" />
-              <Tooltip content={<CustomTooltip />} />
-              <Area
-                type="monotone"
-                dataKey="saturatedHubs"
-                name="Saturated Hubs Footfall"
-                stroke={chartColors.primarySeries}
-                strokeWidth={3}
-                fillOpacity={1}
-                fill="url(#colorHotspots)"
-              />
-              <Area
-                type="monotone"
-                dataKey="ecoAlternatives"
-                name="Eco-Alternative Inflow"
-                stroke={chartColors.secondarySeries}
-                strokeWidth={3}
-                fillOpacity={1}
-                fill="url(#colorEco)"
-              />
-              <Line
-                type="monotone"
-                dataKey="capacityThreshold"
-                name="Max Safe Carrying Capacity"
-                stroke={chartColors.thresholdStroke}
-                strokeDasharray="4 4"
-                strokeWidth={2}
-                dot={false}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+        <div className="h-72 sm:h-80 w-full">
+          {mounted && (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={dispersalTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorHotspots" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="colorEco" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--chart-2)" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="var(--chart-2)" stopOpacity={0.0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 12, fontWeight: 600 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
+                  domain={[0, 100]}
+                  unit="%"
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--popover)',
+                    color: 'var(--popover-foreground)',
+                    borderRadius: '16px',
+                    border: '1px solid var(--border)',
+                    boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
+                    fontSize: '12px',
+                  }}
+                  cursor={{ fill: 'var(--muted)', opacity: 0.6 }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="saturatedHubs"
+                  name="Saturated Hubs Footfall"
+                  stroke="var(--chart-1)"
+                  strokeWidth={3}
+                  fillOpacity={1}
+                  fill="url(#colorHotspots)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="ecoAlternatives"
+                  name="Eco-Alternative Inflow"
+                  stroke="var(--chart-2)"
+                  strokeWidth={3}
+                  fillOpacity={1}
+                  fill="url(#colorEco)"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="capacityThreshold"
+                  name="Max Safe Carrying Capacity"
+                  stroke="var(--destructive)"
+                  strokeDasharray="4 4"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-border/70 text-xs">
-          <div className="flex items-center gap-2">
-            <TrendingDown className="w-4 h-4 text-secondary shrink-0" />
-            <span><strong>-30.8%</strong> Saturated Hub peak congestion reduction</span>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border text-xs">
+          <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-muted/40 border border-border">
+            <TrendingDown className="w-4 h-4 text-primary shrink-0" />
+            <span><strong className="text-foreground">-30.8%</strong> Peak congestion reduction</span>
           </div>
-          <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-secondary shrink-0" />
-            <span><strong>+43.0%</strong> Rural dispersal absorption rate</span>
+          <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-muted/40 border border-border">
+            <TrendingUp className="w-4 h-4 text-primary shrink-0" />
+            <span><strong className="text-foreground">+43.0%</strong> Rural dispersal absorption</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
-            <span><strong>Zero</strong> carrying capacity violations in Q3</span>
+          <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-muted/40 border border-border">
+            <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+            <span><strong className="text-foreground">Zero</strong> capacity violations in {timeframe}</span>
           </div>
         </div>
-      </Card>
+      </div>
 
-      {/* Row 2: Destination Load Comparison & Category Distribution */}
+      {/* ── 4. Mid Row: Destination Carrying Capacity Bar Chart + Categories Donut ─ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left (7 Cols): Pre vs Post Footfall Bar Chart */}
-        <Card className="lg:col-span-7 rounded-3xl border border-border/80 bg-card p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between">
+        {/* Left (8 Cols): Pre vs Post Footfall Bar Chart */}
+        <div className="lg:col-span-8 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2">
-                <span className="p-2 rounded-xl bg-primary/10 text-primary">
-                  <BarChart3 className="w-4 h-4" />
-                </span>
-                <h2 className="text-base font-bold text-foreground">
+                <div className="p-2 rounded-xl bg-muted text-primary">
+                  <BarChart3 className="w-4 h-4 text-primary" />
+                </div>
+                <h2 className="font-heading text-lg font-black text-foreground">
                   Baseline vs. Optimized Carrying Capacity
                 </h2>
               </div>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-xs text-muted-foreground mt-1">
                 Pre-AI visitor overload vs. Post-AI balanced load across monitored destinations.
               </p>
             </div>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="flex items-center gap-1 text-muted-foreground">
-                <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: chartColors.primarySeries }} /> Pre-AI
+            <div className="flex items-center gap-3 text-xs font-bold">
+              <span className="flex items-center gap-1.5 text-foreground">
+                <span className="size-2.5 rounded-full bg-chart-1" /> Pre-AI
               </span>
-              <span className="flex items-center gap-1 text-muted-foreground">
-                <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: chartColors.secondarySeries }} /> Optimized
+              <span className="flex items-center gap-1.5 text-foreground">
+                <span className="size-2.5 rounded-full bg-chart-2" /> Optimized
               </span>
             </div>
           </div>
 
-          <div className="h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={destinationComparisonData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" strokeOpacity={0.08} />
-                <XAxis dataKey="destination" tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} />
-                <YAxis domain={[0, 100]} tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} unit="%" />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="baseline" name="Pre-AI Footfall %" fill={chartColors.primarySeries} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="current" name="Optimized Footfall %" fill={chartColors.secondarySeries} radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="h-64 sm:h-72 w-full">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={destinationComparisonData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
+                  <XAxis
+                    dataKey="destination"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: 'var(--muted-foreground)', fontSize: 12, fontWeight: 600 }}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
+                    domain={[0, 100]}
+                    unit="%"
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'var(--popover)',
+                      color: 'var(--popover-foreground)',
+                      borderRadius: '16px',
+                      border: '1px solid var(--border)',
+                      boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
+                      fontSize: '12px',
+                    }}
+                    cursor={{ fill: 'var(--muted)', opacity: 0.6 }}
+                  />
+                  <Bar
+                    dataKey="baseline"
+                    name="Pre-AI Footfall %"
+                    fill="var(--chart-1)"
+                    radius={[6, 6, 0, 0]}
+                    barSize={16}
+                  />
+                  <Bar
+                    dataKey="current"
+                    name="Optimized Footfall %"
+                    fill="var(--chart-2)"
+                    radius={[6, 6, 0, 0]}
+                    barSize={16}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
           </div>
 
-          <div className="p-3 rounded-2xl bg-muted/40 border border-border/70 flex items-center justify-between text-xs">
-            <span className="text-muted-foreground">Highlight:</span>
-            <span className="font-semibold text-foreground">
+          <div className="p-3.5 rounded-2xl bg-muted/40 border border-border flex items-center justify-between text-xs">
+            <span className="font-bold text-primary uppercase tracking-wider text-[11px]">Capacity Safe:</span>
+            <span className="font-medium text-foreground">
               Belihuloya and Haputale safely absorbed 52% &amp; 56% load without exceeding 75% ecological bounds.
             </span>
           </div>
-        </Card>
+        </div>
 
-        {/* Right (5 Cols): Traveler Dispersal Category Donut Chart */}
-        <Card className="lg:col-span-5 rounded-3xl border border-border/80 bg-card p-6 shadow-xs space-y-4 flex flex-col justify-between">
+        {/* Right (4 Cols): Traveler Dispersal Category Donut Chart */}
+        <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-secondary/15 text-secondary">
-                <PieIcon className="w-4 h-4" />
-              </span>
-              <h2 className="text-base font-bold text-foreground">
-                Dispersal Share by Experience Type
+              <div className="p-2 rounded-xl bg-muted text-primary">
+                <PieIcon className="w-4 h-4 text-primary" />
+              </div>
+              <h2 className="font-heading text-lg font-black text-foreground">
+                Dispersal Share
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-muted-foreground mt-1">
               Category allocation of travelers guided into regenerative activities.
             </p>
           </div>
 
-          <div className="h-60 w-full relative flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={categoryShareData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={85}
-                  paddingAngle={4}
-                  dataKey="value"
-                >
-                  {categoryShareData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} stroke="transparent" />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="h-56 w-full relative flex items-center justify-center">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={categoryShareData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={58}
+                    outerRadius={80}
+                    paddingAngle={4}
+                    dataKey="value"
+                  >
+                    {categoryShareData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="transparent" />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'var(--popover)',
+                      color: 'var(--popover-foreground)',
+                      borderRadius: '16px',
+                      border: '1px solid var(--border)',
+                      boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
+                      fontSize: '12px',
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
 
             {/* Center Label in Donut */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-              <span className="text-xl font-bold text-foreground">3,840</span>
+              <span className="font-heading text-2xl font-black text-foreground">3,840</span>
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Dispersed</span>
             </div>
           </div>
 
           {/* Legend Table */}
-          <div className="space-y-1.5 pt-2 border-t border-border/70">
+          <div className="space-y-1.5 pt-3 border-t border-border">
             {categoryShareData.map((item) => (
               <div key={item.name} className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                  <span className="text-muted-foreground truncate max-w-[200px]">{item.name}</span>
+                  <span className="size-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                  <span className="text-muted-foreground font-medium truncate max-w-[180px]">{item.name}</span>
                 </div>
                 <span className="font-mono font-bold text-foreground">{item.value}%</span>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
       </div>
 
-      {/* Row 3: Environmental Offset & Rural Revenue Composed Chart */}
-      <Card className="rounded-3xl border border-border/80 bg-card p-6 shadow-xs space-y-4">
+      {/* ── 5. Environmental Offset & Rural Revenue Composed Chart ─────────────── */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-primary/10 text-primary">
-                <Layers className="w-4 h-4" />
-              </span>
-              <h2 className="text-base font-bold text-foreground">
+              <div className="p-2 rounded-xl bg-muted text-primary">
+                <Layers className="w-4 h-4 text-primary" />
+              </div>
+              <h2 className="font-heading text-lg font-black text-foreground">
                 Carbon Offset Avoided vs. Rural Economic Inflow
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-muted-foreground mt-1">
               Dual-metric correlation: Metric tonnes of CO2 saved (Bars) and direct LKR Millions injected into rural villages (Line).
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: chartColors.secondarySeries }} />
-              <span className="text-muted-foreground">CO2 Avoided (Tonnes)</span>
+          <div className="flex items-center gap-4 text-xs font-bold">
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-2" />
+              <span>CO2 Avoided (Tonnes)</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-1.5 rounded-full" style={{ backgroundColor: chartColors.primarySeries }} />
-              <span className="text-muted-foreground">Rural Revenue (LKR Millions)</span>
+            <div className="flex items-center gap-1.5 text-foreground">
+              <span className="size-2.5 rounded-full bg-chart-1" />
+              <span>Rural Revenue (LKR Millions)</span>
             </div>
           </div>
         </div>
 
         <div className="h-72 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={impactTimelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" strokeOpacity={0.08} />
-              <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} />
-              <YAxis yAxisId="left" tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} unit=" T" />
-              <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} stroke="currentColor" strokeOpacity={0.5} fontSize={12} unit="M" />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar yAxisId="left" dataKey="co2Saved" name="CO2 Saved (Tonnes)" fill={chartColors.secondarySeries} radius={[6, 6, 0, 0]} />
-              <Line yAxisId="right" type="monotone" dataKey="revenueM" name="Rural Revenue (LKR M)" stroke={chartColors.primarySeries} strokeWidth={3} dot={{ r: 4, fill: chartColors.primarySeries }} />
-            </ComposedChart>
-          </ResponsiveContainer>
+          {mounted && (
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={impactTimelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 12, fontWeight: 600 }}
+                />
+                <YAxis
+                  yAxisId="left"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
+                  unit=" T"
+                />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: 'var(--muted-foreground)', fontSize: 11 }}
+                  unit="M"
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--popover)',
+                    color: 'var(--popover-foreground)',
+                    borderRadius: '16px',
+                    border: '1px solid var(--border)',
+                    boxShadow: '0 8px 24px color-mix(in srgb,var(--shadow-color) 8%,transparent)',
+                    fontSize: '12px',
+                  }}
+                  cursor={{ fill: 'var(--muted)', opacity: 0.6 }}
+                />
+                <Bar
+                  yAxisId="left"
+                  dataKey="co2Saved"
+                  name="CO2 Saved (Tonnes)"
+                  fill="var(--chart-2)"
+                  radius={[6, 6, 0, 0]}
+                  barSize={18}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="revenueM"
+                  name="Rural Revenue (LKR M)"
+                  stroke="var(--chart-1)"
+                  strokeWidth={3}
+                  dot={{ r: 4, fill: 'var(--chart-1)' }}
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          )}
         </div>
-      </Card>
+      </div>
 
-      {/* Dispersal Corridor Matrix */}
-      <Card className="rounded-3xl border border-border/80 bg-card p-6 space-y-4 shadow-xs">
+      {/* ── 6. Dispersal Corridor Matrix ────────────────────────────────────────── */}
+      <div className="p-6 sm:p-7 rounded-3xl border border-border bg-card shadow-dashboard-card space-y-4">
         <div>
-          <h2 className="text-lg font-bold text-foreground">Active Travel Dispersal Corridors</h2>
-          <p className="text-xs text-muted-foreground">
+          <h2 className="font-heading text-lg font-black text-foreground">
+            Active Travel Dispersal Corridors
+          </h2>
+          <p className="text-xs text-muted-foreground mt-0.5 font-medium">
             Measured pressure relief on saturated hubs and direct economic benefit in receiving eco-destinations.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Corridor 1 */}
-          <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3 hover:border-secondary/50 transition-colors">
+          <div className="p-5 rounded-2xl bg-muted/40 border border-border space-y-3 hover:border-primary/50 transition-colors shadow-dashboard-panel">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Central Highlands Corridor</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">OPTIMAL</Badge>
+              <span className="font-black text-foreground">Central Highlands Corridor</span>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">
+                OPTIMAL
+              </Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
@@ -548,16 +681,18 @@ export default function AdminAnalyticsPage() {
                 <span className="font-mono font-bold text-secondary">+14% trail visits</span>
               </div>
             </div>
-            <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
+            <div className="pt-2.5 border-t border-border text-[11px] text-muted-foreground font-medium">
               Estimated 1,420 tourists diverted per week. Zero trail over-capacity incidents logged.
             </div>
           </div>
 
           {/* Corridor 2 */}
-          <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3 hover:border-secondary/50 transition-colors">
+          <div className="p-5 rounded-2xl bg-muted/40 border border-border space-y-3 hover:border-primary/50 transition-colors shadow-dashboard-panel">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Cultural Triangle Corridor</span>
-              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">OPTIMAL</Badge>
+              <span className="font-black text-foreground">Cultural Triangle Corridor</span>
+              <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">
+                OPTIMAL
+              </Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
@@ -573,16 +708,18 @@ export default function AdminAnalyticsPage() {
                 <span className="font-mono font-bold text-secondary">+8% conscious visits</span>
               </div>
             </div>
-            <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
+            <div className="pt-2.5 border-t border-border text-[11px] text-muted-foreground font-medium">
               Estimated 880 tourists diverted per week. Staircase queue wait reduced by 35 minutes.
             </div>
           </div>
 
           {/* Corridor 3 */}
-          <div className="p-5 rounded-2xl bg-muted/40 border border-border/80 space-y-3 hover:border-secondary/50 transition-colors">
+          <div className="p-5 rounded-2xl bg-muted/40 border border-border space-y-3 hover:border-primary/50 transition-colors shadow-dashboard-panel">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-foreground">Southern Coastline Corridor</span>
-              <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 text-[10px] font-bold">EXPANDING</Badge>
+              <span className="font-black text-foreground">Southern Coastline Corridor</span>
+              <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 text-[10px] font-bold">
+                EXPANDING
+              </Badge>
             </div>
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
@@ -598,12 +735,12 @@ export default function AdminAnalyticsPage() {
                 <span className="font-mono font-bold text-secondary">+7% turtle conservation</span>
               </div>
             </div>
-            <div className="pt-2 border-t border-border/70 text-[11px] text-muted-foreground">
+            <div className="pt-2.5 border-t border-border text-[11px] text-muted-foreground font-medium">
               Estimated 610 tourists diverted per week. Marine wildlife disturbance score reduced by 22%.
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
