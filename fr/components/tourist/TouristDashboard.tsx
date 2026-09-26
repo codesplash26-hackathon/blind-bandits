@@ -132,19 +132,19 @@ export default function TouristDashboard() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Traveler Overview &amp; Analytics
+              Your Travel Dashboard
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Live Island Feed
+              Live Updates
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            {user?.name ? `${user.name}'s Overview` : 'Conscious Travel Dashboard'}
+            {user?.name ? `Welcome back, ${user.name}!` : 'Travel Dashboard'}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Monitor real-time carrying capacities, eco-footprint, and curated crowd-free sanctuaries.
+            Find peaceful spots, avoid crowds, and travel responsibly across Sri Lanka.
           </p>
         </div>
 
@@ -193,14 +193,14 @@ export default function TouristDashboard() {
 
       {/* Toast Notification */}
       {lastSavedNotice && (
-        <div className="p-3.5 px-4 rounded-2xl bg-muted border border-primary/50 flex items-center justify-between text-xs text-primary shadow-xs animate-in fade-in duration-200">
+        <div className="p-3.5 px-4 rounded-2xl bg-success/10 border border-success/30 flex items-center justify-between text-xs text-success shadow-xs animate-in fade-in duration-200">
           <div className="flex items-center gap-2.5">
-            <span className="p-1 rounded-full bg-primary/20 text-primary">
+            <span className="p-1 rounded-full bg-success/20 text-success">
               <Bookmark className="w-3.5 h-3.5" />
             </span>
-            <span className="font-semibold">{lastSavedNotice}</span>
+            <span className="font-semibold text-foreground">{lastSavedNotice}</span>
           </div>
-          <Link href="/saved" className="text-primary font-bold hover:underline">
+          <Link href="/saved" className="text-success font-bold hover:underline">
             View Bucketlist →
           </Link>
         </div>
@@ -218,8 +218,8 @@ export default function TouristDashboard() {
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">94</span>
               <span className="text-xs text-muted-foreground font-semibold">/100</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">▲ +4.2%</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-success pt-0.5">
+              <span className="text-success">▲ +4.2%</span>
               <span className="text-muted-foreground font-normal">than last trip</span>
             </div>
           </div>
@@ -252,15 +252,15 @@ export default function TouristDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Crowd Congestion
+              Crowd Levels
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">68%</span>
-              <span className="text-xs text-muted-foreground font-semibold">less</span>
+              <span className="text-xs text-muted-foreground font-semibold">less crowded</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">▲ +12%</span>
-              <span className="text-muted-foreground font-normal">vs Ella corridor</span>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-success pt-0.5">
+              <span className="text-success">▲ 12%</span>
+              <span className="text-muted-foreground font-normal">better than popular areas</span>
             </div>
           </div>
 
@@ -283,17 +283,17 @@ export default function TouristDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Saved Sanctuaries
+              Saved Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {savedDestinationIds.length > 0 ? savedDestinationIds.length : 4}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">destinations</span>
+              <span className="text-xs text-muted-foreground font-semibold">places</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">● Ready</span>
-              <span className="text-muted-foreground font-normal">for trip routing</span>
+              <span className="text-muted-foreground font-normal">for your trip</span>
             </div>
           </div>
 
@@ -310,15 +310,15 @@ export default function TouristDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Direct Host Benefit
+              Local Support
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">88%</span>
-              <span className="text-xs text-muted-foreground font-semibold">income</span>
+              <span className="text-xs text-muted-foreground font-semibold">direct</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">★ Certified</span>
-              <span className="text-muted-foreground font-normal">village homestays</span>
+              <span className="text-primary">★ Verified</span>
+              <span className="text-muted-foreground font-normal">local stays</span>
             </div>
           </div>
 
@@ -354,10 +354,10 @@ export default function TouristDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Visitor Load vs. Conscious Dispersal
+                Crowd Levels: Popular vs. Hidden Gems
               </h2>
               <p className="text-xs text-muted-foreground">
-                Compares saturated peak corridors against CeylonTour crowd-free alternatives
+                Compare crowds in popular spots against our peaceful alternatives
               </p>
             </div>
 
@@ -365,10 +365,10 @@ export default function TouristDashboard() {
               {/* Stat Chips */}
               <div className="hidden sm:flex items-center gap-3 text-xs font-bold">
                 <span className="flex items-center gap-1.5 text-foreground">
-                  <span className="size-2.5 rounded-full bg-chart-1" /> Peak Influx
+                  <span className="size-2.5 rounded-full bg-chart-1" /> Crowded Spots
                 </span>
                 <span className="flex items-center gap-1.5 text-foreground">
-                  <span className="size-2.5 rounded-full bg-chart-2" /> CeylonTour Flow
+                  <span className="size-2.5 rounded-full bg-chart-2" /> Hidden Gems
                 </span>
               </div>
 
@@ -423,14 +423,14 @@ export default function TouristDashboard() {
                   />
                   <Bar
                     dataKey="saturated"
-                    name="Peak Hubs (Ella/Sigiriya)"
+                    name="Popular Places"
                     fill="var(--chart-1)"
                     radius={[6, 6, 0, 0]}
                     barSize={16}
                   />
                   <Bar
                     dataKey="conscious"
-                    name="Conscious Escapes (Belihuloya)"
+                    name="Peaceful Alternatives"
                     fill="var(--chart-2)"
                     radius={[6, 6, 0, 0]}
                     barSize={16}
@@ -448,7 +448,7 @@ export default function TouristDashboard() {
               Travel Categories
             </h2>
             <p className="text-xs text-muted-foreground">
-              Distribution of curated eco-sanctuaries
+              Types of places you can visit
             </p>
           </div>
 
@@ -508,10 +508,10 @@ export default function TouristDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-heading text-lg font-black text-foreground">
-                Hourly Visitor Pressure Trajectory
+                Best Times to Visit
               </h2>
               <p className="text-xs text-muted-foreground">
-                Optimal time windows to explore with zero bottleneck queues
+                Find the best times to enjoy without waiting in line
               </p>
             </div>
             <span className="px-3 py-1 rounded-full bg-muted text-foreground text-xs font-bold border border-border">
@@ -544,7 +544,7 @@ export default function TouristDashboard() {
                   <Area
                     type="monotone"
                     dataKey="quiet"
-                    name="Conscious Sanctuary Load"
+                    name="Hidden Gems Crowds"
                     stroke="var(--chart-2)"
                     strokeWidth={3}
                     fillOpacity={1}
@@ -553,7 +553,7 @@ export default function TouristDashboard() {
                   <Area
                     type="monotone"
                     dataKey="saturated"
-                    name="Saturated Corridors"
+                    name="Popular Places Crowds"
                     stroke="var(--chart-1)"
                     strokeWidth={1.5}
                     strokeDasharray="4 4"
@@ -573,7 +573,7 @@ export default function TouristDashboard() {
                 Profile Summary
               </h2>
               <p className="text-xs text-muted-foreground">
-                Your conscious travel compliance &amp; impact
+                Your travel impact and preferences
               </p>
             </div>
             <span className="size-8 rounded-full bg-muted flex items-center justify-center text-primary">
@@ -638,14 +638,14 @@ export default function TouristDashboard() {
           <div className="space-y-2 pt-2 border-t border-border text-xs">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-muted-foreground font-medium">
-                <span className="size-2.5 rounded-full bg-primary" /> Environmental Score
+                <span className="size-2.5 rounded-full bg-primary" /> Eco-Friendly Score
               </span>
               <strong className="text-primary font-bold">94%</strong>
             </div>
 
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-muted-foreground font-medium">
-                <span className="size-2.5 rounded-full bg-primary" /> Homestay Benefit
+                <span className="size-2.5 rounded-full bg-primary" /> Local Support
               </span>
               <strong className="text-primary font-bold">88%</strong>
             </div>
@@ -665,10 +665,10 @@ export default function TouristDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="font-heading text-xl font-black text-foreground">
-              Curated Sanctuaries to Explore
+              Beautiful Places to Explore
             </h2>
             <p className="text-xs text-muted-foreground">
-              {filteredDestinations.length} destinations calibrated for peace, verified homestays &amp; pristine trails
+              {filteredDestinations.length} peaceful destinations with verified local stays and nature trails
             </p>
           </div>
 
@@ -718,7 +718,7 @@ export default function TouristDashboard() {
 
                 <div className="absolute top-3.5 left-3.5">
                   <span className="text-[10px] font-black px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground backdrop-blur-md border border-overlay-foreground/20">
-                    {dest.pressure.level} PRESSURE
+                    {dest.pressure.level} CROWDS
                   </span>
                 </div>
 
@@ -748,7 +748,7 @@ export default function TouristDashboard() {
               <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between pb-2.5 border-b border-border text-xs">
-                    <span className="text-muted-foreground font-medium">Sustainability Index</span>
+                    <span className="text-muted-foreground font-medium">Eco-Friendly Score</span>
                     <span className="font-black text-primary">
                       {dest.sustainability.overall} / 100
                     </span>
