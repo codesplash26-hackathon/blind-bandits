@@ -18,7 +18,9 @@ EXAMPLE_DESTINATION: dict[str, Any] = {
     "name": "Example Coastal Trail",
     "district": "Example District",
     "region": "Southern",
+    "pressure_region": "South Coast",
     "description": "Example destination used only by automated tests.",
+    "image_url": "https://images.example.com/coastal-trail.jpg",
     "latitude": "6.123456",
     "longitude": "80.123456",
     "landscape_type": "coastal",
@@ -79,11 +81,42 @@ async def test_destination_creation_by_admin(
 
     assert response_data["slug"] == EXAMPLE_DESTINATION["slug"]
     assert response_data["activities"] == ["nature", "hiking"]
+    assert response_data["image_url"] == EXAMPLE_DESTINATION["image_url"]
+    assert response_data["pressure_region"] == "South Coast"
     assert response_data["factor"]["value_type"] == "PROXY"
     stored = db_session.scalar(select(Destination))
     assert stored is not None
     assert stored.factor is not None
     assert str(stored.factor.environmental_score) == "50.25"
+
+
+async def test_admin_can_clear_pressure_region(
+    client: AsyncClient,
+    admin_user: User,
+) -> None:
+    destination = await create_example_destination(client, admin_user)
+    response = await client.patch(
+        f"/api/v1/admin/destinations/{destination['id']}",
+        json={"pressure_region": None},
+        headers=await admin_headers(client, admin_user),
+    )
+    assert response.status_code == 200, response.text
+    assert response.json()["region"] == "Southern"
+    assert response.json()["pressure_region"] is None
+
+
+async def test_destination_rejects_unknown_pressure_region(
+    client: AsyncClient,
+    admin_user: User,
+) -> None:
+    payload = deepcopy(EXAMPLE_DESTINATION)
+    payload["pressure_region"] = "Sabaragamuwa"
+    response = await client.post(
+        "/api/v1/admin/destinations",
+        json=payload,
+        headers=await admin_headers(client, admin_user),
+    )
+    assert response.status_code == 422
 
 
 async def test_destination_creation_is_rejected_for_tourist(
@@ -119,6 +152,7 @@ async def test_destination_listing(
 
     assert response.status_code == 200
     assert [item["slug"] for item in response.json()] == [EXAMPLE_DESTINATION["slug"]]
+    assert float(response.json()[0]["sustainability"]["total_score"]) == 50.05
 
 
 async def test_destination_retrieval_by_id_and_slug(

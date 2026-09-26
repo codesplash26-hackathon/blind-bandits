@@ -25,8 +25,13 @@ async def create_recommendations(
 ) -> RecommendationResponse:
     configuration = get_settings().sustainability_weights
     response = recommend_destinations(db, request, configuration)
-    record_recommendation_search(db, current_user.id, request, response, configuration)
-    return response
+    record = record_recommendation_search(
+        db, current_user.id, request, response, configuration
+    )
+    return RecommendationResponse(
+        recommendation_search_id=record.id,
+        results=response.results,
+    )
 
 
 @router.get("/history", response_model=list[RecommendationHistoryItem])

@@ -9,6 +9,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { Loader } from '@/components/Loader';
 import { useAuth } from '@/context/AuthContext';
 import { Bookmark, Sparkles, ShieldCheck } from 'lucide-react';
+import { toast } from 'sonner';
 
 const emptySubscribe = () => () => {};
 
@@ -17,7 +18,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, role, isLoading, loginAs, savedDestinationIds } = useAuth();
+  const { user, role, isLoading, savedDestinationIds } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const mounted = React.useSyncExternalStore(
@@ -26,7 +27,7 @@ export default function DashboardLayout({
     () => false
   );
 
-  const effectiveRole = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
+  const effectiveRole = role === 'ADMIN' ? 'ADMIN' : 'TOURIST';
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -35,12 +36,21 @@ export default function DashboardLayout({
   }, [user, isLoading, router]);
 
   useEffect(() => {
-    if (pathname.startsWith('/admin') && role !== 'ADMIN') {
-      loginAs('ADMIN');
+    if (!isLoading && user && pathname.startsWith('/admin') && role !== 'ADMIN') {
+      toast.error('Admin access is required for that page.', { id: 'admin-access-required' });
+      router.replace('/dashboard');
     }
-  }, [pathname, role, loginAs]);
+  }, [isLoading, pathname, role, router, user]);
 
-  if (!isLoading && !user) {
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader label="Restoring your session..." />
+      </div>
+    );
+  }
+
+  if (!user || (pathname.startsWith('/admin') && role !== 'ADMIN')) {
     return null;
   }
 
@@ -68,7 +78,7 @@ export default function DashboardLayout({
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
       <SidebarInset className="bg-gradient-to-br from-muted via-background to-background dark:via-muted dark:to-muted min-h-screen text-foreground transition-colors duration-200">
-        {isLoading || !mounted ? (
+        {!mounted ? (
           <div className="flex h-full w-full items-center justify-center min-h-screen">
             <Loader label="Loading CeylonTour..." />
           </div>

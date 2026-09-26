@@ -8,7 +8,6 @@ import {
   LogOut,
   MapPin,
   Bookmark,
-  ShieldCheck,
   User as UserIcon,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -43,8 +42,7 @@ import logo from '@/public/logo.png';
 
 function AppLogo() {
   const { role } = useAuth();
-  const pathname = usePathname();
-  const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
+  const effectiveRole: Role = role === 'ADMIN' ? 'ADMIN' : 'TOURIST';
 
   return (
     <SidebarMenu>
@@ -144,7 +142,7 @@ function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const router = useRouter();
-  const { logout, loginAs, savedDestinationIds } = useAuth();
+  const { logout, savedDestinationIds } = useAuth();
   const isAuthority = user.role === 'ADMIN';
 
   return (
@@ -221,34 +219,6 @@ function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuLabel className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                Demo Switch Role
-              </DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => {
-                  loginAs('TOURIST');
-                  router.push('/dashboard');
-                }}
-                className={`cursor-pointer ${!isAuthority ? 'text-foreground font-black bg-muted' : 'text-foreground'}`}
-              >
-                <Compass className="mr-2 h-4 w-4 text-primary" />
-                <span>Tourist View</span>
-                {!isAuthority && <span className="ml-auto text-[10px] font-extrabold text-foreground">Active</span>}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  loginAs('ADMIN');
-                  router.push('/admin/dashboard');
-                }}
-                className={`cursor-pointer ${isAuthority ? 'text-foreground font-black bg-muted' : 'text-foreground'}`}
-              >
-                <ShieldCheck className="mr-2 h-4 w-4 text-primary" />
-                <span>Authority Admin View</span>
-                {isAuthority && <span className="ml-auto text-[10px] font-extrabold text-foreground">Active</span>}
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() => {
                   logout();
@@ -271,7 +241,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user, role } = useAuth();
   const pathname = usePathname();
 
-  const effectiveRole: Role = (pathname.startsWith('/admin') || role === 'ADMIN') ? 'ADMIN' : 'TOURIST';
+  const effectiveRole: Role = role === 'ADMIN' ? 'ADMIN' : 'TOURIST';
 
   const navGroups = getNavGroupsForRole(effectiveRole).map((group) => ({
     id: group.id,
@@ -291,8 +261,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const navUser = user
     ? {
-        name: effectiveRole === 'ADMIN' ? (user.role === 'ADMIN' ? user.name : 'Dilhara Senanayake') : (user.name || 'Traveler Explorer'),
-        email: effectiveRole === 'ADMIN' ? (user.role === 'ADMIN' ? user.email : 'd.senanayake@tourism.gov.lk') : (user.email || 'traveler@ceylontour.lk'),
+        name: user.name,
+        email: user.email,
         avatar: '',
         role: effectiveRole,
       }

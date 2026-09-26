@@ -15,21 +15,26 @@ import {
   Coins,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import { mapDestination } from '@/lib/destinationMapper';
 
 export default function SavedDestinationsPage() {
-  const { savedDestinationIds, toggleSaveDestination } = useAuth();
+  const { savedDestinations, isSavedLoading, toggleSaveDestination } = useAuth();
 
   const savedList = useMemo(() => {
-    return DESTINATIONS.filter((d) => savedDestinationIds.includes(d.id));
-  }, [savedDestinationIds]);
+    return savedDestinations.map((item) =>
+      mapDestination(item.destination, item.destination.sustainability),
+    );
+  }, [savedDestinations]);
 
   const totalDays = savedList.reduce((acc, d) => acc + d.recommendedDurationDays, 0);
   const totalBudget = savedList.reduce((acc, d) => acc + d.typicalBudgetLKR, 0);
   const avgSustainability = savedList.length > 0
     ? Math.round(savedList.reduce((acc, d) => acc + d.sustainability.overall, 0) / savedList.length)
     : 0;
+
+  if (isSavedLoading) return <Loader label="Loading saved destinations..." />;
 
   return (
     <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
@@ -172,6 +177,7 @@ export default function SavedDestinationsPage() {
                   src={dest.image}
                   alt={dest.name}
                   fill
+                  unoptimized={dest.image.startsWith('http')}
                   className="object-cover group-hover:scale-106 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-transparent to-transparent pointer-events-none" />
@@ -185,7 +191,7 @@ export default function SavedDestinationsPage() {
                 {/* Remove from Saved Button */}
                 <button
                   type="button"
-                  onClick={() => toggleSaveDestination(dest.id)}
+                  onClick={() => void toggleSaveDestination(dest.api.id)}
                   className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-destructive/10 text-muted-foreground hover:text-destructive shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                   title="Remove from saved"
                 >

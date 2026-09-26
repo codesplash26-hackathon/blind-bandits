@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -17,23 +17,64 @@ import {
   X,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { DESTINATIONS } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/Loader';
+import { listDestinations } from '@/lib/destinations';
+import { mapDestinations, type DestinationViewModel } from '@/lib/destinationMapper';
+import describeApiError from '@/lib/apiError';
 
 export default function DestinationsCatalogPage() {
   const { isSaved, toggleSaveDestination, savedDestinationIds } = useAuth();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string>('All');
-  const [selectedPressure, setSelectedPressure] = useState<string>('All');
+  const [selectedRegion, setSelectedRegion] = useState('All');
+  const [selectedLandscape, setSelectedLandscape] = useState('All');
+  const [regionOptions, setRegionOptions] = useState<string[]>([]);
+  const [landscapeOptions, setLandscapeOptions] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<'sustainability' | 'name' | 'budget'>('sustainability');
   const [lastSavedNotice, setLastSavedNotice] = useState<string | null>(null);
+  const [destinations, setDestinations] = useState<DestinationViewModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   const tagFilters = ['All', 'Nature', 'Beach', 'Wildlife', 'Culture', 'Hiking', 'Adventure'];
-  const pressureFilters = ['All', 'LOW', 'MEDIUM', 'HIGH'];
+
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      setIsLoading(true);
+      setLoadError(null);
+      try {
+        const response = await listDestinations({
+          active: true,
+          region: selectedRegion === 'All' ? undefined : selectedRegion,
+          landscape: selectedLandscape === 'All' ? undefined : selectedLandscape,
+          activity: selectedTag === 'All' ? undefined : selectedTag.toLowerCase(),
+        });
+        if (active) {
+          setRegionOptions((current) => Array.from(new Set([...current, ...response.map((item) => item.region)])).sort());
+          setLandscapeOptions((current) => Array.from(new Set([...current, ...response.map((item) => item.landscape_type)])).sort());
+        }
+        const mapped = mapDestinations(response);
+        if (active) setDestinations(mapped);
+      } catch (error) {
+        if (active) {
+          setLoadError(describeApiError(error, 'Unable to load destinations.'));
+        }
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+    void load();
+    return () => {
+      active = false;
+    };
+  }, [reloadKey, selectedLandscape, selectedRegion, selectedTag]);
 
   const filteredDestinations = useMemo(() => {
-    return DESTINATIONS.filter((dest) => {
+    return destinations.filter((dest) => {
       const matchesSearch =
         dest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         dest.district.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -43,10 +84,7 @@ export default function DestinationsCatalogPage() {
         selectedTag === 'All' ||
         dest.tags.some((t) => t.toLowerCase() === selectedTag.toLowerCase());
 
-      const matchesPressure =
-        selectedPressure === 'All' || dest.pressure.level === selectedPressure;
-
-      return matchesSearch && matchesTag && matchesPressure;
+      return matchesSearch && matchesTag;
     }).slice().sort((a, b) => {
       if (sortBy === 'sustainability') {
         return b.sustainability.overall - a.sustainability.overall;
@@ -56,16 +94,36 @@ export default function DestinationsCatalogPage() {
       }
       return a.name.localeCompare(b.name);
     });
-  }, [searchQuery, selectedTag, selectedPressure, sortBy]);
+  }, [destinations, searchQuery, selectedTag, sortBy]);
 
-  const handleSaveToggle = (destId: string, destName: string) => {
-    const currentlySaved = isSaved(destId);
-    toggleSaveDestination(destId);
+  const lowPressureCount = destinations.filter((destination) => destination.pressure.level === 'LOW').length;
+  const scoredDestinations = destinations.filter((destination) => destination.sustainabilityData);
+  const averageSustainability = scoredDestinations.length
+    ? Math.round(scoredDestinations.reduce((total, destination) => total + destination.sustainability.overall, 0) / scoredDestinations.length)
+    : null;
+
+  const handleSaveToggle = (destination: DestinationViewModel) => {
+    const currentlySaved = isSaved(destination.api.id);
+    void toggleSaveDestination(destination.api.id);
     setLastSavedNotice(
-      currentlySaved ? `Removed ${destName} from your saved trips` : `Saved ${destName} to your journey bucketlist!`
+      currentlySaved ? `Removed ${destination.name} from your saved trips` : `Saved ${destination.name} to your journey bucketlist!`
     );
     setTimeout(() => setLastSavedNotice(null), 3000);
   };
+
+  if (isLoading) {
+    return <Loader label="Loading destinations..." />;
+  }
+
+  if (loadError) {
+    return (
+      <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
+        <h2 className="text-lg font-bold text-foreground">Destinations unavailable</h2>
+        <p className="text-sm text-muted-foreground">{loadError}</p>
+        <Button onClick={() => setReloadKey((value) => value + 1)} variant="outline">Try again</Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 pb-20 max-w-7xl mx-auto w-full">
@@ -79,7 +137,7 @@ export default function DestinationsCatalogPage() {
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {DESTINATIONS.length} Amazing Destinations
+              {destinations.length} Active Destinations
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
@@ -138,7 +196,7 @@ export default function DestinationsCatalogPage() {
               All Destinations
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{DESTINATIONS.length}</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{destinations.length}</span>
               <span className="text-xs text-muted-foreground font-semibold">regions</span>
             </div>
             <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
@@ -157,11 +215,11 @@ export default function DestinationsCatalogPage() {
               Quiet Places
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-foreground tracking-tight">8</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{lowPressureCount}</span>
               <span className="text-xs text-muted-foreground font-semibold">destinations</span>
             </div>
             <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-              <span className="text-primary font-bold">● 67%</span> low crowd density
+              Derived from crowd-condition factors
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -176,11 +234,11 @@ export default function DestinationsCatalogPage() {
               Eco-Friendly Score
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-3xl font-black text-foreground tracking-tight">86</span>
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">{averageSustainability ?? '—'}</span>
               <span className="text-xs text-muted-foreground font-semibold">/100</span>
             </div>
             <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-              Verified local stays
+              API configuration weighted
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -251,7 +309,7 @@ export default function DestinationsCatalogPage() {
           </div>
         </div>
 
-        {/* Bottom Filter Controls: Tags & Pressure Level */}
+        {/* Bottom Filter Controls: backend-supported activity, region and landscape filters */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-3 border-t border-border">
           {/* Experience Tabs */}
           <div className="flex flex-wrap items-center gap-2.5">
@@ -277,40 +335,15 @@ export default function DestinationsCatalogPage() {
             </div>
           </div>
 
-          {/* Crowd Level Tabs */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <span className="text-xs text-muted-foreground font-bold">Crowds:</span>
-            <div className="p-1.5 rounded-2xl bg-muted border border-border flex items-center gap-1 shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
-              {pressureFilters.map((p) => {
-                const isActive = selectedPressure === p;
-                let activeStyle = 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--shadow-color)_28%,transparent)] ring-1 ring-overlay-foreground/20 font-black';
-                let inactiveStyle = 'bg-card/60 hover:bg-card text-primary border border-transparent hover:border-border hover:shadow-2xs';
-
-                if (p === 'LOW') {
-                  activeStyle = 'bg-success text-success-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--success)_30%,transparent)] ring-1 ring-overlay-foreground/20 font-black';
-                  inactiveStyle = 'bg-card/60 hover:bg-success/10 text-success border border-transparent hover:border-success/25 hover:shadow-2xs';
-                } else if (p === 'MEDIUM') {
-                  activeStyle = 'bg-warning text-warning-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--warning)_30%,transparent)] ring-1 ring-overlay-foreground/20 font-black';
-                  inactiveStyle = 'bg-card/60 hover:bg-warning/10 text-warning border border-transparent hover:border-warning/25 hover:shadow-2xs';
-                } else if (p === 'HIGH') {
-                  activeStyle = 'bg-destructive text-destructive-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--destructive)_30%,transparent)] ring-1 ring-overlay-foreground/20 font-black';
-                  inactiveStyle = 'bg-card/60 hover:bg-destructive/10 text-destructive border border-transparent hover:border-destructive/25 hover:shadow-2xs';
-                }
-
-                return (
-                  <button
-                    type="button"
-                    key={p}
-                    onClick={() => setSelectedPressure(p)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      isActive ? activeStyle : inactiveStyle
-                    }`}
-                  >
-                    {p === 'All' ? 'All' : `${p.charAt(0) + p.slice(1).toLowerCase()}`}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <select value={selectedRegion} onChange={(event) => setSelectedRegion(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-primary">
+              <option>All</option>
+              {regionOptions.map((region) => <option key={region}>{region}</option>)}
+            </select>
+            <select value={selectedLandscape} onChange={(event) => setSelectedLandscape(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-primary">
+              <option>All</option>
+              {landscapeOptions.map((landscape) => <option key={landscape}>{landscape}</option>)}
+            </select>
           </div>
         </div>
       </div>
@@ -332,6 +365,7 @@ export default function DestinationsCatalogPage() {
                     src={dest.image}
                     alt={dest.name}
                     fill
+                    unoptimized={dest.image.startsWith('http')}
                     className="object-cover group-hover:scale-106 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-overlay/85 via-transparent to-transparent pointer-events-none" />
@@ -339,14 +373,14 @@ export default function DestinationsCatalogPage() {
                   {/* Pressure Pill */}
                   <div className="absolute top-3.5 left-3.5">
                     <span className="text-[10px] font-black px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground border border-overlay-foreground/20 backdrop-blur-md">
-                      {dest.pressure.level} CROWDS
+                      {dest.pressure.level} CROWD PRESSURE PROXY
                     </span>
                   </div>
 
                   {/* Save Heart Button */}
                   <button
                     type="button"
-                    onClick={() => handleSaveToggle(dest.id, dest.name)}
+                    onClick={() => handleSaveToggle(dest)}
                     className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
                     title={isBookmarked ? 'Saved' : 'Save'}
                   >
@@ -377,6 +411,12 @@ export default function DestinationsCatalogPage() {
                       <span className="font-black text-primary">
                         {dest.sustainability.overall} / 100
                       </span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                      <span>{dest.api.factor?.value_type ?? 'NO FACTOR DATA'}</span>
+                      <span>•</span>
+                      <span>{dest.api.factor?.confidence_level ?? 'UNKNOWN'} CONFIDENCE</span>
                     </div>
 
                     <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
@@ -434,7 +474,8 @@ export default function DestinationsCatalogPage() {
             onClick={() => {
               setSearchQuery('');
               setSelectedTag('All');
-              setSelectedPressure('All');
+              setSelectedRegion('All');
+              setSelectedLandscape('All');
             }}
             className="rounded-2xl mt-2 bg-card border-border text-primary hover:bg-muted font-bold cursor-pointer"
           >

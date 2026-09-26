@@ -23,7 +23,7 @@ from app.schemas.engagement import (
     history_item_from_record,
 )
 from app.schemas.pressure import PressureBandThresholds
-from app.schemas.recommendation import RecommendationRequest, RecommendationResponse
+from app.schemas.recommendation import RecommendationRequest, RecommendationResults
 from app.services.recommendations import RANKING_VERSION
 from app.services.sustainability import SustainabilityWeightConfiguration
 
@@ -52,7 +52,7 @@ def record_recommendation_search(
     db: Session,
     user_id: int,
     request: RecommendationRequest,
-    response: RecommendationResponse,
+    response: RecommendationResults,
     configuration: SustainabilityWeightConfiguration,
 ) -> RecommendationSearch:
     record = RecommendationSearch(
@@ -196,12 +196,14 @@ def record_interaction(
         if artifact_dir is None or pressure_thresholds is None:
             raise PressureContextUnavailableError
         artifact = load_artifact(artifact_dir)
-        source_value, version = predict_regional_pressure_from_artifact(
-            artifact, region=source.region, month=pressure_month
-        )
         selected = _active_destination(db, destination_id)
+        if source.pressure_region is None or selected.pressure_region is None:
+            raise PressureContextUnavailableError
+        source_value, version = predict_regional_pressure_from_artifact(
+            artifact, region=source.pressure_region, month=pressure_month
+        )
         selected_value, _ = predict_regional_pressure_from_artifact(
-            artifact, region=selected.region, month=pressure_month
+            artifact, region=selected.pressure_region, month=pressure_month
         )
         context = AlternativeSelectionContext(
             source_destination_id=source_destination_id,

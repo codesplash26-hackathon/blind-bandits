@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   AlertTriangle,
   MapPin,
-  TrendingUp,
-  Compass,
   ArrowRight,
   CheckCircle2,
   BarChart3,
@@ -28,7 +26,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { DESTINATIONS } from '@/lib/mockData';
+import { getAdminDashboard } from '@/lib/destinations';
+import { useAuth } from '@/context/AuthContext';
+import type { AdminDashboardResponse } from '@/types/destination-api';
+import describeApiError from '@/lib/apiError';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -39,56 +40,81 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useAuth } from '@/context/AuthContext';
 
-const emptySubscribe = () => () => {};
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7);
+}
 
 export default function AdminDashboard() {
-  const { loginAs } = useAuth();
-  const mounted = React.useSyncExternalStore(emptySubscribe, () => true, () => false);
-
-  const [isRedistributing, setIsRedistributing] = useState(false);
-  const [redistributeStatus, setRedistributeStatus] = useState<string | null>(null);
   const [pressureFilter, setPressureFilter] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [rebalanceStep, setRebalanceStep] = useState<string>('');
+  const [dashboard, setDashboard] = useState<AdminDashboardResponse | null>(null);
+  const [month, setMonth] = useState(currentMonth);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const { user, role, isLoading: isAuthLoading } = useAuth();
 
-  const highPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'HIGH');
-  const mediumPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'MEDIUM');
-  const lowPressureList = DESTINATIONS.filter((d) => d.pressure.level === 'LOW');
+  useEffect(() => {
+    if (isAuthLoading || !user || role !== 'ADMIN') return;
+    let active = true;
+    const timer = window.setTimeout(() => {
+      setIsLoading(true);
+      setLoadError(null);
+      getAdminDashboard(month)
+        .then((response) => {
+          if (active) setDashboard(response);
+        })
+        .catch((error) => {
+          if (!active) return;
+          setDashboard(null);
+          setLoadError(describeApiError(error, 'Unable to load the admin dashboard.'));
+        })
+        .finally(() => {
+          if (active) setIsLoading(false);
+        });
+    }, 0);
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+    };
+  }, [isAuthLoading, month, reloadKey, role, user]);
 
-  const filteredDestinations = DESTINATIONS.filter((d) => {
-    const matchesFilter =
-      pressureFilter === 'ALL' ? true : d.pressure.level === pressureFilter;
+  if (isAuthLoading) return <div className="p-12 text-center text-sm text-muted-foreground">Restoring administrator session...</div>;
+  if (!user || role !== 'ADMIN') {
+    return (
+      <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-2">
+        <h2 className="text-lg font-bold text-foreground">Administrator access required</h2>
+        <p className="text-sm text-muted-foreground">This dashboard is available only to authorized administrators.</p>
+      </div>
+    );
+  }
+  if (isLoading && !dashboard) return <div className="p-12 text-center text-sm text-muted-foreground">Loading administrator dashboard...</div>;
+  if (loadError) {
+    return (
+      <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
+        <h2 className="text-lg font-bold text-foreground">Dashboard unavailable</h2>
+        <p className="text-sm text-muted-foreground">{loadError}</p>
+        <button type="button" onClick={() => setReloadKey((value) => value + 1)} className="text-sm font-bold text-primary hover:underline">Try again</button>
+      </div>
+    );
+  }
+  if (!dashboard) return null;
+
+  const highestPressureList = dashboard.highest_pressure_destinations;
+  const filteredDestinations = highestPressureList.filter((destination) => {
+    const matchesFilter = pressureFilter === 'ALL' || destination.pressure_level === pressureFilter;
     const matchesSearch =
-      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.district.toLowerCase().includes(searchQuery.toLowerCase());
+      destination.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      destination.region.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
-  }).sort((a, b) => b.pressure.score - a.pressure.score);
+  });
 
-  // Chart data from destinations
-  const overviewChartData = DESTINATIONS.slice(0, 7).map((d) => ({
-    name: d.name,
-    pressure: d.pressure.score,
-    sustainability: d.sustainability.overall,
+  const overviewChartData = highestPressureList.map((destination) => ({
+    name: destination.name,
+    pressure: destination.predicted_regional_occupancy_rate,
+    sustainability: destination.sustainability_score ?? 0,
   }));
-
-  const handleTriggerRedistribution = () => {
-    setIsRedistributing(true);
-    setRebalanceStep('Analyzing real-time crowd data...');
-    
-    setTimeout(() => {
-      setRebalanceStep('Adjusting AI recommendations to promote quieter places...');
-    }, 450);
-
-    setTimeout(() => {
-      setIsRedistributing(false);
-      setRebalanceStep('');
-      setRedistributeStatus(
-        'Update Live: Recommended Belihuloya & Haputale to more travelers. Expected crowding in Ella reduced by 22%.'
-      );
-    }, 1100);
-  };
 
   return (
     <div className="space-y-8 pb-16 max-w-7xl mx-auto w-full">
@@ -117,41 +143,27 @@ export default function AdminDashboard() {
           <Button
             variant="outline"
             size="sm"
-            onClick={handleTriggerRedistribution}
-            disabled={isRedistributing}
+            onClick={() => setReloadKey((value) => value + 1)}
+            disabled={isLoading}
             className="rounded-xl gap-2 cursor-pointer bg-card border-primary/30 text-primary hover:bg-primary/10 shadow-xs"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-secondary ${isRedistributing ? 'animate-spin' : ''}`} />
-            <span>{isRedistributing ? rebalanceStep || 'Broadcasting...' : 'Trigger Rebalance'}</span>
+            <RefreshCw className={`w-3.5 h-3.5 text-secondary ${isLoading ? 'animate-spin' : ''}`} />
+            <span>Refresh dashboard</span>
           </Button>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => loginAs('TOURIST')}
-            className="rounded-xl gap-1.5 cursor-pointer bg-card border-border hover:border-secondary/40 shadow-xs"
-          >
-            <Compass className="w-4 h-4 text-primary" />
-            <span>Switch to Tourist View</span>
-          </Button>
         </div>
       </div>
 
-      {redistributeStatus && (
-        <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex items-center justify-between gap-3 text-xs text-foreground animate-in fade-in duration-300">
-          <div className="flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
-            <span className="font-semibold">{redistributeStatus}</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setRedistributeStatus(null)}
-            className="text-muted-foreground hover:text-foreground cursor-pointer font-bold px-1"
-          >
-            ✕
-          </button>
+      <div className="p-4 rounded-2xl bg-secondary/15 border border-secondary/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-foreground">
+        <div className="flex items-center gap-2.5">
+          <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
+          <span className="font-semibold">{dashboard.recommended_action.message}</span>
         </div>
-      )}
+        <label className="flex items-center gap-2 font-bold text-muted-foreground">
+          Forecast month
+          <input type="month" value={month} onChange={(event) => setMonth(event.target.value)} className="h-8 rounded-lg border border-border bg-background px-2 text-[10px] text-foreground" />
+        </label>
+      </div>
 
       {/* ── 2. Top 4 Modern KPI Cards with Sparklines & Donut Rings ──────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -163,7 +175,7 @@ export default function AdminDashboard() {
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-                {DESTINATIONS.length}
+                {dashboard.monitored_destinations}
               </span>
               <span className="text-xs text-muted-foreground font-semibold">locations</span>
             </div>
@@ -186,9 +198,9 @@ export default function AdminDashboard() {
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-                {lowPressureList.length}
+                {dashboard.pressure_counts.low}
               </span>
-              <span className="text-xs text-muted-foreground font-semibold">/ {DESTINATIONS.length} places</span>
+                <span className="text-xs text-muted-foreground font-semibold">/ {dashboard.total_active_destinations} sites</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
               <span className="text-primary">★ Optimal</span>
@@ -208,7 +220,7 @@ export default function AdminDashboard() {
               />
               <path
                 className="text-primary"
-                strokeDasharray={`${(lowPressureList.length / DESTINATIONS.length) * 100}, 100`}
+                strokeDasharray={`${dashboard.total_active_destinations ? (dashboard.pressure_counts.low / dashboard.total_active_destinations) * 100 : 0}, 100`}
                 strokeWidth="3.5"
                 strokeLinecap="round"
                 stroke="currentColor"
@@ -217,7 +229,7 @@ export default function AdminDashboard() {
               />
             </svg>
             <span className="absolute text-[11px] font-black text-foreground">
-              {Math.round((lowPressureList.length / DESTINATIONS.length) * 100)}%
+              {dashboard.total_active_destinations ? Math.round((dashboard.pressure_counts.low / dashboard.total_active_destinations) * 100) : 0}%
             </span>
           </div>
         </div>
@@ -230,7 +242,7 @@ export default function AdminDashboard() {
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">
-                {mediumPressureList.length}
+                {dashboard.pressure_counts.medium}
               </span>
               <span className="text-xs text-muted-foreground font-semibold">places</span>
             </div>
@@ -263,7 +275,7 @@ export default function AdminDashboard() {
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-destructive tracking-tight">
-                {highPressureList.length}
+                {dashboard.pressure_counts.high}
               </span>
               <span className="text-xs text-muted-foreground font-semibold">crowded</span>
             </div>
@@ -368,7 +380,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="h-64 sm:h-72 w-full">
-          {mounted && (
+          
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={overviewChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
@@ -411,7 +423,7 @@ export default function AdminDashboard() {
                 />
               </BarChart>
             </ResponsiveContainer>
-          )}
+          
         </div>
       </div>
 
@@ -433,8 +445,10 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2 self-start md:self-auto">
-            <Badge variant="success">ACTIVE REDIRECTION</Badge>
-            <span className="text-xs font-mono font-bold text-foreground">~1,420 diverted/week</span>
+            <Badge variant={dashboard.recommended_action.priority === 'HIGH' ? 'destructive' : 'success'}>
+              {dashboard.recommended_action.priority} ACTION
+            </Badge>
+            <span className="text-xs font-mono font-bold text-foreground">{dashboard.monitored_destinations} monitored</span>
           </div>
         </div>
 
@@ -444,9 +458,11 @@ export default function AdminDashboard() {
               <span className="font-bold text-destructive">Busy Location</span>
               <Badge variant="destructive">82% Full</Badge>
             </div>
-            <p className="font-heading text-base font-black text-foreground">Ella (Badulla)</p>
+            <p className="font-heading text-base font-black text-foreground">{highestPressureList[0]?.name ?? 'No pressure data'}</p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              Trails are crowded and local resources are strained.
+              {highestPressureList[0]
+                ? `${highestPressureList[0].predicted_regional_occupancy_rate.toFixed(1)}% regional occupancy in ${highestPressureList[0].region}.`
+                : 'No regional pressure forecast is available for this month.'}
             </p>
           </div>
 
@@ -455,9 +471,16 @@ export default function AdminDashboard() {
               <span className="font-bold text-primary">Suggested Alternatives</span>
               <Send className="w-3.5 h-3.5 text-primary" />
             </div>
-            <p className="font-heading text-base font-black text-foreground">Haputale &amp; Belihuloya</p>
+            <p className="font-heading text-base font-black text-foreground">
+              {dashboard.recommended_action.destination_ids.length
+                ? dashboard.recommended_action.destination_ids
+                  .map((id) => highestPressureList.find((destination) => destination.id === id)?.name)
+                  .filter(Boolean)
+                  .join(' & ')
+                : 'No destinations queued'}
+            </p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              Quiet and scenic alternatives for hiking and tea country views.
+              {dashboard.recommended_action.message}
             </p>
           </div>
 
@@ -466,9 +489,13 @@ export default function AdminDashboard() {
               <span className="font-bold text-success">Impact</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-success" />
             </div>
-            <p className="font-heading text-base font-black text-foreground">-28% Strain on Ella</p>
+            <p className="font-heading text-base font-black text-foreground">
+              {dashboard.sustainability.average_score === null
+                ? 'Sustainability unavailable'
+                : `${dashboard.sustainability.average_score.toFixed(1)} average index`}
+            </p>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              +LKR 4.2M earned by local homestays in quieter areas this month.
+              {dashboard.sustainability.scored_destinations} destinations have scored sustainability factors.
             </p>
           </div>
         </div>
@@ -515,7 +542,9 @@ export default function AdminDashboard() {
                       : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border'
                   }`}
                 >
-                  {lvl === 'ALL' ? 'All (10)' : `${lvl} (${DESTINATIONS.filter((d) => d.pressure.level === lvl).length})`}
+                  {lvl === 'ALL'
+                    ? `All (${highestPressureList.length})`
+                    : `${lvl} (${highestPressureList.filter((destination) => destination.pressure_level === lvl).length})`}
                 </button>
               ))}
             </div>
@@ -534,11 +563,11 @@ export default function AdminDashboard() {
             <TableHeader>
               <TableRow className="text-muted-foreground uppercase tracking-wider text-[11px]">
                 <TableHead className="py-3 px-3">Destination</TableHead>
-                <TableHead className="py-3 px-3">District</TableHead>
-                <TableHead className="py-3 px-3">Crowd Level</TableHead>
-                <TableHead className="py-3 px-3">Status</TableHead>
-                <TableHead className="py-3 px-3">Eco Score</TableHead>
-                <TableHead className="py-3 px-3">Updates</TableHead>
+                <TableHead className="py-3 px-3">Region</TableHead>
+                <TableHead className="py-3 px-3">Load vs Limit</TableHead>
+                <TableHead className="py-3 px-3">Capacity Gauge</TableHead>
+                <TableHead className="py-3 px-3">Sustainability</TableHead>
+                <TableHead className="py-3 px-3">Telemetry Feed</TableHead>
                 <TableHead className="py-3 px-3 text-right">Inspect</TableHead>
               </TableRow>
             </TableHeader>
@@ -549,24 +578,24 @@ export default function AdminDashboard() {
                     <div>
                       <span>{dest.name}</span>
                       <span className="text-[10px] text-muted-foreground block font-normal truncate max-w-[200px]">
-                        {dest.tagline}
+                        {dest.slug}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="py-3.5 px-3 text-muted-foreground text-xs">{dest.district}</TableCell>
+                  <TableCell className="py-3.5 px-3 text-muted-foreground text-xs">{dest.region}</TableCell>
                   <TableCell className="py-3.5 px-3">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-xs">{dest.pressure.score}%</span>
+                      <span className="font-mono font-bold text-xs">{dest.predicted_regional_occupancy_rate.toFixed(1)}%</span>
                       <Badge
                         variant={
-                          dest.pressure.level === 'HIGH'
+                          dest.pressure_level === 'HIGH'
                             ? 'destructive'
-                            : dest.pressure.level === 'MEDIUM'
+                            : dest.pressure_level === 'MEDIUM'
                             ? 'warning'
                             : 'success'
                         }
                       >
-                        {dest.pressure.level}
+                        {dest.pressure_level}
                       </Badge>
                     </div>
                   </TableCell>
@@ -575,19 +604,19 @@ export default function AdminDashboard() {
                       <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-300 ${
-                            dest.pressure.level === 'HIGH'
+                            dest.pressure_level === 'HIGH'
                               ? 'bg-destructive'
-                              : dest.pressure.level === 'MEDIUM'
+                              : dest.pressure_level === 'MEDIUM'
                               ? 'bg-primary'
                               : 'bg-secondary'
                           }`}
-                          style={{ width: `${dest.pressure.score}%` }}
+                          style={{ width: `${dest.predicted_regional_occupancy_rate}%` }}
                         />
                       </div>
                     </div>
                   </TableCell>
                   <TableCell className="py-3.5 px-3 font-bold text-secondary text-xs">
-                    {dest.sustainability.overall} / 100
+                    {dest.sustainability_score === null ? '—' : dest.sustainability_score.toFixed(1)} / 100
                   </TableCell>
                   <TableCell className="py-3.5 px-3">
                     <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
@@ -596,7 +625,7 @@ export default function AdminDashboard() {
                     </span>
                   </TableCell>
                   <TableCell className="py-3.5 px-3 text-right">
-                    <Link href={`/destinations/${dest.id}`}>
+                    <Link href={`/destinations/${dest.slug}`}>
                       <Button size="xs" variant="outline" className="rounded-xl gap-1 text-xs hover:border-secondary">
                         <Eye className="w-3 h-3 text-secondary" />
                         <span>Inspect</span>

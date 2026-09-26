@@ -13,12 +13,8 @@ import {
   DollarSign,
   Activity,
   RefreshCw,
-  Zap,
-  Info,
-  Layers,
-  ArrowRight,
 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
@@ -128,7 +124,7 @@ export default function AdminSettingsPage() {
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              AI Settings Active
+              Deterministic Policy Engine Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
@@ -227,7 +223,7 @@ export default function AdminSettingsPage() {
                 AI Recommendations Setup
               </h2>
               <p className="text-xs text-muted-foreground">
-                Adjust how the AI chooses places for travelers.
+                Deterministic policy weights governing tourist destination rerouting.
               </p>
             </div>
           </div>

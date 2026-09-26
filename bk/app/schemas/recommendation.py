@@ -50,6 +50,9 @@ class RecommendationItemResponse(BaseModel):
     preference_match: PreferenceMatchResponse
 
 
-class RecommendationResponse(BaseModel):
+class RecommendationResults(BaseModel):
     results: list[RecommendationItemResponse]
 
+
+class RecommendationResponse(RecommendationResults):
+    recommendation_search_id: int = Field(gt=0)

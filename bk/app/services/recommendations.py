@@ -12,7 +12,7 @@ from app.schemas.recommendation import (
     PreferenceMatchResponse,
     RecommendationItemResponse,
     RecommendationRequest,
-    RecommendationResponse,
+    RecommendationResults,
     SustainabilityPreference,
 )
 from app.services.destinations import destination_load_options
@@ -108,7 +108,7 @@ def rank_destinations(
     sustainability_configuration: SustainabilityWeightConfiguration,
     *,
     limit: int = DEFAULT_RECOMMENDATION_LIMIT,
-) -> RecommendationResponse:
+) -> RecommendationResults:
     candidates: list[RankedCandidate] = []
     sustainability_multiplier = SUSTAINABILITY_PREFERENCE_MULTIPLIERS[
         request.sustainability_preference
@@ -164,7 +164,7 @@ def rank_destinations(
         ),
     )[:limit]
 
-    return RecommendationResponse(
+    return RecommendationResults(
         results=[
             RecommendationItemResponse(
                 rank=rank,
@@ -188,7 +188,7 @@ def recommend_destinations(
     db: Session,
     request: RecommendationRequest,
     sustainability_configuration: SustainabilityWeightConfiguration,
-) -> RecommendationResponse:
+) -> RecommendationResults:
     statement = (
         select(Destination)
         .where(Destination.is_active.is_(True))

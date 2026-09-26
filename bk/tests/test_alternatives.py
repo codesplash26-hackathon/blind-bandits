@@ -86,7 +86,7 @@ def alternative_settings(
 @pytest.fixture
 def example_pressure(monkeypatch: pytest.MonkeyPatch) -> None:
     # Fixed values isolate selection/ranking from the independently tested ML model.
-    forecasts = {"Central": 90.0, "Southern": 45.0, "Western": 30.0}
+    forecasts = {"Hill Country": 90.0, "South Coast": 45.0, "Greater Colombo": 30.0}
     monkeypatch.setattr(destination_alternatives, "load_artifact", lambda _: object())
 
     def predict(_artifact: object, *, region: str, month: str) -> tuple[float, str]:
@@ -115,6 +115,12 @@ async def create_destination(
         slug=slug,
         name=slug.replace("-", " ").title(),
         region=region,
+        pressure_region={
+            "Central": "Hill Country",
+            "Southern": "South Coast",
+            "Western": "Greater Colombo",
+            "Northern": "Northern Region",
+        }.get(region),
         landscape_type=landscape,
         activities=["nature", "hiking"] if activities is None else activities,
         is_active=active,
@@ -296,7 +302,7 @@ async def test_alternatives_use_trained_regional_artifact(
 ) -> None:
     # Entirely synthetic monthly history, used only to test service integration.
     observations = []
-    for region, offset in (("Central", 45), ("Southern", 0)):
+    for region, offset in (("Hill Country", 45), ("South Coast", 0)):
         for index, month in enumerate(
             pd.date_range("2023-01-01", periods=36, freq="MS")
         ):
@@ -313,7 +319,7 @@ async def test_alternatives_use_trained_regional_artifact(
     calendar = pd.DataFrame(
         [
             {"month": "2026-01", "region": region, "is_holiday": 0, "is_peak_season": 1}
-            for region in ("Central", "Southern")
+            for region in ("Hill Country", "South Coast")
         ]
     )
     artifact_dir = tmp_path / "trained-pressure"
@@ -324,10 +330,10 @@ async def test_alternatives_use_trained_regional_artifact(
         output_dir=artifact_dir,
     )
     central_rate, _ = predict_regional_pressure(
-        artifact_dir, region="Central", month="2026-01"
+        artifact_dir, region="Hill Country", month="2026-01"
     )
     southern_rate, _ = predict_regional_pressure(
-        artifact_dir, region="Southern", month="2026-01"
+        artifact_dir, region="South Coast", month="2026-01"
     )
     assert central_rate > southern_rate
     monkeypatch.setenv("PRESSURE_MODEL_ARTIFACT_DIR", str(artifact_dir))

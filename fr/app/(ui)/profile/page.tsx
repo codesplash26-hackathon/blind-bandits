@@ -9,7 +9,6 @@ import {
   Trash2,
   KeyRound,
   Save,
-  ShieldCheck,
   Sparkles,
   Leaf,
   Heart,
@@ -29,11 +28,11 @@ import { AuthorityProfileContent } from '@/components/profile/AuthorityProfileCo
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, role, loginAs, currentPreferences, updatePreferences, logout, savedDestinationIds } = useAuth();
+  const { user, role, currentPreferences, updatePreferences, logout, savedDestinationIds } = useAuth();
 
   // Tourist state
-  const [name, setName] = useState(user?.name || 'Nipun');
-  const [country, setCountry] = useState(user?.country || 'Sri Lanka');
+  const [name, setName] = useState(user?.name || 'Traveler');
+  const [country, setCountry] = useState('Sri Lanka');
   const [selectedInterests, setSelectedInterests] = useState<string[]>(
     currentPreferences.interests || ['Nature', 'Hiking']
   );
@@ -74,7 +73,7 @@ export default function ProfilePage() {
   if (role === 'ADMIN') {
     return (
       <div className="max-w-6xl mx-auto pb-16">
-        <AuthorityProfileContent showSwitchToTourist={true} />
+        <AuthorityProfileContent />
       </div>
     );
   }
@@ -101,16 +100,6 @@ export default function ProfilePage() {
             <span>Member Since 2026</span>
           </div>
 
-          <button
-            onClick={() => {
-              loginAs('ADMIN');
-              toast.info('Switched session to Tourism Authority Official profile');
-            }}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold transition-all cursor-pointer shadow-xs"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-            <span>Switch to Authority</span>
-          </button>
         </div>
       </div>
 
@@ -133,7 +122,7 @@ export default function ProfilePage() {
               </span>
             </div>
             <p className="text-xs text-muted-foreground font-medium mt-0.5">
-              {user?.email || 'nipun@ceylontour.lk'} • {country}
+              {user?.email} • {country}
             </p>
           </div>
         </div>
@@ -305,7 +294,7 @@ export default function ProfilePage() {
                 <label className="text-xs font-bold text-muted-foreground">Email Address</label>
                 <input
                   type="email"
-                  value={user?.email || 'nipun@ceylontour.lk'}
+                  value={user?.email || ''}
                   disabled
                   className="w-full px-3.5 py-2.5 rounded-2xl border border-border bg-muted text-xs font-mono text-muted-foreground cursor-not-allowed"
                 />

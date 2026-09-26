@@ -41,7 +41,18 @@ async def destinations(client: AsyncClient, admin_user: User) -> list[dict[str, 
         ("analytics-other", "Eastern"),
     ):
         payload = deepcopy(EXAMPLE_DESTINATION)
-        payload.update({"slug": slug, "name": slug, "region": region})
+        payload.update(
+            {
+                "slug": slug,
+                "name": slug,
+                "region": region,
+                "pressure_region": {
+                    "Southern": "South Coast",
+                    "Central": "Hill Country",
+                    "Eastern": "East Coast",
+                }[region],
+            }
+        )
         created.append(await create_example_destination(client, admin_user, payload))
     return created
 
@@ -335,7 +346,7 @@ async def test_alternative_event_snapshots_trusted_pressure_context(
         _artifact: object, *, region: str, month: str
     ) -> tuple[float, str]:
         assert month == "2026-06"
-        return (85.0 if region == "Southern" else 35.0), "test-model-v1"
+        return (85.0 if region == "South Coast" else 35.0), "test-model-v1"
 
     monkeypatch.setattr(
         engagement, "predict_regional_pressure_from_artifact", fake_forecast

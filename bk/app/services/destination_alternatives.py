@@ -42,12 +42,16 @@ def suggest_alternatives(
     sustainability_weights: SustainabilityWeightConfiguration,
 ) -> DestinationAlternativesResponse:
     artifact = load_artifact(artifact_dir)
+    if source.pressure_region is None:
+        raise ForecastContextUnavailableError(
+            "Regional pressure prediction is unavailable for this destination"
+        )
     source_rate, version = predict_regional_pressure_from_artifact(
-        artifact, region=source.region, month=month
+        artifact, region=source.pressure_region, month=month
     )
     source_band = pressure_band(source_rate, thresholds)
     source_pressure = RegionalPressureSummary(
-        region=source.region,
+        region=source.pressure_region,
         predicted_occupancy_rate=source_rate,
         band=source_band,
         model_version=version,
@@ -72,20 +76,20 @@ def suggest_alternatives(
         )
     )
     similarities = destination_cosine_similarities(source, candidates)
-    regional_forecasts: dict[str, float | None] = {source.region: source_rate}
+    regional_forecasts: dict[str, float | None] = {source.pressure_region: source_rate}
     alternatives: list[AlternativeDestination] = []
     for candidate, similarity in zip(candidates, similarities, strict=True):
-        if similarity <= 0 or candidate.factor is None:
+        if similarity <= 0 or candidate.factor is None or candidate.pressure_region is None:
             continue
-        if candidate.region not in regional_forecasts:
+        if candidate.pressure_region not in regional_forecasts:
             try:
                 rate, _ = predict_regional_pressure_from_artifact(
-                    artifact, region=candidate.region, month=month
+                    artifact, region=candidate.pressure_region, month=month
                 )
-                regional_forecasts[candidate.region] = rate
+                regional_forecasts[candidate.pressure_region] = rate
             except ForecastContextUnavailableError:
-                regional_forecasts[candidate.region] = None
-        rate = regional_forecasts[candidate.region]
+                regional_forecasts[candidate.pressure_region] = None
+        rate = regional_forecasts[candidate.pressure_region]
         if rate is None or rate >= source_rate:
             continue
         factor = candidate.factor
@@ -105,7 +109,7 @@ def suggest_alternatives(
                 similarity_score=similarity,
                 similarity_percentage=similarity * 100,
                 pressure=RegionalPressureSummary(
-                    region=candidate.region,
+                    region=candidate.pressure_region,
                     predicted_occupancy_rate=rate,
                     band=pressure_band(rate, thresholds),
                     model_version=version,

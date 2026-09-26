@@ -43,9 +43,9 @@ def map_forecasts(monkeypatch: pytest.MonkeyPatch) -> list[str]:
 
     def predict(_artifact: object, *, region: str, month: str) -> tuple[float, str]:
         calls.append(region)
-        if month != "2026-01" or region not in {"Southern", "Central"}:
+        if month != "2026-01" or region not in {"South Coast", "Hill Country"}:
             raise ForecastContextUnavailableError("No regional forecast context")
-        return {"Southern": 55.0, "Central": 85.0}[region], "synthetic-map-v1"
+        return {"South Coast": 55.0, "Hill Country": 85.0}[region], "synthetic-map-v1"
 
     monkeypatch.setattr(map_data, "predict_regional_pressure_from_artifact", predict)
     return calls
@@ -67,6 +67,11 @@ async def create_map_destination(
         slug=slug,
         name=slug.replace("-", " ").title(),
         region=region,
+        pressure_region={
+            "Southern": "South Coast",
+            "Central": "Hill Country",
+            "Northern": "Northern Region",
+        }.get(region),
         latitude=latitude,
         longitude=longitude,
         is_active=active,
@@ -122,7 +127,7 @@ async def test_map_fields_coordinates_and_one_query_for_destinations(
     assert body["pressure_model_version"] == "synthetic-map-v1"
     assert len(statements) == 1
     assert "destination_factors" in statements[0]
-    assert map_forecasts == ["Southern"]
+    assert map_forecasts == ["South Coast"]
     markers = body["destinations"]
     assert [marker["id"] for marker in markers] == [first["id"], second["id"]]
     assert set(markers[0]) == {

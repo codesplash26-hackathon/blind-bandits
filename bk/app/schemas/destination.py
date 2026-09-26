@@ -11,7 +11,8 @@ from pydantic import (
     model_validator,
 )
 
-from app.models.destination import ConfidenceLevel, FactorValueType
+from app.models.destination import ConfidenceLevel, FactorValueType, PressureRegion
+from app.schemas.sustainability import DestinationSustainabilityResponse
 
 Slug = Annotated[
     str,
@@ -68,7 +69,9 @@ class DestinationBase(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     district: str = Field(min_length=1, max_length=100)
     region: str = Field(min_length=1, max_length=100)
+    pressure_region: PressureRegion | None = None
     description: str = Field(min_length=1)
+    image_url: str | None = Field(default=None, min_length=1, max_length=2048)
     latitude: Decimal = Field(ge=-90, le=90, max_digits=9, decimal_places=6)
     longitude: Decimal = Field(ge=-180, le=180, max_digits=10, decimal_places=6)
     landscape_type: str = Field(min_length=1, max_length=100)
@@ -85,6 +88,16 @@ class DestinationBase(BaseModel):
         value = value.strip()
         if not value:
             raise ValueError("Value cannot be blank")
+        return value
+
+    @field_validator("image_url")
+    @classmethod
+    def strip_image_url(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+        value = value.strip()
+        if not value:
+            raise ValueError("Image URL cannot be blank")
         return value
 
     @model_validator(mode="after")
@@ -112,7 +125,9 @@ class DestinationUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=255)
     district: str | None = Field(default=None, min_length=1, max_length=100)
     region: str | None = Field(default=None, min_length=1, max_length=100)
+    pressure_region: PressureRegion | None = None
     description: str | None = Field(default=None, min_length=1)
+    image_url: str | None = Field(default=None, min_length=1, max_length=2048)
     latitude: Decimal | None = Field(
         default=None,
         ge=-90,
@@ -156,6 +171,16 @@ class DestinationUpdate(BaseModel):
             raise ValueError("Value cannot be blank")
         return value
 
+    @field_validator("image_url")
+    @classmethod
+    def strip_optional_image_url(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+        value = value.strip()
+        if not value:
+            raise ValueError("Image URL cannot be blank")
+        return value
+
     @field_validator("activities")
     @classmethod
     def unique_optional_activities(
@@ -186,6 +211,7 @@ class DestinationResponse(DestinationBase):
     factor: DestinationFactorResponse | None
     created_at: datetime
     updated_at: datetime
+    sustainability: DestinationSustainabilityResponse | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

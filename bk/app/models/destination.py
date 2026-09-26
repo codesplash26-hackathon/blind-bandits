@@ -34,6 +34,16 @@ class FactorValueType(str, Enum):
     PROXY = "PROXY"
 
 
+class PressureRegion(str, Enum):
+    ANCIENT_CITIES = "Ancient Cities"
+    COLOMBO_CITY = "Colombo City"
+    EAST_COAST = "East Coast"
+    GREATER_COLOMBO = "Greater Colombo"
+    HILL_COUNTRY = "Hill Country"
+    NORTHERN_REGION = "Northern Region"
+    SOUTH_COAST = "South Coast"
+
+
 destination_activities = Table(
     "destination_activities",
     Base.metadata,
@@ -86,6 +96,12 @@ class Destination(Base):
             "recommended_max_trip_duration >= recommended_min_trip_duration",
             name="ck_destinations_duration_order",
         ),
+        CheckConstraint(
+            "pressure_region IS NULL OR pressure_region IN "
+            "('Ancient Cities', 'Colombo City', 'East Coast', 'Greater Colombo', "
+            "'Hill Country', 'Northern Region', 'South Coast')",
+            name="ck_destinations_pressure_region",
+        ),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -93,7 +109,11 @@ class Destination(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     district: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     region: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
+    pressure_region: Mapped[str | None] = mapped_column(
+        String(100), nullable=True, index=True
+    )
     description: Mapped[str] = mapped_column(Text, nullable=False)
+    image_url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
     latitude: Mapped[Decimal] = mapped_column(Numeric(9, 6), nullable=False)
     longitude: Mapped[Decimal] = mapped_column(Numeric(10, 6), nullable=False)
     landscape_type: Mapped[str] = mapped_column(

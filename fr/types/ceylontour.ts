@@ -22,18 +22,6 @@ export interface PressureBreakdown {
   traffic: number; // e.g. 15%
 }
 
-export interface XAIContribution {
-  factor: string;
-  percentage: number;
-  positive: boolean;
-  description?: string;
-}
-
-export interface XAIExplanation {
-  summary: string;
-  contributions: XAIContribution[];
-}
-
 export interface DestinationAlternative {
   id: string;
   name: string;
@@ -54,7 +42,7 @@ export interface Destination {
   image: string;
   tags: string[];
   activities: string[];
-  landscape: 'Mountains' | 'Coastal' | 'Rainforest' | 'Cultural' | 'Wildlife' | 'Rural';
+  landscape: string;
   typicalBudgetLKR: number;
   recommendedDurationDays: number;
   coordinates: {
@@ -65,7 +53,6 @@ export interface Destination {
   };
   sustainability: SustainabilityBreakdown;
   pressure: PressureBreakdown;
-  xaiExplanation: XAIExplanation;
   alternatives?: DestinationAlternative[];
   weather?: string;
   airQuality?: string;
@@ -80,31 +67,12 @@ export interface TouristPreferences {
   sustainabilityImportance: number; // 0 - 100
 }
 
-export interface RecommendationResult {
-  rank: number;
-  destination: Destination;
-  matchScore: number; // 0 - 100%
-  whyMatches: string;
-}
-
-export interface SearchHistoryItem {
-  id: string;
-  date: string;
-  preferences: TouristPreferences;
-  recommendations: Array<{
-    id: string;
-    name: string;
-    score: number;
-    pressureLevel: PressureLevel;
-  }>;
-}
-
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   role: Role;
-  country: string;
-  avatar?: string;
-  preferences: TouristPreferences;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }

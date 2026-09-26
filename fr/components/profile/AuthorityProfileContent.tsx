@@ -2,12 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   ShieldCheck,
   CheckCircle2,
   Bell,
-  Compass,
   ArrowRight,
   MapPin,
   KeyRound,
@@ -24,13 +22,14 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 
-interface AuthorityProfileContentProps {
-  showSwitchToTourist?: boolean;
-}
-
-export function AuthorityProfileContent({ showSwitchToTourist = true }: AuthorityProfileContentProps) {
-  const router = useRouter();
-  const { loginAs } = useAuth();
+export function AuthorityProfileContent() {
+  const { user } = useAuth();
+  const initials = user?.name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || 'AD';
 
   // Admin notification states
   const [capacityAlerts, setCapacityAlerts] = useState(true);
@@ -65,19 +64,6 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
             <span>Active Year 2026</span>
           </div>
 
-          {showSwitchToTourist && (
-            <button
-              onClick={() => {
-                loginAs('TOURIST');
-                toast.info('Switched to Tourist mode');
-                router.push('/profile');
-              }}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted hover:bg-frosted-blue/40 text-primary text-xs font-bold transition-all cursor-pointer border border-border"
-            >
-              <Compass className="w-3.5 h-3.5 text-primary" />
-              <span>Switch to Tourist</span>
-            </button>
-          )}
         </div>
       </div>
 
@@ -87,7 +73,7 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
           <div className="relative">
             <Avatar size="lg" className="w-16 h-16 ring-2 ring-ring/20 shadow-sm">
               <AvatarFallback className="bg-primary text-primary-foreground font-heading text-xl font-bold">
-                DS
+                {initials}
               </AvatarFallback>
             </Avatar>
             <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-primary border-2 border-overlay-foreground flex items-center justify-center text-primary-foreground" title="Level 3 Clearance">
@@ -97,24 +83,24 @@ export function AuthorityProfileContent({ showSwitchToTourist = true }: Authorit
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading text-2xl font-bold text-primary tracking-tight">Dilhara Senanayake</h1>
+              <h1 className="font-heading text-2xl font-bold text-primary tracking-tight">{user?.name}</h1>
               <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary text-[10px] font-bold border border-primary/30">
                 Level 3
               </span>
             </div>
             <p className="text-xs font-semibold text-primary mt-0.5">
-              Chief Sustainability Officer &amp; Crowd Manager
+              CeylonTour Authority Administrator
             </p>
             <p className="text-xs text-primary/60">
-              Sri Lanka Tourism Admin
+              {user?.email}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <span className="text-[11px] font-semibold text-primary/50 block uppercase tracking-wider">ID Badge</span>
-            <span className="text-xs font-mono font-bold text-primary">SLTDA-ECO-2026-0842</span>
+            <span className="text-[11px] font-semibold text-primary/50 block uppercase tracking-wider">Badge Identifier</span>
+            <span className="text-xs font-mono font-bold text-primary">ADMIN-{user?.id}</span>
           </div>
         </div>
       </div>
