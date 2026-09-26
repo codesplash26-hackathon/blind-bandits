@@ -59,9 +59,9 @@ const NAV_GROUPS: { id: NavGroupId; label: string }[] = [
   { id: 'travel', label: 'My Travel' },
 
   // Admin / Authority navigation groups
-  { id: 'tourism', label: 'Tourism Monitoring' },
-  { id: 'management', label: 'Operations & Registry' },
-  { id: 'system', label: 'System Configuration' },
+  { id: 'tourism', label: 'Crowd Monitoring' },
+  { id: 'management', label: 'Management' },
+  { id: 'system', label: 'Settings' },
 ];
 
 export const NAV_ITEMS: NavItem[] = [
@@ -113,42 +113,42 @@ export const NAV_ITEMS: NavItem[] = [
   // ─── Authority / Admin Items ───────────────────────────────
   {
     id: 'adminDashboard',
-    label: 'Authority Overview',
+    label: 'Admin Dashboard',
     href: '/admin/dashboard',
     group: 'overview',
     roles: ['ADMIN'],
   },
   {
     id: 'adminDestinations',
-    label: 'Destinations Registry',
+    label: 'Destinations',
     href: '/admin/destinations',
     group: 'tourism',
     roles: ['ADMIN'],
   },
   {
     id: 'adminPressure',
-    label: 'Tourism Pressure',
+    label: 'Crowd Simulator',
     href: '/admin/tourism-pressure',
     group: 'tourism',
     roles: ['ADMIN'],
   },
   {
     id: 'adminAnalytics',
-    label: 'Impact Analytics',
+    label: 'Analytics',
     href: '/admin/analytics',
     group: 'tourism',
     roles: ['ADMIN'],
   },
   {
     id: 'adminUsers',
-    label: 'Users Directory',
+    label: 'Users',
     href: '/admin/users',
     group: 'management',
     roles: ['ADMIN'],
   },
   {
     id: 'adminSettings',
-    label: 'Sustainability Settings',
+    label: 'App Settings',
     href: '/admin/settings',
     group: 'system',
     roles: ['ADMIN'],

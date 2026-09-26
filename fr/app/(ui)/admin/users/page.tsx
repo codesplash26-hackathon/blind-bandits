@@ -125,11 +125,11 @@ export default function AdminUsersPage() {
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'ADMIN':
-        return <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Authority Official</Badge>;
+        return <Badge variant="default" className="bg-primary/10 text-primary border-primary/20 font-bold">Admin</Badge>;
       case 'OPERATOR':
-        return <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 font-bold">Eco Operator</Badge>;
+        return <Badge variant="secondary" className="bg-secondary/15 text-secondary border-secondary/30 font-bold">Tour Guide</Badge>;
       default:
-        return <Badge variant="outline" className="border-border text-muted-foreground font-semibold">Conscious Traveler</Badge>;
+        return <Badge variant="outline" className="border-border text-muted-foreground font-semibold">Traveler</Badge>;
     }
   };
 
@@ -138,13 +138,13 @@ export default function AdminUsersPage() {
       case 'CERTIFIED':
         return (
           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-secondary">
-            <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> Eco-Certified
+            <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> Verified Guide
           </span>
         );
       case 'PENDING':
         return (
           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground">
-            <Clock className="w-3.5 h-3.5" /> Audit Pending
+            <Clock className="w-3.5 h-3.5" /> Pending Approval
           </span>
         );
       default:
@@ -163,19 +163,19 @@ export default function AdminUsersPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Identity &amp; Stakeholders
+              Users &amp; Partners
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Directory Active
+              User List Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Travelers &amp; Eco-Operators Directory
+            Travelers &amp; Tour Guides
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Registry of verified tourists, certified community tour operators, and tourism authority personnel.
+            List of registered travelers, local guides, and admin staff.
           </p>
         </div>
       </div>
@@ -187,7 +187,7 @@ export default function AdminUsersPage() {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search by traveler name, email, or licensed operator..."
+              placeholder="Search by name, email, or organization..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9 bg-muted/40 rounded-xl"
@@ -200,10 +200,10 @@ export default function AdminUsersPage() {
               onChange={(e) => setRoleFilter(e.target.value)}
               className="px-3 py-2 rounded-xl text-xs bg-muted/50 border border-border text-foreground cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary w-full md:w-auto"
             >
-              <option value="ALL">All Stakeholder Roles</option>
-              <option value="TOURIST">Conscious Travelers</option>
-              <option value="OPERATOR">Eco-Tour Operators</option>
-              <option value="ADMIN">Authority Officials</option>
+              <option value="ALL">All User Types</option>
+              <option value="TOURIST">Travelers</option>
+              <option value="OPERATOR">Tour Guides</option>
+              <option value="ADMIN">Admins</option>
             </select>
           </div>
         </div>
@@ -213,10 +213,10 @@ export default function AdminUsersPage() {
       <Card className="rounded-3xl border border-border/80 shadow-sm overflow-hidden">
         <div className="p-6 pb-2">
           <h2 className="text-base font-bold text-foreground">
-            Registered Stakeholders ({filteredUsers.length})
+            Registered Users ({filteredUsers.length})
           </h2>
           <p className="text-xs text-muted-foreground">
-            Stakeholder carrying compliance and environmental participation record.
+            List of all users and their eco-friendly activities.
           </p>
         </div>
 
@@ -224,11 +224,11 @@ export default function AdminUsersPage() {
           <Table>
             <TableHeader>
               <TableRow className="text-muted-foreground uppercase tracking-wider text-[11px]">
-                <TableHead className="py-3 px-3">Stakeholder</TableHead>
+                <TableHead className="py-3 px-3">User</TableHead>
                 <TableHead className="py-3 px-3">Role</TableHead>
-                <TableHead className="py-3 px-3">Compliance Status</TableHead>
-                <TableHead className="py-3 px-3">Eco Index</TableHead>
-                <TableHead className="py-3 px-3">AI Queries / Loads</TableHead>
+                <TableHead className="py-3 px-3">Status</TableHead>
+                <TableHead className="py-3 px-3">Eco Score</TableHead>
+                <TableHead className="py-3 px-3">App Usage</TableHead>
                 <TableHead className="py-3 px-3 text-right">Joined</TableHead>
               </TableRow>
             </TableHeader>

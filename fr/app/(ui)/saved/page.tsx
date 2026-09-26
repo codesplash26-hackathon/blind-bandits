@@ -43,19 +43,19 @@ export default function SavedDestinationsPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Traveler Itinerary Bucketlist
+              Your Saved Places
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {savedList.length} Curated Sanctuaries
+              {savedList.length} Saved Places
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            My Saved Sanctuaries
+            My Saved Places
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Your personalized bucket list of sustainable, crowd-free destinations ready for trip routing.
+            Your personal list of places you want to visit.
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export default function SavedDestinationsPage() {
               className="rounded-2xl gap-2 bg-card border-border text-primary hover:bg-muted text-xs font-bold shadow-2xs"
             >
               <Compass className="w-3.5 h-3.5 text-primary" />
-              <span>Browse Catalog</span>
+              <span>Browse Places</span>
             </Button>
           </Link>
 
@@ -78,7 +78,7 @@ export default function SavedDestinationsPage() {
                 className="rounded-2xl gap-2 bg-primary hover:bg-overlay text-primary-foreground text-xs font-bold shadow-md hover:shadow-lg transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span>Build Itinerary with Saved</span>
+                <span>Plan a Trip</span>
               </Button>
             </Link>
           )}
@@ -91,14 +91,14 @@ export default function SavedDestinationsPage() {
           <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-                Saved Sanctuaries
+                Saved Places
               </span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-heading text-3xl font-black text-foreground">{savedList.length}</span>
                 <span className="text-xs text-muted-foreground font-semibold">places</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Ready for AI routing
+                Ready to plan
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -116,7 +116,7 @@ export default function SavedDestinationsPage() {
                 <span className="text-xs text-muted-foreground font-semibold">days</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Total suggested journey
+                Total time needed
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -127,14 +127,14 @@ export default function SavedDestinationsPage() {
           <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-                Avg Sustainability
+                Eco Score
               </span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-heading text-3xl font-black text-foreground">{avgSustainability}</span>
                 <span className="text-xs text-muted-foreground font-semibold">/100</span>
               </div>
               <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-                Eco-conscious selection
+                How green your trip is
               </p>
             </div>
             <div className="p-3 rounded-2xl bg-muted text-primary border border-border shadow-2xs">
@@ -145,7 +145,7 @@ export default function SavedDestinationsPage() {
           <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-                Total Est. Budget
+                Estimated Cost
               </span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-heading text-xl sm:text-2xl font-black text-foreground">
@@ -184,7 +184,7 @@ export default function SavedDestinationsPage() {
 
                 <div className="absolute top-3.5 left-3.5">
                   <span className="text-[10px] font-black px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground border border-overlay-foreground/20 backdrop-blur-md">
-                    {dest.pressure.level} PRESSURE
+                    {dest.pressure.level} CROWDS
                   </span>
                 </div>
 
@@ -212,7 +212,7 @@ export default function SavedDestinationsPage() {
               <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-xs pb-2.5 border-b border-border">
-                    <span className="text-muted-foreground font-semibold">Sustainability Index</span>
+                    <span className="text-muted-foreground font-semibold">Eco Score</span>
                     <span className="font-black text-primary">
                       {dest.sustainability.overall} / 100
                     </span>
@@ -268,14 +268,14 @@ export default function SavedDestinationsPage() {
               Your bucketlist is currently empty
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
-              Explore sustainable Sri Lanka destinations and tap the heart icon on any sanctuary to add it to your travel plan.
+              Explore beautiful Sri Lanka destinations and tap the heart icon on any place to add it to your travel plan.
             </p>
           </div>
 
           <Link href="/destinations">
             <Button size="sm" className="rounded-2xl gap-2 cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Compass className="w-4 h-4 text-primary" />
-              <span>Explore Sanctuaries</span>
+              <span>Explore Places</span>
             </Button>
           </Link>
         </div>

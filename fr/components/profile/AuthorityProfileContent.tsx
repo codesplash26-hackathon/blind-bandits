@@ -41,7 +41,7 @@ export function AuthorityProfileContent() {
     setSavingAlerts(true);
     setTimeout(() => {
       setSavingAlerts(false);
-      toast.success('Emergency alert dispatch preferences updated successfully!');
+      toast.success('Alert settings updated successfully!');
     }, 400);
   };
 
@@ -53,7 +53,7 @@ export function AuthorityProfileContent() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40" />
           <input
             type="text"
-            placeholder="Search authority clearance or parameters..."
+            placeholder="Search settings or data..."
             className="w-full pl-11 pr-4 py-2.5 rounded-full bg-card border border-border text-xs text-primary placeholder:text-primary/40 focus:outline-none focus:border-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
           />
         </div>
@@ -61,7 +61,7 @@ export function AuthorityProfileContent() {
         <div className="flex items-center gap-2.5 self-end md:self-auto">
           <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
             <Calendar className="w-3.5 h-3.5 text-primary" />
-            <span>Active Cycle 2026</span>
+            <span>Active Year 2026</span>
           </div>
 
         </div>
@@ -85,7 +85,7 @@ export function AuthorityProfileContent() {
             <div className="flex items-center gap-2">
               <h1 className="font-heading text-2xl font-bold text-primary tracking-tight">{user?.name}</h1>
               <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary text-[10px] font-bold border border-primary/30">
-                Clearance Level 3
+                Level 3
               </span>
             </div>
             <p className="text-xs font-semibold text-primary mt-0.5">
@@ -110,7 +110,7 @@ export function AuthorityProfileContent() {
         {/* KPI 1 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Enforced Sanctuaries</span>
+            <span className="text-xs font-semibold text-primary/60">Tracked Places</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <MapPin className="w-4 h-4" />
             </div>
@@ -146,7 +146,7 @@ export function AuthorityProfileContent() {
         {/* KPI 2 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Dispersal Bias</span>
+            <span className="text-xs font-semibold text-primary/60">Redirection Rate</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sliders className="w-4 h-4" />
             </div>
@@ -155,7 +155,7 @@ export function AuthorityProfileContent() {
             <div>
               <span className="font-heading text-3xl font-black text-primary tracking-tight">84%</span>
               <span className="text-[11px] text-primary font-bold block mt-0.5">
-                Active rebalancing rate
+                How often we redirect
               </span>
             </div>
             {/* Sparkline */}
@@ -174,7 +174,7 @@ export function AuthorityProfileContent() {
         {/* KPI 3 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">IoT Telemetry Nodes</span>
+            <span className="text-xs font-semibold text-primary/60">Live Sensors</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Activity className="w-4 h-4" />
             </div>
@@ -183,7 +183,7 @@ export function AuthorityProfileContent() {
             <div>
               <span className="font-heading text-3xl font-black text-primary tracking-tight">28</span>
               <span className="text-[11px] text-primary/60 font-semibold block mt-0.5">
-                River &amp; gate sensors
+                Trackers in the field
               </span>
             </div>
             {/* Mini Bars */}
@@ -199,7 +199,7 @@ export function AuthorityProfileContent() {
         {/* KPI 4 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Peak Traffic Diverted</span>
+            <span className="text-xs font-semibold text-primary/60">Crowds Diverted</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <ShieldCheck className="w-4 h-4" />
             </div>
@@ -242,57 +242,57 @@ export function AuthorityProfileContent() {
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-primary">Delegated Mandates &amp; Directives</h2>
-                <p className="text-xs text-primary/60">Sri Lanka National Sustainable Tourism Policy 2026</p>
+                <h2 className="text-base font-bold text-primary">Admin Permissions</h2>
+                <p className="text-xs text-primary/60">Admin Policies 2026</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Dynamic Rebalancing</span>
+                  <span className="font-bold text-primary">Redirect Visitors</span>
                   <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
-                    AUTHORIZED
+                    ALLOWED
                   </span>
                 </div>
                 <p className="text-[11px] text-primary/70 leading-relaxed">
-                  Authority to broadcast AI policy weights and divert tourist flows away from saturated hubs like Ella.
+                  Allowed to redirect tourists away from busy places.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Carrying Capacity Caps</span>
+                  <span className="font-bold text-primary">Set Crowd Limits</span>
                   <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
-                    AUTHORIZED
+                    ALLOWED
                   </span>
                 </div>
                 <p className="text-[11px] text-primary/70 leading-relaxed">
-                  Authority to set and enforce max daily footfall limits across all 12 pilot destination sites.
+                  Allowed to set max daily visitor limits for tracked places.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Sensor Telemetry Ingestion</span>
+                  <span className="font-bold text-primary">View Live Data</span>
                   <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
-                    AUTHORIZED
+                    ALLOWED
                   </span>
                 </div>
                 <p className="text-[11px] text-primary/70 leading-relaxed">
-                  Access to live river turbidity, trail gate counters, and air quality telemetry data.
+                  Access live data from nature sensors and trail counters.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">National Audit Export</span>
+                  <span className="font-bold text-primary">Export Reports</span>
                   <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
-                    AUTHORIZED
+                    ALLOWED
                   </span>
                 </div>
                 <p className="text-[11px] text-primary/70 leading-relaxed">
-                  Right to generate and publish executive carbon reduction &amp; rural economic audit reports.
+                  Allowed to download reports on crowds and eco-impact.
                 </p>
               </div>
             </div>
@@ -308,9 +308,9 @@ export function AuthorityProfileContent() {
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary mb-3">
                   <Sliders className="w-4 h-4" />
                 </div>
-                <h3 className="text-xs font-bold text-primary">Pressure Simulator</h3>
+                <h3 className="text-xs font-bold text-primary">Crowd Simulator</h3>
                 <p className="text-[11px] text-primary/60 mt-1">
-                  Model peak surge scenarios and evaluate algorithmic dispersal bias.
+                  Test how the AI handles unexpected crowds.
                 </p>
               </div>
               <div className="mt-3 flex items-center text-[11px] font-bold text-primary gap-1 group-hover:translate-x-1 transition-transform">
@@ -327,9 +327,9 @@ export function AuthorityProfileContent() {
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary mb-3">
                   <MapPin className="w-4 h-4" />
                 </div>
-                <h3 className="text-xs font-bold text-primary">Carrying Capacity Caps</h3>
+                <h3 className="text-xs font-bold text-primary">Crowd Limits</h3>
                 <p className="text-[11px] text-primary/60 mt-1">
-                  Adjust visitor limits and status thresholds for monitored spots.
+                  Set limits for how many visitors each place can handle.
                 </p>
               </div>
               <div className="mt-3 flex items-center text-[11px] font-bold text-primary gap-1 group-hover:translate-x-1 transition-transform">
@@ -349,16 +349,16 @@ export function AuthorityProfileContent() {
                 <Bell className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-primary">Emergency Subscriptions</h2>
-                <p className="text-xs text-primary/60">Automated SLTDA alert channels</p>
+                <h2 className="text-base font-bold text-primary">Alert Settings</h2>
+                <p className="text-xs text-primary/60">Get notified of important events</p>
               </div>
             </div>
 
             <div className="space-y-3 pt-1">
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">Capacity Breach Alerts (&gt;80%)</span>
-                  <span className="text-[10px] text-primary/60 block">Instant SMS dispatch during critical surges</span>
+                  <span className="text-xs font-bold text-primary block">Overcrowding Alerts</span>
+                  <span className="text-[10px] text-primary/60 block">Get a text when places get too full</span>
                 </div>
                 <input
                   type="checkbox"
@@ -370,8 +370,8 @@ export function AuthorityProfileContent() {
 
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">CEA River Sensor Spikes</span>
-                  <span className="text-[10px] text-primary/60 block">Alerts for river turbidity or trail runoff</span>
+                  <span className="text-xs font-bold text-primary block">Nature Warnings</span>
+                  <span className="text-[10px] text-primary/60 block">Alerts for weather or nature risks</span>
                 </div>
                 <input
                   type="checkbox"
@@ -383,8 +383,8 @@ export function AuthorityProfileContent() {
 
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">Weekly Eco-Dispersal Digest</span>
-                  <span className="text-[10px] text-primary/60 block">PDF executive audit emailed Mondays at 8 AM</span>
+                  <span className="text-xs font-bold text-primary block">Weekly Summary Report</span>
+                  <span className="text-[10px] text-primary/60 block">A weekly email with all the data</span>
                 </div>
                 <input
                   type="checkbox"
@@ -415,27 +415,27 @@ export function AuthorityProfileContent() {
                 <Shield className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-primary">Terminal Clearance</h3>
-                <p className="text-xs text-primary/60">Cryptographic hardware session</p>
+                <h3 className="text-base font-bold text-primary">Security Key</h3>
+                <p className="text-xs text-primary/60">Secure login session</p>
               </div>
             </div>
 
             <div className="space-y-2 pt-1 text-xs">
               <div className="p-3 rounded-2xl bg-muted/30 border border-border flex items-center justify-between">
-                <span className="text-primary/70">Hardware Token</span>
+                <span className="text-primary/70">Security Device</span>
                 <span className="font-bold text-primary flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> YubiKey 5C Active
                 </span>
               </div>
 
               <div className="p-3 rounded-2xl bg-muted/30 border border-border flex items-center justify-between">
-                <span className="text-primary/70">Clearance Gateway</span>
+                <span className="text-primary/70">Gateway Server</span>
                 <span className="font-bold font-mono text-primary">SLTDA-GW-04</span>
               </div>
             </div>
 
             <div className="pt-2 flex items-center justify-between border-t border-border">
-              <span className="text-[11px] text-primary/60">Rolling 8-hour shift key</span>
+              <span className="text-[11px] text-primary/60">Session valid for 8 hours</span>
               <Button
                 variant="outline"
                 size="sm"

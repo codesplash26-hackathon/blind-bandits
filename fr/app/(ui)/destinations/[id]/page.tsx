@@ -334,7 +334,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-card border border-border text-xs font-bold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] hover:bg-muted transition-all group"
           >
             <ArrowLeft className="w-4 h-4 text-primary group-hover:-translate-x-1 transition-transform" />
-            <span>All Sanctuaries</span>
+            <span>All Places</span>
           </Link>
 
           <span className="text-xs font-semibold text-primary/50 hidden sm:inline">
@@ -370,7 +370,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 1: Sustainability Index */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Sustainability Score</span>
+            <span className="text-xs font-semibold text-primary/60">Eco-Friendly Score</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Leaf className="w-4 h-4" />
             </div>
@@ -628,7 +628,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   High Regional Visitor Pressure ({pressureValue?.toFixed(1)}%)
                 </h2>
                 <span className="px-2.5 py-0.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold">
-                  PEAK DENSITY
+                  PEAK CROWDS
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-destructive/80 leading-relaxed">
@@ -842,7 +842,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
           {/* Sustainability 5-Dimension Breakdown */}
           <div className="p-6 rounded-3xl bg-card border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] space-y-4">
             <div>
-              <h2 className="text-base font-black text-foreground">Sustainability 5-Dimension Index</h2>
+              <h2 className="text-base font-black text-foreground">Eco-Friendly Details</h2>
               <p className="text-xs text-muted-foreground">
                 Evaluated under the Sri Lanka National Sustainable Tourism Framework
               </p>
