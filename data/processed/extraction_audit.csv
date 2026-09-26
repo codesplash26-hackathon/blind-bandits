@@ -1,0 +1,28 @@
+year,report,table,page,status,rows_extracted,warnings,manual_review_required
+2017,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,extracted,84,,false
+2018,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,extracted,84,,false
+2019,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,manual_review_required,84,Image-only PDF; top-level rows visually transcribed and flagged.,true
+2020,Annual Statistical Report 2020.pdf,Table 21: Monthly Occupancy Rates in Tourist Hotels by District – 2020,92,extracted,300,,false
+2024,Year in Review 2024.pdf,"Table 19: Occupancy of graded establishments from different districts by months, 2024",42,extracted,264,,false
+2021,Year in Review 2021.pdf,"Chart 08: District wise annual occupancy, 2021",19,manual_review_required,24,Chart labels were visually transcribed; report narrative conflicts with some plotted labels.,true
+2021,Year in Review 2021.pdf,Monthly district occupancy,,not_found,0,The report does not contain a Jan–Dec district occupancy table; no monthly values were fabricated.,false
+2022,Year in Review 2022 + monthly reports.pdf,Monthly district occupancy,,not_found,0,The report does not contain a Jan–Dec district occupancy table; no monthly values were fabricated.,false
+2023,Annual Statistical Report 2023.pdf,Monthly district occupancy,,not_found,0,The report does not contain a Jan–Dec district occupancy table; no monthly values were fabricated.,false
+2022,Year in Review 2022 + monthly reports.pdf,Annual room occupancy rate (graded) – 2022,3,extracted,1,,false
+2023,Annual Statistical Report 2023.pdf,Table 14: Tourism Growth Trends 1985 to 2023,82,extracted,1,National annual graded occupancy only; no district monthly values present.,false
+2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,extracted,12,,false
+2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,extracted,12,,false
+2019,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,extracted,12,,false
+2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,partial,12,"The 2020 report's monthly values sum to 507,311 while its printed total is 507,704; values were preserved as printed. The 2021 report later shows December 2020 as 393.",false
+2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,extracted,12,,false
+2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,extracted,12,,false
+2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,extracted,12,,false
+2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,extracted,12,,false
+2017,Annual Statistical Report 2017.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2017,82,extracted,7,,false
+2018,Annual Statistical Report 2018.pdf,Table 22: Monthly Occupancy Rates in Tourist Hotels by Region – 2018,94,extracted,7,,false
+2019,Annual Statistical Report 2019.pdf,Table 23: Monthly Occupancy Rates in Tourist Hotels by Region – 2019,91,manual_review_required,7,Image-only source table; room counts require manual verification.,true
+2020,Annual Statistical Report 2020.pdf,Table 18: Room Distribution by District wise and Provincial wise,89,extracted,25,,false
+2021,Year in Review 2021.pdf,"Table 06: District wise distribution of rooms of SLTDA registered accommodation establishments, 2020 and 2021",17,extracted,25,,false
+2022,Year in Review 2022 + monthly reports.pdf,"Table 08: District wise distribution of rooms of SLTDA registered accommodation establishments, 2021 and 2022",17,extracted,25,,false
+2023,Annual Statistical Report 2023.pdf,Table IX: Distribution of rooms by districts,38,extracted,25,,false
+2024,Year in Review 2024.pdf,Table 09: Total rooms by districts,20,extracted,25,,false

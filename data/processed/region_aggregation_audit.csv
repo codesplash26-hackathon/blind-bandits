@@ -1,0 +1,169 @@
+year,month,canonical_region,source_districts,district_count,rooms_used,aggregation_method,occupancy_result,excluded_districts,warnings
+2020,1,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,1,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,67.932568,,
+2020,1,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,61.108609,,
+2020,1,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,59.424544,,
+2020,1,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,62.350392,,
+2020,1,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,47.765462,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,1,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,79.426965,,
+2020,2,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,2,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,51.93512,,
+2020,2,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,44.140894,,
+2020,2,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,44.938817,,
+2020,2,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,45.881183,,
+2020,2,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,36.171888,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,2,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,60.156409,,
+2020,3,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,3,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,28.139885,,
+2020,3,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,23.616722,,
+2020,3,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,23.989818,,
+2020,3,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,23.950392,,
+2020,3,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,19.317269,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,3,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,32.126179,,
+2020,4,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,4,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,2.615848,,
+2020,4,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,2.222517,,
+2020,4,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,2.240818,,
+2020,4,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,2.24077,,
+2020,4,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,1.759036,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,4,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,3.055798,,
+2020,5,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,5,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,2.808679,,
+2020,5,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,2.410099,,
+2020,5,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,2.440818,,
+2020,5,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,2.461155,,
+2020,5,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,1.930924,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,5,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,3.280929,,
+2020,6,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,6,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,8.484216,,
+2020,6,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,7.296358,,
+2020,6,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,7.463273,,
+2020,6,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,7.383464,,
+2020,6,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,5.972691,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,6,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,9.942787,,
+2020,7,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,7,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,11.776005,,
+2020,7,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,10.135265,,
+2020,7,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,10.304091,,
+2020,7,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,10.244619,,
+2020,7,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,8.255422,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,7,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,13.781069,,
+2020,8,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,8,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,10.218103,,
+2020,8,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,8.748841,,
+2020,8,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,8.904091,,
+2020,8,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,8.903849,,
+2020,8,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,7.2,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,8,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,11.951345,,
+2020,9,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,9,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,9.234078,,
+2020,9,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,7.912748,,
+2020,9,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,8.063273,,
+2020,9,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,8.083464,,
+2020,9,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,6.496386,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,9,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,10.778973,,
+2020,10,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,10,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,9.468241,,
+2020,10,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,8.153974,,
+2020,10,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,8.263273,,
+2020,10,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,8.283464,,
+2020,10,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,6.668273,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,10,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,11.047066,,
+2020,11,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,11,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,5.350606,,
+2020,11,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,4.578974,,
+2020,11,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,4.681636,,
+2020,11,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,4.622309,,
+2020,11,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,3.771888,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,11,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,6.293765,,
+2020,12,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Ratnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2020,12,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,4701,room_weighted_district_occupancy,10.46705,,
+2020,12,East Coast,Ampara; Batticaloa; Trincomalee,3,1208,room_weighted_district_occupancy,8.936424,,
+2020,12,Greater Colombo,Gampaha; Kalutara,2,4498,room_weighted_district_occupancy,9.104091,,
+2020,12,Hill Country,Badulla; Nuwara Eliya,2,1403,room_weighted_district_occupancy,9.103849,,
+2020,12,Northern Region,Jaffna; Mannar; Vavuniya,3,249,room_weighted_district_occupancy,7.371888,Kilinochchi (0 rooms); Mullaitivu (0 rooms),Districts with missing or zero room capacity did not receive an equal-weight substitute.
+2020,12,South Coast,Galle; Hambantota; Matara,3,5726,room_weighted_district_occupancy,12.240604,,
+2024,1,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,1,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,47.914776,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,1,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,38.689008,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,1,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,73.048909,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,1,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,51.83776,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,1,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,60.793625,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,1,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,66.80655,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,2,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,48.070629,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,40.873053,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,70.546807,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,55.252669,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,58.754073,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,2,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,65.646282,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,3,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,50.051838,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,42.649389,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,69.919078,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,55.648698,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,53.788312,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,3,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,63.880343,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,4,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,39.15035,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,44.864389,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,54.197898,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,56.093164,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,46.559032,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,4,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,49.915557,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,5,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,26.292917,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,42.940534,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,40.081002,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,34.430924,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,46.957261,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,5,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,30.064184,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,6,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,27.498308,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,49.603397,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,34.623605,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,30.745833,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,45.220189,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,6,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,24.35029,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,7,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,42.926912,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,65.680573,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,46.1173,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,46.772917,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,60.238961,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,7,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,36.482304,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,8,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,49.56014,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,74.830153,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,53.104446,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,55.573047,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,66.459504,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,8,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,43.347054,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,9,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,34.716941,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,53.659733,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,42.997979,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,40.477148,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,44.799882,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,9,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,33.864892,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,10,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,35.61173,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,30.354466,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,41.240501,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,36.231055,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,37.760803,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,10,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,40.673092,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,11,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,39.557952,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,21.552672,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,46.193452,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,47.931055,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,34.252302,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,11,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,46.003038,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,,,0,,excluded_unresolved_geography,,Colombo; Kegalle; Kurunegala; Moneragala; Puttalam; Rathnapura,District observations preserved in visitor_pressure_raw.csv but excluded from canonical aggregation because geography is unresolved.
+2024,12,Ancient Cities,Anuradhapura; Kandy; Matale; Polonnaruwa,4,8866,room_weighted_district_occupancy,40.174126,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,East Coast,Ampara; Batticaloa; Trincomalee,3,2620,room_weighted_district_occupancy,30.609389,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,Greater Colombo,Gampaha; Kalutara,2,8659,room_weighted_district_occupancy,46.908165,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,Hill Country,Badulla; Nuwara Eliya,2,4608,room_weighted_district_occupancy,39.786328,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,Northern Region,Jaffna; Vavuniya,2,847,room_weighted_district_occupancy,44.255608,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
+2024,12,South Coast,Galle; Hambantota; Matara,3,14122,room_weighted_district_occupancy,55.868808,,2024 weights use same-year Table 09 total registered accommodation rooms because Table 19 reports hotels but not rooms; the source populations are not identical.
