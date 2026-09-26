@@ -1,0 +1,20 @@
+feature,classification,used_by_model,reason
+arrivals_lag_1,available_at_prediction_time,True,Final prior-month national arrivals.
+arrivals_rolling_3,available_at_prediction_time,True,Mean of the three prior calendar months only.
+canonical_region,available_at_prediction_time,True,Known forecast geography.
+is_pandemic_period,available_at_prediction_time,False,Calendar regime flag; retained for audit but not used by the models.
+month_cos,available_at_prediction_time,True,Derived from the forecast month.
+month_sin,available_at_prediction_time,True,Derived from the forecast month.
+occupancy_lag_1,available_at_prediction_time,True,Actual prior-month regional occupancy in walk-forward use.
+occupancy_lag_2,available_at_prediction_time,True,Actual occupancy two calendar months earlier.
+occupancy_lag_3,available_at_prediction_time,True,Actual occupancy three calendar months earlier.
+occupancy_rolling_3,available_at_prediction_time,True,Mean of the three prior occupancy observations only.
+aggregation_method,unavailable_at_prediction_time,False,"Source/audit metadata, not a forecast signal."
+arrivals_growth_1m,unavailable_at_prediction_time,False,Existing field uses final same-month arrivals versus lag 1.
+needs_manual_review,unavailable_at_prediction_time,False,Data-quality metadata.
+occupancy_rate,unavailable_at_prediction_time,False,Prediction target.
+source_granularity,unavailable_at_prediction_time,False,"Source/audit metadata, not a forecast signal."
+source_years,unavailable_at_prediction_time,False,Source/audit metadata.
+total_arrivals,unavailable_at_prediction_time,False,Final same-month arrivals are not known one month ahead.
+room_capacity,uncertain,False,"May be known, but source coverage and establishment populations differ by year."
+source_district_count,uncertain,False,Depends on reporting and aggregation availability.

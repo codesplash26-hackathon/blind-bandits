@@ -1,0 +1,97 @@
+date,year,month,total_arrivals,source_year,source_report,source_table,source_page,extraction_method,needs_manual_review
+2017-01-01,2017,1,219360,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-02-01,2017,2,197517,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-03-01,2017,3,188076,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-04-01,2017,4,160249,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-05-01,2017,5,121891,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-06-01,2017,6,123351,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-07-01,2017,7,205482,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-08-01,2017,8,190928,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-09-01,2017,9,145077,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-10-01,2017,10,152429,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-11-01,2017,11,167511,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2017-12-01,2017,12,244536,2017,Annual Statistical Report 2017.pdf,Tourist Arrivals by Month – 1971 to 2017,92,pdftotext_layout,false
+2018-01-01,2018,1,238924,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-02-01,2018,2,235618,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-03-01,2018,3,233382,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-04-01,2018,4,180429,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-05-01,2018,5,129466,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-06-01,2018,6,146828,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-07-01,2018,7,217829,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-08-01,2018,8,200359,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-09-01,2018,9,149087,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-10-01,2018,10,153123,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-11-01,2018,11,195582,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2018-12-01,2018,12,253169,2018,Annual Statistical Report 2018.pdf,Table 29: Tourist Arrivals by Month 1971 to 2018,104,pdftotext_layout,false
+2019-01-01,2019,1,244239,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-02-01,2019,2,252033,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-03-01,2019,3,244328,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-04-01,2019,4,166975,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-05-01,2019,5,37802,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-06-01,2019,6,63072,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-07-01,2019,7,115701,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-08-01,2019,8,143587,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-09-01,2019,9,108575,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-10-01,2019,10,118743,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-11-01,2019,11,176984,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2019-12-01,2019,12,241663,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-01-01,2020,1,228434,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-02-01,2020,2,207507,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-03-01,2020,3,71370,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-04-01,2020,4,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-05-01,2020,5,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-06-01,2020,6,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-07-01,2020,7,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-08-01,2020,8,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-09-01,2020,9,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-10-01,2020,10,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-11-01,2020,11,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2020-12-01,2020,12,0,2020,Annual Statistical Report 2020.pdf,Table 29: Tourist Arrivals by Month – 1971 to 2020,102,pdftotext_layout,false
+2021-01-01,2021,1,1682,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-02-01,2021,2,3366,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-03-01,2021,3,4581,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-04-01,2021,4,4168,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-05-01,2021,5,1497,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-06-01,2021,6,1614,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-07-01,2021,7,2429,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-08-01,2021,8,5040,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-09-01,2021,9,13547,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-10-01,2021,10,22771,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-11-01,2021,11,44294,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2021-12-01,2021,12,89506,2021,Year in Review 2021.pdf,"Table 01: Tourist arrivals to Sri Lanka by month & percentage change, 2020 & 2021",4,pdftotext_layout,false
+2022-01-01,2022,1,82327,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-02-01,2022,2,96507,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-03-01,2022,3,106500,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-04-01,2022,4,62980,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-05-01,2022,5,30207,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-06-01,2022,6,32856,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-07-01,2022,7,47293,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-08-01,2022,8,37760,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-09-01,2022,9,29802,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-10-01,2022,10,42026,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-11-01,2022,11,59759,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2022-12-01,2022,12,91961,2022,Year in Review 2022 + monthly reports.pdf,"Table 01: Tourist arrivals by month & percentage change, 2021 & 2022",4,pdftotext_layout,false
+2023-01-01,2023,1,102545,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-02-01,2023,2,107639,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-03-01,2023,3,125495,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-04-01,2023,4,105498,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-05-01,2023,5,83309,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-06-01,2023,6,100388,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-07-01,2023,7,143039,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-08-01,2023,8,136405,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-09-01,2023,9,111938,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-10-01,2023,10,109199,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-11-01,2023,11,151496,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2023-12-01,2023,12,210352,2023,Annual Statistical Report 2023.pdf,Table 15: Tourist Arrivals by Month 1971 to 2023,84,pdftotext_layout,false
+2024-01-01,2024,1,208253,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-02-01,2024,2,218350,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-03-01,2024,3,209181,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-04-01,2024,4,148867,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-05-01,2024,5,112128,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-06-01,2024,6,113470,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-07-01,2024,7,187810,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-08-01,2024,8,164609,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-09-01,2024,9,122140,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-10-01,2024,10,135907,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-11-01,2024,11,184158,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false
+2024-12-01,2024,12,248592,2024,Year in Review 2024.pdf,"Table 01: Tourist arrivals by month & percentage change, 2023 & 2024",4,pdftotext_layout,false

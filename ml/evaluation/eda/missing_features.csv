@@ -1,0 +1,10 @@
+feature,missing_count,available_count
+month_sin,0,396
+month_cos,0,396
+arrivals_lag_1,7,389
+arrivals_rolling_3,21,375
+occupancy_lag_1,13,383
+occupancy_lag_2,26,370
+occupancy_lag_3,39,357
+occupancy_rolling_3,39,357
+arrivals_growth_1m,55,341

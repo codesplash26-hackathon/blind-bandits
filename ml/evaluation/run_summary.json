@@ -1,0 +1,20 @@
+{
+  "selected_experiment": "B",
+  "selected_model": "lightgbm_lagged",
+  "selected_model_version": "v1_20260926T102713Z_B_lagged",
+  "beats_seasonal_baseline": true,
+  "evaluated_regions_2024": [
+    "Ancient Cities",
+    "East Coast",
+    "Greater Colombo",
+    "Hill Country",
+    "Northern Region",
+    "South Coast"
+  ],
+  "artifact_paths": [
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/visitor_pressure_model_v1_20260926T102713Z_B_lagged.joblib",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/model_metadata_v1_20260926T102713Z_B_lagged.json",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/visitor_pressure_model.joblib",
+    "/home/nipun/Desktop/ceylonetour/ml/artifacts/model_metadata.json"
+  ]
+}
