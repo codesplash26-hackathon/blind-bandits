@@ -40,21 +40,21 @@ export default function RecommendationResultsPage() {
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success/10 text-success border border-success/25 text-xs font-black">
             <span className="size-1.5 rounded-full bg-success" />
-            Low Pressure
+            Quiet
           </span>
         );
       case 'MEDIUM':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning/10 text-warning border border-warning/25 text-xs font-black">
             <span className="size-1.5 rounded-full bg-warning" />
-            Moderate Pressure
+            Moderate
           </span>
         );
       case 'HIGH':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/25 text-xs font-black">
             <span className="size-1.5 rounded-full bg-destructive animate-pulse" />
-            High Pressure Hub
+            Busy Hub
           </span>
         );
       default:
@@ -96,7 +96,7 @@ export default function RecommendationResultsPage() {
         {/* KPI 1 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Top Match Sanctuary</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Top Place Match</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sparkles className="w-4 h-4 text-primary" />
             </div>
@@ -119,7 +119,7 @@ export default function RecommendationResultsPage() {
         {/* KPI 2 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Avg Sustainability</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Eco-Friendly Score</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Leaf className="w-4 h-4 text-primary" />
             </div>
@@ -183,7 +183,7 @@ export default function RecommendationResultsPage() {
         {/* KPI 4 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Overtourism Avoidance</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Crowd Avoidance</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <ShieldCheck className="w-4 h-4" />
             </div>
@@ -192,7 +192,7 @@ export default function RecommendationResultsPage() {
             <div>
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">88%</span>
               <span className="text-[11px] text-success font-bold block mt-0.5 flex items-center gap-1">
-                <TrendingUp className="w-3 h-3" /> Dispersal Score
+                <TrendingUp className="w-3 h-3" /> Peaceful Score
               </span>
             </div>
             <div className="flex items-end gap-1 h-8">
@@ -224,12 +224,12 @@ export default function RecommendationResultsPage() {
               : 'Popular Landmarks'}
           </span>
           <span className="px-3 py-1 rounded-full bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground font-black text-xs shadow-xs">
-            {currentPreferences.sustainabilityImportance}% Sustainability Weight
+            {currentPreferences.sustainabilityImportance}% Eco Preference
           </span>
         </div>
 
         <span className="text-xs font-bold text-muted-foreground">
-          Showing {results.length} ranked sanctuaries
+          Showing {results.length} ranked places
         </span>
       </div>
 
@@ -299,7 +299,7 @@ export default function RecommendationResultsPage() {
                     {/* Overall Score */}
                     <div className="col-span-2 sm:col-span-1 pr-2 border-r-0 sm:border-r border-border">
                       <span className="text-[10px] uppercase font-black text-muted-foreground block">
-                        Sustainability
+                        Eco Score
                       </span>
                       <span className="font-heading text-2xl font-black text-primary leading-none mt-0.5 block">
                         {dest.sustainability.overall}

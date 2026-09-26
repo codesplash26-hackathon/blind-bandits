@@ -74,19 +74,19 @@ export default function DestinationsCatalogPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Island Registry &amp; Sanctuaries
+              Island Places
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {DESTINATIONS.length} Monitored Pilot Sanctuaries
+              {DESTINATIONS.length} Amazing Destinations
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Explore Sri Lanka Sanctuaries
+            Explore Sri Lanka
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            Browse verified eco-destinations with transparent sustainability audits and real-time visitor pressure.
+            Browse verified eco-destinations with real-time crowd updates and eco-friendly scores.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export default function DestinationsCatalogPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Catalog Sanctuaries
+              All Destinations
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">{DESTINATIONS.length}</span>
@@ -154,7 +154,7 @@ export default function DestinationsCatalogPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Uncrowded Havens
+              Quiet Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">8</span>
@@ -173,14 +173,14 @@ export default function DestinationsCatalogPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Avg Sustainability
+              Eco-Friendly Score
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">86</span>
               <span className="text-xs text-muted-foreground font-semibold">/100</span>
             </div>
             <p className="text-[11px] text-muted-foreground font-semibold mt-0.5">
-              Verified eco-audited
+              Verified local stays
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -244,7 +244,7 @@ export default function DestinationsCatalogPage() {
               onChange={(e) => setSortBy(e.target.value as 'sustainability' | 'name' | 'budget')}
               className="px-3.5 py-2 rounded-2xl border border-border bg-card text-xs font-bold text-primary focus:ring-2 focus:ring-ring outline-none transition-colors cursor-pointer shadow-2xs"
             >
-              <option value="sustainability">Sustainability (High to Low)</option>
+              <option value="sustainability">Eco-Friendly (High to Low)</option>
               <option value="name">Name (A to Z)</option>
               <option value="budget">Typical Budget (Low to High)</option>
             </select>
@@ -277,9 +277,9 @@ export default function DestinationsCatalogPage() {
             </div>
           </div>
 
-          {/* Pressure Level Tabs */}
+          {/* Crowd Level Tabs */}
           <div className="flex items-center gap-2.5 shrink-0">
-            <span className="text-xs text-muted-foreground font-bold">Pressure:</span>
+            <span className="text-xs text-muted-foreground font-bold">Crowds:</span>
             <div className="p-1.5 rounded-2xl bg-muted border border-border flex items-center gap-1 shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
               {pressureFilters.map((p) => {
                 const isActive = selectedPressure === p;
@@ -339,7 +339,7 @@ export default function DestinationsCatalogPage() {
                   {/* Pressure Pill */}
                   <div className="absolute top-3.5 left-3.5">
                     <span className="text-[10px] font-black px-3 py-1 rounded-full bg-overlay/85 text-overlay-foreground border border-overlay-foreground/20 backdrop-blur-md">
-                      {dest.pressure.level} PRESSURE
+                      {dest.pressure.level} CROWDS
                     </span>
                   </div>
 
@@ -373,7 +373,7 @@ export default function DestinationsCatalogPage() {
                 <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between text-xs pb-2.5 border-b border-border">
-                      <span className="text-muted-foreground font-semibold">Sustainability Index</span>
+                      <span className="text-muted-foreground font-semibold">Eco-Friendly Score</span>
                       <span className="font-black text-primary">
                         {dest.sustainability.overall} / 100
                       </span>
@@ -424,7 +424,7 @@ export default function DestinationsCatalogPage() {
       ) : (
         <div className="p-12 text-center rounded-3xl bg-card border border-dashed border-border space-y-3 shadow-2xs">
           <Compass className="w-10 h-10 text-primary mx-auto" />
-          <h3 className="text-base font-black text-foreground">No sanctuaries match your active filters</h3>
+          <h3 className="text-base font-black text-foreground">No places match your active filters</h3>
           <p className="text-xs text-muted-foreground max-w-sm mx-auto">
             Try clearing your search query or selecting &quot;All&quot; in the category or pressure filters.
           </p>

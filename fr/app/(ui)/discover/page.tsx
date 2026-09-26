@@ -114,19 +114,19 @@ export default function DiscoverPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Intelligent Destination Calibrator
+              Your Trip Planner
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Carrying Capacity Balancing Active
+              Smart Recommendations Active
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             AI Travel Match &amp; Trip Finder
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-            Calibrate your travel style across 5 factors. CeylonTour balances environmental carrying capacities to generate your optimal route.
+            Tell us your travel style. We will help you find the best places that match your preferences and avoid the crowds.
           </p>
         </div>
 
@@ -358,7 +358,7 @@ export default function DiscoverPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="size-6 rounded-full bg-primary text-primary-foreground text-[11px] font-black flex items-center justify-center">4</span>
-                  <h3 className="text-sm font-black text-foreground">Carrying Capacity &amp; Sustainability Weight</h3>
+                  <h3 className="text-sm font-black text-foreground">Eco-Friendly Preference</h3>
                 </div>
                 <span className="text-xs font-black text-foreground px-2.5 py-0.5 rounded-lg bg-muted border border-border">
                   {sustainability >= 75 ? 'High Priority' : sustainability >= 45 ? 'Balanced' : 'Standard'} ({sustainability}%)
@@ -376,9 +376,9 @@ export default function DiscoverPage() {
                 />
 
                 <div className="flex justify-between text-[11px] font-bold text-muted-foreground">
-                  <span>Popular routes</span>
-                  <span>Balanced Eco Impact</span>
-                  <span className="text-primary font-black">Strict Conservation</span>
+                  <span>Popular Places</span>
+                  <span>Balanced Mix</span>
+                  <span className="text-primary font-black">Very Eco-Friendly</span>
                 </div>
               </div>
             </div>
@@ -413,10 +413,10 @@ export default function DiscoverPage() {
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
-                  AI Calibrator Preview
+                  Your Match
                 </span>
                 <h3 className="font-heading text-lg font-black text-foreground">
-                  Predicted Trip Profile
+                  Predicted Trip Style
                 </h3>
               </div>
               <span className="size-8 rounded-2xl bg-muted border border-border flex items-center justify-center text-primary shadow-2xs">
@@ -446,7 +446,7 @@ export default function DiscoverPage() {
                 <span className="font-heading text-2xl font-black text-primary">
                   {predictedScore}%
                 </span>
-                <span className="text-[10px] uppercase font-bold text-muted-foreground">Eco Match</span>
+                <span className="text-[10px] uppercase font-bold text-muted-foreground">Match</span>
               </div>
             </div>
 

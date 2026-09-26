@@ -212,7 +212,7 @@ export default function TouristDashboard() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-dashboard-card transition-all duration-300 flex items-center justify-between group">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Eco Travel Score
+              Green Score
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-foreground tracking-tight">94</span>
@@ -484,7 +484,7 @@ export default function TouristDashboard() {
             )}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <span className="font-heading text-xl font-black text-foreground">100%</span>
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Curated</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground">Selected</span>
             </div>
           </div>
 
@@ -629,8 +629,8 @@ export default function TouristDashboard() {
 
             {/* Inner Center Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Eco Tier</span>
-              <span className="font-heading text-lg font-black text-primary">Pioneer</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground">Your Level</span>
+              <span className="font-heading text-lg font-black text-primary">Eco Explorer</span>
             </div>
           </div>
 
@@ -675,7 +675,7 @@ export default function TouristDashboard() {
           {/* Vibe Category Tabs (Elegant Ceylon Lagoon Blue Segmented Control) */}
           <div className="p-1.5 rounded-2xl bg-muted border border-border flex flex-wrap items-center gap-1.5 shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
             {[
-              { id: 'ALL', label: 'All Sanctuaries' },
+              { id: 'ALL', label: 'All Places' },
               { id: 'HIGHLANDS', label: 'Highlands' },
               { id: 'WATERFALLS', label: 'Waterfalls' },
               { id: 'HERITAGE', label: 'Heritage' },

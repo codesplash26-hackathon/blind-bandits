@@ -50,19 +50,19 @@ export default function SriLankaMapPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Geographic Intelligence
+              Interactive Map
             </span>
             <span className="text-muted-foreground">•</span>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              12 Active Carrying Capacity Nodes
+              12 Active Destinations
             </span>
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            Sri Lanka Sustainability Map
+            Sri Lanka Travel Map
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-            Explore monitored regional destinations across green (low), amber (medium), and red (high) visitor density.
+            Explore destinations across green (quiet), amber (moderate), and red (busy) crowd levels.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export default function SriLankaMapPage() {
                 : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border hover:shadow-2xs font-bold'
             }`}
           >
-            All Sanctuaries ({DESTINATIONS.length})
+            All Places ({DESTINATIONS.length})
           </button>
           <button
             type="button"
@@ -89,7 +89,7 @@ export default function SriLankaMapPage() {
             }`}
           >
             <span className="size-2 rounded-full bg-success" />
-            <span>Low Pressure</span>
+            <span>Quiet</span>
           </button>
           <button
             type="button"
@@ -113,7 +113,7 @@ export default function SriLankaMapPage() {
             }`}
           >
             <span className="size-2 rounded-full bg-destructive" />
-            <span>High Hubs</span>
+            <span>Busy Hubs</span>
           </button>
         </div>
       </div>
@@ -123,14 +123,14 @@ export default function SriLankaMapPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-[0_8px_25px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Plotted Sanctuaries
+              All Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-primary">{DESTINATIONS.length}</span>
-              <span className="text-xs text-muted-foreground font-bold">nodes</span>
+              <span className="text-xs text-muted-foreground font-bold">locations</span>
             </div>
             <p className="text-[11px] text-primary font-bold mt-0.5">
-              Active telemetry
+              Live updates
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -141,14 +141,14 @@ export default function SriLankaMapPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-[0_8px_25px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Uncrowded Havens
+              Quiet Places
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-primary">8</span>
-              <span className="text-xs text-muted-foreground font-bold">low crowd</span>
+              <span className="text-xs text-muted-foreground font-bold">uncrowded</span>
             </div>
             <p className="text-[11px] text-success font-bold mt-0.5">
-              ● 67% tranquility buffer
+              ● 67% peaceful
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -159,14 +159,14 @@ export default function SriLankaMapPage() {
         <div className="p-5 rounded-3xl bg-card border border-border shadow-[0_8px_25px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">
-              Island Avg Eco Index
+              Island Avg Eco Score
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-heading text-3xl font-black text-primary">86</span>
               <span className="text-xs text-muted-foreground font-bold">/100</span>
             </div>
             <p className="text-[11px] text-success font-bold mt-0.5">
-              Verified sustainable
+              Eco-friendly choice
             </p>
           </div>
           <div className="p-3 rounded-2xl bg-muted text-primary border border-border">
@@ -210,19 +210,19 @@ export default function SriLankaMapPage() {
           {/* Legend Box */}
           <div className="absolute bottom-6 left-6 p-4 rounded-2xl bg-card/95 backdrop-blur-md border border-border shadow-[0_4px_16px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)] space-y-2 text-xs">
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
-              Carrying Capacity
+              Crowd Levels
             </span>
             <div className="flex items-center gap-2 text-foreground font-bold">
               <span className="size-2.5 rounded-full bg-success" />
-              <span>Low Pressure (&lt;40%)</span>
+              <span>Quiet (&lt;40%)</span>
             </div>
             <div className="flex items-center gap-2 text-foreground font-bold">
               <span className="size-2.5 rounded-full bg-warning" />
-              <span>Medium Pressure (40-70%)</span>
+              <span>Moderate (40-70%)</span>
             </div>
             <div className="flex items-center gap-2 text-foreground font-bold">
               <span className="size-2.5 rounded-full bg-destructive" />
-              <span>High Pressure (&gt;70%)</span>
+              <span>Busy (&gt;70%)</span>
             </div>
           </div>
 
@@ -348,7 +348,7 @@ export default function SriLankaMapPage() {
                 {/* Scores Matrix */}
                 <div className="p-4 rounded-2xl bg-muted/60 border border-border space-y-2.5 text-xs">
                   <div className="flex items-center justify-between pb-2 border-b border-border">
-                    <span className="font-black text-primary">Sustainability Score</span>
+                    <span className="font-black text-primary">Eco-Friendly Score</span>
                     <span className="font-black text-primary">
                       {selectedDestination.sustainability.overall} / 100
                     </span>
@@ -386,7 +386,7 @@ export default function SriLankaMapPage() {
                 <div className="p-3.5 rounded-2xl bg-muted/40 border border-border">
                   <span className="text-[11px] font-black text-primary flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    Why Choose This Sanctuary
+                    Why Choose This Place
                   </span>
                   <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
                     {selectedDestination.xaiExplanation.summary}
@@ -407,7 +407,7 @@ export default function SriLankaMapPage() {
               <MapPin className="w-8 h-8 text-muted-foreground/60 mx-auto" />
               <p className="text-xs font-black text-primary">Select a pin on the map</p>
               <p className="text-[11px] text-muted-foreground">
-                Click any colored marker across Sri Lanka to view its sustainability and carrying capacity breakdown.
+                Click any colored marker across Sri Lanka to view its eco-friendly score and crowd level.
               </p>
             </div>
           )}
