@@ -118,14 +118,10 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               AI Settings
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Deterministic Policy Engine Active
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             AI Routing Settings
@@ -139,9 +135,8 @@ export default function AdminSettingsPage() {
           <Button
             size="sm"
             onClick={handleSave}
-            className="rounded-xl gap-1.5 cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
           >
-            <Save className="w-4 h-4 text-secondary" />
+            <Save className="w-4 h-4" />
             <span>Save Settings</span>
           </Button>
         </div>
@@ -173,39 +168,33 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <button
+            <Button
               type="button"
               onClick={() => applyPreset('strict')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-                activePreset === 'strict'
-                  ? 'bg-primary text-primary-foreground border-primary shadow-xs'
-                  : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
-              }`}
+              variant={activePreset === 'strict' ? "default" : "outline"}
+              size="sm"
+              aria-pressed={activePreset === 'strict'}
             >
               Eco-First
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={() => applyPreset('balanced')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-                activePreset === 'balanced'
-                  ? 'bg-secondary text-secondary-foreground border-secondary shadow-xs'
-                  : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
-              }`}
+              variant={activePreset === 'balanced' ? "default" : "outline"}
+              size="sm"
+              aria-pressed={activePreset === 'balanced'}
             >
               Balanced (Recommended)
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={() => applyPreset('relaxed')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-                activePreset === 'relaxed'
-                  ? 'bg-primary text-primary-foreground border-primary shadow-xs'
-                  : 'bg-muted/50 text-muted-foreground border-border/70 hover:text-foreground'
-              }`}
+              variant={activePreset === 'relaxed' ? "default" : "outline"}
+              size="sm"
+              aria-pressed={activePreset === 'relaxed'}
             >
               Relaxed
-            </button>
+            </Button>
           </div>
         </div>
       </Card>
@@ -263,7 +252,7 @@ export default function AdminSettingsPage() {
             <div className="space-y-2.5 p-4 rounded-2xl bg-muted/30 border border-border/60">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold text-foreground">How strongly to redirect</span>
-                <span className="font-mono font-bold text-secondary px-2 py-0.5 rounded-md bg-secondary/15 text-xs">
+                <span className="font-mono font-bold text-foreground px-2 py-0.5 rounded-md bg-secondary/15 text-xs">
                   +{diversionBias}% Bias
                 </span>
               </div>
@@ -293,7 +282,7 @@ export default function AdminSettingsPage() {
             <div className="space-y-2.5 p-4 rounded-2xl bg-muted/30 border border-border/60">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold text-foreground">Eco-Friendly Importance</span>
-                <span className="font-mono font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10 text-xs">
+                <span className="font-mono font-bold text-foreground px-2 py-0.5 rounded-md bg-primary/10 text-xs">
                   {ecoWeight}% Eco-Priority
                 </span>
               </div>
@@ -333,12 +322,12 @@ export default function AdminSettingsPage() {
                   <h3 className="text-base font-bold text-foreground">
                     Live Simulator
                   </h3>
-                  <span className="text-[10px] font-mono text-secondary">
+                  <span className="text-[10px] font-mono text-foreground">
                     Preview Changes
                   </span>
                 </div>
               </div>
-              <span className="p-1 px-2 rounded-full bg-secondary/15 text-secondary text-[10px] font-extrabold">
+              <span className="p-1 px-2 rounded-full bg-secondary/15 text-foreground text-[10px] font-extrabold">
                 SIM ACTIVE
               </span>
             </div>
@@ -394,7 +383,7 @@ export default function AdminSettingsPage() {
                   <DollarSign className="w-3.5 h-3.5 text-secondary" />
                   Local Earnings Expected
                 </span>
-                <span className="font-mono font-bold text-secondary text-base">
+                <span className="font-mono font-bold text-foreground text-base">
                   LKR {projectedMonthlyRevenue}M
                 </span>
               </div>
@@ -480,27 +469,29 @@ export default function AdminSettingsPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
+                  <Button
                     type="button"
                     onClick={() => handleTestPing(feed.id)}
                     disabled={isSimulatingSync === feed.id}
-                    className="px-2.5 py-1 rounded-lg bg-card border border-border text-foreground hover:border-primary/40 text-[10px] font-bold cursor-pointer transition-all flex items-center gap-1"
+                    variant="outline"
+                    size="xs"
                   >
                     <RefreshCw
-                      className={`w-3 h-3 text-secondary ${
+                      className={`w-3 h-3 ${
                         isSimulatingSync === feed.id ? 'animate-spin' : ''
                       }`}
                     />
                     <span>{isSimulatingSync === feed.id ? 'Syncing...' : 'Ping'}</span>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button
                     type="button"
                     onClick={() => toggleFeed(feed.id)}
-                    className="px-2 py-1 rounded-lg text-[10px] font-semibold text-muted-foreground hover:text-foreground cursor-pointer"
+                    variant="ghost"
+                    size="xs"
                   >
                     {feed.active ? 'Mute' : 'Enable'}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

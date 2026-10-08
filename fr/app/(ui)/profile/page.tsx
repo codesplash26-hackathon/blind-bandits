@@ -95,7 +95,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="flex items-center gap-2.5 self-end md:self-auto">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-bold text-primary shadow-xs">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-bold text-foreground shadow-xs">
             <Calendar className="w-3.5 h-3.5 text-primary" />
             <span>Member Since 2026</span>
           </div>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-heading text-2xl font-black text-foreground tracking-tight">{name}</h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-muted text-primary text-[10px] font-bold border border-border">
+              <span className="px-2.5 py-0.5 rounded-full bg-muted text-foreground text-[10px] font-bold border border-border">
                 Gold Explorer
               </span>
             </div>
@@ -332,25 +332,23 @@ export default function ProfilePage() {
 
               {/* Interests Selector Tabs */}
               <div className="space-y-2">
-                <span className="text-xs font-black text-primary uppercase tracking-wider block">
+                <span className="text-xs font-black text-foreground uppercase tracking-wider block">
                   Favorite Interests &amp; Themes
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {INTEREST_OPTIONS.map((int) => {
                     const isSelected = selectedInterests.includes(int);
                     return (
-                      <button
+                      <Button
                         type="button"
                         key={int}
                         onClick={() => toggleInterest(int)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
-                          isSelected
-                            ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground border-border shadow-xs font-black'
-                            : 'bg-muted text-primary hover:bg-card hover:border-border border-border'
-                        }`}
+                        variant={isSelected ? "default" : "outline"}
+                        size="sm"
+                        aria-pressed={isSelected}
                       >
                         {int}
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
@@ -358,7 +356,7 @@ export default function ProfilePage() {
 
               {/* Preferred Crowd Atmosphere Tabs */}
               <div className="space-y-2">
-                <span className="text-xs font-black text-primary uppercase tracking-wider block">
+                <span className="text-xs font-black text-foreground uppercase tracking-wider block">
                   Preferred Crowd Atmosphere
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -367,19 +365,18 @@ export default function ProfilePage() {
                     { id: 'balanced', label: 'Balanced Flow', sub: 'Moderate social energy' },
                     { id: 'popular', label: 'Landmark Vibrance', sub: 'Iconic world heritage spots' },
                   ].map((opt) => (
-                    <button
+                    <Button
                       type="button"
                       key={opt.id}
                       onClick={() => setCrowd(opt.id as CrowdPreference)}
-                      className={`p-3 rounded-2xl text-left border transition-all cursor-pointer ${
-                        crowd === opt.id
-                          ? 'bg-muted border-border ring-2 ring-ring/25 text-primary font-black shadow-xs'
-                          : 'border-border bg-card text-muted-foreground hover:border-border hover:bg-background'
-                      }`}
+                      variant={crowd === opt.id ? "default" : "outline"}
+                      size="sm"
+                      aria-pressed={crowd === opt.id}
+                      className="h-auto flex-col items-start whitespace-normal p-3 text-left"
                     >
-                      <span className="text-xs font-black text-primary block">{opt.label}</span>
-                      <span className="text-[10px] text-muted-foreground font-medium block mt-0.5">{opt.sub}</span>
-                    </button>
+                      <span className="text-xs font-black block">{opt.label}</span>
+                      <span className="text-[10px] font-medium block mt-0.5">{opt.sub}</span>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -387,10 +384,10 @@ export default function ProfilePage() {
               {/* Sustainability Weight Priority */}
               <div className="space-y-3 p-4 rounded-2xl bg-muted border border-border">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-black text-primary uppercase tracking-wider text-[11px]">
+                  <span className="font-black text-foreground uppercase tracking-wider text-[11px]">
                     Sustainability Dispersal Priority
                   </span>
-                  <span className="text-primary font-heading font-black text-base">{sustainability}%</span>
+                  <span className="text-foreground font-heading font-black text-base">{sustainability}%</span>
                 </div>
                 <input
                   type="range"
@@ -403,16 +400,15 @@ export default function ProfilePage() {
                 <div className="flex items-center justify-between text-[10px] text-muted-foreground font-bold">
                   <span>Economic Focus</span>
                   <span>Balanced Eco Impact</span>
-                  <span className="text-primary font-black">Strict Conservation</span>
+                  <span className="text-foreground font-black">Strict Conservation</span>
                 </div>
               </div>
 
               <div className="flex justify-end pt-2">
                 <Button
                   type="submit"
-                  className="rounded-full px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold gap-2 cursor-pointer shadow-xs transition-all"
                 >
-                  <Save className="w-3.5 h-3.5 text-primary" />
+                  <Save className="w-3.5 h-3.5" />
                   <span>Save Traveler Preferences</span>
                 </Button>
               </div>
@@ -482,7 +478,7 @@ export default function ProfilePage() {
                 </svg>
 
                 <div className="absolute text-center">
-                  <span className="font-heading text-lg font-black text-primary block leading-none">94%</span>
+                  <span className="font-heading text-lg font-black text-foreground block leading-none">94%</span>
                   <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mt-0.5">Overall</span>
                 </div>
               </div>
@@ -493,25 +489,25 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-primary" />
-                  <span className="text-primary font-bold">Overtourism Dispersal</span>
+                  <span className="text-foreground font-bold">Overtourism Dispersal</span>
                 </div>
-                <span className="font-black text-primary">92%</span>
+                <span className="font-black text-foreground">92%</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-primary" />
-                  <span className="text-primary font-bold">Biodiversity Preservation</span>
+                  <span className="text-foreground font-bold">Biodiversity Preservation</span>
                 </div>
-                <span className="font-black text-primary">85%</span>
+                <span className="font-black text-foreground">85%</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-accent" />
-                  <span className="text-primary font-bold">Rural Community Direct Spend</span>
+                  <span className="text-foreground font-bold">Rural Community Direct Spend</span>
                 </div>
-                <span className="font-black text-primary">96%</span>
+                <span className="font-black text-foreground">96%</span>
               </div>
             </div>
           </div>
@@ -535,9 +531,8 @@ export default function ProfilePage() {
                 variant="outline"
                 size="sm"
                 onClick={() => toast.info('Password reset instructions sent to your registered email.')}
-                className="rounded-full text-xs font-bold gap-1.5 border-border text-foreground hover:bg-muted"
               >
-                <KeyRound className="w-3.5 h-3.5 text-primary" />
+                <KeyRound className="w-3.5 h-3.5" />
                 <span>Reset Password</span>
               </Button>
 
@@ -546,7 +541,6 @@ export default function ProfilePage() {
                 variant="destructive"
                 size="sm"
                 onClick={handleDeleteAccount}
-                className="rounded-full text-xs font-bold gap-1.5 bg-destructive/10 text-destructive hover:bg-destructive/10 border border-destructive/25 shadow-none cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Delete Account</span>

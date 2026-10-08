@@ -278,7 +278,7 @@ export default function Login({ onSwitchToSignup }: LoginProps) {
               type="checkbox"
               checked={formData.rememberMe}
               onChange={(e) => setFormData((prev) => ({ ...prev, rememberMe: e.target.checked }))}
-              className="w-4 h-4 rounded border-border text-primary focus:ring-ring/30 accent-primary"
+              className="w-4 h-4 rounded border-border text-foreground focus:ring-ring/30 accent-primary"
             />
             <span className="text-xs text-muted-foreground hover:text-foreground transition-colors">Keep me signed in</span>
           </label>

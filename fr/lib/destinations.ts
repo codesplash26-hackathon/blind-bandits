@@ -68,7 +68,14 @@ export async function getDestinationEnvironment(destinationId: number) {
   const response = await axiosInstance.get<EnvironmentalSnapshotResponse>(
     apiPaths.destinations.environment(destinationId),
   );
-  return response.data;
+  if (response.data.weather && response.data.air_quality) {
+    return response.data;
+  }
+
+  const populatedResponse = await axiosInstance.post<EnvironmentalSnapshotResponse>(
+    apiPaths.destinations.populateEnvironment(destinationId),
+  );
+  return populatedResponse.data;
 }
 
 export async function refreshDestinationEnvironment(

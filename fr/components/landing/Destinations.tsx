@@ -155,7 +155,7 @@ export const Destinations = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/15 border border-secondary/30 text-foreground text-xs font-semibold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Curated Sri Lankan Journeys</span>
           </div>
@@ -243,7 +243,7 @@ export const Destinations = () => {
             {/* Content Body */}
             <div className="p-6 flex flex-col flex-grow justify-between gap-4">
               <div>
-                <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
+                <span className="text-xs font-semibold text-foreground uppercase tracking-wider">
                   {dest.categoryLabel}
                 </span>
                 <h3 className="font-heading text-xl font-bold text-foreground mt-1 group-hover:text-primary transition-colors line-clamp-1">

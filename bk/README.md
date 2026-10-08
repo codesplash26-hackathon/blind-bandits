@@ -141,6 +141,11 @@ one source at a time with
 `POST /api/v1/admin/destinations/{id}/environment/refresh?type=WEATHER` or
 `?type=AIR_QUALITY`. Any authenticated user can read the latest stored values
 at `GET /api/v1/destinations/{id}/environment`. Reads make no external calls.
+When a destination has no stored weather or air-quality observation yet, the
+frontend calls `POST /api/v1/destinations/{id}/environment/populate`. This
+idempotent endpoint fetches and stores only the missing observation types;
+subsequent page loads use the stored values. Regular refreshes remain restricted
+to administrators.
 Refreshes append a new observation when the provider timestamp changes; a
 repeat of the same source/timestamp is reported as `UNCHANGED`. If a provider
 fails, the refresh returns the latest stored observation as `FALLBACK` with
@@ -155,7 +160,9 @@ precipitation is a backward-looking interval total. Air quality uses the
 monitoring station within `OPENAQ_RADIUS_M` (default 25 km), stores the
 station ID, name, distance, original unit, and measurement time, and does not
 claim an on-site destination measurement or calculate an AQI. OpenAQ requires
-`OPENAQ_API_KEY` in the private environment. Its
+`OPENAQ_API_KEY` in the private environment. When initial population cannot
+find an OpenAQ observation, it falls back to Open-Meteo's global CAMS modeled
+PM2.5 current conditions and labels that source explicitly. OpenAQ's
 [latest endpoint](https://docs.openaq.org/resources/latest) is not a complete
 historical feed; this application only preserves snapshots fetched by its
 refreshes.

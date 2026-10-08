@@ -131,14 +131,10 @@ export default function DestinationsCatalogPage() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               Island Places
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {destinations.length} Active Destinations
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Explore Sri Lanka
@@ -149,26 +145,20 @@ export default function DestinationsCatalogPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/map">
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-2xl gap-2 bg-card border-border text-primary hover:bg-muted text-xs font-bold shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] cursor-pointer"
-            >
-              <Compass className="w-3.5 h-3.5 text-primary" />
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/map" />}
+          >
+              <Compass className="w-3.5 h-3.5" />
               <span>Interactive Map View</span>
             </Button>
-          </Link>
 
-          <Link href="/discover">
-            <Button
-              size="sm"
-              className="rounded-2xl gap-2 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold shadow-sm hover:shadow-md transition-all cursor-pointer"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-secondary" />
-              <span>AI Trip Finder</span>
+          <Button size="sm" nativeButton={false} render={<Link href="/discover" />}>
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Trip Finder</span>
             </Button>
-          </Link>
         </div>
       </div>
 
@@ -279,16 +269,19 @@ export default function DestinationsCatalogPage() {
               placeholder="Search destinations by name, district, or style (e.g. Belihuloya, hiking)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-9 py-2.5 rounded-2xl border border-border bg-card text-xs sm:text-sm text-primary placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all shadow-2xs font-semibold"
+              className="w-full pl-10 pr-9 py-2.5 rounded-2xl border border-border bg-card text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all shadow-2xs font-semibold"
             />
             {searchQuery && (
-              <button
+              <Button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary cursor-pointer"
+                variant="ghost"
+                size="icon-xs"
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2"
               >
                 <X className="w-4 h-4" />
-              </button>
+              </Button>
             )}
           </div>
 
@@ -300,7 +293,7 @@ export default function DestinationsCatalogPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'sustainability' | 'name' | 'budget')}
-              className="px-3.5 py-2 rounded-2xl border border-border bg-card text-xs font-bold text-primary focus:ring-2 focus:ring-ring outline-none transition-colors cursor-pointer shadow-2xs"
+              className="px-3.5 py-2 rounded-2xl border border-border bg-card text-xs font-bold text-foreground focus:ring-2 focus:ring-ring outline-none transition-colors cursor-pointer shadow-2xs"
             >
               <option value="sustainability">Eco-Friendly (High to Low)</option>
               <option value="name">Name (A to Z)</option>
@@ -318,29 +311,27 @@ export default function DestinationsCatalogPage() {
               {tagFilters.map((tag) => {
                 const isActive = selectedTag === tag;
                 return (
-                  <button
+                  <Button
                     type="button"
                     key={tag}
                     onClick={() => setSelectedTag(tag)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--shadow-color)_28%,transparent)] ring-1 ring-overlay-foreground/20 font-black'
-                        : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border hover:shadow-2xs'
-                    }`}
+                    variant={isActive ? "default" : "outline"}
+                    size="sm"
+                    aria-pressed={isActive}
                   >
                     {tag}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <select value={selectedRegion} onChange={(event) => setSelectedRegion(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-primary">
+            <select value={selectedRegion} onChange={(event) => setSelectedRegion(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground">
               <option>All</option>
               {regionOptions.map((region) => <option key={region}>{region}</option>)}
             </select>
-            <select value={selectedLandscape} onChange={(event) => setSelectedLandscape(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-primary">
+            <select value={selectedLandscape} onChange={(event) => setSelectedLandscape(event.target.value)} className="px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground">
               <option>All</option>
               {landscapeOptions.map((landscape) => <option key={landscape}>{landscape}</option>)}
             </select>
@@ -378,10 +369,14 @@ export default function DestinationsCatalogPage() {
                   </div>
 
                   {/* Save Heart Button */}
-                  <button
+                  <Button
                     type="button"
                     onClick={() => handleSaveToggle(dest)}
-                    className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
+                    variant="outline"
+                    size="icon"
+                    aria-pressed={isBookmarked}
+                    aria-label={isBookmarked ? "Remove from saved" : "Save destination"}
+                    className="absolute top-3.5 right-3.5 bg-card text-card-foreground dark:bg-card"
                     title={isBookmarked ? 'Saved' : 'Save'}
                   >
                     <Heart
@@ -389,11 +384,11 @@ export default function DestinationsCatalogPage() {
                         isBookmarked ? 'fill-destructive text-destructive' : 'text-primary'
                       }`}
                     />
-                  </button>
+                  </Button>
 
                   {/* Title overlay on photo */}
                   <div className="absolute bottom-3.5 inset-x-4 text-overlay-foreground">
-                    <div className="flex items-center gap-1 text-[11px] font-bold text-frosted-blue uppercase tracking-wider">
+                    <div className="flex items-center gap-1 text-[11px] font-bold text-overlay-foreground uppercase tracking-wider">
                       <MapPin className="w-3.5 h-3.5" />
                       <span>{dest.district} District</span>
                     </div>
@@ -408,7 +403,7 @@ export default function DestinationsCatalogPage() {
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between text-xs pb-2.5 border-b border-border">
                       <span className="text-muted-foreground font-semibold">Eco-Friendly Score</span>
-                      <span className="font-black text-primary">
+                      <span className="font-black text-foreground">
                         {dest.sustainability.overall} / 100
                       </span>
                     </div>
@@ -428,7 +423,7 @@ export default function DestinationsCatalogPage() {
                       {dest.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-muted text-primary border border-border"
+                          className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-muted text-foreground border border-border"
                         >
                           {tag}
                         </span>
@@ -440,21 +435,20 @@ export default function DestinationsCatalogPage() {
                   <div className="pt-3 border-t border-border flex items-center justify-between">
                     <div>
                       <span className="text-[10px] uppercase font-bold text-muted-foreground block">Typical Budget</span>
-                      <span className="text-xs font-black text-primary">
+                      <span className="text-xs font-black text-foreground">
                         ~LKR {dest.typicalBudgetLKR.toLocaleString()}
                       </span>
                     </div>
 
-                    <Link href={`/destinations/${dest.id}`}>
-                      <Button
-                        size="xs"
-                        variant="outline"
-                        className="rounded-xl gap-1 text-xs cursor-pointer border-border text-primary hover:bg-primary hover:text-primary-foreground transition-all font-bold"
-                      >
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      nativeButton={false}
+                      render={<Link href={`/destinations/${dest.id}`} />}
+                    >
                         <span>Explore</span>
                         <ArrowRight className="w-3 h-3" />
                       </Button>
-                    </Link>
                   </div>
                 </div>
               </div>
@@ -477,7 +471,7 @@ export default function DestinationsCatalogPage() {
               setSelectedRegion('All');
               setSelectedLandscape('All');
             }}
-            className="rounded-2xl mt-2 bg-card border-border text-primary hover:bg-muted font-bold cursor-pointer"
+            className="mt-2"
           >
             Reset Filters
           </Button>

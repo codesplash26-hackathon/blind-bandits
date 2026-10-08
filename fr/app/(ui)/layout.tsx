@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
+import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Loader } from '@/components/Loader';
 import { useAuth } from '@/context/AuthContext';
@@ -90,52 +91,33 @@ export default function DashboardLayout({
                 <SidebarTrigger className="-ml-1 text-primary dark:text-secondary hover:bg-muted dark:hover:bg-primary/15" />
                 <div className="h-4 w-px bg-primary/15 dark:bg-primary/25 hidden sm:block" />
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xs sm:text-sm font-black text-primary dark:text-overlay-foreground tracking-tight">
+                  <span className="text-xs sm:text-sm font-black text-foreground dark:text-overlay-foreground tracking-tight">
                     {getPageTitle()}
                   </span>
-                  {effectiveRole === 'ADMIN' ? (
-                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-muted text-primary dark:text-secondary border border-border dark:border-primary/30">
-                      <ShieldCheck className="w-3 h-3 text-primary" /> Authority Clearance
-                    </span>
-                  ) : (
-                    <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-muted text-primary dark:text-secondary border border-border dark:border-primary/30 shadow-2xs">
-                      <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-                      Live Travel Stream
-                    </span>
-                  )}
+
                 </div>
 
                 <div className="ml-auto flex items-center gap-2 sm:gap-3">
                   {/* Contextual Action Controls */}
                   {effectiveRole === 'ADMIN' ? (
-                    <Link
-                      href="/admin/tourism-pressure"
-                      className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground hover:opacity-95 text-xs font-bold transition-all shadow-xs"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
+                    <Button nativeButton={false} render={<Link href="/admin/tourism-pressure" />} size="sm" className="hidden md:inline-flex">
+                      <ShieldCheck className="w-3.5 h-3.5" />
                       <span>Pressure Simulator</span>
-                    </Link>
+                    </Button>
                   ) : (
                     <>
-                      <Link
-                        href="/discover"
-                        className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground text-xs font-bold shadow-xs hover:opacity-95 transition-all hover:scale-102"
-                      >
+                      <Button nativeButton={false} render={<Link href="/discover" />} size="sm" className="hidden md:inline-flex">
                         <Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
-                        <span>AI Trip Finder</span>
-                      </Link>
+                        <span>Trip Finder</span>
+                      </Button>
 
-                      <Link
-                        href="/saved"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/80 hover:bg-card dark:bg-muted dark:hover:bg-muted text-primary dark:text-secondary text-xs font-bold border border-border dark:border-primary/25 shadow-2xs transition-colors"
-                        title="Saved destinations"
-                      >
-                        <Bookmark className="w-3.5 h-3.5 text-primary" />
+                      <Button nativeButton={false} render={<Link href="/saved" />} size="sm" variant="outline" aria-label="Saved destinations" title="Saved destinations">
+                        <Bookmark className="w-3.5 h-3.5" />
                         <span className="hidden sm:inline">Saved</span>
-                        <span className="h-4 min-w-4 px-1 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground text-[10px] font-black flex items-center justify-center">
+                        <span className="h-4 min-w-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black flex items-center justify-center">
                           {savedDestinationIds.length}
                         </span>
-                      </Link>
+                      </Button>
                     </>
                   )}
 

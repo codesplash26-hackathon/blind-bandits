@@ -28,7 +28,7 @@ The project addresses two connected problems: visitors are concentrated at a sma
 | What-if analysis | Sustainability-factor simulator showing score and factor changes |
 | Map | API-backed schematic Sri Lanka destination map with sustainability and pressure filters |
 | Authority tools | Role-protected dashboard, analytics, destination management, pressure views, and environmental refresh controls |
-| Environmental data | Open-Meteo weather and OpenAQ PM2.5 snapshot ingestion with stored fallback and stale-data indicators |
+| Environmental data | Open-Meteo weather plus OpenAQ or modeled PM2.5 snapshot ingestion, stored fallback, and stale-data indicators |
 | Engagement | Saved places, searches, selections, and pressure-redirection metrics |
 
 FastAPI also exposes interactive OpenAPI documentation at `http://localhost:8000/docs` while the backend is running.
@@ -44,7 +44,7 @@ FastAPI application (bk/) ---- PostgreSQL
           |
           +---- versioned sustainability and simulation policies
           +---- trained LightGBM + TreeSHAP artifacts (ml/)
-          +---- Open-Meteo and OpenAQ (admin-triggered refresh)
+          +---- Open-Meteo and OpenAQ (initial fill and admin refresh)
 
 SLTDA source reports -> extraction/validation scripts -> model datasets -> offline training
 ```
@@ -131,7 +131,7 @@ Before starting the application:
 - replace `JWT_SECRET_KEY` with a random secret of at least 32 characters;
 - review the example sustainability weights, pressure bands, and simulation policy before any real use;
 - leave `OPEN_METEO_URL` at its default public endpoint unless a different compatible endpoint is required;
-- set `OPENAQ_API_KEY` to a valid private OpenAQ API key if air-quality refresh is required; an empty value disables authenticated OpenAQ requests;
+- set `OPENAQ_API_KEY` to a valid private OpenAQ API key for monitoring-station PM2.5; destinations without a usable station fall back to clearly labelled Open-Meteo modeled PM2.5 during initial population;
 - `OPENAQ_RADIUS_M=25000` searches for a monitoring station within 25 km, which is also the maximum accepted by the backend;
 - `ENVIRONMENT_STALE_AFTER_MINUTES` controls when stored environmental observations are labelled stale, and `ENVIRONMENT_HTTP_TIMEOUT_SECONDS` controls provider request timeouts;
 - keep `PRESSURE_MODEL_ARTIFACT_DIR=../ml/artifacts` when launching from `bk/`.

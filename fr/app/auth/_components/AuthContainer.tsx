@@ -11,7 +11,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import logo from '@/public/logo.png';
+import { ThemeLogo } from "@/components/ThemeLogo";
 import visualBg from '@/public/andrei-alekseev-VVltlbkjMwQ-unsplash.jpg';
 import sigiriyaImg from '@/public/poswiecie-sigiriya-459197_1920.jpg';
 import mirissaImg from '@/public/tomas-malik-6BQyHtYSb5E-unsplash.jpg';
@@ -84,13 +84,13 @@ export default function AuthContainer() {
               {/* Brand Emblem */}
               <Link href="/" className="inline-flex items-center gap-2.5 group mb-2">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-success/20 backdrop-blur-xl border border-overlay-foreground/25 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                  <Image src={logo} alt="Ceylon Tour Logo" width={24} height={24} />
+                  <ThemeLogo alt="Ceylon Tour Logo" width={24} height={24} />
                 </div>
                 <div>
                   <span className="font-heading text-2xl font-bold tracking-tight text-overlay-foreground block">
                     Ceylon Tour
                   </span>
-                  <span className="text-[10px] uppercase tracking-widest text-sky-aqua font-semibold block">
+                  <span className="text-[10px] uppercase tracking-widest text-overlay-foreground font-semibold block">
                     Smart & Sustainable Travel
                   </span>
                 </div>
@@ -166,7 +166,7 @@ export default function AuthContainer() {
                     <div className="absolute inset-0 bg-gradient-to-t from-overlay/80 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-2.5 inset-x-2.5">
                       <span className="block text-xs font-bold text-overlay-foreground leading-tight">Galle Fort</span>
-                      <span className="block text-[10px] text-frosted-blue font-medium">Historic Lighthouse</span>
+                      <span className="block text-[10px] text-overlay-foreground font-medium">Historic Lighthouse</span>
                     </div>
                   </div>
                 </div>
@@ -180,13 +180,13 @@ export default function AuthContainer() {
             <div className="lg:hidden text-center mb-5 flex flex-col items-center">
               <Link href="/" className="inline-flex items-center gap-3 group mb-1">
                 <div className="w-11 h-11 rounded-2xl bg-overlay-foreground/10 backdrop-blur-md border border-overlay-foreground/20 flex items-center justify-center shadow-lg">
-                  <Image src={logo} alt="Ceylon Tour Logo" width={26} height={26} />
+                  <ThemeLogo alt="Ceylon Tour Logo" width={26} height={26} />
                 </div>
                 <div className="text-left">
                   <span className="font-heading text-2xl font-bold text-overlay-foreground tracking-tight block">
                     Ceylon Tour
                   </span>
-                  <span className="text-[10px] uppercase tracking-widest text-sky-aqua font-semibold block">
+                  <span className="text-[10px] uppercase tracking-widest text-overlay-foreground font-semibold block">
                     Smart & Sustainable Travel
                   </span>
                 </div>

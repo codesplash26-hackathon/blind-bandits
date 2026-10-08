@@ -28,7 +28,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CeylonTour - Sustainable Travel & AI Destination Recommendations",
+  title: "CeylonTour",
   description: "Discover conscious eco-destinations, XAI recommendations, and live overtourism monitoring across Sri Lanka.",
 };
 

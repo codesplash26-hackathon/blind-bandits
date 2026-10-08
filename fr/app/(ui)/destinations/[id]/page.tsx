@@ -23,6 +23,7 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DatePickerInput } from '@/components/ui/date-picker';
 import { Loader } from '@/components/Loader';
 import {
   getDestination,
@@ -301,11 +302,9 @@ export default function DestinationDetailPage({ params }: PageProps) {
   if (!destination) {
     return (
       <div className="p-12 text-center space-y-4">
-        <h2 className="text-xl font-bold text-primary">Destination Not Found</h2>
+        <h2 className="text-xl font-bold text-foreground">Destination Not Found</h2>
         {loadError && <p className="text-sm text-muted-foreground">{loadError}</p>}
-        <Link href="/destinations">
-          <Button variant="outline" className="rounded-full">Back to Destinations Catalog</Button>
-        </Link>
+        <Button variant="outline" nativeButton={false} render={<Link href="/destinations" />}>Back to Destinations Catalog</Button>
       </div>
     );
   }
@@ -329,39 +328,40 @@ export default function DestinationDetailPage({ params }: PageProps) {
       {/* Top Search & Navigation Bar (Kleon Style) */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Link
-            href="/destinations"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-card border border-border text-xs font-bold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] hover:bg-muted transition-all group"
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/destinations" />}
           >
-            <ArrowLeft className="w-4 h-4 text-primary group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-4 h-4" />
             <span>All Places</span>
-          </Link>
+          </Button>
 
-          <span className="text-xs font-semibold text-primary/50 hidden sm:inline">
+          <span className="text-xs font-semibold text-muted-foreground hidden sm:inline">
             Catalog &gt; {destination.district} &gt; {destination.name}
           </span>
         </div>
 
         <div className="flex items-center gap-2.5 self-end md:self-auto">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-foreground shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
             <Calendar className="w-3.5 h-3.5 text-primary" />
             <span>
               Recommended: {destination.api.recommended_min_trip_duration}–{destination.api.recommended_max_trip_duration} Days
             </span>
           </div>
 
-          <button
+          <Button
             type="button"
             onClick={() => void toggleSaveDestination(destination.api.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer shadow-sm ${
-              isBookmarked
-                ? 'bg-destructive/10 text-destructive border-destructive/25'
-                : 'bg-card hover:bg-muted text-primary border-border'
-            }`}
+            variant={isBookmarked ? "secondary" : "outline"}
+            size="sm"
+            aria-pressed={isBookmarked}
+            aria-label={isBookmarked ? "Remove from saved" : "Save destination"}
           >
             <Heart className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-destructive text-destructive' : ''}`} />
             <span>{isBookmarked ? 'Saved to Bookmarks' : 'Bookmark Destination'}</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -370,18 +370,18 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 1: Sustainability Index */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Eco-Friendly Score</span>
+            <span className="text-xs font-semibold text-muted-foreground">Eco-Friendly Score</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Leaf className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {destination.sustainability.overall}
-                <span className="text-sm font-normal text-primary/50">/100</span>
+                <span className="text-sm font-normal text-muted-foreground">/100</span>
               </span>
-              <span className="text-[11px] text-primary font-bold block mt-0.5 flex items-center gap-1">
+              <span className="text-[11px] text-foreground font-bold block mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" /> {destination.sustainabilityData ? 'API calculated' : 'Factor data unavailable'}
               </span>
             </div>
@@ -401,7 +401,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="absolute text-[10px] font-bold text-primary">{destination.sustainability.overall}%</span>
+              <span className="absolute text-[10px] font-bold text-foreground">{destination.sustainability.overall}%</span>
             </div>
           </div>
         </div>
@@ -409,14 +409,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 2: Regional visitor-pressure model */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Regional Visitor Pressure</span>
+            <span className="text-xs font-semibold text-muted-foreground">Regional Visitor Pressure</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sliders className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">
                 {pressureLoading ? '…' : pressureValue === null ? '—' : `${pressureValue.toFixed(1)}%`}
               </span>
               {pressureBand && activePressureTone ? (
@@ -442,15 +442,15 @@ export default function DestinationDetailPage({ params }: PageProps) {
             </svg>
           </div>
           <div className="mt-3 pt-2 border-t border-border space-y-1.5">
-            <label className="flex items-center justify-between gap-2 text-[10px] font-bold text-muted-foreground">
-              Forecast month
-              <input
-                type="month"
-                value={pressureMonth}
-                onChange={(event) => setPressureMonth(event.target.value)}
-                className="h-7 rounded-lg border border-border bg-background px-2 text-[10px] text-foreground"
-              />
-            </label>
+            <DatePickerInput
+              id="destination-pressure-month"
+              type="month"
+              label="Forecast month"
+              value={pressureMonth}
+              onValueChange={setPressureMonth}
+              className="w-full"
+              inputClassName="w-full"
+            />
             {pressure && (
               <p className="text-[10px] text-muted-foreground leading-relaxed">
                 {pressure.region} • {formatForecastMonth(pressure.forecast_month ?? pressure.month)}<br />
@@ -460,13 +460,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
             {pressureError && (
               <div className="flex items-start justify-between gap-2">
                 <p className="text-[10px] leading-relaxed text-destructive">{pressureError}</p>
-                <button
+                <Button
                   type="button"
                   onClick={() => setPressureReloadKey((value) => value + 1)}
-                  className="text-[10px] font-bold text-primary hover:underline"
+                  variant="link"
+                  size="sm"
                 >
                   Retry
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -475,17 +476,17 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 3: Typical Budget */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Typical Budget</span>
+            <span className="text-xs font-semibold text-muted-foreground">Typical Budget</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-2xl font-black text-primary tracking-tight">
+              <span className="font-heading text-2xl font-black text-foreground tracking-tight">
                 LKR {(destination.typicalBudgetLKR / 1000).toFixed(0)}k
               </span>
-              <span className="text-[11px] text-primary/60 font-semibold block mt-0.5">
+              <span className="text-[11px] text-muted-foreground font-semibold block mt-0.5">
                 Homestays &amp; meals
               </span>
             </div>
@@ -502,17 +503,17 @@ export default function DestinationDetailPage({ params }: PageProps) {
         {/* KPI 4: Backend data provenance */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Factor Data Quality</span>
+            <span className="text-xs font-semibold text-muted-foreground">Factor Data Quality</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-xl font-bold text-primary tracking-tight">
+              <span className="font-heading text-xl font-bold text-foreground tracking-tight">
                 {destination.api.factor?.confidence_level ?? 'UNAVAILABLE'} confidence
               </span>
-              <span className="text-[11px] text-primary font-bold block mt-0.5">
+              <span className="text-[11px] text-foreground font-bold block mt-0.5">
                 {destination.api.factor?.value_type ?? 'No factor data'}
               </span>
             </div>
@@ -546,7 +547,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
           {/* Hero Content Bottom */}
           <div className="absolute bottom-6 inset-x-6 text-overlay-foreground space-y-2">
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            <h1 className="font-heading text-3xl text-overlay-foreground/90 sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
               {destination.name}
             </h1>
             <p className="text-sm sm:text-base text-overlay-foreground/90 max-w-2xl font-light leading-relaxed">
@@ -590,7 +591,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   <p className="text-xs text-muted-foreground">No stored observation is available.</p>
                 ) : (
                   <>
-                    <p className="text-2xl font-black text-primary">
+                    <p className="text-2xl font-black text-foreground">
                       {observationValue(item.observation, item.primary) ?? '—'}
                       {item.label === 'Weather' ? ' °C' : ' µg/m³'}
                     </p>
@@ -676,7 +677,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
           {!alternativesLoading && !alternativesError && alternatives?.status === 'ALTERNATIVES_FOUND' && (
             <div className="pt-3 space-y-3">
-              <h3 className="text-sm font-bold text-primary">
+              <h3 className="text-sm font-bold text-foreground">
                 Consider these serene, low-pressure alternatives
               </h3>
 
@@ -697,17 +698,17 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-primary">
+                        <span className="text-xs font-bold text-foreground">
                           {alt.similarity_percentage.toFixed(0)}% match
                         </span>
-                        <span className="px-2 py-0.5 rounded-full bg-muted text-primary text-[10px] font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-muted text-foreground text-[10px] font-bold">
                           {alt.pressure.band}
                         </span>
                       </div>
-                      <h4 className="text-sm font-bold text-primary mt-1 group-hover:text-primary transition-colors">
+                      <h4 className="text-sm font-bold text-foreground mt-1 group-hover:text-primary transition-colors">
                         {alt.destination.name}
                       </h4>
-                      <p className="text-[11px] text-primary/60 mt-0.5 line-clamp-2">
+                      <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">
                         {alt.reason.same_landscape ? 'Same landscape' : 'Different landscape'}
                         {alt.reason.shared_activities.length > 0 && ` • ${alt.reason.shared_activities.join(', ')}`}
                       </p>
@@ -715,14 +716,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
                     <div className="pt-2 border-t border-border space-y-1 text-xs">
                       <div className="flex items-center justify-between">
-                        <span className="text-primary/60">Sustainability</span>
-                        <span className="font-bold text-primary">{Number(alt.sustainability_score).toFixed(1)}/100</span>
+                        <span className="text-muted-foreground">Sustainability</span>
+                        <span className="font-bold text-foreground">{Number(alt.sustainability_score).toFixed(1)}/100</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-primary/60">Tourism pressure</span>
-                        <span className="font-bold text-primary">{alt.pressure.predicted_occupancy_rate.toFixed(1)}%</span>
+                        <span className="text-muted-foreground">Tourism pressure</span>
+                        <span className="font-bold text-foreground">{alt.pressure.predicted_occupancy_rate.toFixed(1)}%</span>
                       </div>
-                      <p className="text-[10px] text-primary/60">
+                      <p className="text-[10px] text-muted-foreground">
                         {alt.reason.pressure_reduction_percentage_points.toFixed(1)} points lower pressure
                       </p>
                     </div>
@@ -859,10 +860,10 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 <div key={item.label} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <div>
-                      <span className="font-bold text-primary">{item.label}</span>
-                      <span className="text-[10px] text-primary/50 hidden sm:inline ml-1.5">({item.desc})</span>
+                      <span className="font-bold text-foreground">{item.label}</span>
+                      <span className="text-[10px] text-muted-foreground hidden sm:inline ml-1.5">({item.desc})</span>
                     </div>
-                    <span className="font-bold text-primary font-mono">{item.value}/100</span>
+                    <span className="font-bold text-foreground font-mono">{item.value}/100</span>
                   </div>
                   <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                     <div
@@ -895,24 +896,24 @@ export default function DestinationDetailPage({ params }: PageProps) {
             </div>
 
             <div className="p-4 rounded-2xl bg-muted/40 border border-border">
-              <p className="text-xs sm:text-sm text-primary leading-relaxed">
+              <p className="text-xs sm:text-sm text-foreground leading-relaxed">
                 &ldquo;{destination.sustainabilityExplanation.summary}&rdquo;
               </p>
             </div>
 
             {/* Weighted contribution bar chart */}
             <div className="space-y-3 pt-2">
-              <span className="text-xs font-bold text-primary/70 uppercase tracking-wider block">
+              <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                 Weighted Factor Contributions
               </span>
 
               {destination.sustainabilityExplanation.contributions.map((contribution) => (
                 <div key={contribution.factor} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">
+                    <span className="font-semibold text-foreground">
                       {contribution.factor} ({(contribution.weight * 100).toFixed(0)}% weight)
                     </span>
-                    <span className="font-bold font-mono text-primary">
+                    <span className="font-bold font-mono text-foreground">
                       {contribution.value.toFixed(2)} points
                     </span>
                   </div>
@@ -939,16 +940,18 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   What-If Impact Simulator
                 </h2>
               </div>
-              <button
+              <Button
                 type="button"
                 onClick={() => setShowSimulator(!showSimulator)}
-                className="text-xs text-primary font-bold hover:underline cursor-pointer"
+                variant="link"
+                size="sm"
+                aria-expanded={showSimulator}
               >
                 {showSimulator ? 'Collapse' : 'Expand'}
-              </button>
+              </Button>
             </div>
 
-            <p className="text-xs text-primary/60">
+            <p className="text-xs text-muted-foreground">
               Simulate how future visitor density and municipal eco-interventions affect this sanctuary&apos;s live score.
             </p>
 
@@ -957,8 +960,8 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 {/* Slider 1: Expected Visitors */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">Expected Visitor Level</span>
-                    <span className="font-mono font-bold text-primary">
+                    <span className="font-semibold text-foreground">Expected Visitor Level</span>
+                    <span className="font-mono font-bold text-foreground">
                       {visitorSlider} / 100
                     </span>
                   </div>
@@ -970,7 +973,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     onChange={(e) => setVisitorSlider(Number(e.target.value))}
                     className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                   />
-                  <div className="flex justify-between text-[10px] text-primary/50">
+                  <div className="flex justify-between text-[10px] text-muted-foreground">
                     <span>Low</span>
                     <span>High</span>
                   </div>
@@ -979,8 +982,8 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 {/* Slider 2: Waste Management */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">Waste Sorting &amp; Composting</span>
-                    <span className="font-mono font-bold text-primary">
+                    <span className="font-semibold text-foreground">Waste Sorting &amp; Composting</span>
+                    <span className="font-mono font-bold text-foreground">
                       {wasteSlider > 66 ? 'Zero Waste' : wasteSlider > 33 ? 'Moderate' : 'Understaffed'}
                     </span>
                   </div>
@@ -997,8 +1000,8 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 {/* Slider 3: Eco-Infrastructure */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-primary">Eco Transit &amp; Solar Trails</span>
-                    <span className="font-mono font-bold text-primary">
+                    <span className="font-semibold text-foreground">Eco Transit &amp; Solar Trails</span>
+                    <span className="font-mono font-bold text-foreground">
                       {infraSlider > 66 ? 'High Grade' : infraSlider > 33 ? 'Standard' : 'Primitive'}
                     </span>
                   </div>
@@ -1020,25 +1023,25 @@ export default function DestinationDetailPage({ params }: PageProps) {
                 <div className="p-4 rounded-2xl bg-muted/50 border border-border space-y-2">
                   <div className="grid grid-cols-2 gap-4 text-center divide-x divide-border">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-primary/60 block">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                         Original Score
                       </span>
-                      <span className="text-2xl font-black text-primary mt-1 block">
+                      <span className="text-2xl font-black text-foreground mt-1 block">
                         {simulation ? Number(simulation.original_score).toFixed(1) : '—'}
                       </span>
                     </div>
 
                     <div className="pl-4">
-                      <span className="text-[10px] uppercase font-bold text-primary/60 block">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                         Simulated Score
                       </span>
                       <div className="flex items-center justify-center gap-1.5 mt-1">
-                        <span className="text-2xl font-black text-primary">
+                        <span className="text-2xl font-black text-foreground">
                           {simulation ? Number(simulation.simulated_score).toFixed(1) : '—'}
                         </span>
                         <span
                           className={`text-xs font-bold ${
-                            Number(simulation?.score_delta ?? 0) >= 0 ? 'text-primary' : 'text-destructive'
+                            Number(simulation?.score_delta ?? 0) >= 0 ? 'text-success' : 'text-destructive'
                           }`}
                         >
                           {simulation
@@ -1052,20 +1055,20 @@ export default function DestinationDetailPage({ params }: PageProps) {
                   </div>
 
                   {simulationLoading && (
-                    <p className="text-xs text-primary/60 text-center pt-1">Calculating scenario...</p>
+                    <p className="text-xs text-muted-foreground text-center pt-1">Calculating scenario...</p>
                   )}
 
                   {simulation && Object.keys(simulation.changed_factors).length > 0 && (
                     <div className="pt-2 border-t border-border space-y-2">
-                      <span className="text-[10px] uppercase font-bold text-primary/60 block">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                         Changed Factors
                       </span>
                       {Object.entries(simulation.changed_factors).map(([factor, change]) => (
                         <div key={factor} className="flex items-center justify-between gap-3 text-xs">
-                          <span className="font-semibold text-primary capitalize">
+                          <span className="font-semibold text-foreground capitalize">
                             {factor.replaceAll('_', ' ')}
                           </span>
-                          <span className="font-mono text-primary/70">
+                          <span className="font-mono text-muted-foreground">
                             {Number(change.original).toFixed(1)} → {Number(change.simulated).toFixed(1)}
                             <span className={Number(change.delta) >= 0 ? 'text-success' : 'text-destructive'}>
                               {' '}({Number(change.delta) >= 0 ? '+' : ''}{Number(change.delta).toFixed(1)})
@@ -1076,7 +1079,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     </div>
                   )}
 
-                  <p className="text-xs text-primary/70 text-center italic pt-1">
+                  <p className="text-xs text-muted-foreground text-center italic pt-1">
                     {simulation?.explanation ?? 'Adjust the controls to run the backend simulation.'}
                   </p>
                 </div>
@@ -1092,16 +1095,16 @@ export default function DestinationDetailPage({ params }: PageProps) {
               {destination.activities.map((act) => (
                 <span
                   key={act}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-muted text-primary border border-border"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-muted text-foreground border border-border"
                 >
                   {act}
                 </span>
               ))}
             </div>
 
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-primary/70">
+            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
               <span>Factor provenance</span>
-              <span className="font-bold text-primary flex items-center gap-1">
+              <span className="font-bold text-foreground flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
                 {destination.api.factor
                   ? `${destination.api.factor.value_type} • ${destination.api.factor.confidence_level}`

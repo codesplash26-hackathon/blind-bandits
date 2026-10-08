@@ -13,6 +13,9 @@ import {
   Compass,
   Check,
   RotateCcw,
+  Leaf,
+  Scale,
+  Star,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/Loader';
@@ -85,25 +88,25 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
     id: RecommendationCrowdPreference;
     title: string;
     description: string;
-    icon: string;
+    icon: React.ReactNode;
   }> = [
     {
       id: 'QUIET',
       title: 'Quiet & Peaceful',
       description: 'Fewer visitors, serene nature trails, and non-motorized tranquility.',
-      icon: '🌿',
+      icon: <Leaf className="w-5 h-5" />,
     },
     {
       id: 'BALANCED',
       title: 'Balanced Atmosphere',
       description: 'Some active local life and amenities without heavy crowds or queues.',
-      icon: '⚖️',
+      icon: <Scale className="w-5 h-5" />,
     },
     {
       id: 'LIVELY',
       title: 'Popular & Bustling',
       description: 'Iconic landmarks, bustling cafes, and lively tourist hubs.',
-      icon: '🌟',
+      icon: <Star className="w-5 h-5" />,
     },
   ];
 
@@ -170,31 +173,29 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               Your Trip Planner
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Smart Recommendations Active
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
-            AI Travel Match &amp; Trip Finder
+            Trip Finder
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
             Tell us your travel style. We will help you find the best places that match your preferences and avoid the crowds.
           </p>
         </div>
 
-        <button
+        <Button
           type="button"
           onClick={handleReset}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card hover:bg-muted border border-border text-primary text-xs font-bold shadow-xs transition-all cursor-pointer self-start sm:self-auto"
+          variant="outline"
+          size="sm"
+          className="self-start sm:self-auto"
         >
-          <RotateCcw className="w-3.5 h-3.5 text-primary" />
+          <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Defaults</span>
-        </button>
+        </Button>
       </div>
 
       {/* ── 2. Master Form Container + Live Prediction Widget ────────── */}
@@ -217,7 +218,7 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-card border border-border text-primary shadow-2xs">
+              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-card border border-border text-foreground shadow-2xs">
                 4 Sections
               </span>
             </div>
@@ -257,7 +258,7 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                       step={5000}
                       value={budget}
                       onChange={(e) => setBudget(Number(e.target.value))}
-                      className="w-full pl-11 pr-3 py-2 rounded-xl border border-border bg-card text-xs font-bold text-primary focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all shadow-2xs"
+                      className="w-full pl-11 pr-3 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all shadow-2xs"
                     />
                   </div>
 
@@ -266,20 +267,19 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                     {[
                       { label: '35k Budget', val: 35000 },
                       { label: '60k Standard', val: 60000 },
-                      { label: '120k+ Flex', val: 120000 },
+                      { label: '120k ', val: 120000 },
                     ].map((preset) => (
-                      <button
+                      <Button
                         type="button"
                         key={preset.label}
                         onClick={() => handleQuickBudget(preset.val)}
-                        className={`flex-1 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
-                          budget === preset.val
-                            ? 'bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-2xs'
-                            : 'bg-card hover:bg-muted text-muted-foreground border border-border'
-                        }`}
+                        variant={budget === preset.val ? "default" : "outline"}
+                        size="sm"
+                        aria-pressed={budget === preset.val}
+                        className="flex-1"
                       >
                         {preset.label}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>
@@ -297,27 +297,31 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                   </div>
 
                   <div className="flex items-center gap-2 pt-0.5">
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setDuration((prev) => Math.max(1, prev - 1))}
-                      className="size-9 rounded-xl border border-border bg-card hover:bg-muted flex items-center justify-center text-primary transition-all cursor-pointer shadow-2xs font-bold active:scale-95"
+                      variant="outline"
+                      size="icon-lg"
+                      aria-label="Decrease trip duration"
                     >
                       <Minus className="w-3.5 h-3.5" />
-                    </button>
+                    </Button>
 
                     <div className="flex-1 text-center py-1.5 px-3 rounded-xl bg-card border border-border shadow-2xs">
-                      <span className="font-heading text-base font-black text-primary">
+                      <span className="font-heading text-base font-black text-foreground">
                         {duration} {duration === 1 ? 'day' : 'days'}
                       </span>
                     </div>
 
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setDuration((prev) => Math.min(21, prev + 1))}
-                      className="size-9 rounded-xl border border-border bg-card hover:bg-muted flex items-center justify-center text-primary transition-all cursor-pointer shadow-2xs font-bold active:scale-95"
+                      variant="outline"
+                      size="icon-lg"
+                      aria-label="Increase trip duration"
                     >
                       <Plus className="w-3.5 h-3.5" />
-                    </button>
+                    </Button>
                   </div>
 
                   <p className="text-[10px] text-muted-foreground font-medium pt-1">
@@ -345,19 +349,17 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                 {INTEREST_OPTIONS.map((interest) => {
                   const isSelected = selectedInterests.includes(interest.value);
                   return (
-                    <button
+                    <Button
                       type="button"
                       key={interest.value}
                       onClick={() => toggleInterest(interest.value)}
-                      className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-                        isSelected
-                          ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground border-border shadow-xs font-black'
-                          : 'bg-background hover:bg-card text-foreground border-border hover:border-border'
-                      }`}
+                      variant={isSelected ? "default" : "outline"}
+                      size="sm"
+                      aria-pressed={isSelected}
                     >
-                      {isSelected && <Check className="w-3.5 h-3.5 text-primary stroke-[3]" />}
+                      {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                       <span>{interest.label}</span>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -365,7 +367,8 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
 
             <div className="h-px bg-primary/10" />
 
-            {/* Section 3: Atmosphere / Crowd Preference */}
+            {/* Section 3: Atmosphere / Crowd Preference
+            */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="size-6 rounded-full bg-primary text-primary-foreground text-[11px] font-black flex items-center justify-center">3</span>
@@ -406,7 +409,7 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                   );
                 })}
               </div>
-            </div>
+            </div> 
 
             <div className="h-px bg-primary/10" />
 
@@ -415,7 +418,7 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="size-6 rounded-full bg-primary text-primary-foreground text-[11px] font-black flex items-center justify-center">4</span>
-                  <h3 className="text-sm font-black text-foreground">Eco-Friendly Preference</h3>
+                  <h3 className="text-sm font-black text-foreground">Sustainability Preference</h3>
                 </div>
                 <span className="text-xs font-black text-foreground px-2.5 py-0.5 rounded-lg bg-muted border border-border">
                   {sustainability === 'HIGH' ? 'High Priority' : sustainability === 'MEDIUM' ? 'Balanced' : 'Low Priority'}
@@ -436,7 +439,7 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
                 <div className="flex justify-between text-[11px] font-bold text-muted-foreground">
                   <span>Popular Places</span>
                   <span>Balanced Mix</span>
-                  <span className="text-primary font-black">Very Eco-Friendly</span>
+                  <span className="text-foreground font-black">Very Eco-Friendly</span>
                 </div>
               </div>
             </div>
@@ -447,22 +450,23 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
             {submitError && (
               <p className="text-xs font-semibold text-destructive sm:basis-full">{submitError}</p>
             )}
-            <button
+            <Button
               type="button"
               onClick={handleReset}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card hover:bg-muted border border-border text-muted-foreground hover:text-primary text-xs font-bold transition-all cursor-pointer self-start sm:self-auto shadow-2xs"
+              variant="outline"
+              size="sm"
+              className="self-start sm:self-auto"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-primary" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset to Defaults</span>
-            </button>
+            </Button>
 
             <Button
               type="submit"
               size="lg"
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-primary via-primary to-secondary hover:opacity-95 text-primary-foreground font-extrabold px-6 py-3 rounded-xl shadow-md transition-all cursor-pointer gap-2"
             >
-              <Sparkles className="w-4 h-4 text-secondary" />
+              <Sparkles className="w-4 h-4" />
               <span>{isSubmitting ? 'Finding destinations...' : 'Generate Recommendations'}</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
@@ -474,14 +478,14 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
           <div className="p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-dashboard-card space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-foreground block">
                   Request Preview
                 </span>
                 <h3 className="font-heading text-lg font-black text-foreground">
                   Submitted Preference Profile
                 </h3>
               </div>
-              <span className="size-8 rounded-2xl bg-muted border border-border flex items-center justify-center text-primary shadow-2xs">
+              <span className="size-8 rounded-2xl bg-muted border border-border flex items-center justify-center text-foreground shadow-2xs">
                 <Sparkles className="w-4 h-4 text-primary" />
               </span>
             </div>
@@ -490,38 +494,28 @@ function DiscoverForm({ previousRequest }: { previousRequest?: RecommendationReq
             <div className="space-y-2.5 pt-2 border-t border-border text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-medium">Crowd preference:</span>
-                <span className="font-black text-primary">{crowd}</span>
+                <span className="font-black text-foreground">{crowd}</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-medium">Sustainability preference:</span>
-                <span className="font-black text-primary">{sustainability}</span>
+                <span className="font-black text-foreground">{sustainability}</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-medium">Selected Categories:</span>
-                <span className="font-black text-primary">{selectedInterests.length} Selected</span>
+                <span className="font-black text-foreground">{selectedInterests.length} Selected</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-medium">Daily Avg Budget:</span>
-                <span className="font-black text-primary">
+                <span className="font-black text-foreground">
                   ~LKR {Math.round(budget / duration).toLocaleString()}/day
                 </span>
               </div>
             </div>
 
-            {/* Submit Primary CTA */}
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-extrabold py-5 rounded-2xl shadow-md hover:shadow-xl transition-all cursor-pointer gap-2 mt-2"
-            >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span>{isSubmitting ? 'Finding destinations...' : 'Find My Sustainable Trip'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            
           </div>
         </div>
       </form>

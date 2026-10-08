@@ -42,14 +42,10 @@ export default function SavedDestinationsPage() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               Your Saved Places
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              {savedList.length} Saved Places
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             My Saved Places
@@ -60,27 +56,21 @@ export default function SavedDestinationsPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/destinations">
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-2xl gap-2 bg-card border-border text-primary hover:bg-muted text-xs font-bold shadow-2xs"
-            >
-              <Compass className="w-3.5 h-3.5 text-primary" />
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/destinations" />}
+          >
+              <Compass className="w-3.5 h-3.5" />
               <span>Browse Places</span>
             </Button>
-          </Link>
 
           {savedList.length > 0 && (
-            <Link href="/discover">
-              <Button
-                size="sm"
-                className="rounded-2xl gap-2 bg-primary hover:bg-overlay text-primary-foreground text-xs font-bold shadow-md hover:shadow-lg transition-all"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <Button size="sm" nativeButton={false} render={<Link href="/discover" />}>
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>Plan a Trip</span>
               </Button>
-            </Link>
           )}
         </div>
       </div>
@@ -189,17 +179,20 @@ export default function SavedDestinationsPage() {
                 </div>
 
                 {/* Remove from Saved Button */}
-                <button
+                <Button
                   type="button"
                   onClick={() => void toggleSaveDestination(dest.api.id)}
-                  className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-destructive/10 text-muted-foreground hover:text-destructive shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
+                  variant="outline"
+                  size="icon"
+                  aria-label="Remove from saved"
+                  className="absolute top-3.5 right-3.5 bg-card text-card-foreground dark:bg-card"
                   title="Remove from saved"
                 >
                   <Trash2 className="w-4 h-4" />
-                </button>
+                </Button>
 
                 <div className="absolute bottom-3.5 inset-x-4 text-overlay-foreground">
-                  <div className="flex items-center gap-1 text-[11px] font-bold text-frosted-blue uppercase tracking-wider">
+                  <div className="flex items-center gap-1 text-[11px] font-bold text-overlay-foreground uppercase tracking-wider">
                     <MapPin className="w-3.5 h-3.5" />
                     <span>{dest.district} District</span>
                   </div>
@@ -213,7 +206,7 @@ export default function SavedDestinationsPage() {
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-xs pb-2.5 border-b border-border">
                     <span className="text-muted-foreground font-semibold">Eco Score</span>
-                    <span className="font-black text-primary">
+                    <span className="font-black text-foreground">
                       {dest.sustainability.overall} / 100
                     </span>
                   </div>
@@ -226,7 +219,7 @@ export default function SavedDestinationsPage() {
                     {dest.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-muted text-primary border border-border"
+                        className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-muted text-foreground border border-border"
                       >
                         {tag}
                       </span>
@@ -237,21 +230,20 @@ export default function SavedDestinationsPage() {
                 <div className="pt-3 border-t border-border flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-muted-foreground block">Typical Budget</span>
-                    <span className="text-xs font-black text-primary">
+                    <span className="text-xs font-black text-foreground">
                       ~LKR {dest.typicalBudgetLKR.toLocaleString()}
                     </span>
                   </div>
 
-                  <Link href={`/destinations/${dest.id}`}>
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      className="rounded-xl gap-1 text-xs cursor-pointer border-border text-primary hover:bg-primary hover:text-primary-foreground transition-all font-bold"
-                    >
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    nativeButton={false}
+                    render={<Link href={`/destinations/${dest.id}`} />}
+                  >
                       <span>Explore</span>
                       <ArrowRight className="w-3 h-3" />
                     </Button>
-                  </Link>
                 </div>
               </div>
             </div>
@@ -272,12 +264,10 @@ export default function SavedDestinationsPage() {
             </p>
           </div>
 
-          <Link href="/destinations">
-            <Button size="sm" className="rounded-2xl gap-2 cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
-              <Compass className="w-4 h-4 text-primary" />
+          <Button size="sm" nativeButton={false} render={<Link href="/destinations" />}>
+              <Compass className="w-4 h-4" />
               <span>Explore Places</span>
             </Button>
-          </Link>
         </div>
       )}
     </div>

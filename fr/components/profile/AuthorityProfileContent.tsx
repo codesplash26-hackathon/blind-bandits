@@ -54,12 +54,12 @@ export function AuthorityProfileContent() {
           <input
             type="text"
             placeholder="Search settings or data..."
-            className="w-full pl-11 pr-4 py-2.5 rounded-full bg-card border border-border text-xs text-primary placeholder:text-primary/40 focus:outline-none focus:border-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
+            className="w-full pl-11 pr-4 py-2.5 rounded-full bg-card border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
           />
         </div>
 
         <div className="flex items-center gap-2.5 self-end md:self-auto">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-primary shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-border text-xs font-semibold text-foreground shadow-[0_2px_10px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]">
             <Calendar className="w-3.5 h-3.5 text-primary" />
             <span>Active Year 2026</span>
           </div>
@@ -83,15 +83,15 @@ export function AuthorityProfileContent() {
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading text-2xl font-bold text-primary tracking-tight">{user?.name}</h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary text-[10px] font-bold border border-primary/30">
+              <h1 className="font-heading text-2xl font-bold text-foreground tracking-tight">{user?.name}</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-foreground text-[10px] font-bold border border-primary/30">
                 Level 3
               </span>
             </div>
-            <p className="text-xs font-semibold text-primary mt-0.5">
+            <p className="text-xs font-semibold text-foreground mt-0.5">
               CeylonTour Authority Administrator
             </p>
-            <p className="text-xs text-primary/60">
+            <p className="text-xs text-muted-foreground">
               {user?.email}
             </p>
           </div>
@@ -99,8 +99,8 @@ export function AuthorityProfileContent() {
 
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <span className="text-[11px] font-semibold text-primary/50 block uppercase tracking-wider">Badge Identifier</span>
-            <span className="text-xs font-mono font-bold text-primary">ADMIN-{user?.id}</span>
+            <span className="text-[11px] font-semibold text-muted-foreground block uppercase tracking-wider">Badge Identifier</span>
+            <span className="text-xs font-mono font-bold text-foreground">ADMIN-{user?.id}</span>
           </div>
         </div>
       </div>
@@ -110,15 +110,15 @@ export function AuthorityProfileContent() {
         {/* KPI 1 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Tracked Places</span>
+            <span className="text-xs font-semibold text-muted-foreground">Tracked Places</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <MapPin className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">12</span>
-              <span className="text-[11px] text-primary font-bold block mt-0.5 flex items-center gap-1">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">12</span>
+              <span className="text-[11px] text-foreground font-bold block mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" /> 100% active caps
               </span>
             </div>
@@ -138,7 +138,7 @@ export function AuthorityProfileContent() {
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="absolute text-[10px] font-bold text-primary">100%</span>
+              <span className="absolute text-[10px] font-bold text-foreground">100%</span>
             </div>
           </div>
         </div>
@@ -146,15 +146,15 @@ export function AuthorityProfileContent() {
         {/* KPI 2 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Redirection Rate</span>
+            <span className="text-xs font-semibold text-muted-foreground">Redirection Rate</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Sliders className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">84%</span>
-              <span className="text-[11px] text-primary font-bold block mt-0.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">84%</span>
+              <span className="text-[11px] text-foreground font-bold block mt-0.5">
                 How often we redirect
               </span>
             </div>
@@ -174,15 +174,15 @@ export function AuthorityProfileContent() {
         {/* KPI 3 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Live Sensors</span>
+            <span className="text-xs font-semibold text-muted-foreground">Live Sensors</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <Activity className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">28</span>
-              <span className="text-[11px] text-primary/60 font-semibold block mt-0.5">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">28</span>
+              <span className="text-[11px] text-muted-foreground font-semibold block mt-0.5">
                 Trackers in the field
               </span>
             </div>
@@ -199,15 +199,15 @@ export function AuthorityProfileContent() {
         {/* KPI 4 */}
         <div className="bg-card p-5 rounded-3xl border border-border shadow-[0_8px_30px_color-mix(in_srgb,var(--shadow-color)_4%,transparent)] relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-primary/60">Crowds Diverted</span>
+            <span className="text-xs font-semibold text-muted-foreground">Crowds Diverted</span>
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-between mt-3">
             <div>
-              <span className="font-heading text-3xl font-black text-primary tracking-tight">1,480</span>
-              <span className="text-[11px] text-primary font-bold block mt-0.5 flex items-center gap-1">
+              <span className="font-heading text-3xl font-black text-foreground tracking-tight">1,480</span>
+              <span className="text-[11px] text-foreground font-bold block mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" /> +18.5% protected
               </span>
             </div>
@@ -226,7 +226,7 @@ export function AuthorityProfileContent() {
                   strokeLinecap="round"
                 />
               </svg>
-              <span className="absolute text-[10px] font-bold text-primary">82%</span>
+              <span className="absolute text-[10px] font-bold text-foreground">82%</span>
             </div>
           </div>
         </div>
@@ -242,56 +242,56 @@ export function AuthorityProfileContent() {
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-primary">Admin Permissions</h2>
-                <p className="text-xs text-primary/60">Admin Policies 2026</p>
+                <h2 className="text-base font-bold text-foreground">Admin Permissions</h2>
+                <p className="text-xs text-muted-foreground">Admin Policies 2026</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Redirect Visitors</span>
-                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+                  <span className="font-bold text-foreground">Redirect Visitors</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-foreground text-[10px] font-bold">
                     ALLOWED
                   </span>
                 </div>
-                <p className="text-[11px] text-primary/70 leading-relaxed">
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
                   Allowed to redirect tourists away from busy places.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Set Crowd Limits</span>
-                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+                  <span className="font-bold text-foreground">Set Crowd Limits</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-foreground text-[10px] font-bold">
                     ALLOWED
                   </span>
                 </div>
-                <p className="text-[11px] text-primary/70 leading-relaxed">
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
                   Allowed to set max daily visitor limits for tracked places.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">View Live Data</span>
-                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+                  <span className="font-bold text-foreground">View Live Data</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-foreground text-[10px] font-bold">
                     ALLOWED
                   </span>
                 </div>
-                <p className="text-[11px] text-primary/70 leading-relaxed">
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
                   Access live data from nature sensors and trail counters.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl border border-border bg-muted/30 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-primary">Export Reports</span>
-                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+                  <span className="font-bold text-foreground">Export Reports</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-foreground text-[10px] font-bold">
                     ALLOWED
                   </span>
                 </div>
-                <p className="text-[11px] text-primary/70 leading-relaxed">
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
                   Allowed to download reports on crowds and eco-impact.
                 </p>
               </div>
@@ -308,8 +308,8 @@ export function AuthorityProfileContent() {
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary mb-3">
                   <Sliders className="w-4 h-4" />
                 </div>
-                <h3 className="text-xs font-bold text-primary">Crowd Simulator</h3>
-                <p className="text-[11px] text-primary/60 mt-1">
+                <h3 className="text-xs font-bold text-foreground">Crowd Simulator</h3>
+                <p className="text-[11px] text-muted-foreground mt-1">
                   Test how the AI handles unexpected crowds.
                 </p>
               </div>
@@ -327,8 +327,8 @@ export function AuthorityProfileContent() {
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary mb-3">
                   <MapPin className="w-4 h-4" />
                 </div>
-                <h3 className="text-xs font-bold text-primary">Crowd Limits</h3>
-                <p className="text-[11px] text-primary/60 mt-1">
+                <h3 className="text-xs font-bold text-foreground">Crowd Limits</h3>
+                <p className="text-[11px] text-muted-foreground mt-1">
                   Set limits for how many visitors each place can handle.
                 </p>
               </div>
@@ -349,16 +349,16 @@ export function AuthorityProfileContent() {
                 <Bell className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-primary">Alert Settings</h2>
-                <p className="text-xs text-primary/60">Get notified of important events</p>
+                <h2 className="text-base font-bold text-foreground">Alert Settings</h2>
+                <p className="text-xs text-muted-foreground">Get notified of important events</p>
               </div>
             </div>
 
             <div className="space-y-3 pt-1">
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">Overcrowding Alerts</span>
-                  <span className="text-[10px] text-primary/60 block">Get a text when places get too full</span>
+                  <span className="text-xs font-bold text-foreground block">Overcrowding Alerts</span>
+                  <span className="text-[10px] text-muted-foreground block">Get a text when places get too full</span>
                 </div>
                 <input
                   type="checkbox"
@@ -370,8 +370,8 @@ export function AuthorityProfileContent() {
 
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">Nature Warnings</span>
-                  <span className="text-[10px] text-primary/60 block">Alerts for weather or nature risks</span>
+                  <span className="text-xs font-bold text-foreground block">Nature Warnings</span>
+                  <span className="text-[10px] text-muted-foreground block">Alerts for weather or nature risks</span>
                 </div>
                 <input
                   type="checkbox"
@@ -383,8 +383,8 @@ export function AuthorityProfileContent() {
 
               <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border">
                 <div className="space-y-0.5 pr-2">
-                  <span className="text-xs font-bold text-primary block">Weekly Summary Report</span>
-                  <span className="text-[10px] text-primary/60 block">A weekly email with all the data</span>
+                  <span className="text-xs font-bold text-foreground block">Weekly Summary Report</span>
+                  <span className="text-[10px] text-muted-foreground block">A weekly email with all the data</span>
                 </div>
                 <input
                   type="checkbox"
@@ -400,9 +400,8 @@ export function AuthorityProfileContent() {
                 size="sm"
                 onClick={handleSaveAlerts}
                 disabled={savingAlerts}
-                className="rounded-full px-4 py-2 bg-primary hover:bg-overlay/90 text-primary-foreground text-xs font-bold gap-1.5 cursor-pointer shadow-sm"
               >
-                <Save className="w-3.5 h-3.5 text-primary" />
+                <Save className="w-3.5 h-3.5" />
                 <span>{savingAlerts ? 'Saving...' : 'Save Subscriptions'}</span>
               </Button>
             </div>
@@ -415,34 +414,33 @@ export function AuthorityProfileContent() {
                 <Shield className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-primary">Security Key</h3>
-                <p className="text-xs text-primary/60">Secure login session</p>
+                <h3 className="text-base font-bold text-foreground">Security Key</h3>
+                <p className="text-xs text-muted-foreground">Secure login session</p>
               </div>
             </div>
 
             <div className="space-y-2 pt-1 text-xs">
               <div className="p-3 rounded-2xl bg-muted/30 border border-border flex items-center justify-between">
-                <span className="text-primary/70">Security Device</span>
-                <span className="font-bold text-primary flex items-center gap-1">
+                <span className="text-muted-foreground">Security Device</span>
+                <span className="font-bold text-foreground flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> YubiKey 5C Active
                 </span>
               </div>
 
               <div className="p-3 rounded-2xl bg-muted/30 border border-border flex items-center justify-between">
-                <span className="text-primary/70">Gateway Server</span>
-                <span className="font-bold font-mono text-primary">SLTDA-GW-04</span>
+                <span className="text-muted-foreground">Gateway Server</span>
+                <span className="font-bold font-mono text-foreground">SLTDA-GW-04</span>
               </div>
             </div>
 
             <div className="pt-2 flex items-center justify-between border-t border-border">
-              <span className="text-[11px] text-primary/60">Session valid for 8 hours</span>
+              <span className="text-[11px] text-muted-foreground">Session valid for 8 hours</span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => toast.success('Security key rotation validated.')}
-                className="rounded-full text-xs font-semibold gap-1.5 border-border text-primary hover:bg-muted"
               >
-                <KeyRound className="w-3.5 h-3.5 text-primary" />
+                <KeyRound className="w-3.5 h-3.5" />
                 <span>Rotate Key</span>
               </Button>
             </div>

@@ -326,6 +326,51 @@ async def test_read_and_refresh_authorization_and_empty_dataset(
     ).status_code == 404
 
 
+async def test_tourist_can_populate_missing_environment_once(
+    client: AsyncClient,
+    admin_user: User,
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    destination = await create_example_destination(client, admin_user)
+    monkeypatch.setenv("OPENAQ_API_KEY", "test-only-openaq-key")
+    get_settings.cache_clear()
+    requests: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request.url.path)
+        if request.url.path == "/v1/forecast":
+            return httpx.Response(200, json=weather_payload())
+        if request.url.path == "/v3/locations":
+            return httpx.Response(200, json={"results": []})
+        assert request.url.path == "/v1/air-quality"
+        return httpx.Response(
+            200,
+            json={
+                "current": {"time": "2026-09-24T09:00", "pm2_5": 11.4},
+                "current_units": {"pm2_5": "µg/m³"},
+            },
+        )
+
+    mock_http(httpx.MockTransport(handler))
+    headers = await tourist_headers(client)
+    path = f"/api/v1/destinations/{destination['id']}/environment/populate"
+
+    first = await client.post(path, headers=headers)
+    assert first.status_code == 200, first.text
+    assert first.json()["weather"]["values"]["temperature_c"] == 29.5
+    assert first.json()["air_quality"]["values"]["pm25"] == 11.4
+    assert first.json()["air_quality"]["source"] == "Open-Meteo Air Quality"
+    assert len(requests) == 3
+
+    second = await client.post(path, headers=headers)
+    assert second.status_code == 200
+    assert second.json() == first.json()
+    assert len(requests) == 3
+    assert db_session.scalar(select(func.count(EnvironmentalObservation.id))) == 2
+    get_settings.cache_clear()
+
+
 async def test_openaq_missing_key_or_station_does_not_invent_air_quality(
     client: AsyncClient,
     admin_user: User,

@@ -137,7 +137,7 @@ export default function AdminUsersPage() {
     switch (status) {
       case 'CERTIFIED':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-secondary">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-foreground">
             <CheckCircle2 className="w-3.5 h-3.5 text-secondary" /> Verified Guide
           </span>
         );
@@ -162,14 +162,10 @@ export default function AdminUsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               Users &amp; Partners
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              User List Active
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Travelers &amp; Tour Guides
@@ -244,7 +240,7 @@ export default function AdminUsersPage() {
                         <span className="font-bold text-foreground text-xs block">{user.name}</span>
                         <span className="text-[11px] text-muted-foreground block">{user.email}</span>
                         {user.organization && (
-                          <span className="text-[10px] text-secondary font-semibold block">
+                          <span className="text-[10px] text-foreground font-semibold block">
                             {user.organization}
                           </span>
                         )}

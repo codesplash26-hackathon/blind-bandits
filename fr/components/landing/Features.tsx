@@ -6,76 +6,54 @@ import {
   Leaf,
   Train,
   HeartHandshake,
-  ShieldCheck,
-  WifiOff,
   Sparkles,
-  Utensils,
 } from "lucide-react";
 
+import { motion } from "motion/react";
+import { Compass, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 export const Features = () => {
+   const router = useRouter();
   const features = [
     {
-      title: "Smart Eco-Planner",
+      title: "Crowd-Free Escapes",
       description:
-        "Smart planner that helps you travel green and find hidden gems.",
+        "Skip packed tourist bottlenecks. We connect you with peaceful, untouched waterfalls, beaches, and tea valleys that offer identical beauty with far fewer crowds.",
       icon: <Map className="w-7 h-7" />,
     },
     {
-      title: "100% Green Stays",
+      title: "Clear & Trustworthy",
       description:
-        "Handpicked eco-villas and treehouses that use solar energy and no plastic.",
+        "No hidden sponsor bias or confusing ratings. We clearly explain why each place is recommended—showing real crowd levels, nature conditions, and seasonality.",
       icon: <Leaf className="w-7 h-7" />,
     },
     {
-      title: "Scenic Train Pass",
+      title: "Community-First",
       description:
-        "Instant booking for Sri Lanka's iconic Ella to Kandy mountain train rides and EV transfers.",
+        "Your journey makes a real difference. Over 85% of money spent on certified village homestays, meals, and native guides stays directly with Sri Lankan families.",
       icon: <Train className="w-7 h-7" />,
     },
     {
-      title: "Support Locals",
+      title: "Nature-Safe",
       description:
-        "Over 85% of your booking fee goes directly to local hosts and guides.",
+        "We prioritize the safety and well-being of both travelers and the environment. Every recommended stay and trail adheres to zero-single-use-plastic and wildlife safety guidelines, ensuring Sri Lanka stays green for generations to come.Over 85% of your booking fee goes directly to local hosts and guides.",
       icon: <HeartHandshake className="w-7 h-7" />,
-    },
-    {
-      title: "Verified Local Guides",
-      description:
-        "Connect with friendly local experts for safe hiking and cultural tours.",
-      icon: <ShieldCheck className="w-7 h-7" />,
-    },
-    {
-      title: "Offline Maps",
-      description:
-        "Use interactive GPS maps for remote treks even when you don't have internet.",
-      icon: <WifiOff className="w-7 h-7" />,
-    },
-    {
-      title: "Authentic Food Tours",
-      description:
-        "Experience traditional village cooking classes, spice garden visits, and organic tea tastings.",
-      icon: <Utensils className="w-7 h-7" />,
-    },
-    {
-      title: "Custom Wildlife Safaris",
-      description:
-        "Ethical leopard, elephant, and blue whale watching tours guided by certified naturalists.",
-      icon: <Sparkles className="w-7 h-7" />,
     },
   ];
 
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 md:px-12 w-full max-w-7xl mx-auto">
       <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-primary/15 border border-border dark:border-primary/30 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-primary/15 border border-border dark:border-primary/30 text-foreground text-xs font-semibold uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Smart Features</span>
+          <span>A Better Way to Travel</span>
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight mb-4">
-          Everything You Need
+          Why Travel With CeylonTour?
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Everything you need to plan, explore, and experience Sri Lanka easily and responsibly.
+          We believe exploring paradise shouldn’t mean standing in long queues or harming the fragile places we come to admire.
         </p>
       </div>
 
@@ -84,6 +62,31 @@ export const Features = () => {
           <Feature key={feature.title} {...feature} index={index} />
         ))}
       </div>
+
+      {/* Friendly Bottom Banner with Scroll Animation */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-14 p-6 sm:p-9 rounded-3xl bg-muted/70 border border-border/80 dark:border-border flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm relative z-10"
+      >
+        <div>
+          <h4 className="text-lg sm:text-xl font-bold font-heading text-foreground">
+            Looking for a customized holiday plan?
+          </h4>
+          <p className="text-sm text-muted-foreground mt-1 font-normal max-w-xl">
+            Tell our smart trip planner what you love, and let us show you where Sri Lanka shines best.
+          </p>
+        </div>
+        <button
+          onClick={() => router.push("/auth")}
+          className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-7 py-3.5 rounded-full text-sm shadow-md hover:shadow-lg transition-all shrink-0 hover:gap-3 group"
+        >
+          <span>Find Your Destination</span>
+          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+      </motion.div>
     </div>
   );
 };

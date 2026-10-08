@@ -1,18 +1,14 @@
-'use client';
+"use client"
 
-import * as React from 'react';
+import * as React from "react"
 import {
   BadgeCheck,
-  Compass,
+  Bell,
   ChevronsUpDown,
   LogOut,
-  MapPin,
-  Bookmark,
-  User as UserIcon,
-} from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+  SquareTerminal,
+  User
+} from "lucide-react"
 
 import {
   DropdownMenu,
@@ -22,7 +18,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu"
 import {
   Sidebar,
   SidebarContent,
@@ -34,92 +30,64 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
-import { useAuth } from '@/context/AuthContext';
-import { getNavGroupsForRole, ICONS_MAP } from '@/lib/navigation';
-import { Role } from '@/types/ceylontour';
-import logo from '@/public/logo.png';
+} from "@/components/ui/sidebar"
+import { useAuth } from "@/context/AuthContext"
+import { getNavGroupsForRole, ICONS_MAP } from "@/lib/navigation"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { ThemeLogo } from "@/components/ThemeLogo"
 
 function AppLogo() {
-  const { role } = useAuth();
-  const effectiveRole: Role = role === 'ADMIN' ? 'ADMIN' : 'TOURIST';
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton
-          size="lg"
-          className="hover:bg-transparent pointer-events-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        >
-          <div className="flex aspect-square size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-xs">
-            <Image src={logo} alt="CeylonTour Logo" className="size-full object-contain p-1.5 brightness-0 invert" priority />
+        <SidebarMenuButton size="lg" className="hover:bg-transparent pointer-events-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-transparent">
+            <ThemeLogo alt="Ceylone Tour" width={32} height={32} className="size-full" fetchPriority="high" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-heading font-black text-base text-foreground tracking-tight">CeylonTour</span>
-            <span className="truncate text-[10px] font-bold text-primary uppercase tracking-wider">
-              {effectiveRole === 'ADMIN' ? 'Authority Portal' : 'Sustainable Travel'}
-            </span>
+            <span className="truncate font-bold text-lg text-foreground">Ceylone Tour</span>
           </div>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }
 
 interface NavMenuItem {
-  title: string;
-  url: string;
-  icon?: React.ElementType;
-  badge?: string;
-  isActive?: boolean;
+  title: string
+  url: string
+  icon?: React.ElementType
+  isActive?: boolean
 }
 
 interface NavMenuGroup {
-  id: string;
-  label: string;
-  items: NavMenuItem[];
+  id: string
+  label: string
+  items: NavMenuItem[]
 }
 
+/**
+ * One SidebarGroup per functional section. The headings collapse away on their
+ * own in icon mode (SidebarGroupLabel fades and pulls itself up), so grouping
+ * costs nothing when the sidebar is narrowed.
+ */
 function NavMain({ groups }: { groups: NavMenuGroup[] }) {
   return (
     <>
       {groups.map((group) => (
-        <SidebarGroup key={group.id} className="py-1">
-          <SidebarGroupLabel className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-3 py-1">
-            {group.label}
-          </SidebarGroupLabel>
-          <SidebarMenu className="gap-1">
+        <SidebarGroup key={group.id}>
+          <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+          <SidebarMenu>
             {group.items.map((item) => (
               <SidebarMenuItem key={item.url}>
                 <SidebarMenuButton
                   isActive={item.isActive}
                   tooltip={item.title}
-                  className={`transition-all duration-150 rounded-xl px-3 py-2 ${
-                    item.isActive
-                      ? 'bg-sidebar-primary text-sidebar-primary-foreground font-extrabold shadow-xs border border-transparent'
-                      : 'text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent font-medium'
-                  }`}
-                  render={<Link href={item.url} className="flex items-center gap-2.5" />}
+                  render={<Link href={item.url} className="flex items-center gap-2" />}
                 >
-                  {item.icon && (
-                    <item.icon
-                      className={`h-4 w-4 shrink-0 transition-colors ${
-                        item.isActive ? 'text-inherit stroke-[2.3]' : 'text-muted-foreground'
-                      }`}
-                    />
-                  )}
-                  <span className={item.isActive ? 'text-inherit font-black' : 'text-inherit font-semibold'}>
-                    {item.title}
-                  </span>
-                  {item.badge && (
-                    <span className={`ml-auto text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full group-data-[collapsible=icon]:hidden ${
-                      item.isActive
-                        ? 'bg-sidebar-primary-foreground/15 text-inherit shadow-2xs'
-                        : 'bg-sidebar-accent text-sidebar-accent-foreground border border-sidebar-border'
-                    }`}>
-                      {item.badge}
-                    </span>
-                  )}
+                  {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
+                  <span>{item.title}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -127,163 +95,130 @@ function NavMain({ groups }: { groups: NavMenuGroup[] }) {
         </SidebarGroup>
       ))}
     </>
-  );
+  )
 }
 
 function NavUser({
   user,
 }: {
   user: {
-    name: string;
-    email: string;
-    avatar: string;
-    role?: Role;
-  };
+    name: string
+    email: string
+    avatar: string
+  }
 }) {
-  const { isMobile } = useSidebar();
-  const router = useRouter();
-  const { logout, savedDestinationIds } = useAuth();
-  const isAuthority = user.role === 'ADMIN';
+  const { isMobile } = useSidebar()
+  const router = useRouter()
+  const { logout } = useAuth()
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-2xl border border-border hover:bg-background"
-              />
-            }
-          >
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-foreground overflow-hidden">
-              <UserIcon className="h-4 w-4 text-foreground" />
+          <DropdownMenuTrigger render={
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            />
+          }>
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-muted bg-secondary overflow-hidden">
+              <User className="h-5 w-5 text-secondary-foreground" />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <div className="flex items-center gap-1.5">
-                <span className="truncate font-bold text-foreground">{user.name}</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-md bg-muted text-foreground font-bold border border-border">
-                  {user.role}
-                </span>
-              </div>
-              <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+              <span className="truncate font-medium">{user.name}</span>
+              <span className="truncate text-xs">{user.email}</span>
             </div>
-            <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
+            <ChevronsUpDown className="ml-auto size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-2xl bg-card shadow-xl border border-border"
-            side={isMobile ? 'bottom' : 'right'}
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
             <DropdownMenuGroup>
               <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-2 py-2 text-left text-sm">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-foreground overflow-hidden">
-                    <UserIcon className="h-4 w-4 text-foreground" />
+                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-muted bg-secondary overflow-hidden">
+                    <User className="h-5 w-5 text-secondary-foreground" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-bold text-foreground">{user.name}</span>
-                    <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                    <span className="truncate font-medium">{user.name}</span>
+                    <span className="truncate text-xs">{user.email}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => router.push(isAuthority ? '/admin/profile' : '/profile')}
-                className="cursor-pointer text-foreground font-medium"
-              >
-                <BadgeCheck className="mr-2 h-4 w-4 text-primary" />
-                <span>{isAuthority ? 'Authority Official Profile' : 'Traveler Profile'}</span>
+              <DropdownMenuItem onClick={() => router.push('/profile')} className="cursor-pointer">
+                <BadgeCheck className="mr-2 h-4 w-4" />
+                Profile
               </DropdownMenuItem>
-              {isAuthority ? (
-                <DropdownMenuItem
-                  onClick={() => router.push('/admin/destinations')}
-                  className="cursor-pointer text-foreground font-medium"
-                >
-                  <MapPin className="mr-2 h-4 w-4 text-primary" />
-                  <span>Destinations Registry</span>
-                </DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem
-                  onClick={() => router.push('/saved')}
-                  className="cursor-pointer text-foreground font-medium"
-                >
-                  <Bookmark className="mr-2 h-4 w-4 text-primary" />
-                  <span>Saved Destinations ({savedDestinationIds.length})</span>
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem>
+                <Bell className="mr-2 h-4 w-4" />
+                Notifications
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => {
-                  logout();
-                  router.push('/auth');
-                }}
-                className="cursor-pointer text-destructive focus:text-destructive"
-              >
+              <DropdownMenuItem onClick={() => {
+                logout();
+                router.push('/auth');
+              }}>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                Log out
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user, role } = useAuth();
-  const pathname = usePathname();
+export function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useAuth()
+  const pathname = usePathname()
 
-  const effectiveRole: Role = role === 'ADMIN' ? 'ADMIN' : 'TOURIST';
-
-  const navGroups = getNavGroupsForRole(effectiveRole).map((group) => ({
+  const navGroups = getNavGroupsForRole(user?.role).map((group) => ({
     id: group.id,
     label: group.label,
     items: group.items.map((item) => ({
       title: item.label,
       url: item.href,
-      icon: ICONS_MAP[item.id] ?? Compass,
-      badge: item.badge,
-      isActive:
-        pathname === item.href ||
-        (item.href !== '/dashboard' &&
-          item.href !== '/admin/dashboard' &&
-          pathname.startsWith(`${item.href}/`)),
+      icon: ICONS_MAP[item.id] ?? SquareTerminal,
+      // Matching on a bare `startsWith` lit up every item whose href is a
+      // prefix of another's — /officer-distribution stayed highlighted while
+      // /officer-distribution-history was open. Requiring the trailing slash
+      // keeps a nested route active without bleeding across sibling routes.
+      isActive: pathname === item.href || pathname.startsWith(`${item.href}/`),
     })),
-  }));
+  }))
 
-  const navUser = user
-    ? {
-        name: user.name,
-        email: user.email,
-        avatar: '',
-        role: effectiveRole,
-      }
-    : {
-        name: 'Guest',
-        email: 'guest@ceylontour.lk',
-        avatar: '',
-        role: effectiveRole,
-      };
+  const navUser = user ? {
+    name: user.username || "User",
+    email: user.email || "user@example.com",
+    avatar: "https://assets.aceternity.com/manu.png"
+  } : {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: ""
+  }
 
   return (
-    <Sidebar collapsible="icon" className="bg-sidebar border-r border-sidebar-border" {...props}>
-      <SidebarHeader className="bg-card dark:bg-muted">
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
         <AppLogo />
       </SidebarHeader>
-      <SidebarContent className="bg-card dark:bg-muted">
+      <SidebarContent>
         <NavMain groups={navGroups} />
       </SidebarContent>
-      <SidebarFooter className="bg-sidebar border-t border-sidebar-border">
+      <SidebarFooter>
         <NavUser user={navUser} />
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

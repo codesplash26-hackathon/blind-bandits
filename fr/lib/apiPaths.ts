@@ -26,6 +26,8 @@ const apiPaths = {
       `/destinations/${destinationId}/simulate`,
     environment: (destinationId: number) =>
       `/destinations/${destinationId}/environment`,
+    populateEnvironment: (destinationId: number) =>
+      `/destinations/${destinationId}/environment/populate`,
   },
   map: {
     destinations: "/map/destinations",
