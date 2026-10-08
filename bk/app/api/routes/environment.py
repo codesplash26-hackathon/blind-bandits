@@ -18,7 +18,11 @@ from app.schemas.environment import (
 )
 from app.services.destinations import get_destination_by_id
 from app.services.environment import current_snapshot, refresh_observation
-from app.services.environment_providers import OpenAQProvider, OpenMeteoProvider
+from app.services.environment_providers import (
+    OpenAQProvider,
+    OpenMeteoAirQualityProvider,
+    OpenMeteoProvider,
+)
 
 read_router = APIRouter(prefix="/destinations", tags=["environment"])
 admin_router = APIRouter(prefix="/admin/destinations", tags=["admin environment"])
@@ -46,6 +50,84 @@ async def read_environment(
         db,
         destination_id,
         stale_after_minutes=get_settings().environment_stale_after_minutes,
+    )
+
+
+@read_router.post(
+    "/{destination_id}/environment/populate",
+    response_model=EnvironmentalSnapshotResponse,
+)
+async def populate_missing_environment(
+    destination_id: int,
+    _: CurrentUser,
+    db: Annotated[Session, Depends(get_db)],
+    client: Annotated[httpx.AsyncClient, Depends(get_environment_http_client)],
+) -> EnvironmentalSnapshotResponse:
+    """Fetch only observation types that have never been stored for a destination."""
+    destination = get_destination_by_id(db, destination_id)
+    if destination is None or not destination.is_active:
+        raise HTTPException(status_code=404, detail="Destination not found")
+
+    settings = get_settings()
+    snapshot = current_snapshot(
+        db,
+        destination_id,
+        stale_after_minutes=settings.environment_stale_after_minutes,
+    )
+    missing_types = []
+    if snapshot.weather is None:
+        missing_types.append(ObservationType.WEATHER)
+    if snapshot.air_quality is None:
+        missing_types.append(ObservationType.AIR_QUALITY)
+
+    for observation_type in missing_types:
+        provider = (
+            OpenMeteoProvider(
+                client,
+                settings.open_meteo_url,
+                settings.open_meteo_api_key.get_secret_value()
+                if settings.open_meteo_api_key
+                else None,
+            )
+            if observation_type == ObservationType.WEATHER
+            else OpenAQProvider(
+                client,
+                settings.openaq_url,
+                settings.openaq_api_key.get_secret_value()
+                if settings.openaq_api_key
+                else None,
+                settings.openaq_radius_m,
+            )
+        )
+        result = await refresh_observation(
+            db,
+            destination,
+            provider,
+            observation_type,
+            stale_after_minutes=settings.environment_stale_after_minutes,
+        )
+        if (
+            observation_type == ObservationType.AIR_QUALITY
+            and result.observation is None
+        ):
+            await refresh_observation(
+                db,
+                destination,
+                OpenMeteoAirQualityProvider(
+                    client,
+                    settings.open_meteo_air_quality_url,
+                    settings.open_meteo_api_key.get_secret_value()
+                    if settings.open_meteo_api_key
+                    else None,
+                ),
+                observation_type,
+                stale_after_minutes=settings.environment_stale_after_minutes,
+            )
+
+    return current_snapshot(
+        db,
+        destination_id,
+        stale_after_minutes=settings.environment_stale_after_minutes,
     )
 
 

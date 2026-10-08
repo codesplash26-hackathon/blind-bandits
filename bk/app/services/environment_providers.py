@@ -146,6 +146,52 @@ class OpenMeteoProvider:
         )
 
 
+class OpenMeteoAirQualityProvider:
+    """Global model fallback for places without a nearby OpenAQ monitor."""
+
+    def __init__(
+        self, client: httpx.AsyncClient, url: str, api_key: str | None = None
+    ) -> None:
+        self.client = client
+        self.url = url
+        self.api_key = api_key
+
+    async def fetch(self, destination: Destination) -> ProviderObservation:
+        latitude = float(destination.latitude)
+        longitude = float(destination.longitude)
+        params: dict[str, str | float] = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "current": "pm2_5",
+            "timezone": "GMT",
+        }
+        if self.api_key:
+            params["apikey"] = self.api_key
+        payload = await _get_json(self.client, self.url, params=params)
+        current = _mapping(payload.get("current"))
+        pm25 = _number(current.get("pm2_5"))
+        if pm25 < 0:
+            raise MalformedProviderResponse
+        units = payload.get("current_units")
+        unit = "µg/m³"
+        if units is not None:
+            unit_value = _mapping(units).get("pm2_5")
+            if not isinstance(unit_value, str):
+                raise MalformedProviderResponse
+            unit = unit_value
+        return ProviderObservation(
+            observation_type=ObservationType.AIR_QUALITY,
+            values={
+                "pm25": pm25,
+                "unit": unit,
+                "station_name": "CAMS global atmospheric model",
+            },
+            source="Open-Meteo Air Quality",
+            source_location=f"{latitude:.6f},{longitude:.6f}",
+            observed_at=_utc_time(current.get("time"), allow_naive=True),
+        )
+
+
 def _distance_m(a_lat: float, a_lon: float, b_lat: float, b_lon: float) -> float:
     lat_delta = radians(b_lat - a_lat)
     lon_delta = radians(b_lon - a_lon)

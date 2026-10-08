@@ -548,7 +548,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
             />
             <span className="text-[11px] text-muted-foreground leading-snug">
               I agree to CeylonTour&apos;s{' '}
-              <span className="text-primary font-medium hover:underline">
+              <span className="text-foreground font-medium hover:underline">
                 Sustainable Travel Code
               </span>{' '}
               and Terms of Service.

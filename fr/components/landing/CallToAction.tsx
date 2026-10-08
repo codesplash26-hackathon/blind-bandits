@@ -14,23 +14,23 @@ export const CallToAction = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.65, ease: "easeOut" }}
-        className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-french-blue via-deep-twilight to-overlay text-overlay-foreground p-8 sm:p-14 md:p-18 border border-overlay-foreground/15 shadow-2xl"
+        className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-card via-muted to-accent text-foreground p-8 sm:p-14 md:p-18 border border-border shadow-2xl"
       >
         {/* Ambient Color Glow Rings from Palette */}
-        <div className="absolute -right-24 -bottom-24 w-[420px] h-[420px] rounded-full bg-primary/25 blur-3xl pointer-events-none" />
-        <div className="absolute -left-24 -top-24 w-[380px] h-[380px] rounded-full bg-frosted-blue/20 blur-3xl pointer-events-none" />
+        <div className="absolute -right-24 -bottom-24 w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute -left-24 -top-24 w-[380px] h-[380px] rounded-full bg-accent/20 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-overlay-foreground/10 backdrop-blur-md border border-overlay-foreground/20 text-xs sm:text-sm font-medium">
-            <Compass className="w-4 h-4 text-sky-aqua" />
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-foreground text-xs sm:text-sm font-medium">
+            <Compass className="w-4 h-4 text-primary" />
             <span>Start Your Sri Lanka Trip</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight leading-[1.1] text-overlay-foreground drop-shadow-md">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight leading-[1.1] text-foreground">
             Ready to Explore Sri Lanka?
           </h2>
 
-          <p className="text-overlay-foreground/90 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
+          <p className="text-muted-foreground text-base sm:text-lg max-w-xl font-normal leading-relaxed">
             Join other travelers discovering hidden waterfalls, ancient ruins, and quiet villages away from the crowds.
           </p>
 
@@ -40,16 +40,16 @@ export const CallToAction = () => {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base px-8 py-4 rounded-full shadow-lg hover:shadow-2xl transition-all hover:-translate-y-0.5 group"
             >
               <span>Find A Destination</span>
-              <span className="w-7 h-7 rounded-full bg-overlay-foreground/20 group-hover:bg-overlay-foreground/30 flex items-center justify-center text-inherit transition-colors">
+              <span className="w-7 h-7 rounded-full bg-primary-foreground/20 group-hover:bg-primary-foreground/30 flex items-center justify-center text-inherit transition-colors">
                 <ArrowUpRight size={18} />
               </span>
             </button>
 
             <button
               onClick={() => router.push("#why-us")}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-overlay-foreground/10 hover:bg-overlay-foreground/20 backdrop-blur-md border border-overlay-foreground/20 text-overlay-foreground font-medium text-base px-8 py-4 rounded-full transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 border border-border text-secondary-foreground font-medium text-base px-8 py-4 rounded-full transition-all"
             >
-              <Sparkles size={18} className="text-frosted-blue" />
+              <Sparkles size={18} className="text-inherit" />
               <span>Learn Our Approach</span>
             </button>
           </div>

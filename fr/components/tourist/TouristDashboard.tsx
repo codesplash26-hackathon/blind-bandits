@@ -150,17 +150,7 @@ export default function TouristDashboard() {
       {/* ── 1. Modern Kleon-Style Top Action Bar ─────────────────────────────── */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Your Travel Dashboard
-            </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Live Updates
-            </span>
-          </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
+         <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             {user?.name ? `Welcome back, ${user.name}!` : 'Travel Dashboard'}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
@@ -178,21 +168,24 @@ export default function TouristDashboard() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search here..."
-              className="w-full pl-10 pr-8 py-2 rounded-2xl bg-card border border-border text-primary placeholder:text-muted-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
+              className="w-full pl-10 pr-8 py-2 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)]"
             />
             {searchQuery && (
-              <button
+              <Button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 p-1 text-muted-foreground hover:text-primary cursor-pointer"
+                variant="ghost"
+                size="icon-xs"
+                aria-label="Clear search"
+                className="absolute right-2.5"
               >
                 <X className="w-3.5 h-3.5" />
-              </button>
+              </Button>
             )}
           </form>
 
           {/* Period Selector Dropdown Pill */}
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card border border-border shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] text-xs font-bold text-primary">
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card border border-border shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] text-xs font-bold text-foreground">
             <Calendar className="w-3.5 h-3.5 text-primary" />
             <span className="hidden sm:inline">Aug 2026 - Oct 2026</span>
             <span className="sm:hidden">Q3 2026</span>
@@ -200,14 +193,15 @@ export default function TouristDashboard() {
           </div>
 
           {/* Export Report Button */}
-          <button
+          <Button
             type="button"
             onClick={handleExport}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-card hover:bg-muted border border-border text-primary text-xs font-bold shadow-[0_2px_8px_color-mix(in_srgb,var(--shadow-color)_3%,transparent)] transition-all cursor-pointer"
+            variant="outline"
+            size="sm"
           >
-            <Download className="w-3.5 h-3.5 text-primary" />
+            <Download className="w-3.5 h-3.5" />
             <span>{downloadNotice ? 'Exported!' : 'Export'}</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -312,7 +306,7 @@ export default function TouristDashboard() {
               <span className="text-xs text-muted-foreground font-semibold">places</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">● Ready</span>
+              <span className="text-foreground">● Ready</span>
               <span className="text-muted-foreground font-normal">for your trip</span>
             </div>
           </div>
@@ -337,7 +331,7 @@ export default function TouristDashboard() {
               <span className="text-xs text-muted-foreground font-semibold">direct</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">★ Verified</span>
+              <span className="text-foreground">★ Verified</span>
               <span className="text-muted-foreground font-normal">local stays</span>
             </div>
           </div>
@@ -395,18 +389,16 @@ export default function TouristDashboard() {
               {/* Daily / Weekly Segmented Tab Control */}
               <div className="p-1 rounded-xl bg-muted border border-border flex items-center text-xs font-bold shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
                 {(['Daily', 'Weekly'] as const).map((period) => (
-                  <button
+                  <Button
                     key={period}
                     type="button"
                     onClick={() => setChartPeriod(period)}
-                    className={`px-3.5 py-1 rounded-lg transition-all cursor-pointer ${
-                      chartPeriod === period
-                        ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-xs font-black'
-                        : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border'
-                    }`}
+                    variant={chartPeriod === period ? "default" : "outline"}
+                    size="sm"
+                    aria-pressed={chartPeriod === period}
                   >
                     {period}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -596,16 +588,22 @@ export default function TouristDashboard() {
                 Your travel impact and preferences
               </p>
             </div>
-            <span className="size-8 rounded-full bg-muted flex items-center justify-center text-primary">
+            <span className="size-8 rounded-full bg-muted flex items-center justify-center text-foreground">
               <ShieldCheck className="w-4 h-4 text-primary" />
             </span>
           </div>
 
           {/* Concentric Circular Rings SVG Widget */}
-          <div className="relative h-44 w-full flex items-center justify-center">
-            <svg className="size-40 -rotate-90" viewBox="0 0 100 100">
+          <div className="flex min-h-48 w-full flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+            <svg
+              className="size-44 shrink-0 -rotate-90 drop-shadow-sm sm:size-48"
+              viewBox="0 0 100 100"
+              role="img"
+              aria-labelledby="profile-impact-rings-title"
+            >
+              <title id="profile-impact-rings-title">Travel impact scores</title>
               {/* Outer Ring: Eco-Footprint (94%) */}
-              <circle cx="50" cy="50" r="42" stroke="var(--muted)" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="42" stroke="var(--border)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
@@ -613,13 +611,13 @@ export default function TouristDashboard() {
                 stroke="var(--chart-1)"
                 strokeWidth="6"
                 strokeDasharray="264"
-                strokeDashoffset="264 - (264 * 0.94)"
+                strokeDashoffset={264 * (1 - 0.94)}
                 strokeLinecap="round"
                 fill="none"
               />
 
               {/* Middle Ring: Homestay Benefit (88%) */}
-              <circle cx="50" cy="50" r="32" stroke="var(--muted)" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="32" stroke="var(--border)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
@@ -627,13 +625,13 @@ export default function TouristDashboard() {
                 stroke="var(--chart-2)"
                 strokeWidth="6"
                 strokeDasharray="201"
-                strokeDashoffset="201 - (201 * 0.88)"
+                strokeDashoffset={201 * (1 - 0.88)}
                 strokeLinecap="round"
                 fill="none"
               />
 
               {/* Inner Ring: Crowd Reduction (68%) */}
-              <circle cx="50" cy="50" r="22" stroke="var(--muted)" strokeWidth="6" fill="none" />
+              <circle cx="50" cy="50" r="22" stroke="var(--border)" strokeWidth="6" fill="none" />
               <circle
                 cx="50"
                 cy="50"
@@ -641,16 +639,22 @@ export default function TouristDashboard() {
                 stroke="var(--chart-3)"
                 strokeWidth="6"
                 strokeDasharray="138"
-                strokeDashoffset="138 - (138 * 0.68)"
+                strokeDashoffset={138 * (1 - 0.68)}
                 strokeLinecap="round"
                 fill="none"
               />
             </svg>
 
-            {/* Inner Center Label */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Your Level</span>
-              <span className="font-heading text-lg font-black text-primary">Eco Explorer</span>
+            <div className="min-w-0 text-center sm:text-left">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                Your Level
+              </span>
+              <span className="mt-1 block font-heading text-xl font-black leading-tight text-foreground">
+                Eco Explorer
+              </span>
+              <p className="mt-2 max-w-40 text-xs leading-relaxed text-muted-foreground">
+                Strong choices across nature, communities, and quieter routes.
+              </p>
             </div>
           </div>
 
@@ -660,21 +664,21 @@ export default function TouristDashboard() {
               <span className="flex items-center gap-2 text-muted-foreground font-medium">
                 <span className="size-2.5 rounded-full bg-primary" /> Eco-Friendly Score
               </span>
-              <strong className="text-primary font-bold">94%</strong>
+              <strong className="text-foreground font-bold">94%</strong>
             </div>
 
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-muted-foreground font-medium">
                 <span className="size-2.5 rounded-full bg-primary" /> Local Support
               </span>
-              <strong className="text-primary font-bold">88%</strong>
+              <strong className="text-foreground font-bold">88%</strong>
             </div>
 
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-muted-foreground font-medium">
                 <span className="size-2.5 rounded-full bg-accent" /> Crowd Avoidance
               </span>
-              <strong className="text-primary font-bold">68%</strong>
+              <strong className="text-foreground font-bold">68%</strong>
             </div>
           </div>
         </div>
@@ -703,18 +707,16 @@ export default function TouristDashboard() {
             ].map((vibe) => {
               const isActive = selectedVibe === vibe.id;
               return (
-                <button
+                <Button
                   key={vibe.id}
                   type="button"
                   onClick={() => setSelectedVibe(vibe.id as VibeCategory)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-[0_3px_12px_color-mix(in_srgb,var(--shadow-color)_28%,transparent)] ring-1 ring-overlay-foreground/20 font-black'
-                      : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border hover:shadow-2xs'
-                  }`}
+                  variant={isActive ? "default" : "outline"}
+                  size="sm"
+                  aria-pressed={isActive}
                 >
                   {vibe.label}
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -749,10 +751,14 @@ export default function TouristDashboard() {
                   </span>
                 </div>
 
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSaveToggle(dest)}
-                  className="absolute top-3.5 right-3.5 p-2 rounded-full bg-card/90 hover:bg-card text-primary shadow-md transition-all cursor-pointer hover:scale-110 active:scale-95"
+                  variant="outline"
+                  size="icon"
+                  aria-pressed={isSaved(dest.id)}
+                  aria-label={isSaved(dest.id) ? "Remove from saved" : "Save destination"}
+                  className="absolute top-3.5 right-3.5 bg-card text-card-foreground dark:bg-card"
                   title={isSaved(dest.id) ? 'Saved' : 'Save'}
                 >
                   <Heart
@@ -760,10 +766,10 @@ export default function TouristDashboard() {
                       isSaved(dest.id) ? 'fill-destructive text-destructive' : 'text-primary'
                     }`}
                   />
-                </button>
+                </Button>
 
                 <div className="absolute bottom-3.5 inset-x-4 text-overlay-foreground">
-                  <span className="text-[10px] font-bold text-frosted-blue uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-overlay-foreground uppercase tracking-wider block">
                     {dest.district} District
                   </span>
                   <h3 className="font-heading text-xl font-bold leading-tight mt-0.5 text-overlay-foreground">
@@ -776,7 +782,7 @@ export default function TouristDashboard() {
                 <div>
                   <div className="flex items-center justify-between pb-2.5 border-b border-border text-xs">
                     <span className="text-muted-foreground font-medium">Eco-Friendly Score</span>
-                    <span className="font-black text-primary">
+                    <span className="font-black text-foreground">
                       {dest.sustainability.overall} / 100
                     </span>
                   </div>
@@ -791,16 +797,15 @@ export default function TouristDashboard() {
                     <span>{dest.tags.slice(0, 2).join(' • ')}</span>
                   </div>
 
-                  <Link href={`/destinations/${dest.id}`}>
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      className="rounded-xl gap-1 text-xs cursor-pointer border-border text-primary hover:bg-primary hover:text-primary-foreground transition-all font-bold"
-                    >
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    nativeButton={false}
+                    render={<Link href={`/destinations/${dest.id}`} />}
+                  >
                       <span>Explore</span>
                       <ArrowRight className="w-3 h-3" />
                     </Button>
-                  </Link>
                 </div>
               </div>
             </div>

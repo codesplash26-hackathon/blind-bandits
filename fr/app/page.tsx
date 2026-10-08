@@ -2,13 +2,13 @@
 
 import { Navigation } from "../components/landing/Navigation";
 import { Hero } from "../components/landing/Hero";
-import { WhyCeylonTour } from "../components/landing/WhyCeylonTour";
 import { ExperienceStory } from "../components/landing/ExperienceStory";
 import { HowItWorks } from "../components/landing/HowItWorks";
 import { Stat } from "../components/landing/Stat";
 import { Testimonial } from "../components/landing/Testimonial";
 import { CallToAction } from "../components/landing/CallToAction";
 import { Footer } from "../components/landing/Footer";
+import {Features} from "../components/landing/Features";
 
 export default function LandingPage() {
   return (
@@ -21,7 +21,9 @@ export default function LandingPage() {
         <Hero />
 
         {/* Why CeylonTour - Plain, Human-Friendly Values */}
-        <WhyCeylonTour />
+        {/* <WhyCeylonTour /> */}
+        <Features />
+
 
         {/* Visual Photographic Story - The CeylonTour Standard */}
         <ExperienceStory />

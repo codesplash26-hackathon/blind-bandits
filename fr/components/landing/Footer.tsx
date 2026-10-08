@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/logo.png";
+import { ThemeLogo } from "@/components/ThemeLogo";
 import { Compass, Globe, Shield, Heart } from "lucide-react";
 
 export const Footer = () => {
@@ -14,7 +13,7 @@ export const Footer = () => {
               href="/"
               className="text-2xl font-bold font-heading text-primary flex items-center gap-2"
             >
-              <Image src={logo} alt="Ceylon Tour logo" width={36} height={36} />
+              <ThemeLogo alt="Ceylon Tour logo" width={36} height={36} />
               Ceylon Tour
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">

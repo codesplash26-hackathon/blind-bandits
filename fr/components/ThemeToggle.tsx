@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 
@@ -16,7 +17,10 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
   );
 
   return (
-    <button
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
       onClick={(e) => {
         const newTheme = resolvedTheme === "dark" ? "light" : "dark";
 
@@ -53,7 +57,7 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
         });
       }}
       className={cn(
-        "inline-flex text-foreground cursor-pointer items-center justify-center whitespace-nowrap text-sm font-semibold disabled:pointer-events-none disabled:opacity-50 hover:bg-muted h-11 w-11 relative rounded-full transition-all active:scale-90 sm:h-10 sm:w-10 sm:border-none sm:bg-transparent sm:shadow-none sm:backdrop-blur-none bg-transparent shadow-none backdrop-blur-none",
+        "relative",
         className,
       )}
     >
@@ -118,6 +122,6 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
         </svg>
       </div>
       <span className="sr-only">Toggle theme</span>
-    </button>
+    </Button>
   );
 };

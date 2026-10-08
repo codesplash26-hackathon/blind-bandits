@@ -1,21 +1,15 @@
-"use client";
+import { useId, type ComponentProps } from "react";
+import { MapPin, Users, Compass, ShieldCheck, TreePine } from "lucide-react";
 
-import { useId } from "react";
 import { motion } from "motion/react";
-import { Compass, MapPin, Users, ShieldCheck, TreePine } from "lucide-react";
+
 import CountUp from "./CountUp";
 
 export function Stat() {
   return (
-    <section
-      id="impact"
-      className="w-full bg-gradient-to-b from-overlay via-overlay to-overlay text-overlay-foreground py-24 md:py-32 border-y border-overlay-foreground/10 relative overflow-hidden"
-    >
-      {/* Background Soft Glow Rings */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[450px] h-[450px] bg-frosted-blue/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-2 pb-12 pt-0 px-4 sm:px-6 md:px-12 lg:px-12 w-full max-w-7xl mx-auto">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+      <div className="col-span-2 lg:col-span-4 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -23,55 +17,45 @@ export function Stat() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-overlay-foreground/10 backdrop-blur-md border border-overlay-foreground/20 text-frosted-blue text-xs font-semibold uppercase tracking-wider mb-4">
-            <TreePine className="w-3.5 h-3.5 text-sky-aqua" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-foreground text-xs font-semibold uppercase tracking-wider mb-4">
+            <TreePine className="w-3.5 h-3.5 text-primary" />
             <span>Our Sustainable Footprint</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-overlay-foreground tracking-tight drop-shadow-md">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground tracking-tight drop-shadow-md">
             Empowering Sri Lanka Through Conscious Travel
           </h2>
-          <p className="text-overlay-foreground/90 text-base sm:text-lg max-w-2xl mx-auto mt-3.5 font-normal leading-relaxed">
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto mt-3.5 font-normal leading-relaxed">
             Every journey planned through Ceylon Tour helps preserve fragile ecosystems and directly supports local rural communities.
           </p>
         </motion.div>
+    </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-          {stats.map((feature, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: idx * 0.12 }}
-              whileHover={{ y: -8 }}
-              className="relative flex flex-col border border-overlay-foreground/15 items-center justify-center bg-overlay-foreground/10 backdrop-blur-xl p-8 sm:p-9 rounded-3xl overflow-hidden shadow-2xl hover:border-primary/60 hover:bg-overlay-foreground/15 transition-all duration-300 group"
-            >
-              <Grid size={22} />
-              <div className={`relative z-20 mb-5 p-3.5 rounded-2xl ${feature.iconStyle} group-hover:scale-110 transition-transform duration-300 shadow-md`}>
-                {feature.icon}
-              </div>
-              <div className="text-3xl sm:text-4xl font-extrabold text-overlay-foreground relative z-20 flex items-center tracking-tight drop-shadow">
-                <CountUp
-                  from={0}
-                  to={feature.value}
-                  separator=","
-                  direction="up"
-                  duration={1.5}
-                  className="count-up-text"
-                />
-                <span className={`font-bold ml-0.5 ${feature.suffixColor}`}>{feature.suffix}</span>
-              </div>
-              <p className="text-overlay-foreground font-semibold text-base mt-2.5 relative z-20 text-center">
-                {feature.title}
-              </p>
-              <p className="text-overlay-foreground/80 text-sm font-normal relative z-20 text-center mt-1 leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+      {stats.map((feature, idx) => (
+        <div
+          key={idx}
+          className="relative flex flex-col border border-border items-center justify-center bg-card p-3 sm:p-6 rounded-3xl overflow-hidden soft-bloom"
+        >
+          <Grid size={20} />
+          <div className="relative z-20 mb-4 text-primary">
+            {feature.icon}
+          </div>
+          <div className="text-3xl font-bold text-foreground relative z-20 flex items-center">
+            <CountUp
+              from={0}
+              to={feature.value}
+              separator=","
+              direction="up"
+              duration={1}
+              className="count-up-text"
+            />
+            {feature.suffix}
+          </div>
+          <p className="text-muted-foreground mt-2 text-base font-normal relative z-20 text-center">
+            {feature.description}
+          </p>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 }
 
@@ -82,8 +66,6 @@ const stats = [
     suffix: "+",
     description: "Curated off-grid locations & secret trails",
     icon: <MapPin className="w-6 h-6" />,
-    iconStyle: "bg-primary/25 text-sky-aqua",
-    suffixColor: "text-sky-aqua",
   },
   {
     title: "Certified Local Hosts",
@@ -91,8 +73,6 @@ const stats = [
     suffix: "+",
     description: "Verified guides, artisans & homestays",
     icon: <Users className="w-6 h-6" />,
-    iconStyle: "bg-frosted-blue/25 text-frosted-blue",
-    suffixColor: "text-frosted-blue",
   },
   {
     title: "Eco Travelers Served",
@@ -100,8 +80,6 @@ const stats = [
     suffix: "k+",
     description: "Memorable journeys across the island",
     icon: <Compass className="w-6 h-6" />,
-    iconStyle: "bg-overlay-foreground/20 text-sky-aqua",
-    suffixColor: "text-sky-aqua",
   },
   {
     title: "Zero-Waste Certified",
@@ -109,8 +87,6 @@ const stats = [
     suffix: "%",
     description: "Sustainable plastic-free tour protocols",
     icon: <ShieldCheck className="w-6 h-6" />,
-    iconStyle: "bg-success/25 text-frosted-blue",
-    suffixColor: "text-frosted-blue",
   },
 ];
 
@@ -131,8 +107,8 @@ export const Grid = ({
 }) => {
   const p = pattern ?? defaultGridPattern;
   return (
-    <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(var(--overlay-foreground),transparent)] opacity-20">
-      <div className="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,var(--overlay-foreground),transparent)] from-transparent to-transparent opacity-100">
+    <div className="pointer-events-none absolute left-1/2 top-0  -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(var(--foreground),transparent)]">
+      <div className="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,var(--foreground),transparent)] dark:from-muted/20 from-transparent to-transparent dark:to-muted/20 opacity-100">
         <GridPattern
           width={size ?? 20}
           height={size ?? 20}
@@ -140,32 +116,15 @@ export const Grid = ({
           y="4"
           squares={p}
           className="absolute inset-0 h-full w-full"
-          strokeClassName="stroke-overlay-foreground/30"
-          fillClassName="fill-overlay-foreground/10"
+          strokeClassName="stroke-border"
+          fillClassName="fill-border/50"
         />
       </div>
     </div>
   );
 };
 
-export function GridPattern({
-  width,
-  height,
-  x,
-  y,
-  squares,
-  strokeClassName,
-  fillClassName,
-  ...props
-}: React.ComponentProps<"svg"> & {
-  width?: number;
-  height?: number;
-  x?: string | number;
-  y?: string | number;
-  squares?: number[][];
-  strokeClassName?: string;
-  fillClassName?: string;
-}) {
+export function GridPattern({ width, height, x, y, squares, strokeClassName, fillClassName, ...props }: ComponentProps<"svg"> & { width?: number, height?: number, x?: string | number, y?: string | number, squares?: number[][], strokeClassName?: string, fillClassName?: string }) {
   const patternId = useId();
 
   return (
@@ -179,12 +138,7 @@ export function GridPattern({
           x={x}
           y={y}
         >
-          <path
-            d={`M.5 ${height}V.5H${width}`}
-            fill="none"
-            strokeWidth="1"
-            className={strokeClassName}
-          />
+          <path d={`M.5 ${height}V.5H${width}`} fill="none" strokeWidth="1" className={strokeClassName} />
         </pattern>
       </defs>
       <rect

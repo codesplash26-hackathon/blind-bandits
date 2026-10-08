@@ -75,16 +75,13 @@ function HistoryContent() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Recommendation Audit Log</span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />{history.length} Recorded Queries
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">Recommendation Audit Log</span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">Recommendation History</h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">Your backend-recorded searches, ranking versions, and returned destination order.</p>
         </div>
-        <Link href="/discover"><Button size="sm" className="rounded-2xl gap-2"><Sparkles className="w-3.5 h-3.5" />New Trip Query</Button></Link>
+        <Button size="sm" nativeButton={false} render={<Link href="/discover" />}><Sparkles className="w-3.5 h-3.5" />New Trip Query</Button>
       </div>
 
       {history.length > 0 ? (
@@ -100,7 +97,7 @@ function HistoryContent() {
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  {item.request.interests.map((interest) => <span key={interest} className="px-2.5 py-1 rounded-xl bg-muted text-primary text-xs font-bold border border-border">{titleCase(interest)}</span>)}
+                  {item.request.interests.map((interest) => <span key={interest} className="px-2.5 py-1 rounded-xl bg-muted text-foreground text-xs font-bold border border-border">{titleCase(interest)}</span>)}
                   <span className="text-xs text-muted-foreground font-bold">{item.request.trip_duration} days • LKR {Number(item.request.budget).toLocaleString()} • {item.request.crowd_preference}</span>
                 </div>
               </div>
@@ -127,15 +124,18 @@ function HistoryContent() {
 
               <div className="pt-3 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <span className="text-[11px] text-muted-foreground flex items-center gap-1.5 font-bold"><CheckCircle2 className="w-3.5 h-3.5" />Sustainability config: {item.sustainability_config_version}</span>
-                <Link href="/discover" onClick={() => storeRecommendationDraft({
+                <Button
+                  size="xs"
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link href="/discover" onClick={() => storeRecommendationDraft({
                   budget: Number(item.request.budget),
                   trip_duration: item.request.trip_duration,
                   interests: item.request.interests,
                   crowd_preference: item.request.crowd_preference,
                   sustainability_preference: item.request.sustainability_preference,
-                })}>
-                  <Button size="xs" variant="outline" className="rounded-xl gap-1"><span>Use These Preferences</span><ArrowRight className="w-3 h-3" /></Button>
-                </Link>
+                })} />}
+                ><span>Use These Preferences</span><ArrowRight className="w-3 h-3" /></Button>
               </div>
             </article>
           ))}
@@ -144,7 +144,7 @@ function HistoryContent() {
         <div className="p-12 sm:p-16 text-center rounded-3xl bg-card border border-dashed border-border max-w-lg mx-auto space-y-4">
           <div className="size-16 rounded-full bg-muted text-primary flex items-center justify-center mx-auto"><History className="w-8 h-8" /></div>
           <div><h3 className="text-lg font-black text-foreground">No recommendations logged yet</h3><p className="text-xs sm:text-sm text-muted-foreground mt-1">Run a Discover search to create your first history entry.</p></div>
-          <Link href="/discover"><Button size="sm">Discover Destinations</Button></Link>
+          <Button size="sm" nativeButton={false} render={<Link href="/discover" />}>Discover Destinations</Button>
         </div>
       )}
     </div>

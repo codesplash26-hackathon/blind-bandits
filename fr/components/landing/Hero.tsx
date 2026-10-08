@@ -111,7 +111,7 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-body-md text-overlay-foreground/90 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed drop-shadow">
+          <p className="font-body-md text-overlay-foreground/90 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
             Discover Sri Lanka’s hidden gems while caring for nature and supporting local communities with smart, personalized travel suggestions.
           </p>
 

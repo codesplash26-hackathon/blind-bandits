@@ -45,6 +45,10 @@ class Settings(BaseSettings):
     open_meteo_api_key: SecretStr | None = Field(
         default=None, validation_alias="OPEN_METEO_API_KEY"
     )
+    open_meteo_air_quality_url: str = Field(
+        default="https://air-quality-api.open-meteo.com/v1/air-quality",
+        validation_alias="OPEN_METEO_AIR_QUALITY_URL",
+    )
     openaq_url: str = Field(
         default="https://api.openaq.org/v3", validation_alias="OPENAQ_URL"
     )

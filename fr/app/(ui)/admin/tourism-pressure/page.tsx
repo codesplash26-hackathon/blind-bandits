@@ -6,6 +6,7 @@ import { ArrowRight, Calendar, Info, RefreshCw, TrendingUp } from 'lucide-react'
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DatePickerInput } from '@/components/ui/date-picker';
 import { Loader } from '@/components/Loader';
 import { getDestinationPressure, listDestinations } from '@/lib/destinations';
 import describeApiError from '@/lib/apiError';
@@ -126,12 +127,8 @@ export default function AdminTourismPressurePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Tourism Pressure Engine</span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Artifact-backed regional forecasts
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">Tourism Pressure Engine</span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Tourism Pressure Monitor
@@ -140,33 +137,29 @@ export default function AdminTourismPressurePage() {
             One-month-ahead regional accommodation occupancy from the deployed visitor-pressure model.
           </p>
         </div>
-        <Link href="/admin/analytics">
-          <Button size="sm" variant="outline" className="rounded-xl gap-1.5 cursor-pointer">
-            <TrendingUp className="w-4 h-4 text-secondary" /> View Impact Analytics
+        <Button size="sm" variant="outline" nativeButton={false} render={<Link href="/admin/analytics" />}>
+            <TrendingUp className="w-4 h-4" /> View Impact Analytics
           </Button>
-        </Link>
       </div>
 
       <Card className="rounded-3xl border border-primary/30 p-6 bg-gradient-to-br from-primary/5 via-card to-card shadow-sm space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Calendar className="w-5 h-5 text-primary" />
-            <label className="space-y-1 text-xs font-bold text-foreground">
-              Forecast month
-              <input
-                type="month"
-                value={month}
-                onChange={(event) => setMonth(event.target.value)}
-                className="block h-9 rounded-xl border border-border bg-background px-3 text-xs text-foreground"
-              />
-            </label>
+            <DatePickerInput
+              type="month"
+              label="Forecast month"
+              value={month}
+              onValueChange={setMonth}
+              labelClassName="text-foreground"
+              inputClassName="text-xs"
+            />
           </div>
           <Button
             size="sm"
             variant="outline"
             onClick={() => setReloadKey((value) => value + 1)}
             disabled={isLoading}
-            className="rounded-xl gap-1.5"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh predictions

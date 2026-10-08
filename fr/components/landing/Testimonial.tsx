@@ -21,7 +21,7 @@ export function Testimonial() {
   return (
     <section id="reviews" className="w-full bg-muted/50 dark:bg-muted border-y border-border/80 dark:border-border py-20 md:py-28 relative overflow-hidden">
       {/* Subtle Background Glow */}
-      <div className="absolute top-1/2 left-10 w-96 h-96 bg-frosted-blue/20 dark:bg-muted/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
@@ -31,7 +31,7 @@ export function Testimonial() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/25 dark:border-primary/40 text-primary text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/25 dark:border-primary/40 text-foreground text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
             <Heart className="w-3.5 h-3.5 text-primary" />
             <span>Traveler & Host Stories</span>
           </div>

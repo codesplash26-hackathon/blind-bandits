@@ -32,6 +32,7 @@ import type { AdminDashboardResponse } from '@/types/destination-api';
 import describeApiError from '@/lib/apiError';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DatePickerInput } from '@/components/ui/date-picker';
 import {
   Table,
   TableBody,
@@ -95,7 +96,7 @@ export default function AdminDashboard() {
       <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
         <h2 className="text-lg font-bold text-foreground">Dashboard unavailable</h2>
         <p className="text-sm text-muted-foreground">{loadError}</p>
-        <button type="button" onClick={() => setReloadKey((value) => value + 1)} className="text-sm font-bold text-primary hover:underline">Try again</button>
+        <Button type="button" onClick={() => setReloadKey((value) => value + 1)} variant="link" size="sm">Try again</Button>
       </div>
     );
   }
@@ -122,14 +123,10 @@ export default function AdminDashboard() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
               Admin Dashboard
             </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground">
-              <span className="size-2 rounded-full bg-primary animate-pulse" />
-              Live AI Monitoring
-            </span>
+
           </div>
           <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">
             Admin Overview
@@ -145,7 +142,6 @@ export default function AdminDashboard() {
             size="sm"
             onClick={() => setReloadKey((value) => value + 1)}
             disabled={isLoading}
-            className="rounded-xl gap-2 cursor-pointer bg-card border-primary/30 text-primary hover:bg-primary/10 shadow-xs"
           >
             <RefreshCw className={`w-3.5 h-3.5 text-secondary ${isLoading ? 'animate-spin' : ''}`} />
             <span>Refresh dashboard</span>
@@ -159,10 +155,15 @@ export default function AdminDashboard() {
           <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
           <span className="font-semibold">{dashboard.recommended_action.message}</span>
         </div>
-        <label className="flex items-center gap-2 font-bold text-muted-foreground">
-          Forecast month
-          <input type="month" value={month} onChange={(event) => setMonth(event.target.value)} className="h-8 rounded-lg border border-border bg-background px-2 text-[10px] text-foreground" />
-        </label>
+        <DatePickerInput
+          type="month"
+          label="Forecast month"
+          value={month}
+          onValueChange={setMonth}
+          className="flex items-center gap-2"
+          labelClassName="text-[10px]"
+          inputClassName="h-8 text-[10px]"
+        />
       </div>
 
       {/* ── 2. Top 4 Modern KPI Cards with Sparklines & Donut Rings ──────────── */}
@@ -180,7 +181,7 @@ export default function AdminDashboard() {
               <span className="text-xs text-muted-foreground font-semibold">locations</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">● Active</span>
+              <span className="text-foreground">● Active</span>
               <span className="text-muted-foreground font-normal">tracking</span>
             </div>
           </div>
@@ -203,7 +204,7 @@ export default function AdminDashboard() {
                 <span className="text-xs text-muted-foreground font-semibold">/ {dashboard.total_active_destinations} sites</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">★ Optimal</span>
+              <span className="text-foreground">★ Optimal</span>
               <span className="text-muted-foreground font-normal">crowd levels</span>
             </div>
           </div>
@@ -247,7 +248,7 @@ export default function AdminDashboard() {
               <span className="text-xs text-muted-foreground font-semibold">places</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-primary pt-0.5">
-              <span className="text-primary">▲ Watch</span>
+              <span className="text-foreground">▲ Watch</span>
               <span className="text-muted-foreground font-normal">getting busy</span>
             </div>
           </div>
@@ -380,7 +381,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="h-64 sm:h-72 w-full">
-          
+
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={overviewChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted)" />
@@ -423,7 +424,7 @@ export default function AdminDashboard() {
                 />
               </BarChart>
             </ResponsiveContainer>
-          
+
         </div>
       </div>
 
@@ -468,7 +469,7 @@ export default function AdminDashboard() {
 
           <div className="p-4 rounded-2xl bg-background border border-border shadow-dashboard-panel space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-primary">Suggested Alternatives</span>
+              <span className="font-bold text-foreground">Suggested Alternatives</span>
               <Send className="w-3.5 h-3.5 text-primary" />
             </div>
             <p className="font-heading text-base font-black text-foreground">
@@ -532,29 +533,25 @@ export default function AdminDashboard() {
             {/* Filter Tabs */}
             <div className="flex items-center p-1 rounded-xl bg-muted border border-border text-xs font-bold shadow-[inset_0_1px_3px_color-mix(in_srgb,var(--shadow-color)_6%,transparent)]">
               {(['ALL', 'HIGH', 'MEDIUM', 'LOW'] as const).map((lvl) => (
-                <button
+                <Button
                   key={lvl}
                   type="button"
                   onClick={() => setPressureFilter(lvl)}
-                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer text-xs ${
-                    pressureFilter === lvl
-                      ? 'bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground shadow-xs font-black'
-                      : 'bg-card/60 hover:bg-card text-primary hover:text-primary border border-transparent hover:border-border'
-                  }`}
+                  variant={pressureFilter === lvl ? "default" : "outline"}
+                  size="sm"
+                  aria-pressed={pressureFilter === lvl}
                 >
                   {lvl === 'ALL'
                     ? `All (${highestPressureList.length})`
                     : `${lvl} (${highestPressureList.filter((destination) => destination.pressure_level === lvl).length})`}
-                </button>
+                </Button>
               ))}
             </div>
 
-            <Link href="/admin/destinations">
-              <Button size="xs" variant="outline" className="rounded-xl gap-1 shadow-xs">
+            <Button size="xs" variant="outline" nativeButton={false} render={<Link href="/admin/destinations" />}>
                 <span>Registry</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
-            </Link>
           </div>
         </div>
 
@@ -615,7 +612,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="py-3.5 px-3 font-bold text-secondary text-xs">
+                  <TableCell className="py-3.5 px-3 font-bold text-foreground text-xs">
                     {dest.sustainability_score === null ? '—' : dest.sustainability_score.toFixed(1)} / 100
                   </TableCell>
                   <TableCell className="py-3.5 px-3">
@@ -625,12 +622,10 @@ export default function AdminDashboard() {
                     </span>
                   </TableCell>
                   <TableCell className="py-3.5 px-3 text-right">
-                    <Link href={`/destinations/${dest.slug}`}>
-                      <Button size="xs" variant="outline" className="rounded-xl gap-1 text-xs hover:border-secondary">
-                        <Eye className="w-3 h-3 text-secondary" />
+                    <Button size="xs" variant="outline" nativeButton={false} render={<Link href={`/destinations/${dest.slug}`} />}>
+                        <Eye className="w-3 h-3" />
                         <span>Inspect</span>
                       </Button>
-                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

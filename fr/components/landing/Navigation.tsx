@@ -7,13 +7,12 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logo from "@/public/logo.png"
+import { ThemeLogo } from "@/components/ThemeLogo";
 
 const navItems = [
   { name: "Why CeylonTour", href: "#why-us" },
@@ -88,7 +87,7 @@ export const Navigation = () => {
             href="/"
             className="text-title-lg font-title-lg font-bold text-primary flex items-center gap-2 transition-colors"
           >
-            <Image src={logo} alt="Ceylon Tour logo" width={32} height={32} />
+            <ThemeLogo alt="Ceylon Tour logo" width={32} height={32} />
             Ceylon Tour
           </Link>
           <ul className="hidden font-body-md gap-6 text-sm sm:flex whitespace-nowrap px-16">
@@ -169,7 +168,7 @@ export const Navigation = () => {
                   href="/"
                   className="text-title-lg font-title-lg font-bold text-primary flex items-center gap-2"
                 >
-                  <Image src={logo} alt="Ceylon Tour logo" width={32} height={32} />
+                  <ThemeLogo alt="Ceylon Tour logo" width={32} height={32} />
                   Ceylon Tour
                 </Link>
                 <button

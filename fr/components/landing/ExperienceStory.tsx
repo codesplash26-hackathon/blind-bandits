@@ -26,7 +26,7 @@ export const ExperienceStory = () => {
       badge: "Eco-Verified",
     },
     {
-      icon: <ShieldCheck className="w-5 h-5 text-primary dark:text-secondary" />,
+      icon: <ShieldCheck className="w-5 h-5 text-primary" />,
       title: "Accredited Wildlife & Cultural Guardians",
       description:
         "Explore alongside licensed environmentalists who protect natural elephant and leopard corridors, prioritizing animal welfare and ancient heritage preservation.",
@@ -37,7 +37,7 @@ export const ExperienceStory = () => {
   return (
     <section className="w-full bg-muted/60 dark:bg-muted border-y border-border/80 dark:border-border py-20 md:py-28 relative overflow-hidden">
       {/* Background Soft Glows */}
-      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-frosted-blue/25 dark:bg-muted/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-accent/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-primary/15 dark:bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
@@ -63,7 +63,7 @@ export const ExperienceStory = () => {
 
             {/* Embedded Bottom Image Caption */}
             <div className="absolute bottom-6 left-6 right-6 text-overlay-foreground z-10">
-              <span className="text-[11px] uppercase tracking-widest text-secondary font-semibold">
+              <span className="text-[11px] uppercase tracking-widest text-overlay-foreground/90 font-semibold">
                 Central Highlands
               </span>
               <p className="font-heading text-lg sm:text-xl font-bold">
@@ -113,7 +113,7 @@ export const ExperienceStory = () => {
           transition={{ duration: 0.65, ease: "easeOut" }}
           className="lg:col-span-6 flex flex-col justify-center gap-6"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/25 dark:border-primary/40 text-primary text-xs font-bold uppercase tracking-wider w-fit shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/25 dark:border-primary/40 text-foreground text-xs font-bold uppercase tracking-wider w-fit shadow-sm">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>The CeylonTour Standard</span>
           </div>
@@ -140,7 +140,7 @@ export const ExperienceStory = () => {
                     <h4 className="font-heading text-base font-bold text-foreground">
                       {benefit.title}
                     </h4>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground dark:text-secondary border border-border/50 dark:border-border">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-border/50 dark:border-border">
                       {benefit.badge}
                     </span>
                   </div>

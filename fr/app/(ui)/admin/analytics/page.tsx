@@ -31,6 +31,7 @@ import describeApiError from '@/lib/apiError';
 import type { AdminAnalyticsResponse } from '@/types/analytics-api';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DatePickerInput } from '@/components/ui/date-picker';
 
 function dateInputValue(date: Date) {
   return date.toISOString().slice(0, 10);
@@ -95,7 +96,7 @@ export default function AdminAnalyticsPage() {
       <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
         <h2 className="text-lg font-bold text-foreground">Analytics unavailable</h2>
         <p className="text-sm text-muted-foreground">{loadError}</p>
-        <button type="button" onClick={() => setReloadKey((value) => value + 1)} className="text-sm font-bold text-primary hover:underline">Try again</button>
+        <Button type="button" onClick={() => setReloadKey((value) => value + 1)} variant="link" size="sm">Try again</Button>
       </div>
     );
   }
@@ -123,14 +124,13 @@ export default function AdminAnalyticsPage() {
     <div className="space-y-8 pb-16 max-w-7xl mx-auto w-full">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2"><span className="text-xs font-bold uppercase tracking-wider text-primary">Authority Aggregate Analytics</span><span className="text-muted-foreground">•</span><span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground"><span className="size-2 rounded-full bg-primary animate-pulse" /> Privacy-preserving totals</span></div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">Recommendation &amp; Engagement Analytics</h1>
+         <h1 className="font-heading text-2xl sm:text-3xl font-black text-foreground tracking-tight mt-0.5">Recommendation &amp; Engagement Analytics</h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">Aggregate activity and pressure-redirection outcomes for the selected UTC date range.</p>
         </div>
         <div className="flex flex-wrap items-end gap-2">
-          <label className="text-[10px] font-bold text-muted-foreground">From<input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} className="block h-9 rounded-lg border border-border bg-background px-2 text-xs text-foreground" /></label>
-          <label className="text-[10px] font-bold text-muted-foreground">To<input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} className="block h-9 rounded-lg border border-border bg-background px-2 text-xs text-foreground" /></label>
-          <Button size="sm" variant="outline" onClick={() => setReloadKey((value) => value + 1)} disabled={isLoading} className="rounded-xl gap-1.5"><RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} /> Refresh</Button>
+          <DatePickerInput label="From" value={startDate} onValueChange={setStartDate} inputClassName="text-xs" />
+          <DatePickerInput label="To" value={endDate} onValueChange={setEndDate} inputClassName="text-xs" />
+          <Button size="sm" variant="outline" onClick={() => setReloadKey((value) => value + 1)} disabled={isLoading}><RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} /> Refresh</Button>
         </div>
       </div>
 
